@@ -283,4 +283,3 @@ if (typeof window !== 'undefined') {
     window.songsData = songsData;
     window.authorsData = authorsData;
 }
-
