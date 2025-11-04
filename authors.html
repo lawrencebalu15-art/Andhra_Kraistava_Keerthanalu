@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse hymn authors of Andhra Kraistava Keerthanallu. Discover biographies, song lists, and featured YouTube performances from Telugu Christian hymn writers.">
+    <meta name="keywords" content="hymn authors, Telugu Christian hymn writers, hymn biographies, Christian hymn composers, Telugu Christian music authors">
+    <meta property="og:title" content="Hymn Authors - Andhra Kraistava Keerthanallu">
+    <meta property="og:description" content="Discover the devoted writers who composed Telugu Christian hymns">
+    <title>Andhra Kraistava Keerthanallu - Authors | Hymn Writers</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600&family=Noto+Sans+Telugu:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-title-section">
+            <div class="logo">
+                <h1>ఆంధ్ర క్రైస్తవ కీర్తనలు - కవులు</h1>
+                <p class="logo-subtitle">Andhra Kraistava Keerthanallu</p>
+            </div>
+        </div>
+        <nav class="navbar">
+            <div class="nav-container">
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="authors.html" class="active">Authors</a></li>
+                    <li><a href="hymns.html">Hymns</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="search-container">
+                    <input type="text" id="globalSearch" placeholder="Search hymns or authors...">
+                    <button id="searchBtn">🔍</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>Hymn Authors</h1>
+                <p>Discover the devoted writers who composed these timeless spiritual hymns</p>
+            </div>
+        </section>
+
+        <section class="authors-section">
+            <div class="container">
+                <div class="filter-controls">
+                    <label for="initialFilter">Filter by Initial:</label>
+                    <select id="initialFilter">
+                        <option value="all">All Authors</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                        <option value="G">G</option>
+                        <option value="H">H</option>
+                        <option value="I">I</option>
+                        <option value="J">J</option>
+                        <option value="K">K</option>
+                        <option value="L">L</option>
+                        <option value="M">M</option>
+                        <option value="N">N</option>
+                        <option value="O">O</option>
+                        <option value="P">P</option>
+                        <option value="Q">Q</option>
+                        <option value="R">R</option>
+                        <option value="S">S</option>
+                        <option value="T">T</option>
+                        <option value="U">U</option>
+                        <option value="V">V</option>
+                        <option value="W">W</option>
+                        <option value="X">X</option>
+                        <option value="Y">Y</option>
+                        <option value="Z">Z</option>
+                    </select>
+                    <input type="text" id="authorSearch" placeholder="Search author by name...">
+                </div>
+
+                <div id="authorsList" class="authors-list">
+                    <!-- Authors will be dynamically loaded here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Mission</h3>
+                <p>"To preserve and promote the rich heritage of Telugu Christian hymns, making them accessible to all who seek spiritual inspiration and cultural understanding."</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="authors.html">Authors</a></li>
+                    <li><a href="hymns.html">Hymns</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Disclaimer</h3>
+                <p>This website is created for devotional and educational purposes. All hymn content is attributed to their respective authors. YouTube links are provided for convenience and are subject to availability.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Andhra Kraistava Keerthanallu. All rights reserved. Dedicated to preserving Telugu Christian hymn heritage.</p>
+        </div>
+    </footer>
+
+    <script src="js/songs-data.js"></script>
+    <script src="js/authors.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
+
