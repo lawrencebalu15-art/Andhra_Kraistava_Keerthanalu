@@ -3,12 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Browse and search through 626 Telugu Christian hymns with lyrics, meanings, and YouTube performances">
+    <meta name="description" content="Browse and search through 626 Telugu Christian hymns with lyrics and YouTube performances">
     <title>Andhra Kraistava Keerthanallu - Kavulu - Ardhamulu | Songs Library</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600&family=Noto+Sans+Telugu:wght@400;500;600&display=swap" rel="stylesheet">
+        <!-- Structured data for search engines -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@graph": [
+                {
+                    "@type": "WebSite",
+                    "@id": "https://andhra-kraistava-keerthanallu.vercel.app/#website",
+                    "url": "https://andhra-kraistava-keerthanallu.vercel.app/",
+                    "name": "Andhra Kraistava Keerthanallu",
+                    "potentialAction": {
+                        "@type": "SearchAction",
+                        "target": "https://andhra-kraistava-keerthanallu.vercel.app/hymns.html?search={search_term_string}",
+                        "query-input": "required name=search_term_string"
+                    }
+                },
+                {
+                    "@type": "Organization",
+                    "@id": "https://andhra-kraistava-keerthanallu.vercel.app/#organization",
+                    "name": "Andhra Kraistava Keerthanallu",
+                    "url": "https://andhra-kraistava-keerthanallu.vercel.app/",
+                    "sameAs": []
+                }
+            ]
+        }
+        </script>
 </head>
 <body>
     <header>
@@ -55,59 +81,46 @@
         <section class="songs-section">
             <div class="container">
                 <div class="filter-controls-panel">
-                    <div class="search-controls">
-                        <input type="text" id="songSearch" placeholder="Search by song number, title, author, or lyrics...">
-                        <button id="clearSearch" class="clear-btn">Clear</button>
-                    </div>
+                    <button type="button" id="filterToggleBtn" class="filter-toggle-btn">
+                        <span>Filter &amp; Sort</span>
+                        <i>▼</i>
+                    </button>
                     
-                    <div class="filter-row">
-                        <div class="filter-group">
-                            <label for="sortSongs">Sort By:</label>
-                            <select id="sortSongs">
-                                <option value="number">Song Number (1-626)</option>
-                                <option value="title">Title (A-Z)</option>
-                                <option value="author">Author (A-Z)</option>
-                            </select>
+                    <div class="filter-content">
+                        <div class="search-controls">
+                            <input type="text" id="songSearch" placeholder="Search by song number, title, author, or lyrics...">
+                            <button type="button" id="clearSearch" class="clear-btn">Clear</button>
                         </div>
                         
-                        <div class="filter-group">
-                            <label for="filterAuthor">Filter by Author:</label>
-                            <select id="filterAuthor">
-                                <option value="all">All Authors</option>
-                            </select>
+                        <div class="filter-row">
+                            <div class="filter-group">
+                                <label for="sortSongs">Sort By:</label>
+                                <select id="sortSongs">
+                                    <option value="number">Song Number (1-626)</option>
+                                    <option value="title">Title (A-Z)</option>
+                                    <option value="author">Author (A-Z)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="filter-group">
+                                <label for="filterAuthor">Filter by Author:</label>
+                                <select id="filterAuthor">
+                                    <option value="all">All Authors</option>
+                                </select>
+                            </div>
+                            
+                            <div class="filter-group">
+                                <label for="filterInitial">Filter by Initial:</label>
+                                <select id="filterInitial">
+                                    <option value="all">All Letters</option>
+                                </select>
+                            </div>
                         </div>
                         
-                        <div class="filter-group">
-                            <label for="filterInitial">Filter by Initial:</label>
-                            <select id="filterInitial">
-                                <option value="all">All Letters</option>
-                                <option value="A">A</option>
-                                <option value="B">B</option>
-                                <option value="C">C</option>
-                                <option value="D">D</option>
-                                <option value="E">E</option>
-                                <option value="F">F</option>
-                                <option value="G">G</option>
-                                <option value="H">H</option>
-                                <option value="I">I</option>
-                                <option value="J">J</option>
-                                <option value="K">K</option>
-                                <option value="L">L</option>
-                                <option value="M">M</option>
-                                <option value="N">N</option>
-                                <option value="O">O</option>
-                                <option value="P">P</option>
-                                <option value="Q">Q</option>
-                                <option value="R">R</option>
-                                <option value="S">S</option>
-                                <option value="T">T</option>
-                                <option value="U">U</option>
-                                <option value="V">V</option>
-                                <option value="W">W</option>
-                                <option value="X">X</option>
-                                <option value="Y">Y</option>
-                                <option value="Z">Z</option>
-                            </select>
+                        <div class="active-filters" id="activeFilters">
+                            <!-- Active filters will be added here dynamically -->
+                        </div>
+                    </div>
                         </div>
                         
                         <div class="filter-group">
