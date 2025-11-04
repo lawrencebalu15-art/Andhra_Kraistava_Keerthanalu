@@ -70,20 +70,7 @@ function populateAuthorDropdown() {
     if (!filterAuthor) return;
     
     // Get all authors and sort them alphabetically
-    const authors = window.authorsData.map(author => author.name).sort((a, b) => 
-        a.localeCompare(b)
-    );
-    
-    // Clear existing options except "All Authors"
-    filterAuthor.innerHTML = '<option value="all">All Authors</option>';
-    
-    // Add each author as an option
-    authors.forEach(author => {
-        const option = document.createElement('option');
-        option.value = author;
-        option.textContent = author;
-        filterAuthor.appendChild(option);
-    });
+    // (Removed duplicate implementation here — a single robust implementation exists later in the file)
 }
 
 function initializeAuthors() {
