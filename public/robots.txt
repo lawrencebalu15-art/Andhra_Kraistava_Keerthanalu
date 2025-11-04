@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://andhra-kraistava-keerthanallu.vercel.app/sitemap.xml
