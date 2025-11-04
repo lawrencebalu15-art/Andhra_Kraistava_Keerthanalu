@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-function handleFormSubmit(e) {
+async function handleFormSubmit(e) {
     e.preventDefault();
     
     const form = e.target;
@@ -18,6 +18,8 @@ function handleFormSubmit(e) {
     // Get form values
     const name = document.getElementById('name').value.trim();
     const email = document.getElementById('email').value.trim();
+    const subject = document.getElementById('subject')?.value.trim();
+    const message = document.getElementById('message').value.trim();
     const subject = document.getElementById('subject').value;
     const message = document.getElementById('message').value.trim();
     

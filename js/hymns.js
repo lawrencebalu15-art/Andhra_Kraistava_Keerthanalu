@@ -14,6 +14,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set up event listeners
     setupEventListeners();
     
+    // Initialize filter panel toggle
+    const filterToggleBtn = document.getElementById('filterToggleBtn');
+    const filterContent = document.querySelector('.filter-content');
+    
+    if (filterToggleBtn && filterContent) {
+        // Set initial state
+        filterContent.classList.remove('show');
+        filterToggleBtn.classList.remove('active');
+        
+        filterToggleBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            filterContent.classList.toggle('show');
+            this.classList.toggle('active');
+        });
+    }
+    
     // Check for URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const searchParam = urlParams.get('search');
@@ -133,8 +149,7 @@ function performSongSearch() {
             song.titleTelugu.toLowerCase().includes(searchTerm) ||
             song.titleEnglish.toLowerCase().includes(searchTerm) ||
             song.author.toLowerCase().includes(searchTerm) ||
-            song.meaning.toLowerCase().includes(searchTerm) ||
-            song.summary.toLowerCase().includes(searchTerm) ||
+            
             song.lyricsTelugu.toLowerCase().includes(searchTerm) ||
             song.lyricsEnglish.toLowerCase().includes(searchTerm) ||
             song.number.toString().includes(searchTerm)
@@ -268,15 +283,7 @@ function createSongCard(song) {
                     </button>
                 </div>
                 
-                <div class="song-summary">
-                    <h4>Summary</h4>
-                    <p>${song.summary}</p>
-                </div>
                 
-                <div class="song-meaning">
-                    <h4>Meaning</h4>
-                    <p>${song.meaning}</p>
-                </div>
                 
                 <div class="song-lyrics-section">
                     <div class="lyrics-header">

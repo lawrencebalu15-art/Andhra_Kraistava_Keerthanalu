@@ -11,6 +11,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize authors list
     initializeAuthors();
     
+    // Initialize filter panel toggle
+    const filterToggleBtn = document.getElementById('filterToggleBtn');
+    const filterContent = document.querySelector('.filter-content');
+    
+    if (filterToggleBtn && filterContent) {
+        // Set initial state
+        filterContent.classList.remove('show');
+        filterToggleBtn.classList.remove('active');
+        
+        filterToggleBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            filterContent.classList.toggle('show');
+            this.classList.toggle('active');
+        });
+    }
+    
     // Set up event listeners
     setupEventListeners();
     
@@ -33,38 +49,112 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function setupEventListeners() {
-    // Filter by initial letter
-    const initialFilter = document.getElementById('initialFilter');
-    if (initialFilter) {
-        initialFilter.addEventListener('change', filterAuthors);
-    }
-    
     // Search functionality
     const authorSearch = document.getElementById('authorSearch');
     if (authorSearch) {
         authorSearch.addEventListener('input', debounce(filterAuthors, 300));
     }
+
+    // Author filter dropdown
+    const filterAuthor = document.getElementById('filterAuthor');
+    if (filterAuthor) {
+        // Populate author dropdown
+        populateAuthorDropdown();
+        // Add event listener
+        filterAuthor.addEventListener('change', filterAuthors);
+    }
+}
+
+function populateAuthorDropdown() {
+    const filterAuthor = document.getElementById('filterAuthor');
+    if (!filterAuthor) return;
+    
+    // Get all authors and sort them alphabetically
+    const authors = window.authorsData.map(author => author.name).sort((a, b) => 
+        a.localeCompare(b)
+    );
+    
+    // Clear existing options except "All Authors"
+    filterAuthor.innerHTML = '<option value="all">All Authors</option>';
+    
+    // Add each author as an option
+    authors.forEach(author => {
+        const option = document.createElement('option');
+        option.value = author;
+        option.textContent = author;
+        filterAuthor.appendChild(option);
+    });
 }
 
 function initializeAuthors() {
+    // Initialize filters
+    populateAuthorDropdown();
+    
     // Display all authors
     displayAuthors(window.authorsData);
 }
 
-function filterAuthors() {
-    const initialFilter = document.getElementById('initialFilter');
-    const authorSearch = document.getElementById('authorSearch');
+function populateAuthorDropdown() {
+    const filterAuthor = document.getElementById('filterAuthor');
+    if (!filterAuthor) return;
     
-    const selectedInitial = initialFilter ? initialFilter.value : 'all';
+    // Get unique authors from data
+    const authors = [...new Set(window.authorsData.map(author => author.name))].sort();
+    
+    // Clear existing options except "All Authors"
+    filterAuthor.innerHTML = '<option value="all">All Authors</option>';
+    
+    // Add author options
+    authors.forEach(author => {
+        const option = document.createElement('option');
+        option.value = author;
+        option.textContent = author;
+        filterAuthor.appendChild(option);
+    });
+}
+
+function populateAuthorFilter() {
+    const filterInitial = document.getElementById('filterInitial');
+    if (!filterInitial) return;
+    
+    // Get unique initial letters from author names
+    const initials = [...new Set(window.authorsData.map(author => 
+        author.name.charAt(0).toUpperCase()
+    ))].sort();
+    
+    // Clear existing options except "All Letters"
+    filterInitial.innerHTML = '<option value="all">All Letters</option>';
+    
+    // Add initial options
+    initials.forEach(initial => {
+        const option = document.createElement('option');
+        option.value = initial;
+        option.textContent = initial;
+        filterInitial.appendChild(option);
+    });
+}
+
+function filterAuthors() {
+    const filterInitial = document.getElementById('filterInitial');
+    const authorSearch = document.getElementById('authorSearch');
+    const sortAuthors = document.getElementById('sortAuthors');
+    const filterAuthor = document.getElementById('filterAuthor');
+    
+    const selectedInitial = filterInitial ? filterInitial.value : 'all';
     const searchTerm = authorSearch ? authorSearch.value.trim().toLowerCase() : '';
+    const sortBy = sortAuthors ? sortAuthors.value : 'name';
+    const selectedAuthor = filterAuthor ? filterAuthor.value : 'all';
     
     let filteredAuthors = [...window.authorsData];
     
+    // Filter by selected author
+    if (selectedAuthor !== 'all') {
+        filteredAuthors = filteredAuthors.filter(author => author.name === selectedAuthor);
+    }
+    
     // Filter by initial letter
     if (selectedInitial !== 'all') {
-        filteredAuthors = filteredAuthors.filter(author => 
-            author.name.charAt(0).toUpperCase() === selectedInitial
-        );
+        filteredAuthors = filteredAuthors.filter(author => author.name.charAt(0).toUpperCase() === selectedInitial);
     }
     
     // Filter by search term
@@ -79,11 +169,81 @@ function filterAuthors() {
         );
     }
     
-    // Sort alphabetically
-    filteredAuthors.sort((a, b) => a.name.localeCompare(b.name));
+    // Sort authors
+    filteredAuthors.sort((a, b) => {
+        if (sortBy === 'name') {
+            return a.name.localeCompare(b.name);
+        } else if (sortBy === 'songs') {
+            return b.songs.length - a.songs.length;
+        }
+        return 0;
+    });
     
     // Display authors
     displayAuthors(filteredAuthors);
+}
+
+function updateActiveFilters(initial, search, sort) {
+    const activeFiltersContainer = document.getElementById('activeFilters');
+    if (!activeFiltersContainer) return;
+    
+    let activeFiltersHTML = '';
+    
+    // Add initial filter tag
+    if (initial !== 'all') {
+        activeFiltersHTML += `
+            <div class="filter-tag">
+                Initial: ${initial}
+                <button type="button" onclick="clearInitialFilter()">×</button>
+            </div>
+        `;
+    }
+    
+    // Add search filter tag
+    if (search) {
+        activeFiltersHTML += `
+            <div class="filter-tag">
+                Search: ${search}
+                <button type="button" onclick="clearSearchFilter()">×</button>
+            </div>
+        `;
+    }
+    
+    // Add sort filter tag
+    if (sort === 'songs') {
+        activeFiltersHTML += `
+            <div class="filter-tag">
+                Sort: By Number of Songs
+                <button type="button" onclick="clearSortFilter()">×</button>
+            </div>
+        `;
+    }
+    
+    activeFiltersContainer.innerHTML = activeFiltersHTML;
+}
+
+function clearInitialFilter() {
+    const filterInitial = document.getElementById('filterInitial');
+    if (filterInitial) {
+        filterInitial.value = 'all';
+        filterAuthors();
+    }
+}
+
+function clearSearchFilter() {
+    const authorSearch = document.getElementById('authorSearch');
+    if (authorSearch) {
+        authorSearch.value = '';
+        filterAuthors();
+    }
+}
+
+function clearSortFilter() {
+    const sortAuthors = document.getElementById('sortAuthors');
+    if (sortAuthors) {
+        sortAuthors.value = 'name';
+        filterAuthors();
+    }
 }
 
 function displayAuthors(authors) {
@@ -157,9 +317,7 @@ function createSongItem(song) {
                 <div class="song-item-title-telugu">${song.titleTelugu}</div>
                 <div class="song-item-title-english">${song.titleEnglish}</div>
             </div>
-            <div class="song-item-summary">
-                <p>${song.summary}</p>
-            </div>
+            <!-- Summary removed intentionally (no summaries available) -->
             ${youtubeEmbed ? `
                 <div class="song-item-youtube">
                     <div class="youtube-embed">

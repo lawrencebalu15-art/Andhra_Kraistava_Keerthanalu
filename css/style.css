@@ -1184,28 +1184,7 @@ html {
     background: var(--primary-color);
     color: white;
 }
-
-.song-summary,
-.song-meaning {
-    margin-bottom: 1.5rem;
-    padding: 1rem;
-    background: var(--bg-section);
-    border-radius: 8px;
-    border-left: 3px solid var(--secondary-color);
-}
-
-.song-summary h4,
-.song-meaning h4 {
-    color: var(--primary-color);
-    margin-bottom: 0.8rem;
-    font-size: 1.1rem;
-}
-
-.song-summary p,
-.song-meaning p {
-    color: var(--text-light);
-    line-height: 1.8;
-}
+/* Removed song summary/meaning styles (no longer used) */
 
 /* Lyrics Section */
 .song-lyrics-section {
@@ -1582,15 +1561,7 @@ html {
     margin-bottom: 0.8rem;
 }
 
-.song-item-summary {
-    margin-bottom: 1rem;
-}
-
-.song-item-summary p {
-    color: var(--text-light);
-    font-size: 0.9rem;
-    line-height: 1.6;
-}
+/* Removed .song-item-summary styles (summaries removed from UI) */
 
 .song-item-youtube {
     margin: 1rem 0;
@@ -1637,3 +1608,93 @@ html {
     }
 }
 
+/* Filter Controls Panel Styles */
+.filter-controls-panel {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px var(--shadow);
+    margin-bottom: 2rem;
+}
+
+.filter-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    transition: background 0.3s ease;
+}
+
+.filter-toggle-btn:hover {
+    background: var(--hover-color);
+}
+
+.filter-toggle-btn i {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.filter-toggle-btn.active i {
+    transform: rotate(180deg);
+}
+
+.filter-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+    margin-top: 0;
+}
+
+.filter-content.show {
+    max-height: 1000px;
+    opacity: 1;
+    visibility: visible;
+    margin-top: 1rem;
+}
+
+.search-controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.filter-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--bg-section);
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.filter-tag button {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 0;
+    font-size: 1.1rem;
+}
+
+.filter-tag button:hover {
+    color: var(--primary-color);
+}

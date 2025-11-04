@@ -1,6 +1,6 @@
 // Songs Data for Andhra Kraistava Keerthanallu
 // Complete collection of 626 Telugu Christian Hymns
-// This file contains all song data: lyrics, meaning, summary, author info, and YouTube links
+// This file contains all song data: lyrics, author info, and YouTube links
 
 // ============================================
 // CONFIGURATION - UPDATE THIS SECTION
@@ -80,8 +80,6 @@ const songsList = [
         author: "బేతాళ జాన్",
         lyricsTelugu: "",
         lyricsEnglish: "",
-        meaning: "",
-        summary: "",
         youtubeLinks: [
             "https://www.youtube.com/watch?v=08RCqxN3VEY",
             "https://www.youtube.com/watch?v=U4xpGq7A-gs"
@@ -96,41 +94,42 @@ const songsList = [
         author: "విలియం డాసన్",
         lyricsTelugu: "",
         lyricsEnglish: "",
-        meaning: "",
-        summary: "",
         youtubeLinks: ["https://www.youtube.com/watch?v=5FUePS25kLs"]
     },
     {
         number: 3,
         titleTelugu: "యేసు నాయకుడా",
         titleEnglish: "Yesu naayakudaa",
-        author: "",
+        author: "పురుషోత్తము చౌధరి",
         lyricsTelugu: "",
         lyricsEnglish: "",
-        meaning: "",
-        summary: "",
         youtubeLinks: ["https://www.youtube.com/watch?v=aCZUgWLMO5A"]
     },
     {
         number: 4,
         titleTelugu: "దేవ దివ్యానంత ప్రభావ",
         titleEnglish: "Deva divyananta prabhava",
-        author: "పురుషోత్తము చౌదరి",
+        author: "పురుషోత్తము చౌధరి ",
         lyricsTelugu: "",
         lyricsEnglish: "",
-        meaning: "",
-        summary: "",
         youtubeLinks: ["https://www.youtube.com/watch?v=IA6xgma8jsc"]
     },
     {
         number: 5,
-        titleTelugu: "దేవ దివ్యానంత ప్రభావ",
-        titleEnglish: "Deva divyananta prabhava",
-        author: "పురుషోత్తము చౌదరి",
+        titleTelugu: "నీతి గల యెహోవా",
+        titleEnglish: "Neeti gala Yehovaa",
+        author: "పసుపులేటి దావీదు",
         lyricsTelugu: "",
         lyricsEnglish: "",
-        meaning: "",
-        summary: "",
+        youtubeLinks: ["https://youtu.be/_uGNOvsEl0Y?si=6n_YySybFvY_lVrC"]
+    },
+    {
+        number: 6,
+        titleTelugu: "భీకరుండౌ మా యెహోవా",
+        titleEnglish: "Bheekarundou maa Yehovaa",
+        author: "",
+        lyricsTelugu: "",
+        lyricsEnglish: "",
         youtubeLinks: ["https://youtu.be/_uGNOvsEl0Y?si=6n_YySybFvY_lVrC"]
     }
     
@@ -207,8 +206,7 @@ const processSongsData = () => {
             authorBio: authorInfo.bio,
             lyricsTelugu: song.lyricsTelugu || `Song ${song.number} - Telugu lyrics`,
             lyricsEnglish: song.lyricsEnglish || `Song ${song.number} - English lyrics`,
-            meaning: song.meaning || `Meaning of song ${song.number}`,
-            summary: song.summary || `Summary of song ${song.number}`,
+            
             youtubeLink,
             youtubeChannel,
             isFeaturedChannel,
@@ -240,8 +238,6 @@ const generatePlaceholderData = () => {
             authorBio: defaultAuthors[0].bio,
             lyricsTelugu: `పాట ${i} - తెలుగు సాహిత్యం\n\n(Add actual lyrics)`,
             lyricsEnglish: `Song ${i} - English Lyrics\n\n(Add actual lyrics)`,
-            meaning: `Meaning of song ${i}`,
-            summary: `Summary of song ${i}`,
             youtubeLink: null,
             youtubeChannel: null,
             isFeaturedChannel: false,
@@ -274,8 +270,6 @@ songsData.forEach(song => {
         number: song.number,
         titleTelugu: song.titleTelugu,
         titleEnglish: song.titleEnglish,
-        meaning: song.meaning,
-        summary: song.summary,
         youtubeLink: song.youtubeLink,
         youtubeChannel: song.youtubeChannel,
         isFeaturedChannel: song.isFeaturedChannel

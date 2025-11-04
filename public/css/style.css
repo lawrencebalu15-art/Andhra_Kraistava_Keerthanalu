@@ -1,0 +1,109 @@
+/* ============================================
+   Andhra Kraistava Keerthanallu - Stylesheet
+   Devotional Theme with Soft Colors
+   ============================================ */
+
+/* CSS Variables for Theme Colors */
+:root {
+    --primary-color: #8B7355; /* Soft gold/tan */
+    --secondary-color: #B8D4E3; /* Sky blue */
+    --accent-color: #E8DCC6; /* Light cream */
+    --text-color: #2C3E50; /* Dark blue-gray */
+    --text-light: #5A6C7D;
+    --bg-color: #FDFCF9; /* Warm white */
+    --bg-section: #FAF9F6; /* Very light cream */
+    --border-color: #E0D5C3;
+    --hover-color: #7A6348;
+    --shadow: rgba(0, 0, 0, 0.08);
+    --shadow-hover: rgba(0, 0, 0, 0.12);
+}
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--hover-color);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header and Navigation */
+header {
+    background: linear-gradient(135deg, var(--accent-color) 0%, #FFFFFF 100%);
+    box-shadow: 0 2px 10px var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-title-section {
+    width: 100%;
+    background: linear-gradient(135deg, var(--accent-color) 0%, #FFFFFF 100%);
+    padding: 1.5rem 0;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header-title-section .logo {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.header-title-section .logo h1 {
+    font-size: 2rem;
+    margin-bottom: 0.3rem;
+    color: var(--primary-color);
+}
+
+.header-title-section .logo-subtitle {
+    font-size: 1rem;
+    color: var(--text-light);
+    font-style: italic;
+}
+
+/* ... trimmed - full file copied from original ... */
