@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lowrence-devu.github.io/Andhra-Kraistava-Keerthanallu/sitemap.xml
+
+
+
