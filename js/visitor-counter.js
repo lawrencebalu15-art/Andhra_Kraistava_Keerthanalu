@@ -30,6 +30,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.head.appendChild(styles);
 
     // Function to update the counter with retries and local fallback
+    // Try serverless endpoint first (recommended). Fallback to CountAPI if serverless isn't deployed.
+    const SERVERLESS_ENDPOINT = '/api/counter';
     const COUNTAPI_URL = 'https://api.countapi.xyz/hit/andhra-kraistava-keerthanalu/visits';
     const CACHE_KEY = 'ak_visitors_cached';
 
@@ -44,18 +46,35 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function fetchCountOnce() {
+        // First try the serverless endpoint on the same domain
+        try {
+            const resp = await fetch(SERVERLESS_ENDPOINT, { cache: 'no-store' });
+            if (resp.ok) {
+                const json = await resp.json();
+                if (json && typeof json.value === 'number') {
+                    try { localStorage.setItem(CACHE_KEY, String(json.value)); } catch (e) {}
+                    displayValue(json.value);
+                    return true;
+                }
+            }
+        } catch (err) {
+            // Not available or error; continue to fallback
+            console.warn('Serverless endpoint not available or errored:', err);
+        }
+
+        // Fallback to CountAPI (third-party)
         try {
             const resp = await fetch(COUNTAPI_URL, { cache: 'no-store' });
             if (!resp.ok) throw new Error('Non-OK response: ' + resp.status);
             const data = await resp.json();
             if (data && typeof data.value === 'number') {
-                try { localStorage.setItem(CACHE_KEY, String(data.value)); } catch (e) { /* ignore storage errors */ }
+                try { localStorage.setItem(CACHE_KEY, String(data.value)); } catch (e) {}
                 displayValue(data.value);
                 return true;
             }
             throw new Error('Invalid JSON structure');
         } catch (error) {
-            console.error('Error updating visitor counter (fetch):', error);
+            console.error('Error updating visitor counter (CountAPI):', error);
             return false;
         }
     }
