@@ -1037,15 +1037,10 @@ footer {
         font-size: 2rem;
     }
     
-    /* Keep nav horizontal on smaller screens; allow horizontal scrolling if needed */
     .nav-menu {
         gap: 1rem;
-        flex-direction: row; /* keep horizontal */
-        flex-wrap: nowrap;
-        width: auto;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        padding-bottom: 0.5rem;
+        flex-direction: column;
+        width: 100%;
     }
     
     .search-container {
