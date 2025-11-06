@@ -821,9 +821,9 @@ main {
 
 /* Header and Navigation */
 header {
-    background: rgba(255, 255, 255, 0.85);
+    background: rgb(255, 255, 255);
     backdrop-filter: blur(10px);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 10px rgb(255, 255, 255);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -832,7 +832,7 @@ header {
 
 .navbar {
     padding: 0.1rem 0;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgb(255, 255, 255);
 }
 
 .nav-container {
@@ -1037,10 +1037,15 @@ footer {
         font-size: 2rem;
     }
     
+    /* Keep nav horizontal on smaller screens; allow horizontal scrolling if needed */
     .nav-menu {
         gap: 1rem;
-        flex-direction: column;
-        width: 100%;
+        flex-direction: row; /* keep horizontal */
+        flex-wrap: nowrap;
+        width: auto;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 0.5rem;
     }
     
     .search-container {
