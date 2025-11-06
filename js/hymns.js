@@ -1,6 +1,16 @@
 // Hymns Page JavaScript - Display and filter songs
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Wait for the songs data to be loaded
+    let checkInterval = setInterval(function() {
+        if (typeof songsList !== 'undefined') {
+            clearInterval(checkInterval);
+            initializePage();
+        }
+    }, 100);
+});
+
+function initializePage() {
     // Global variables
     let validSongsList = [];
     let currentSort = 'number';
@@ -294,4 +304,4 @@ document.addEventListener('DOMContentLoaded', function() {
     } catch (error) {
         console.error('Error during initialization:', error);
     }
-});
+}
