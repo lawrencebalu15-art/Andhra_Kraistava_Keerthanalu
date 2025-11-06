@@ -8,7 +8,17 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    let filteredSongs = [...songsList];
+    // Remove loading message
+    const loadingMessage = document.querySelector('.loading');
+    if (loadingMessage) {
+        loadingMessage.remove();
+    }
+
+    let filteredSongs = [...songsList].filter(song => 
+        song && song.titleTelugu && song.titleTelugu.trim() !== '' && 
+        song.titleEnglish && song.titleEnglish.trim() !== '' && 
+        song.author && song.author.trim() !== ''
+    );
     let currentSort = 'number';
     let currentSearchTerm = '';
 
