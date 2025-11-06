@@ -2,9 +2,27 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // Check if songs data is loaded
-    if (typeof songsList === 'undefined') {
+    if (typeof songsList === 'undefined' || !Array.isArray(songsList)) {
         document.getElementById('songsContainer').innerHTML = 
             '<div class="empty-state"><p>Please add songs data in js/songs-data.js</p></div>';
+        console.error('Songs data is not properly loaded');
+        return;
+    }
+
+    // Filter out invalid songs at the start
+    const validSongsList = songsList.filter(song => 
+        song && 
+        typeof song === 'object' &&
+        song.titleTelugu && typeof song.titleTelugu === 'string' && song.titleTelugu.trim() !== '' &&
+        song.titleEnglish && typeof song.titleEnglish === 'string' && song.titleEnglish.trim() !== '' &&
+        song.author && typeof song.author === 'string' && song.author.trim() !== '' &&
+        typeof song.number === 'number'
+    );
+
+    if (validSongsList.length === 0) {
+        document.getElementById('songsContainer').innerHTML = 
+            '<div class="empty-state"><p>No valid songs found in the data</p></div>';
+        console.error('No valid songs found in songsList');
         return;
     }
 
@@ -14,11 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
         loadingMessage.remove();
     }
 
-    let filteredSongs = [...songsList].filter(song => 
-        song && song.titleTelugu && song.titleTelugu.trim() !== '' && 
-        song.titleEnglish && song.titleEnglish.trim() !== '' && 
-        song.author && song.author.trim() !== ''
-    );
     let currentSort = 'number';
     let currentSearchTerm = '';
 
@@ -65,72 +78,72 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function initializeFilters() {
-        // Filter valid songs first
-        const validSongs = songsList.filter(song => 
-            song && 
-            typeof song === 'object' &&
-            song.titleTelugu && 
-            typeof song.titleTelugu === 'string' && 
-            song.titleTelugu.trim() !== '' &&
-            song.author &&
-            typeof song.author === 'string' &&
-            song.author.trim() !== ''
-        );
+        try {
+            // Initialize author filter
+            const authorSelect = document.getElementById('authorFilter');
+            if (authorSelect) {
+                // Clear existing options except the first one
+                while (authorSelect.options.length > 1) {
+                    authorSelect.remove(1);
+                }
 
-        // Initialize author filter
-        const authorSelect = document.getElementById('authorFilter');
-        if (authorSelect) {
-            // Clear existing options except the first one
-            while (authorSelect.options.length > 1) {
-                authorSelect.remove(1);
+                // Get unique authors
+                const authors = [...new Set(validSongsList
+                    .map(song => song.author)
+                    .filter(author => author && author.trim() !== '')
+                )];
+
+                // Add new options
+                authors.sort().forEach(author => {
+                    if (author) {
+                        const option = document.createElement('option');
+                        option.value = author;
+                        option.textContent = author;
+                        authorSelect.appendChild(option);
+                    }
+                });
             }
 
-            // Get unique authors
-            const authors = [...new Set(validSongs
-                .map(song => song.author)
-                .filter(author => author && author.trim() !== '')
-            )];
+            // Initialize letter filter
+            const letterSelect = document.getElementById('letterFilter');
+            if (letterSelect) {
+                // Clear existing options except the first one
+                while (letterSelect.options.length > 1) {
+                    letterSelect.remove(1);
+                }
 
-            // Add new options
-            authors.sort().forEach(author => {
-                const option = document.createElement('option');
-                option.value = author;
-                option.textContent = author;
-                authorSelect.appendChild(option);
-            });
-        }
-
-        // Initialize letter filter
-        const letterSelect = document.getElementById('letterFilter');
-        if (letterSelect) {
-            // Clear existing options except the first one
-            while (letterSelect.options.length > 1) {
-                letterSelect.remove(1);
+        // Get unique first letters
+        const letters = [...new Set(validSongs
+            .map(song => {
+                try {
+                    return song && song.titleTelugu ? song.titleTelugu.charAt(0) : '';
+                } catch (error) {
+                    console.error('Error getting first letter:', error);
+                    return '';
+                }
+            })
+            .filter(char => char && char.trim() !== '')
+        )];                // Add new options
+                letters.sort().forEach(letter => {
+                    if (letter) {
+                        const option = document.createElement('option');
+                        option.value = letter;
+                        option.textContent = letter;
+                        letterSelect.appendChild(option);
+                    }
+                });
             }
-
-            // Get unique first letters
-            const letters = [...new Set(validSongs
-                .map(song => song.titleTelugu.charAt(0))
-                .filter(char => char && char.trim() !== '')
-            )];
-
-            // Add new options
-            letters.sort().forEach(letter => {
-                const option = document.createElement('option');
-                option.value = letter;
-                option.textContent = letter;
-                letterSelect.appendChild(option);
-            });
+        } catch (error) {
+            console.error('Error initializing filters:', error);
         }
     }
-        }
-    }
+        },
 
     function handleSearch() {
         const searchTerm = searchInput.value.toLowerCase().trim();
         currentSearchTerm = searchTerm;
         updateDisplay();
-    }
+    },
 
     function updateDisplay() {
         function updateDisplay() {
