@@ -2183,7 +2183,7 @@ Sing joyfully`
 const authorsList = [
     {
         name: " Rev.బేతాళ జాన్",
-        nameEnglish: "Bethal John",
+        nameEnglish: "Rev. Bethal John",
         bio: "A devoted hymn writer known for his spiritual compositions.",
         bioTelugu: "ఆత్మిక సంగీత రచయితగా ప్రసిద్ధి చెందిన రచయిత.",
         songs: [1], // Array of song numbers by this author
@@ -2191,7 +2191,7 @@ const authorsList = [
     },
     {
         name: "Rev. విలియం డాసన్",
-        nameEnglish: "William Dawson",
+        nameEnglish: "Rev. William Dawson",
         bio: "Renowned composer of Christian hymns in Telugu.",
         bioTelugu: "తెలుగు క్రైస్తవ కీర్తనల రచయితగా ప్రసిద్ధి చెందినవారు.",
         songs: [2],
@@ -2199,14 +2199,14 @@ const authorsList = [
     },
     {
         name: "Rev. గొల్లపల్లి నతానియేలు",
-        nameEnglish: "Gollapalli Nathaniel",
+        nameEnglish: "Rev. Gollapalli Nathaniel",
         bio: "A renowned hymn writer known for his spiritual compositions.",
         bioTelugu: "ఆత్మిక సంగీత రచయితగా ప్రసిద్ధి చెందిన రచయిత.",
         songs: [3],
         featuredYouTubeLinks: []
     },
     {   name: "Rev. పురుషోత్తము చౌదరి",
-        nameEnglish: "Purushotham Choudari",
+        nameEnglish: "Rev. Purushotham Choudari",
         bio: "A renowned hymn writer known for his spiritual compositions.",
         bioTelugu: "ఆత్మిక సంగీత రచయితగా ప్రసిద్ధి చెందిన రచయిత.",
         songs: [4],
@@ -2214,7 +2214,7 @@ const authorsList = [
     },
     {
         name: "Rev. పసుపులేటి దావీదు ",
-        nameEnglish: "Pushpaleti Davide",
+        nameEnglish: "Rev. Pushpaleti Davide",
         bio: "A renowned hymn writer known for his spiritual compositions.",
         bioTelugu: "ఆత్మిక సంగీత రచయితగా ప్రసిద్ధి చెందిన రచయిత.",
         songs: [5, 6],
@@ -2222,7 +2222,7 @@ const authorsList = [
     },
     {
         name: "Rev. బొంతా సమూయేలు ",
-        nameEnglish: "Bonta Samuel",
+        nameEnglish: "Rev. Bonta Samuel",
         bio: "A renowned hymn writer known for his spiritual compositions.",
         bioTelugu: "ఆత్మిక సంగీత రచయితగా ప్రసిద్ధి చెందిన రచయిత.",
         songs: [7],
@@ -2230,7 +2230,7 @@ const authorsList = [
     },
     {
         name: "Rev. మిక్కిలి సమూయేలు ",
-        nameEnglish: "Mikkil Samyeles",
+        nameEnglish: "Rev. Mikkil Samyeles",
         bio: "A renowned hymn writer known for his spiritual compositions.",
         bioTelugu: "ఆత్మిక సంగీత రచయితగా ప్రసిద్ధి చెందిన రచయిత.",
         songs: [8],
@@ -2238,7 +2238,7 @@ const authorsList = [
     },
     {
         name: "Rev. చెట్టి భానుమూర్తి ",
-        nameEnglish: "Chetti Bhanumurthi",
+        nameEnglish: "Rev. Chetti Bhanumurthi",
         bio: "A renowned hymn writer known for his spiritual compositions.",
         bioTelugu: "ఆత్మిక సంగీత రచయితగా ప్రసిద్ధి చెందిన రచయిత.",
         songs: [9],
@@ -2246,15 +2246,15 @@ const authorsList = [
     },
     {
         name: "Rev. పులిపాక జగన్నాధము ",
-        nameEnglish: "Pulipaka Jagannadhamu",
+        nameEnglish: "Rev. Pulipaka Jagannadhamu",
         bio: "A renowned hymn writer known for his spiritual compositions.",
         bioTelugu: "ఆత్మిక సంగీత రచయితగా ప్రసిద్ధి చెందిన రచయిత.",
         songs: [ 11, 13],
         featuredYouTubeLinks: []
     },
     {
-        name: "ముంగమూరి దేవదాసు ",
-        nameEnglish: "Mungamuridavas",
+        name: "Rev. ముంగమూరి దేవదాసు ",
+        nameEnglish: "Rev. Mungamuridavas",
         bio: "A renowned hymn writer known for his spiritual compositions.",
         bioTelugu: "ఆత్మిక సంగీత రచయితగా ప్రసిద్ధి చెందిన రచయిత.",
         songs: [12, 14],
