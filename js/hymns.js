@@ -78,10 +78,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Get unique first letters
-        const letters = [...new Set(songsList.map(song => {
-            const firstChar = song.titleTelugu.charAt(0);
-            return firstChar;
-        }).filter(c => c))];
+        const letters = [...new Set(songsList
+            .filter(song => song && song.titleTelugu && typeof song.titleTelugu === 'string')
+            .map(song => song.titleTelugu.charAt(0))
+            .filter(c => c))];
         const letterSelect = document.getElementById('letterFilter');
         if (letterSelect) {
             letters.sort().forEach(letter => {
@@ -100,7 +100,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateDisplay() {
-        // Start with all valid songs (those that have required fields and non-empty values)
+        function updateDisplay() {
+        // Start with all valid songs (those that have titles and authors)
         let filtered = songsList.filter(song => 
             song && 
             song.titleTelugu && song.titleTelugu.trim() !== '' &&
@@ -112,10 +113,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Apply search filter
         if (currentSearchTerm) {
             filtered = filtered.filter(song => {
-                const matchesTitle = song.titleTelugu.toLowerCase().includes(currentSearchTerm) ||
-                                   song.titleEnglish.toLowerCase().includes(currentSearchTerm);
-                const matchesAuthor = song.author.toLowerCase().includes(currentSearchTerm);
-                const matchesNumber = song.number.toString().includes(currentSearchTerm);
+                const matchesTitle = 
+                    (song.titleTelugu && song.titleTelugu.toLowerCase().includes(currentSearchTerm)) ||
+                    (song.titleEnglish && song.titleEnglish.toLowerCase().includes(currentSearchTerm));
+                const matchesAuthor = song.author && song.author.toLowerCase().includes(currentSearchTerm);
+                const matchesNumber = song.number && song.number.toString().includes(currentSearchTerm);
                 
                 return matchesTitle || matchesAuthor || matchesNumber;
             });
@@ -124,20 +126,27 @@ document.addEventListener('DOMContentLoaded', function() {
         // Apply author filter
         const selectedAuthor = document.getElementById('authorFilter')?.value;
         if (selectedAuthor) {
-            filtered = filtered.filter(song => song.author === selectedAuthor);
+            filtered = filtered.filter(song => song && song.author === selectedAuthor);
         }
 
         // Apply letter filter
         const selectedLetter = document.getElementById('letterFilter')?.value;
         if (selectedLetter) {
-            filtered = filtered.filter(song => song.titleTelugu.charAt(0) === selectedLetter);
+            filtered = filtered.filter(song => 
+                song && song.titleTelugu && 
+                song.titleTelugu.charAt(0) === selectedLetter
+            );
         }
 
         // Apply sort
         if (currentSort === 'number') {
-            filtered.sort((a, b) => a.number - b.number);
+            filtered.sort((a, b) => (a.number || 0) - (b.number || 0));
         } else if (currentSort === 'title') {
-            filtered.sort((a, b) => a.titleTelugu.localeCompare(b.titleTelugu));
+            filtered.sort((a, b) => {
+                if (!a.titleTelugu) return 1;
+                if (!b.titleTelugu) return -1;
+                return a.titleTelugu.localeCompare(b.titleTelugu);
+            });
         }
 
         // Display the final result
