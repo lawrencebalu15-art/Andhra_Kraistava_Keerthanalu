@@ -29,20 +29,64 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     document.head.appendChild(styles);
 
-    // Function to update the counter
-    function updateCounter() {
-        // Using a free counter API service
-        fetch('https://api.countapi.xyz/hit/andhra-kraistava-keerthanalu/visits')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('visitorCount').textContent = data.value.toLocaleString();
-            })
-            .catch(error => {
-                console.error('Error updating visitor counter:', error);
-                document.getElementById('visitorCount').textContent = 'Error';
-            });
+    // Function to update the counter with retries and local fallback
+    const COUNTAPI_URL = 'https://api.countapi.xyz/hit/andhra-kraistava-keerthanalu/visits';
+    const CACHE_KEY = 'ak_visitors_cached';
+
+    function displayValue(val) {
+        const el = document.getElementById('visitorCount');
+        if (!el) return;
+        if (val === null || typeof val === 'undefined' || Number.isNaN(Number(val))) {
+            el.textContent = 'N/A';
+        } else {
+            try { el.textContent = Number(val).toLocaleString(); } catch (e) { el.textContent = String(val); }
+        }
     }
 
-    // Update the counter when the page loads
-    updateCounter();
+    async function fetchCountOnce() {
+        try {
+            const resp = await fetch(COUNTAPI_URL, { cache: 'no-store' });
+            if (!resp.ok) throw new Error('Non-OK response: ' + resp.status);
+            const data = await resp.json();
+            if (data && typeof data.value === 'number') {
+                try { localStorage.setItem(CACHE_KEY, String(data.value)); } catch (e) { /* ignore storage errors */ }
+                displayValue(data.value);
+                return true;
+            }
+            throw new Error('Invalid JSON structure');
+        } catch (error) {
+            console.error('Error updating visitor counter (fetch):', error);
+            return false;
+        }
+    }
+
+    function showFallback() {
+        // Try cached value first
+        try {
+            const cached = localStorage.getItem(CACHE_KEY);
+            if (cached !== null) {
+                displayValue(Number(cached));
+                return;
+            }
+        } catch (e) {
+            console.error('Error reading cached visitor count:', e);
+        }
+        // If nothing available, show friendly offline message
+        const el = document.getElementById('visitorCount');
+        if (el) el.textContent = 'Offline';
+    }
+
+    async function updateCounterWithRetry(retries = 3, delayMs = 5000) {
+        for (let i = 0; i < retries; i++) {
+            const ok = await fetchCountOnce();
+            if (ok) return;
+            // Wait before next try
+            await new Promise(res => setTimeout(res, delayMs));
+        }
+        // All attempts failed -> show fallback
+        showFallback();
+    }
+
+    // Update the counter when the page loads (with retry/fallback)
+    updateCounterWithRetry();
 });
