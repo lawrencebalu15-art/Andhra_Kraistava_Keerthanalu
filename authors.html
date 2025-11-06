@@ -3,25 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Browse hymn authors of Andhra Kraistava Keerthanallu. Discover biographies, song lists, and featured YouTube performances from Telugu Christian hymn writers.">
-    <meta name="keywords" content="hymn authors, Telugu Christian hymn writers, hymn biographies, Christian hymn composers, Telugu Christian music authors">
-    <meta property="og:title" content="Hymn Authors - Andhra Kraistava Keerthanallu">
-    <meta property="og:description" content="Discover the devoted writers who composed Telugu Christian hymns">
-    <title>Andhra Kraistava Keerthanallu | Authors</title>
-    <link rel="stylesheet" href="public/css/style.css">
-    <link rel="canonical" href="https://lowrence-devu.github.io/Andhra-Kraistava-Keerthanallu/authors.html" />
+    <meta name="description" content="Browse all authors of Telugu Christian hymns with their biographies and song collections">
+    <title>Authors | Andhra Kraistava Keerthanallu</title>
+    <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600&family=Noto+Sans+Telugu:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600&family=Noto+Sans+Telugu:wght@400;500;600&family=Noto+Serif+Telugu:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ponnala@latest/index.css">
 </head>
 <body>
+    <!-- Musical Notes Falling Animation -->
+    <div class="musical-notes-background">
+        <div class="musical-note">♪</div>
+        <div class="musical-note">♫</div>
+        <div class="musical-note">♬</div>
+        <div class="musical-note">♪</div>
+        <div class="musical-note">♫</div>
+        <div class="musical-note">♩</div>
+        <div class="musical-note">♬</div>
+        <div class="musical-note">♪</div>
+        <div class="musical-note">♫</div>
+        <div class="musical-note">♬</div>
+        <div class="musical-note">♪</div>
+        <div class="musical-note">♫</div>
+    </div>
+
     <header>
         <div class="header-title-section">
             <div class="logo">
                 <h1>ఆంధ్ర క్రైస్తవ కీర్తనలు - కవులు</h1>
-                <p class="logo-subtitle">Andhra Kraistava Keerthanallu</p>
+                <p class="logo-subtitle">Andhra Kraistava Keerthanalu</p>
             </div>
-        </div>
+         
         <nav class="navbar">
             <div class="nav-container">
                 <ul class="nav-menu">
@@ -37,29 +50,30 @@
                 </div>
             </div>
         </nav>
+    </div>
     </header>
 
     <main>
         <section class="page-header">
-            <div class="container">
-                <h1>Hymn Authors</h1>
-                <p>Discover the devoted writers who composed these timeless spiritual hymns</p>
-            </div>
+            <h1>Hymn Authors</h1>
+            <p class="hero-subtitle">Discover the devoted writers behind these beautiful hymns</p>
         </section>
 
-        <section class="authors-section">
-            <div class="container">
-                <div class="filter-controls">
-                    <label for="filterAuthor">Filter by Author:</label>
-                                <select id="filterAuthor">
-                                    <option value="all">All Authors</option>
-                                </select>
-                    <input type="text" id="authorSearch" placeholder="Search author by name...">
+        <section class="container">
+            <!-- Filters -->
+            <div class="filters-container">
+                <div class="filter-group">
+                    <label for="authorSearch">Search:</label>
+                    <input type="text" id="authorSearch" placeholder="Search authors...">
                 </div>
+                <div class="sort-controls">
+                    <button class="sort-btn active" data-sort="name">By Name</button>
+                </div>
+            </div>
 
-                <div id="authorsList" class="authors-list">
-                    <!-- Authors will be dynamically loaded here -->
-                </div>
+            <!-- Authors Grid -->
+            <div id="authorsContainer" class="authors-grid">
+                <div class="loading">Loading authors...</div>
             </div>
         </section>
     </main>
@@ -86,13 +100,14 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 Andhra Kraistava Keerthanallu. All rights reserved. Dedicated to preserving Telugu Christian hymn heritage.</p>
+            <p>&copy; 2024 Andhra Kraistava Keerthanalu. All rights reserved. Dedicated to preserving Telugu Christian hymn heritage.</p>
         </div>
     </footer>
 
-    <script src="public/js/songs-data.js"></script>
-    <script src="public/js/authors.js"></script>
-    <script src="public/js/main.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/cursor-effects.js"></script>
+    <script src="js/songs-data.js"></script>
+    <script src="js/authors.js"></script>
 </body>
 </html>
 

@@ -1,141 +1,108 @@
 // Main JavaScript for Andhra Kraistava Keerthanallu
-// Global search functionality and common utilities
+// Global search and utility functions
 
+// Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
-    // Wait for songs data to load
-    if (typeof window.songsData === 'undefined') {
-        // If songs data not loaded yet, wait a bit
-        setTimeout(() => {
-            initializeGlobalSearch();
-        }, 100);
-    } else {
-        initializeGlobalSearch();
-    }
+    initializeSearch();
+    setActiveNavLink();
 });
 
-function initializeGlobalSearch() {
-    const globalSearchInput = document.getElementById('globalSearch');
+// Global search functionality
+function initializeSearch() {
+    const searchInput = document.getElementById('globalSearch');
     const searchBtn = document.getElementById('searchBtn');
-
-    if (globalSearchInput) {
-        // Handle search button click
+    
+    if (searchInput) {
+        // Search on input with debounce
+        let searchTimeout;
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                performSearch(this.value);
+            }, 300);
+        });
+        
+        // Search on button click
         if (searchBtn) {
             searchBtn.addEventListener('click', function() {
-                performGlobalSearch();
+                performSearch(searchInput.value);
             });
         }
-
-        // Handle Enter key press
-        globalSearchInput.addEventListener('keypress', function(e) {
+        
+        // Search on Enter key
+        searchInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                performGlobalSearch();
+                e.preventDefault();
+                performSearch(this.value);
             }
-        });
-
-        // Real-time search as user types (with debounce)
-        let searchTimeout;
-        globalSearchInput.addEventListener('input', function() {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(function() {
-                // Optional: Show suggestions or perform search
-            }, 300);
         });
     }
 }
 
-function performGlobalSearch() {
-    const globalSearchInput = document.getElementById('globalSearch');
-    if (!globalSearchInput) return;
-    
-    const searchTerm = globalSearchInput.value.trim();
-    
-    if (!searchTerm) {
-        return;
-    }
-
-    const currentPath = window.location.pathname;
-    const currentPage = currentPath.split('/').pop() || 'index.html';
-    
-    // If on hymns page, perform search directly
-    if (currentPage === 'hymns.html' || currentPage.includes('hymns')) {
-        const songSearch = document.getElementById('songSearch');
-        if (songSearch && typeof window.performSongSearch === 'function') {
-            songSearch.value = searchTerm;
-            window.performSongSearch();
-        } else {
-            // Redirect with search parameter
-            window.location.href = `hymns.html?search=${encodeURIComponent(searchTerm)}`;
-        }
+// Perform search across hymns and authors
+function performSearch(query) {
+    if (!query || query.trim() === '') {
         return;
     }
     
-    // If on authors page, try to filter authors
-    if (currentPage === 'authors.html' || currentPage.includes('authors')) {
-        const authorSearch = document.getElementById('authorSearch');
-        if (authorSearch && typeof window.filterAuthors === 'function') {
-            authorSearch.value = searchTerm;
-            window.filterAuthors();
-        } else {
-            // Redirect with search parameter
-            window.location.href = `authors.html?search=${encodeURIComponent(searchTerm)}`;
-        }
-        return;
-    }
+    const searchTerm = query.toLowerCase().trim();
     
-    // Otherwise, redirect to hymns page with search parameter
+    // Redirect to hymns page with search parameter
     window.location.href = `hymns.html?search=${encodeURIComponent(searchTerm)}`;
 }
 
-// Utility function to extract YouTube video ID from URL
-function getYouTubeVideoId(url) {
-    if (!url) return null;
+// Set active navigation link based on current page
+function setActiveNavLink() {
+    const currentPath = window.location.pathname;
+    const navLinks = document.querySelectorAll('.nav-menu a');
     
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[2].length === 11) ? match[2] : null;
+    navLinks.forEach(link => {
+        const linkPath = new URL(link.href).pathname;
+        if (currentPath.includes(linkPath.split('/').pop()) || 
+            (currentPath === '/' && linkPath.includes('index.html'))) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
+    });
 }
 
-// Utility function to create YouTube embed URL
+// Utility function to extract YouTube video ID from URL
+function extractYouTubeId(url) {
+    if (!url) return null;
+    
+    const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[7].length === 11) ? match[7] : null;
+}
+
+// Utility function to format YouTube embed URL
 function getYouTubeEmbedUrl(url) {
-    const videoId = getYouTubeVideoId(url);
+    const videoId = extractYouTubeId(url);
     return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
 }
 
-// Utility function for smooth scrolling
-function smoothScrollTo(element) {
-    if (element) {
-        element.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
-    }
+// Debounce function for performance
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
 }
 
-// Language toggle functionality (if available)
-document.addEventListener('DOMContentLoaded', function() {
-    const langToggle = document.getElementById('langToggle');
-    if (langToggle && !langToggle.hasAttribute('data-initialized')) {
-        langToggle.setAttribute('data-initialized', 'true');
-        langToggle.addEventListener('click', function() {
-            const currentLang = this.dataset.lang || 'en';
-            const newLang = currentLang === 'en' ? 'te' : 'en';
-            
-            this.dataset.lang = newLang;
-            this.textContent = newLang === 'en' ? 'తెలుగు' : 'English';
-            
-            // Toggle language display (can be extended for full site translation)
-            document.body.setAttribute('data-lang', newLang);
-            
-            // Update page language
-            document.documentElement.lang = newLang === 'te' ? 'te' : 'en';
-        });
-    }
-});
-
-// Export utilities for use in other scripts
-if (typeof window !== 'undefined') {
-    window.getYouTubeVideoId = getYouTubeVideoId;
-    window.getYouTubeEmbedUrl = getYouTubeEmbedUrl;
-    window.smoothScrollTo = smoothScrollTo;
-    window.performGlobalSearch = performGlobalSearch;
+// Format text for display (handles Telugu and English)
+function formatText(text) {
+    if (!text) return '';
+    return text.trim();
 }
+
+// Check if device is mobile
+function isMobile() {
+    return window.innerWidth <= 768;
+}
+

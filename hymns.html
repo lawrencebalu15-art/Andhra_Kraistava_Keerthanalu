@@ -3,113 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Browse and search through 626 Telugu Christian hymns with lyrics and YouTube performances">
-    <title>Andhra Kraistava Keerthanallu | Songs Library (626 Hymns)</title>
-    <link rel="stylesheet" href="public/css/style.css">
-    <link rel="canonical" href="https://lowrence-devu.github.io/Andhra-Kraistava-Keerthanallu/hymns.html" />
+    <meta name="description" content="Browse all 626 Telugu Christian hymns with lyrics, meanings, summaries, and YouTube performances">
+    <title>Hymns | Andhra Kraistava Keerthanallu</title>
+    <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600&family=Noto+Sans+Telugu:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600&family=Noto+Sans+Telugu:wght@400;500;600&family=Noto+Serif+Telugu:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ponnala@latest/index.css">
 </head>
 <body>
+    <!-- Musical Notes Falling Animation -->
+    <div class="musical-notes-background">
+        <div class="musical-note">♪</div>
+        <div class="musical-note">♫</div>
+        <div class="musical-note">♬</div>
+        <div class="musical-note">♪</div>
+        <div class="musical-note">♫</div>
+        <div class="musical-note">♩</div>
+        <div class="musical-note">♬</div>
+        <div class="musical-note">♪</div>
+        <div class="musical-note">♫</div>
+        <div class="musical-note">♬</div>
+        <div class="musical-note">♪</div>
+        <div class="musical-note">♫</div>
+    </div>
+
     <header>
         <div class="header-title-section">
             <div class="logo">
                 <h1>ఆంధ్ర క్రైస్తవ కీర్తనలు - కవులు</h1>
-                <p class="logo-subtitle">Andhra Kraistava Keerthanallu</p>
+                <p class="logo-subtitle">Andhra Kraistava Keerthanalu</p>
             </div>
-        </div>
+        
         <nav class="navbar">
             <div class="nav-container">
                 <ul class="nav-menu">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="authors.html">Authors</a></li>
-                    <li><a href="hymns.html" class="active">Songs Library</a></li>
+                    <li><a href="hymns.html" class="active">Hymns</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
-                <div class="header-controls">
-                    <div class="language-toggle">
-                        <button id="langToggle" class="lang-btn" data-lang="en">తెలుగు</button>
-                    </div>
-                    <div class="search-container">
-                        <input type="text" id="globalSearch" placeholder="Search hymns or authors...">
-                        <button id="searchBtn">🔍</button>
-                    </div>
+                <div class="search-container">
+                    <input type="text" id="globalSearch" placeholder="Search hymns or authors...">
+                    <button id="searchBtn">🔍</button>
                 </div>
             </div>
         </nav>
+    </div>
     </header>
 
     <main>
         <section class="page-header">
-            <div class="container">
-                <h1>Songs Library</h1>
-                <p>Browse and search through our collection of 626 Telugu Christian hymns</p>
-                <div class="stats-bar">
-                    <span id="songCount">626 Songs</span>
-                    <span id="authorCount">Multiple Authors</span>
-                </div>
-            </div>
+            <h1>All Hymns</h1>
+            <p class="hero-subtitle">Browse our collection of 626 Telugu Christian hymns</p>
         </section>
 
-        <section class="songs-section">
-            <div class="container">
-                <div class="filter-controls-panel">
-                    <button type="button" id="filterToggleBtn" class="filter-toggle-btn">
-                        <span>Filter &amp; Sort</span>
-                        <i>▼</i>
-                    </button>
-                    
-                    <div class="filter-content">
-                        <div class="search-controls">
-                            <input type="text" id="songSearch" placeholder="Search by song number, title, author, or lyrics...">
-                            <button type="button" id="clearSearch" class="clear-btn">Clear</button>
-                        </div>
-                        
-                        <div class="filter-row">
-                            <div class="filter-group">
-                                <label for="sortSongs">Sort By:</label>
-                                <select id="sortSongs">
-                                    <option value="number">Song Number (1-626)</option>
-                                    <option value="title">Title (A-Z)</option>
-                                    <option value="author">Author (A-Z)</option>
-                                </select>
-                            </div>
-                            
-                            <div class="filter-group">
-                                <label for="filterAuthor">Filter by Author:</label>
-                                <select id="filterAuthor">
-                                    <option value="all">All Authors</option>
-                                </select>
-                            </div>
-                            
-                            <div class="filter-group">
-                                <label for="filterInitial">Filter by Initial:</label>
-                                <select id="filterInitial">
-                                    <option value="all">All Letters</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="active-filters" id="activeFilters">
-                            <!-- Active filters will be added here dynamically -->
-                        </div>
-                    </div>
-                        </div>
-                        
-                        <div class="filter-group">
-                            <label for="filterNumber">Song Number:</label>
-                            <input type="number" id="filterNumber" placeholder="1-626" min="1" max="626">
-                        </div>
-                    </div>
+        <section class="container">
+            <!-- Filters -->
+            <div class="filters-container">
+                <div class="filter-group">
+                    <label for="searchInput">Search:</label>
+                    <input type="text" id="searchInput" placeholder="Search by title, author, or number...">
                 </div>
+                <div class="filter-group">
+                    <label for="authorFilter">Author:</label>
+                    <select id="authorFilter">
+                        <option value="">All Authors</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="letterFilter">Letter:</label>
+                    <select id="letterFilter">
+                        <option value="">All Letters</option>
+                    </select>
+                </div>
+                <div class="sort-controls">
+                    <button class="sort-btn active" data-sort="number">By Number</button>
+                    <button class="sort-btn" data-sort="title">By Title</button>
+                </div>
+            </div>
 
-                <div id="songsList" class="songs-list">
-                    <!-- Songs will be dynamically loaded here -->
-                </div>
-                
-                <div id="loadingIndicator" class="loading">Loading songs...</div>
+            <!-- Songs Grid -->
+            <div id="songsContainer" class="songs-grid">
+                <div class="loading">Loading hymns...</div>
             </div>
         </section>
     </main>
@@ -125,7 +102,7 @@
                 <ul class="footer-links">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="authors.html">Authors</a></li>
-                    <li><a href="hymns.html">Songs Library</a></li>
+                    <li><a href="hymns.html">Hymns</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
@@ -136,12 +113,14 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 Andhra Kraistava Keerthanallu. All rights reserved. Dedicated to preserving Telugu Christian hymn heritage.</p>
+            <p>&copy; 2024 Andhra Kraistava Keerthanalu. All rights reserved. Dedicated to preserving Telugu Christian hymn heritage.</p>
         </div>
     </footer>
 
-    <script src="public/js/songs-data.js"></script>
-    <script src="public/js/hymns.js"></script>
-    <script src="public/js/main.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/cursor-effects.js"></script>
+    <script src="js/songs-data.js"></script>
+    <script src="js/hymns.js"></script>
 </body>
 </html>
+
