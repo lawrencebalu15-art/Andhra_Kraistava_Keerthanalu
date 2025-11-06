@@ -90,15 +90,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateDisplay() {
-        // Start with all songs
-        let filtered = [...songsList];
+        // Start with all valid songs (those that have required fields and non-empty values)
+        let filtered = songsList.filter(song => 
+            song && 
+            song.titleTelugu && song.titleTelugu.trim() !== '' &&
+            song.titleEnglish && song.titleEnglish.trim() !== '' &&
+            song.author && song.author.trim() !== '' &&
+            song.number
+        );
 
         // Apply search filter
         if (currentSearchTerm) {
             filtered = filtered.filter(song => {
                 const matchesTitle = song.titleTelugu.toLowerCase().includes(currentSearchTerm) ||
                                    song.titleEnglish.toLowerCase().includes(currentSearchTerm);
-                const matchesAuthor = (song.author || '').toLowerCase().includes(currentSearchTerm);
+                const matchesAuthor = song.author.toLowerCase().includes(currentSearchTerm);
                 const matchesNumber = song.number.toString().includes(currentSearchTerm);
                 
                 return matchesTitle || matchesAuthor || matchesNumber;
@@ -132,16 +138,28 @@ document.addEventListener('DOMContentLoaded', function() {
         const container = document.getElementById('songsContainer');
         if (!container) return;
 
-        if (songs.length === 0) {
+        // Filter out empty songs
+        const validSongs = songs.filter(song => 
+            song && song.titleTelugu && song.titleTelugu.trim() !== '' && 
+            song.titleEnglish && song.titleEnglish.trim() !== '' && 
+            song.author && song.author.trim() !== ''
+        );
+
+        if (validSongs.length === 0) {
             container.innerHTML = '<div class="empty-state"><p>No songs found matching your criteria.</p></div>';
             return;
         }
 
-        container.innerHTML = songs.map(song => createSongCard(song)).join('');
+        container.innerHTML = validSongs.map(song => createSongCard(song)).join('');
     }
 
     function createSongCard(song) {
-        const youtubeEmbeds = song.youtubeLinks ? song.youtubeLinks.map(link => {
+        // Skip creating card for empty songs
+        if (!song || !song.titleTelugu || !song.titleEnglish || !song.author) {
+            return '';
+        }
+
+        const youtubeEmbeds = song.youtubeLinks && song.youtubeLinks.length > 0 ? song.youtubeLinks.map(link => {
             const videoId = extractYouTubeId(link);
             if (videoId) {
                 return `
