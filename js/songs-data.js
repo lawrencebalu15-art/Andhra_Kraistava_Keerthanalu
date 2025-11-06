@@ -798,10 +798,10 @@ Sing joyfully`
     },
     {
         number:107,
-        titleTelugu: "fjnekfjioefjliioef",
-        titleEnglish:"fenflkefjijfjlw",
-        author: "fjehfwihfie",
-        youtubeLinks:["fenfkioejflekjfijofij.com"],
+        titleTelugu: "",
+        titleEnglish:"",
+        author: "",
+        youtubeLinks:[""],
     },
     {
         number:108,
