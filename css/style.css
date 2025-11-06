@@ -856,15 +856,18 @@ header {
     display: flex;
     list-style: none;
     gap: 2rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
 }
 
 .nav-menu a {
     font-weight: 500;
     color: var(--text-color);
-    padding: 0.5rem 0;
+    padding: 0.5rem 1rem;
     position: relative;
     transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
 .nav-menu a:hover,
@@ -1037,15 +1040,23 @@ footer {
         font-size: 2rem;
     }
     
-    /* Keep nav horizontal on smaller screens; allow horizontal scrolling if needed */
     .nav-menu {
-        gap: 1rem;
-        flex-direction: row; /* keep horizontal */
-        flex-wrap: nowrap;
-        width: auto;
+        gap: 0.8rem;
+        width: 100%;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
-        padding-bottom: 0.5rem;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* Internet Explorer 11 */
+        padding: 0.5rem 0;
+    }
+    
+    .nav-menu::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, newer versions of Opera */
+    }
+    
+    .nav-menu a {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.95rem;
     }
     
     .search-container {
