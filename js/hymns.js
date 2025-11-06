@@ -65,10 +65,33 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function initializeFilters() {
-        // Get unique authors
-        const authors = [...new Set(songsList.map(song => song.author).filter(a => a))];
+        // Filter valid songs first
+        const validSongs = songsList.filter(song => 
+            song && 
+            typeof song === 'object' &&
+            song.titleTelugu && 
+            typeof song.titleTelugu === 'string' && 
+            song.titleTelugu.trim() !== '' &&
+            song.author &&
+            typeof song.author === 'string' &&
+            song.author.trim() !== ''
+        );
+
+        // Initialize author filter
         const authorSelect = document.getElementById('authorFilter');
         if (authorSelect) {
+            // Clear existing options except the first one
+            while (authorSelect.options.length > 1) {
+                authorSelect.remove(1);
+            }
+
+            // Get unique authors
+            const authors = [...new Set(validSongs
+                .map(song => song.author)
+                .filter(author => author && author.trim() !== '')
+            )];
+
+            // Add new options
             authors.sort().forEach(author => {
                 const option = document.createElement('option');
                 option.value = author;
@@ -77,19 +100,29 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // Get unique first letters
-        const letters = [...new Set(songsList
-            .filter(song => song && song.titleTelugu && typeof song.titleTelugu === 'string')
-            .map(song => song.titleTelugu.charAt(0))
-            .filter(c => c))];
+        // Initialize letter filter
         const letterSelect = document.getElementById('letterFilter');
         if (letterSelect) {
+            // Clear existing options except the first one
+            while (letterSelect.options.length > 1) {
+                letterSelect.remove(1);
+            }
+
+            // Get unique first letters
+            const letters = [...new Set(validSongs
+                .map(song => song.titleTelugu.charAt(0))
+                .filter(char => char && char.trim() !== '')
+            )];
+
+            // Add new options
             letters.sort().forEach(letter => {
                 const option = document.createElement('option');
                 option.value = letter;
                 option.textContent = letter;
                 letterSelect.appendChild(option);
             });
+        }
+    }
         }
     }
 
