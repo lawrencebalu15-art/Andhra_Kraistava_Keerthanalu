@@ -5,20 +5,30 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    let filteredAuthors = [...authorsList];
-    let currentSort = 'name';
+    function normalizeAuthorName(name) {
+        if (!name) return '';
+        return name.trim().replace(/\s+/g, ' ').replace(/\.+$/, '').toLowerCase();
+    }
 
-    // Populate Author Filter with unique names
-    const authorSet = new Set();
-    authorsList.forEach(author => {
-        if (author.name && author.name.trim()) {
-            authorSet.add(author.name.trim());
+    // 1. Deduplicate authors for dropdown using normalization
+    const authorNormalizedMap = new Map();
+    songsList.forEach(song => {
+        if (song.author && song.author.trim()) {
+            const normalized = normalizeAuthorName(song.author);
+            if (!authorNormalizedMap.has(normalized)) {
+                authorNormalizedMap.set(normalized, song.author.trim());
+            }
         }
     });
+    const uniqueAuthors = Array.from(authorNormalizedMap.values()).sort((a,b) => a.localeCompare(b, 'en'));
+
+    // 2. Author dropdown
     const authorFilter = document.getElementById('authorFilter');
+    let filteredAuthors = [...authorsList];
+    let currentSort = 'name';
     if (authorFilter) {
         authorFilter.innerHTML = '<option value="">All Authors</option>';
-        authorSet.forEach(author => {
+        uniqueAuthors.forEach(author => {
             const option = document.createElement('option');
             option.value = author;
             option.textContent = author;
@@ -27,7 +37,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
         authorFilter.addEventListener('change', function() {
             if (this.value) {
-                filteredAuthors = authorsList.filter(author => author.name.trim() === this.value);
+                // Find matches IN songs data by normalized name
+                const selectedNorm = normalizeAuthorName(this.value);
+                // Get all song numbers matching this author
+                const authorSongNumbers = songsList
+                  .filter(song => normalizeAuthorName(song.author) === selectedNorm)
+                  .map(song => song.number);
+
+                // Now, filter authorsList to authors who wrote at least one of these songs
+                filteredAuthors = authorsList.filter(author => 
+                    (author.songs && author.songs.find(num => authorSongNumbers.includes(num))) ||
+                    (normalizeAuthorName(author.name) === selectedNorm)
+                );
             } else {
                 filteredAuthors = [...authorsList];
             }
@@ -35,16 +56,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Display authors
+    // 3. Author display logic
     displayAuthors(filteredAuthors);
 
-    // Search functionality
+    // 4. Search functionality
     const authorSearch = document.getElementById('authorSearch');
     if (authorSearch) {
         authorSearch.addEventListener('input', debounce(handleSearch, 300));
     }
 
-    // Sort functionality
+    // 5. Sort functionality
     document.querySelectorAll('.sort-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
@@ -58,9 +79,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const searchTerm = authorSearch.value.toLowerCase().trim();
         filteredAuthors = authorsList.filter(author => {
             const matchesName = author.name.toLowerCase().includes(searchTerm) ||
-                               author.nameEnglish.toLowerCase().includes(searchTerm);
-            const matchesBio = author.bio.toLowerCase().includes(searchTerm) ||
-                             (author.bioTelugu && author.bioTelugu.toLowerCase().includes(searchTerm));
+                            (author.nameEnglish && author.nameEnglish.toLowerCase().includes(searchTerm));
+            const matchesBio = (author.bio && author.bio.toLowerCase().includes(searchTerm)) ||
+                            (author.bioTelugu && author.bioTelugu.toLowerCase().includes(searchTerm));
             return matchesName || matchesBio;
         });
         applySort();
@@ -71,6 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (currentSort === 'name') {
             filteredAuthors.sort((a, b) => a.name.localeCompare(b.name));
         }
+        // Add other sort logic here if needed in the future
         displayAuthors(filteredAuthors);
     }
 
@@ -85,9 +107,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createAuthorCard(author) {
-        // Get songs by this author
+        // Get all songs from song list using normalized author name matching
+        const authorNorm = normalizeAuthorName(author.name);
         const authorSongs = songsList.filter(song => 
-            author.songs && author.songs.includes(song.number)
+            normalizeAuthorName(song.author) === authorNorm
         );
         const songsListHtml = authorSongs.length > 0 ? `
             <div class="featured-songs-section">
@@ -108,11 +131,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 ${author.featuredYouTubeLinks.map(link => {
                     const videoId = extractYouTubeId(link);
                     if (videoId) {
-                        // Only link, no embed:
                         return `<a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" class="youtube-link" rel="noopener noreferrer">
-                                  <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="Video thumbnail" class="youtube-thumbnail" />
-                                  <div class="play-button"></div>
-                                  Watch on YouTube ↗
+                                <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="Video thumbnail" class="youtube-thumbnail" />
+                                <div class="play-button"></div>
+                                Watch on YouTube ↗
                                 </a>`;
                     }
                     return `<a href="${link}" target="_blank" class="youtube-link" rel="noopener noreferrer">Watch on YouTube ↗</a>`;
@@ -143,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
     }
 
-    // Utility function (from main.js)
+    // Utility function for YouTube links
     function extractYouTubeId(url) {
         if (!url) return null;
         const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
