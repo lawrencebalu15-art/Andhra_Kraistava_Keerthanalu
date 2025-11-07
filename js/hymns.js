@@ -1,7 +1,4 @@
-// Hymns Page JavaScript - Display and filter songs
-
 document.addEventListener('DOMContentLoaded', function() {
-    // Wait for the songs data to be loaded
     let checkInterval = setInterval(function() {
         if (typeof songsList !== 'undefined') {
             clearInterval(checkInterval);
@@ -10,8 +7,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 100);
 });
 
+function normalizeAuthorName(name) {
+    if (!name) return '';
+    return name.trim().replace(/\s+/g, ' ').replace(/\.+$/, '').toLowerCase();
+}
+
 function initializePage() {
-    // Global variables
     let validSongsList = [];
     let currentSort = 'number';
     let currentSearchTerm = '';
@@ -19,13 +20,11 @@ function initializePage() {
     const authorFilter = document.getElementById('authorFilter');
     const letterFilter = document.getElementById('letterFilter');
 
-    // Function definitions
     function updateDisplay() {
         try {
-            // Start with valid songs
             let filtered = [...validSongsList];
 
-            // Apply search filter
+            // Search filter
             if (currentSearchTerm) {
                 filtered = filtered.filter(song => {
                     try {
@@ -34,7 +33,6 @@ function initializePage() {
                             song.titleEnglish.toLowerCase().includes(currentSearchTerm);
                         const matchesAuthor = song.author.toLowerCase().includes(currentSearchTerm);
                         const matchesNumber = song.number.toString().includes(currentSearchTerm);
-                        
                         return matchesTitle || matchesAuthor || matchesNumber;
                     } catch (error) {
                         console.error('Error filtering song:', error);
@@ -43,19 +41,22 @@ function initializePage() {
                 });
             }
 
-            // Apply author filter
+            // Author filter (normalized comparison!)
             const selectedAuthor = authorFilter?.value;
             if (selectedAuthor) {
-                filtered = filtered.filter(song => song.author === selectedAuthor);
+                const selectedNorm = normalizeAuthorName(selectedAuthor);
+                filtered = filtered.filter(song =>
+                    normalizeAuthorName(song.author) === selectedNorm
+                );
             }
 
-            // Apply letter filter
+            // Letter filter
             const selectedLetter = letterFilter?.value;
             if (selectedLetter) {
                 filtered = filtered.filter(song => song.titleTelugu.charAt(0) === selectedLetter);
             }
 
-            // Apply sort
+            // Sort
             if (currentSort === 'number') {
                 filtered.sort((a, b) => a.number - b.number);
             } else if (currentSort === 'title') {
@@ -70,38 +71,33 @@ function initializePage() {
 
     function initializeFilters() {
         try {
-            // Initialize author filter
+            // ---- AUTHOR FILTER ----
             if (authorFilter) {
-                // Clear existing options except the first one
-                while (authorFilter.options.length > 1) {
-                    authorFilter.remove(1);
-                }
-
-                // Get unique authors
-                const authors = [...new Set(validSongsList
-                    .map(song => song.author)
-                    .filter(author => author && author.trim() !== '')
-                )];
-
-                // Add new options
-                authors.sort().forEach(author => {
-                    if (author) {
-                        const option = document.createElement('option');
-                        option.value = author;
-                        option.textContent = author;
-                        authorFilter.appendChild(option);
+                // Unique & normalized authors from all songs
+                const authorNormalizedMap = new Map();
+                validSongsList.forEach(song => {
+                    if (song.author && song.author.trim()) {
+                        const normalized = normalizeAuthorName(song.author);
+                        if (!authorNormalizedMap.has(normalized)) {
+                            authorNormalizedMap.set(normalized, song.author.trim());
+                        }
                     }
+                });
+                const uniqueAuthors = Array.from(authorNormalizedMap.values()).sort((a,b) => a.localeCompare(b, 'en'));
+
+                // Reset filter
+                authorFilter.innerHTML = '<option value="">All Authors</option>';
+                uniqueAuthors.forEach(author => {
+                    const option = document.createElement('option');
+                    option.value = author;
+                    option.textContent = author;
+                    authorFilter.appendChild(option);
                 });
             }
 
-            // Initialize letter filter
+            // ---- LETTER FILTER ----
             if (letterFilter) {
-                // Clear existing options except the first one
-                while (letterFilter.options.length > 1) {
-                    letterFilter.remove(1);
-                }
-
-                // Get unique first letters
+                while (letterFilter.options.length > 1) letterFilter.remove(1);
                 const letters = [...new Set(validSongsList
                     .map(song => {
                         try {
@@ -110,12 +106,10 @@ function initializePage() {
                             console.error('Error getting first letter:', error);
                             return '';
                         }
-                    })
-                    .filter(char => char && char.trim() !== '')
+                    }).filter(char => char && char.trim() !== '')
                 )];
-
-                // Add new options
-                letters.sort().forEach(letter => {
+                letters.sort();
+                letters.forEach(letter => {
                     if (letter) {
                         const option = document.createElement('option');
                         option.value = letter;
@@ -133,12 +127,10 @@ function initializePage() {
         try {
             const container = document.getElementById('songsContainer');
             if (!container) return;
-
             if (!Array.isArray(songs) || songs.length === 0) {
                 container.innerHTML = '<div class="empty-state"><p>No songs found matching your criteria.</p></div>';
                 return;
             }
-
             container.innerHTML = songs.map(song => createSongCard(song)).join('');
         } catch (error) {
             console.error('Error displaying songs:', error);
@@ -148,29 +140,20 @@ function initializePage() {
     function createSongCard(song) {
         try {
             if (!song) return '';
-
-            const youtubeEmbeds = song.youtubeLinks && Array.isArray(song.youtubeLinks) 
+            // Only provide external links, no embedded players (per your current expectation)
+            const youtubeLinks = (song.youtubeLinks && Array.isArray(song.youtubeLinks)
                 ? song.youtubeLinks.map(link => {
                     const videoId = extractYouTubeId(link);
                     if (videoId) {
-                        return `
-                            <div class="youtube-embed">
-                                <iframe src="https://www.youtube.com/embed/${videoId}" 
-                                        frameborder="0" 
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                        allowfullscreen></iframe>
-                            </div>
-                        `;
+                        return `<a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" class="youtube-link" rel="noopener noreferrer">
+                                  <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="Video thumbnail" class="youtube-thumbnail" />
+                                  <div class="play-button"></div>
+                                  Watch on YouTube ↗
+                                </a>`;
                     }
-                    return '';
-                }).join('') 
-                : '';
-
-            const youtubeLinks = song.youtubeLinks && Array.isArray(song.youtubeLinks)
-                ? song.youtubeLinks.map(link => {
-                    return `<a href="${link}" target="_blank" class="youtube-link">Watch on YouTube ↗</a>`;
+                    return `<a href="${link}" target="_blank" class="youtube-link" rel="noopener noreferrer">Watch on YouTube ↗</a>`;
                 }).join(' ')
-                : '';
+                : '');
 
             return `
                 <div class="song-card">
@@ -178,9 +161,8 @@ function initializePage() {
                     <h3 class="song-title-telugu">${song.titleTelugu}</h3>
                     <p class="song-title-english">${song.titleEnglish}</p>
                     <p><strong>Author:</strong> ${song.author}</p>
-                    ${youtubeEmbeds ? `
+                    ${youtubeLinks ? `
                         <div class="youtube-section">
-                            ${youtubeEmbeds}
                             ${youtubeLinks}
                         </div>
                     ` : ''}
@@ -216,20 +198,9 @@ function initializePage() {
 
     function setupEventListeners() {
         try {
-            // Search functionality
-            if (searchInput) {
-                searchInput.addEventListener('input', debounce(handleSearch, 300));
-            }
-
-            // Filter functionality
-            if (authorFilter) {
-                authorFilter.addEventListener('change', updateDisplay);
-            }
-            if (letterFilter) {
-                letterFilter.addEventListener('change', updateDisplay);
-            }
-
-            // Sort functionality
+            if (searchInput) searchInput.addEventListener('input', debounce(handleSearch, 300));
+            if (authorFilter) authorFilter.addEventListener('change', updateDisplay);
+            if (letterFilter) letterFilter.addEventListener('change', updateDisplay);
             document.querySelectorAll('.sort-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
@@ -239,7 +210,7 @@ function initializePage() {
                 });
             });
 
-            // Check for search parameter in URL
+            // Pre-fill search from URL parameter
             const urlParams = new URLSearchParams(window.location.search);
             const searchParam = urlParams.get('search');
             if (searchParam && searchInput) {
@@ -266,38 +237,29 @@ function initializePage() {
 
     // Start initialization
     try {
-        // Check if songs data is loaded
         if (typeof songsList === 'undefined' || !Array.isArray(songsList)) {
             document.getElementById('songsContainer').innerHTML = 
                 '<div class="empty-state"><p>Please add songs data in js/songs-data.js</p></div>';
             console.error('Songs data is not properly loaded');
             return;
         }
-
-        // Filter out invalid songs at the start
         validSongsList = songsList.filter(song => 
-            song && 
+            song &&
             typeof song === 'object' &&
             song.titleTelugu && typeof song.titleTelugu === 'string' && song.titleTelugu.trim() !== '' &&
             song.titleEnglish && typeof song.titleEnglish === 'string' && song.titleEnglish.trim() !== '' &&
             song.author && typeof song.author === 'string' && song.author.trim() !== '' &&
             typeof song.number === 'number'
         );
-
         if (validSongsList.length === 0) {
             document.getElementById('songsContainer').innerHTML = 
                 '<div class="empty-state"><p>No valid songs found in the data</p></div>';
             console.error('No valid songs found in songsList');
             return;
         }
-
-        // Remove loading message
         const loadingMessage = document.querySelector('.loading');
-        if (loadingMessage) {
-            loadingMessage.remove();
-        }
+        if (loadingMessage) loadingMessage.remove();
 
-        // Set up the page
         setupEventListeners();
         initializeFilters();
         updateDisplay();
