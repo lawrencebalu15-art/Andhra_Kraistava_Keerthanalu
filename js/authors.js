@@ -1,7 +1,4 @@
-// Authors Page JavaScript - Display authors and their songs
-
 document.addEventListener('DOMContentLoaded', function() {
-    // Check if authors data is loaded
     if (typeof authorsList === 'undefined' || typeof songsList === 'undefined') {
         document.getElementById('authorsContainer').innerHTML = 
             '<div class="empty-state"><p>Please add authors data in js/songs-data.js</p></div>';
@@ -10,6 +7,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let filteredAuthors = [...authorsList];
     let currentSort = 'name';
+
+    // Populate Author Filter with unique names
+    const authorSet = new Set();
+    authorsList.forEach(author => {
+        if (author.name && author.name.trim()) {
+            authorSet.add(author.name.trim());
+        }
+    });
+    const authorFilter = document.getElementById('authorFilter');
+    if (authorFilter) {
+        authorFilter.innerHTML = '<option value="">All Authors</option>';
+        authorSet.forEach(author => {
+            const option = document.createElement('option');
+            option.value = author;
+            option.textContent = author;
+            authorFilter.appendChild(option);
+        });
+
+        authorFilter.addEventListener('change', function() {
+            if (this.value) {
+                filteredAuthors = authorsList.filter(author => author.name.trim() === this.value);
+            } else {
+                filteredAuthors = [...authorsList];
+            }
+            applySort();
+        });
+    }
 
     // Display authors
     displayAuthors(filteredAuthors);
@@ -32,16 +56,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function handleSearch() {
         const searchTerm = authorSearch.value.toLowerCase().trim();
-        
         filteredAuthors = authorsList.filter(author => {
             const matchesName = author.name.toLowerCase().includes(searchTerm) ||
                                author.nameEnglish.toLowerCase().includes(searchTerm);
             const matchesBio = author.bio.toLowerCase().includes(searchTerm) ||
                              (author.bioTelugu && author.bioTelugu.toLowerCase().includes(searchTerm));
-            
             return matchesName || matchesBio;
         });
-
         applySort();
         displayAuthors(filteredAuthors);
     }
@@ -56,12 +77,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function displayAuthors(authors) {
         const container = document.getElementById('authorsContainer');
         if (!container) return;
-
         if (authors.length === 0) {
             container.innerHTML = '<div class="empty-state"><p>No authors found matching your criteria.</p></div>';
             return;
         }
-
         container.innerHTML = authors.map(author => createAuthorCard(author)).join('');
     }
 
@@ -70,7 +89,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const authorSongs = songsList.filter(song => 
             author.songs && author.songs.includes(song.number)
         );
-
         const songsListHtml = authorSongs.length > 0 ? `
             <div class="featured-songs-section">
                 <h4>Songs by ${author.name}</h4>
@@ -90,16 +108,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 ${author.featuredYouTubeLinks.map(link => {
                     const videoId = extractYouTubeId(link);
                     if (videoId) {
-                        return `
-                            <div class="youtube-embed">
-                                <iframe src="https://www.youtube.com/embed/${videoId}" 
-                                        frameborder="0" 
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                        allowfullscreen></iframe>
-                            </div>
-                        `;
+                        // Only link, no embed:
+                        return `<a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" class="youtube-link" rel="noopener noreferrer">
+                                  <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="Video thumbnail" class="youtube-thumbnail" />
+                                  <div class="play-button"></div>
+                                  Watch on YouTube ↗
+                                </a>`;
                     }
-                    return `<a href="${link}" target="_blank" class="youtube-link">Watch on YouTube ↗</a>`;
+                    return `<a href="${link}" target="_blank" class="youtube-link" rel="noopener noreferrer">Watch on YouTube ↗</a>`;
                 }).join('')}
             </div>
         ` : '';
@@ -109,21 +125,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 <h3 class="author-name">${author.name}</h3>
                 ${author.nameEnglish ? `<p class="author-song-count">${author.nameEnglish}</p>` : ''}
                 <div class="author-song-count">${authorSongs.length} song${authorSongs.length !== 1 ? 's' : ''}</div>
-                
                 ${author.bio ? `
                     <div class="author-bio">
                         <p><strong>Biography:</strong></p>
                         <p>${author.bio}</p>
                     </div>
                 ` : ''}
-                
                 ${author.bioTelugu ? `
                     <div class="author-bio">
                         <p><strong>చరిత్ర:</strong></p>
                         <p>${author.bioTelugu}</p>
                     </div>
                 ` : ''}
-                
                 ${songsListHtml}
                 ${featuredLinks}
             </div>
@@ -150,4 +163,3 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
 });
-
