@@ -1,6 +1,6 @@
 // Main JavaScript for Andhra Kraistava Keerthanallu
 // Global search and utility functions
-
+import { inject } from "@vercel/analytics"
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
     initializeSearch();
