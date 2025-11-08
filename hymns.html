@@ -47,11 +47,10 @@
                 </ul>
                 <div class="search-container">
                     <input type="text" id="globalSearch" placeholder="Search hymns or authors...">
-                    <button id="searchBtn">🔍</button>
+                    <button type="button" id="searchBtn">🔍</button>
                 </div>
             </div>
         </nav>
-    </div>
     </header>
 
     <main>
@@ -89,6 +88,7 @@
             <div id="songsContainer" class="songs-grid">
                 <div class="loading">Loading hymns...</div>
             </div>
+            <div id="videos-container"></div>
         </section>
     </main>
 
@@ -114,9 +114,12 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 Andhra Kraistava Keerthanalu. All rights reserved. Dedicated to preserving Telugu Christian hymn heritage.</p>
+            <p>&copy; 2025 Andhra Kraistava Keerthanalu. All rights reserved. Dedicated to preserving Telugu Christian hymn heritage.</p>
         </div>
     </footer>
+
+
+<script src="js/lazy_loading.js"></script>
 
     <!-- Load the data first -->
     <script src="js/songs-data.js"></script>

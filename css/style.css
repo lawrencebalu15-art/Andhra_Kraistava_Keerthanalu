@@ -1307,18 +1307,30 @@ footer {
 /* YouTube Section */
 .youtube {
   position: relative;
+<<<<<<< HEAD
   width: 160px;  /* adjust as needed */
   height: 90px; /* adjust as needed */
   margin: 5px;
+=======
+  width: 320px;  /* adjust as needed */
+  height: 180px; /* adjust as needed */
+  margin: 10px;
+>>>>>>> 26fb741 (Your descriptive commit message)
   cursor: pointer;
   display: inline-block;
 }
 
 .youtube img {
+<<<<<<< HEAD
   width: 50%;
   height: 50%;
   display: block;
   margin: 0 auto;
+=======
+  width: 100%;
+  height: 100%;
+  display: block;
+>>>>>>> 26fb741 (Your descriptive commit message)
 }
 
 .play-button {
@@ -1332,6 +1344,7 @@ footer {
   transform: translate(-50%, -50%);
   pointer-events: none;
 }
+<<<<<<< HEAD
 .song-card {
     overflow: hidden; /* Ensures inner content doesn't overflow the card */
 }
@@ -1367,6 +1380,14 @@ footer {
 }
 
 
+=======
+.youtube-section {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+>>>>>>> 26fb741 (Your descriptive commit message)
 .youtube-title {
     font-size: 1.2rem;
     color: var(--text-color);
