@@ -17,6 +17,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // First visit - show splash screen
         if (splashScreen) {
             splashScreen.classList.add('splash-visible');
+            
+            // Automatically enter site after 3 seconds
+            setTimeout(function() {
+                enterSite();
+            }, 3000);
         }
         if (mainContent) {
             mainContent.classList.add('main-content-hidden');
@@ -58,4 +63,3 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 800); // Match animation duration
     }
 });
-

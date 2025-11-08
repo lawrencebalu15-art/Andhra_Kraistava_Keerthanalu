@@ -17,11 +17,7 @@ const songsList = [
         number: 1,
         titleTelugu: "అన్ని కాలంబుల",
         titleEnglish: "Anni Kaalambula",
-<<<<<<< HEAD
         author: "Rev. బేతాళ జాన్",
-=======
-        author: "బేతాళ జాన్",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks: [
             "https://www.youtube.com/watch?v=08RCqxN3VEY",
             "https://www.youtube.com/watch?v=U4xpGq7A-gs"
@@ -33,11 +29,7 @@ const songsList = [
         number: 2,
         titleTelugu: "గానము జేయుడు",
         titleEnglish: "Gaanamu jeyudu",
-<<<<<<< HEAD
         author: "Rev. విలియం డాసన్",
-=======
-        author: "విలియం డాసన్",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks: ["https://www.youtube.com/watch?v=5FUePS25kLs"
         ]
     },
@@ -56,11 +48,7 @@ const songsList = [
         number: 4,
         titleTelugu: "దేవ దివ్యానంత ప్రభావ",
         titleEnglish: "Deva divyananta prabhava",
-<<<<<<< HEAD
         author: "Rev. పురుషోత్తము చౌధరి",
-=======
-        author: "పురుషోత్తము చౌదరి",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks: ["https://www.youtube.com/watch?v=IA6xgma8jsc"]
     },
     {
@@ -1961,33 +1949,21 @@ const songsList = [
         number:276,
         titleTelugu: " మనస! యాత్మ!",
         titleEnglish:"Manasa yathma",
-<<<<<<< HEAD
         author: "Rev. రావూరి దావీదు",
-=======
-        author: "రావూరి దావీదు",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=EcNNSTkuICY"],
     },  
     { 
         number:277,
         titleTelugu: "ఓ దయానిలయా!",
         titleEnglish:"o dayaanilaya! ",
-<<<<<<< HEAD
         author: "Rev. మొలతాటి విద్యానందము",
-=======
-        author: "మొలతాటి విద్యానందము",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=BLGRr4jFnAM"],
     },  
     {
         number:278,
         titleTelugu: " జీవహారమ రమ్ము",
         titleEnglish:" jeevahaaramuu rammu",
-<<<<<<< HEAD
         author: "Rev. ఏ. బి. మాసిలామణి",
-=======
-        author: "ఏ. బి. మాసిలామణి",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=eWR8Eoes7Kw"],
 
     },  
@@ -2009,88 +1985,56 @@ const songsList = [
         number:281,
         titleTelugu: " మానవుడవై సకల",
         titleEnglish:"maanavudavai sakala",
-<<<<<<< HEAD
         author: "Rev. మార్తాండ జ్ఞానప్రకాశము",
-=======
-        author: "మార్తాండ జ్ఞానప్రకాశము",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=eTxV1ThlEGY"],
     },  
     {
         number:282,
         titleTelugu: " మాన యేసు మరణస్మరణ",
         titleEnglish:" Mana yesu maranasmaarana",
-<<<<<<< HEAD
         author: "Rev. దాసరి మోజెస్",
-=======
-        author: "దాసరి మోజెస్",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=X5B3sl_8rmw"],
     },  
     {
         number:283,
         titleTelugu: " స్తోత్రర్పణ నర్పింతము ",
         titleEnglish:"stotrarpana narpinthamu ",
-<<<<<<< HEAD
         author: "Rev. సమూయేలు పాక్యనాధము",
-=======
-        author: "సమూయేలు పాక్యనాధము",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=u0Ar2qHEBNo"],
     },  
     {
         number:284,
         titleTelugu: " యేసూ నిన్ జుతూ నిండు దేటగా",
         titleEnglish:"yesu nin nindu detaga",
-<<<<<<< HEAD
         author: "Rev. హోరేషియన్ బోనర్",
-=======
-        author: "హోరేషియన్ బోనర్",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=NRkvWHOoBw8"],
     },  
     {
         number:285,
         titleTelugu: " శ్రీ రాజిల్లుచు",
         titleEnglish:"Sree rajilluchu",
-<<<<<<< HEAD
         author: "Rev. జాన్ చౌధరి",
-=======
-        author: "జాన్ చౌధరి",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=bAQJjP5KRT8"],
     },  
     {
         number:286,
         titleTelugu: " గ్రీన్ ల్యాండ్ దేశస్థులును",
         titleEnglish:"Green land desasthulunu",
-<<<<<<< HEAD
         author: "Rev. రెజినాల్డ్ హెబర్",
-=======
-        author: "రెజినాల్డ్ హెబర్",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=rUpWgZTJvGQ"],
     },  
     {
         number:287,
         titleTelugu: " శ్రీ యేసు రాజ్యముందును",
         titleEnglish:"sree yesu rajyamundunu",
-<<<<<<< HEAD
         author: "Rev. ఐజక్ వాట్స్",
-=======
-        author: "ఐజక్ వాట్స్",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=qECzNGWZOoA"],
     },  
     {
         number:288,
         titleTelugu: " శుభవార్త వింటిమి",
         titleEnglish:"shubhavartha vintimi",
-<<<<<<< HEAD
         author: "Rev. ప్రిసిల్లా జేన్ ఓవెన్స్",
-=======
-        author: "ప్రిసిల్లా జేన్ ఓవెన్స్",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=6vv0hFaEmes"],
     },  
     {
@@ -2220,71 +2164,43 @@ const songsList = [
         number:307,
         titleTelugu: " హే ప్రభు యేసు",
         titleEnglish:"Hey prabhu yesu",
-<<<<<<< HEAD
         author: "Rev. ఏ. బి. మాసిలామణి",
-=======
-        author: "ఏ. బి. మాసిలామణి",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=Yt9F8aup4no"],
     },{
         number:308,
         titleTelugu: " పాపకుపమునందు",
         titleEnglish:"papa kupamunandu",
-<<<<<<< HEAD
         author: "Rev. పంతగాని పరదేశి",
-=======
-        author: "పంతగాని పరదేశి",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=jyKYTwKW7b0"],
     },{
         number:309,
         titleTelugu: " దారుణ మగు",
         titleEnglish:" daaruna magu",
-<<<<<<< HEAD
         author: "Rev. రావూరి దావీదు",
-=======
-        author: "రావూరి దావీదు",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=11V66FLW0KU"],
     },{
         number:310,
         titleTelugu: " హృదయ మనేడు",
         titleEnglish:"Hrudaya manedu",
-<<<<<<< HEAD
         author: "Rev. పులిపాక జగన్నాధము",
-=======
-        author: "పులిపాక జగన్నాధము",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=NlkSjKJgDU8"],
     },{
         number:311,
         titleTelugu: " జనులందరు వినండి",
         titleEnglish:"Janulandaru vinandi",
-<<<<<<< HEAD
         author: "Rev. జేకబ్ చేంబర్లీన్",
-=======
-        author: "జేకబ్ చేంబర్లీన్",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=y5q-xmsEXnQ"],
     },{
         number:312,
         titleTelugu: " మహా వైద్యుండు వచ్చెను",
         titleEnglish:"Mahaa vydyundu vachenu",
-<<<<<<< HEAD
         author: "Rev. విలియం హంటర్",
-=======
-        author: "విలియం హంటర్",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=2ibqmiVzGfM&list=PLTKEOkSXKDj7IfNLydqwOhK_FIzC5Fzxs&index=291"],
     },{
         number:313,
         titleTelugu: " త్రాహిమాం క్రీస్తు నాధ",
         titleEnglish:"trahimam kreestu naadha",
-<<<<<<< HEAD
         author: "Rev. పురుషోత్తము చౌధరి",
-=======
-        author: "పురుషోత్తము చౌధరి",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=ymyg84qM07I&list=PLTKEOkSXKDj7IfNLydqwOhK_FIzC5Fzxs&index=292"],
     },{
         number:314,
@@ -2302,21 +2218,13 @@ const songsList = [
         number:316,
         titleTelugu: " డిక్కు లేనివాడనో",
         titleEnglish:"Dikku lenivaadano",
-<<<<<<< HEAD
         author: "Rev. చిక్కాల పాలస్",
-=======
-        author: "చిక్కాల పాలస్",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=ffdQjkUGpyU&list=PLTKEOkSXKDj7IfNLydqwOhK_FIzC5Fzxs&index=296"],
     },{
         number:317,
         titleTelugu: " పాపము దలచు సుమీ",
         titleEnglish:" Paapamu dalachu sumee ",
-<<<<<<< HEAD
         author: "Rev. యెషయా వీరమార్టిన్",
-=======
-        author: "యెషయా వీరమార్టిన్",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=uz3dg5CutAA&list=PLTKEOkSXKDj7IfNLydqwOhK_FIzC5Fzxs&index=297"],
     },{
         number:318  ,
@@ -2346,11 +2254,7 @@ const songsList = [
         number:322,
         titleTelugu: "  శరణు నా యేసు ప్రభువ",
         titleEnglish:"saranu naa yesu prabhuva",
-<<<<<<< HEAD
         author: "Rev. మిక్కిలి సమూయేలు",
-=======
-        author: "మిక్కిలి సమూయేలు",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=1Uw2w5t-bDc&list=PLTKEOkSXKDj7IfNLydqwOhK_FIzC5Fzxs&index=301"],
     },{
         number:323,
@@ -2362,41 +2266,25 @@ const songsList = [
         number:324,
         titleTelugu: " ఏ ముఖంబు తొడ వత్తు",
         titleEnglish:" Ye mukhambu thoda vathu",
-<<<<<<< HEAD
         author: "Rev. జొన్నకూటి దేవదానము",
-=======
-        author: "జొన్నకూటి దేవదానము",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=3mTHVrO8feI&list=PLTKEOkSXKDj7IfNLydqwOhK_FIzC5Fzxs&index=303"],
     },{
         number:325,
         titleTelugu: " నన్ను దిద్దుము",
         titleEnglish:" Nannu diddumu",
-<<<<<<< HEAD
         author: "Rev. ముంగమూరి దేవదాసు",
-=======
-        author: "ముంగమూరి దేవదాసు",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=CK-rygnoIC4&list=PLTKEOkSXKDj7IfNLydqwOhK_FIzC5Fzxs&index=304"],
     },{
         number:326, 
         titleTelugu: " నమ్మితినయ్య యేసయ్య",
         titleEnglish:"Nammitinayya yesayya",
-<<<<<<< HEAD
         author: "Rev. బుఱ్ఱారెడ్డి",
-=======
-        author: "బుఱ్ఱారెడ్డి",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=reAem0J_7zo&list=PLTKEOkSXKDj7IfNLydqwOhK_FIzC5Fzxs&index=305"],
     },{
         number:327,
         titleTelugu: " దేవ నీవు నన్ను",
         titleEnglish:"DEVA NEEVU NANNU",
-<<<<<<< HEAD
         author: "Rev. మల్లెల దావీదు",
-=======
-        author: "మల్లెల దావీదు",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=JxgQ0PgJwMU&list=PLTKEOkSXKDj7IfNLydqwOhK_FIzC5Fzxs&index=306"],
     },{
         number:328,
@@ -2433,11 +2321,7 @@ const songsList = [
         number:333,
         titleTelugu: " పశ్చాత్తాపము బొందుము",
         titleEnglish:"paschatapamu bondumu",
-<<<<<<< HEAD
         author: "Rev. మోర్తా ప్రకాశము",
-=======
-        author: "మోర్తా ప్రకాశము",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=BSDtVwM-nVk&list=PLTKEOkSXKDj7IfNLydqwOhK_FIzC5Fzxs&index=309"],
     },{
         number:334,
@@ -2449,11 +2333,7 @@ const songsList = [
         number:335,
         titleTelugu: " ఓ యేసు రక్షక",
         titleEnglish:"o yesu, rakshaka",
-<<<<<<< HEAD
         author: "Rev. లూయిస్ హార్ట్ సౌ",
-=======
-        author: "లూయిస్ హార్ట్ సౌ",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=iyRMcB3Z2Ys&list=PLTKEOkSXKDj7IfNLydqwOhK_FIzC5Fzxs&index=311"],
     },{
         number:336,
@@ -2465,11 +2345,7 @@ const songsList = [
         number:337,
         titleTelugu: " తన యాక్రమములకు ",
         titleEnglish:"thana akramamulaku",
-<<<<<<< HEAD
         author: "Rev. మల్లెల దావీదు",
-=======
-        author: "మల్లెల దావీదు",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=-h-qi9iIaX4&list=PLTKEOkSXKDj7IfNLydqwOhK_FIzC5Fzxs&index=312"],
     },{
         number:338,
@@ -2481,31 +2357,19 @@ const songsList = [
         number:339,
         titleTelugu: " ఎంత పాపినైనను ",
         titleEnglish:"enta papinainanu",
-<<<<<<< HEAD
         author: "Rev. ఎర్డ్ మాన్ న్యూమీస్టెర్",
-=======
-        author: "ఎర్డ్ మాన్ న్యూమీస్టెర్",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=L1NYrRM7hvs&list=PLTKEOkSXKDj7IfNLydqwOhK_FIzC5Fzxs&index=313"],
     },{
         number:340,
         titleTelugu: " సిల్వ చెంత  నెసువ",
         titleEnglish:"Silva chenta nesuva",
-<<<<<<< HEAD
         author: "Rev. ఫ్రాన్సెస్ జేన్ వేన్ ఆల్స్ టీన్",
-=======
-        author: "ఫ్రాన్సెస్ జేన్ వేన్ ఆల్స్ టీన్",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=H4S3CBYruEc&list=PLTKEOkSXKDj7IfNLydqwOhK_FIzC5Fzxs&index=314"],
     },{
         number:341,
         titleTelugu: " దాగు నేది మాపున",
         titleEnglish:"daagunedi maapun",
-<<<<<<< HEAD
         author: "Rev. జేకబ్ చేంబర్లీన్",
-=======
-        author: "జేకబ్ చేంబర్లీన్",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=cGzY_neaqos&list=PLTKEOkSXKDj7IfNLydqwOhK_FIzC5Fzxs&index=315"],
     },{
         number:342,
@@ -2535,11 +2399,7 @@ const songsList = [
         number:346,
         titleTelugu: " యేసు నావదని ",
         titleEnglish:"yesu naavadani ",
-<<<<<<< HEAD
         author: "Rev. ఫ్రాన్సెస్ జేన్ వేన్ ఆల్స్ టీన్",
-=======
-        author: "ఫ్రాన్సెస్ జేన్ వేన్ ఆల్స్ టీన్",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=_Dd3t5M9OMM&list=PLTKEOkSXKDj7IfNLydqwOhK_FIzC5Fzxs&index=320"],
     },{
         number:347,
@@ -2582,11 +2442,7 @@ const songsList = [
         number:353,
         titleTelugu: " నేను క్రీస్తు ప్రభునిjeri ",
         titleEnglish:"nenu kreestu prabhuni jeri ",
-<<<<<<< HEAD
         author: "Rev. పి. రవివర్మ ",
-=======
-        author: "పి. రవివర్మ ",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=1jKDL4z3TSk&list=PLTKEOkSXKDj7IfNLydqwOhK_FIzC5Fzxs&index=327"],
     },
     {
@@ -2600,11 +2456,7 @@ const songsList = [
         number:355,
         titleTelugu: " యేసుని జేరా",
         titleEnglish:"yesuni jera",
-<<<<<<< HEAD
         author: "Rev. జి. ఎఫ్. రూట్",
-=======
-        author: "జి. ఎఫ్. రూట్",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=kpFvCAn8lrQ&list=PLTKEOkSXKDj7IfNLydqwOhK_FIzC5Fzxs&index=329"],
     },
     {
@@ -2658,11 +2510,7 @@ const songsList = [
         number:363,
         titleTelugu: " ఓ యేసు భక్తులారా",
         titleEnglish:"o yesu bhaktulaara",
-<<<<<<< HEAD
         author: "Rev. జార్జ్ డఫీల్డ్",
-=======
-        author: "జార్జ్ డఫీల్డ్",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=lkWtenVfDew&list=PLTKEOkSXKDj7IfNLydqwOhK_FIzC5Fzxs&index=335"],
     },{
         number:364,
@@ -2692,11 +2540,7 @@ const songsList = [
         number:368,
         titleTelugu: " భయమేల క్రైస్తవుండా",
         titleEnglish:"Bhayamela kraistavunda",
-<<<<<<< HEAD
         author: "Rev. ఏ.జి. జాన్ తాతయ్య",
-=======
-        author: " Rev. ఏ.జి. జాన్ తాతయ్య",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=bL4pitUoiKI&list=PLTKEOkSXKDj7IfNLydqwOhK_FIzC5Fzxs&index=339"],
     },{
         number:369,
@@ -2708,11 +2552,7 @@ const songsList = [
         number:370,
         titleTelugu: " నా దేవ ప్రభువ",
         titleEnglish:"Naa deva prabhuva",
-<<<<<<< HEAD
         author: "Rev. శారా ఫ్లవర్ ఆడమ్స్",
-=======
-        author: "శారా ఫ్లవర్ ఆడమ్స్",
->>>>>>> 26fb741 (Your descriptive commit message)
         youtubeLinks:["https://www.youtube.com/watch?v=3Gnk6Br2OPI&list=PLTKEOkSXKDj7IfNLydqwOhK_FIzC5Fzxs&index=341"],
     },{
         number:371,
@@ -3129,11 +2969,7 @@ const authorsList = [
         featuredYouTubeLinks: [] // Optional: Featured performances
     },
     {
-<<<<<<< HEAD
         name: "Rev. జొన్నకూటి దేవదానము",
-=======
-        name: "జొన్నకూటి దేవదానము",
->>>>>>> 26fb741 (Your descriptive commit message)
         nameEnglish: "Jonnakooti Devadanamu",
         bio: "An influential figure in Telugu Christian hymnody.",
         bioTelugu: "తెలుగు క్రైస్తవ గీతాలలో ప్రభావవంతమైన వ్యక్తి.",
@@ -3141,11 +2977,7 @@ const authorsList = [
         featuredYouTubeLinks: []
     },
     {
-<<<<<<< HEAD
         name: "Rev. ముంగమూరి దేవదాసు",
-=======
-        name: "ముంగమూరి దేవదాసు",
->>>>>>> 26fb741 (Your descriptive commit message)
         nameEnglish: "Mungamuri Devadasu",
         bio: "Known for his heartfelt hymns that touch the soul.",
         bioTelugu: "ఆత్మను స్పృశించే హృదయపూర్వక గీతాల కోసం ప్రసిద్ధి చెందారు.",
@@ -3153,11 +2985,7 @@ const authorsList = [
         featuredYouTubeLinks: []
     },
     {
-<<<<<<< HEAD
         name: "Rev. బుఱ్ఱారెడ్డి",
-=======
-        name: "బుఱ్ఱారెడ్డి",
->>>>>>> 26fb741 (Your descriptive commit message)
         nameEnglish: "Burrareddi",
         bio: "A prolific hymn writer with numerous contributions.",
         bioTelugu: "అనేక రచనలు చేసిన విస్తృత గీత రచయిత.",
@@ -3189,11 +3017,7 @@ const authorsList = [
         featuredYouTubeLinks: []
     },
     {
-<<<<<<< HEAD
         name: "Rev. లూయిస్ హార్ట్ సౌ",
-=======
-        name: "లూయిస్ హార్ట్ సౌ",
->>>>>>> 26fb741 (Your descriptive commit message)
         nameEnglish: "Louise Hart Sau",
         bio: "An influential hymn writer known for her devotional songs.",
         bioTelugu: "ఆధ్యాత్మిక గీతాల కోసం ప్రసిద్ధి చెందిన ప్రభావవంతమైన గీత రచయిత.",
@@ -3201,11 +3025,7 @@ const authorsList = [
         featuredYouTubeLinks: []
     },
     {
-<<<<<<< HEAD
         name: "Rev. జేకబ్ చేంబర్లీన్",
-=======
-        name: "జేకబ్ చేంబర్లీన్",
->>>>>>> 26fb741 (Your descriptive commit message)
         nameEnglish: "Jacob Chamberlain",
         bio: "A well-known author of spiritual hymns.",
         bioTelugu: "ఆధ్యాత్మిక గీతాల ప్రసిద్ధ రచయిత.",
@@ -3245,12 +3065,8 @@ const authorsList = [
         featuredYouTubeLinks: []
     },
     {
-<<<<<<< HEAD
         name: "Rev. ఫ్రాన్సెస్ జేన్ వేన్ ఆల్స్ టీన్",
-=======
-        name: "ఫ్రాన్సెస్ జేన్ వేన్ ఆల్స్ టీన్",
->>>>>>> 26fb741 (Your descriptive commit message)
-        nameEnglish: "Frances Jane Van Alstyne",
+        nameEnglish: "Rev. Frances Jane Van Alstyne",
         bio: "A celebrated hymn writer with a lasting impact.",
         bioTelugu: "ఒక ప్రసిద్ధ గీత రచయిత, దీర్ఘకాల ప్రభావంతో.",
         songs: [14, 340, 346],

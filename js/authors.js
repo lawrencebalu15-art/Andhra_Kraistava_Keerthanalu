@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function() {
             authorFilter.appendChild(option);
         });
 
-<<<<<<< HEAD
         authorFilter.addEventListener('change', function() {
             if (this.value) {
                 // Find matches IN songs data by normalized name
@@ -50,28 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     (author.songs && author.songs.find(num => authorSongNumbers.includes(num))) ||
                     (normalizeAuthorName(author.name) === selectedNorm)
                 );
-=======
-    // Populate Author Filter with unique names
-    const authorSet = new Set();
-    authorsList.forEach(author => {
-        if (author.name && author.name.trim()) {
-            authorSet.add(author.name.trim());
-        }
-    });
-    const authorFilter = document.getElementById('authorFilter');
-    if (authorFilter) {
-        authorFilter.innerHTML = '<option value="">All Authors</option>';
-        authorSet.forEach(author => {
-            const option = document.createElement('option');
-            option.value = author;
-            option.textContent = author;
-            authorFilter.appendChild(option);
-        });
-
-        authorFilter.addEventListener('change', function() {
-            if (this.value) {
-                filteredAuthors = authorsList.filter(author => author.name.trim() === this.value);
->>>>>>> 26fb741 (Your descriptive commit message)
             } else {
                 filteredAuthors = [...authorsList];
             }
@@ -79,11 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-<<<<<<< HEAD
     // 3. Author display logic
-=======
-    // Display authors
->>>>>>> 26fb741 (Your descriptive commit message)
     displayAuthors(filteredAuthors);
 
     // 4. Search functionality
@@ -106,15 +79,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const searchTerm = authorSearch.value.toLowerCase().trim();
         filteredAuthors = authorsList.filter(author => {
             const matchesName = author.name.toLowerCase().includes(searchTerm) ||
-<<<<<<< HEAD
                             (author.nameEnglish && author.nameEnglish.toLowerCase().includes(searchTerm));
             const matchesBio = (author.bio && author.bio.toLowerCase().includes(searchTerm)) ||
                             (author.bioTelugu && author.bioTelugu.toLowerCase().includes(searchTerm));
-=======
-                               author.nameEnglish.toLowerCase().includes(searchTerm);
-            const matchesBio = author.bio.toLowerCase().includes(searchTerm) ||
-                             (author.bioTelugu && author.bioTelugu.toLowerCase().includes(searchTerm));
->>>>>>> 26fb741 (Your descriptive commit message)
             return matchesName || matchesBio;
         });
         applySort();
@@ -164,18 +131,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 ${author.featuredYouTubeLinks.map(link => {
                     const videoId = extractYouTubeId(link);
                     if (videoId) {
-<<<<<<< HEAD
                         return `<a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" class="youtube-link" rel="noopener noreferrer">
                                 <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="Video thumbnail" class="youtube-thumbnail" />
                                 <div class="play-button"></div>
                                 Watch on YouTube ↗
-=======
-                        // Only link, no embed:
-                        return `<a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" class="youtube-link" rel="noopener noreferrer">
-                                  <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="Video thumbnail" class="youtube-thumbnail" />
-                                  <div class="play-button"></div>
-                                  Watch on YouTube ↗
->>>>>>> 26fb741 (Your descriptive commit message)
                                 </a>`;
                     }
                     return `<a href="${link}" target="_blank" class="youtube-link" rel="noopener noreferrer">Watch on YouTube ↗</a>`;
