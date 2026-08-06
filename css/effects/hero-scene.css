@@ -1,0 +1,42 @@
+/* =========================================
+   HERO SECTION
+========================================= */
+
+.hero{
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+/* =========================================
+   THREE CANVAS
+========================================= */
+
+#hero-canvas{
+
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    z-index:0;
+
+    pointer-events:none;
+
+}
+
+/* =========================================
+   HERO CONTENT
+========================================= */
+
+.hero-container{
+
+    position:relative;
+
+    z-index:2;
+
+}

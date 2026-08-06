@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- ===================================
+        META
+    ==================================== -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hymns | Andhra Kraistava Keerthanalu - Kavulu</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+    <!-- ===================================
+        STYLES
+    ==================================== -->
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages/hymns.css">
+</head>
+
+<body>
+
+    <!-- ===================================
+        SEARCH MODAL PLACEHOLDER
+    ==================================== -->
+
+    <div id="searchModalContainer"></div>
+
+    <main>
+<!-- ===================================
+            NAVBAR
+        ==================================== -->
+<div id="pageHeaderContainer"></div>
+        <div id="navbar"></div>
+
+        <!-- ===================================
+            TOOLBAR
+        ==================================== -->
+
+        <section class="toolbar">
+
+            <div class="container">
+
+                <!-- Search -->
+
+                <div class="search-wrapper">
+
+                    <input
+                        id="searchInput"
+                        type="search"
+                        placeholder="🔍 Search by hymn number, Telugu title, English title or author...">
+
+                </div>
+
+                <!-- Sort -->
+
+                <div class="sort-wrapper">
+
+                    <label for="sortSelect">
+                        Sort By
+                    </label>
+
+                    <select id="sortSelect">
+
+                        <option value="number-asc">
+                            Hymn Number (Ascending)
+                        </option>
+
+                        <option value="number-desc">
+                            Hymn Number (Descending)
+                        </option>
+
+                        <option value="telugu-asc">
+                            Telugu Alphabet (అ → హ)
+                        </option>
+
+                        <option value="telugu-desc">
+                            Telugu Alphabet (హ → అ)
+                        </option>
+
+                        <option value="author-asc">
+                            Author (A → Z)
+                        </option>
+
+                        <option value="author-desc">
+                            Author (Z → A)
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Dynamic Filters -->
+
+                <div id="languageContainer"></div>
+
+                <div id="alphabetContainer"></div>
+
+                <div id="numberContainer"></div>
+
+                <div id="categoryContainer"></div>
+
+            </div>
+
+        </section>
+
+        <!-- ===================================
+            RESULTS
+        ==================================== -->
+
+        <section class="section">
+
+            <div class="container">
+
+                <!-- Results Counter -->
+
+                <div class="results-bar">
+
+                    <span id="resultsText">
+                        Showing 0 Hymns
+                    </span>
+
+                </div>
+
+                <!-- Hymns Table -->
+
+                <section class="hymns-table-section">
+
+                    <div class="hymns-table">
+
+                        <div class="table-header">
+
+                            <div class="col-number">
+                                No.
+                            </div>
+
+                            <div class="col-title">
+                                Hymn Title
+                            </div>
+
+                            <div class="col-author">
+                                Author
+                            </div>
+
+                            <div class="col-youtube">
+                                YouTube
+                            </div>
+
+                        </div>
+
+                        <div
+                            id="hymnsBody"
+                            class="table-body">
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- ===================================
+        COMPONENT PLACEHOLDERS
+    ==================================== -->
+
+    <div id="searchModal"></div>
+
+    <div id="footer"></div>
+
+    <!-- ===================================
+        SCRIPTS
+    ==================================== -->
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/pages/hymns.js"></script>
+
+</body>
+
+</html>

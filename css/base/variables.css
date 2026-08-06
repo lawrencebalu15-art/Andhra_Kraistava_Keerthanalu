@@ -1,0 +1,243 @@
+/* ==========================================================
+   AKK DESIGN SYSTEM
+   Andhra Kraistava Keerthanalu
+   Version: 1.0
+========================================================== */
+
+:root{
+
+    /* ======================================================
+       BRAND COLORS
+    ====================================================== */
+
+    --primary:#3D4A57;
+    --primary-light:#566575;
+    --primary-dark:#2A3440;
+
+    --secondary:#8B7355;
+    --secondary-light:#A68B67;
+    --secondary-dark:#6F5A42;
+
+    --accent:#C49A4A;
+    --accent-light:#D8B46A;
+    --accent-dark:#A47C31;
+
+    /* ======================================================
+       SEMANTIC COLORS
+    ====================================================== */
+
+    --success:#22C55E;
+    --warning:#F59E0B;
+    --danger:#EF4444;
+    --info:#3B82F6;
+
+    /* ======================================================
+       CRIMSON PALETTE
+    ====================================================== */
+
+    --crimson-100:#FDEBEC;
+    --crimson-200:#F8CFCF;
+    --crimson-300:#F2A9A9;
+    --crimson-400:#D97A7A;
+    --crimson-500:#B84040;
+    --crimson-600:#8E2A2A;
+
+    /* ======================================================
+       SURFACE COLORS
+    ====================================================== */
+
+    --background:#F8FAFC;
+    --surface:#FFFFFF;
+    --surface-alt:#F1F5F9;
+    --surface-hover:#E2E8F0;
+
+    --border:#DDD6CA;
+    --border-light:#ECE7DE;
+
+    /* ======================================================
+       TEXT COLORS
+    ====================================================== */
+
+    --heading:#1E293B;
+    --text:#334155;
+    --text-light:#64748B;
+    --text-muted:#94A3B8;
+    --white:#FFFFFF;
+
+    /* ======================================================
+       TYPOGRAPHY
+    ====================================================== */
+
+    --font-heading:"Playfair Display", serif;
+
+    --font-body:"Source Sans Pro", sans-serif;
+
+    --font-telugu:
+        "Ponnala",
+        "Noto Serif Telugu",
+        serif;
+
+    --font-body-telugu:
+        "Nirmala UI",
+        "Noto Sans Telugu",
+        "Gautami",
+        sans-serif;
+
+    /* ======================================================
+       FONT WEIGHTS
+    ====================================================== */
+
+    --fw-light:300;
+    --fw-normal:400;
+    --fw-medium:500;
+    --fw-semibold:600;
+    --fw-bold:700;
+
+    /* ======================================================
+       FONT SIZES
+    ====================================================== */
+
+    --fs-xs:.75rem;
+    --fs-sm:.875rem;
+    --fs-base:1rem;
+    --fs-lg:1.125rem;
+    --fs-xl:1.25rem;
+    --fs-2xl:1.5rem;
+    --fs-3xl:2rem;
+    --fs-4xl:2.75rem;
+    --fs-5xl:3.5rem;
+
+    /* ======================================================
+       LINE HEIGHT
+    ====================================================== */
+
+    --lh-tight:1.2;
+    --lh-normal:1.6;
+    --lh-relaxed:1.9;
+
+    /* ======================================================
+       SPACING SCALE
+    ====================================================== */
+
+    --space-1:4px;
+    --space-2:8px;
+    --space-3:12px;
+    --space-4:16px;
+    --space-5:20px;
+    --space-6:24px;
+    --space-7:32px;
+    --space-8:40px;
+    --space-9:48px;
+    --space-10:64px;
+    --space-11:80px;
+    --space-12:96px;
+
+    /* ======================================================
+       BORDER RADIUS
+    ====================================================== */
+
+    --radius-xs:4px;
+    --radius-sm:8px;
+    --radius-md:12px;
+    --radius-lg:18px;
+    --radius-xl:24px;
+    --radius-2xl:32px;
+    --radius-round:999px;
+
+    /* ======================================================
+       SHADOWS
+    ====================================================== */
+
+    --shadow-xs:
+        0 1px 3px rgba(15,23,42,.05);
+
+    --shadow-sm:
+        0 4px 10px rgba(15,23,42,.06);
+
+    --shadow-md:
+        0 10px 30px rgba(15,23,42,.08);
+
+    --shadow-lg:
+        0 20px 50px rgba(15,23,42,.12);
+
+    --shadow-xl:
+        0 30px 80px rgba(15,23,42,.18);
+
+    /* ======================================================
+       TRANSITIONS
+    ====================================================== */
+
+    --transition-fast:.2s ease;
+
+    --transition:.3s ease;
+
+    --transition-slow:.5s ease;
+
+    /* ======================================================
+       CONTAINER
+    ====================================================== */
+
+    --container:1320px;
+
+    --container-sm:640px;
+
+    --container-md:768px;
+
+    --container-lg:1024px;
+
+    --container-xl:1320px;
+
+    /* ======================================================
+       HEADER
+    ====================================================== */
+
+    --navbar-height:80px;
+
+    /* ======================================================
+       Z INDEX
+    ====================================================== */
+
+    --z-navbar:1000;
+
+    --z-dropdown:1100;
+
+    --z-modal:1200;
+
+    --z-overlay:1300;
+
+    --z-toast:1400;
+
+    --z-loader:1500;
+
+}
+
+/* ==========================================================
+   RESPONSIVE BREAKPOINTS
+
+   Mobile : 480px
+   Tablet : 768px
+   Laptop : 1024px
+   Desktop: 1280px
+   Large  : 1440px
+========================================================== */
+
+/* ==========================================================
+   LOCAL FONT
+========================================================== */
+
+@font-face{
+
+    font-family:"Ponnala";
+
+    src:
+        url("../../assets/fonts/Ponnala-Regular.woff2") format("woff2"),
+        url("../../assets/fonts/Ponnala-Regular.woff") format("woff"),
+        url("../../assets/fonts/Ponnala-Regular.ttf") format("truetype");
+
+    font-weight:400;
+
+    font-style:normal;
+
+    font-display:swap;
+
+}

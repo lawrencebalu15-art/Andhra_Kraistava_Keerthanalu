@@ -1,0 +1,275 @@
+/* ==========================================================
+   AKK DESIGN SYSTEM
+   LAYOUT
+   Version: 1.0
+========================================================== */
+
+
+/* ==========================================================
+   CONTAINERS
+========================================================== */
+
+.container{
+
+    width:min(92%, var(--container));
+
+    margin-inline:auto;
+
+}
+
+.container-sm{
+
+    width:min(92%, 900px);
+
+    margin-inline:auto;
+
+}
+
+.container-xs{
+
+    width:min(92%, 700px);
+
+    margin-inline:auto;
+
+}
+
+
+/* ==========================================================
+   SECTIONS
+========================================================== */
+
+.section{
+
+    padding:var(--space-11) 0;
+
+}
+
+.section-sm{
+
+    padding:var(--space-8) 0;
+
+}
+
+.section-lg{
+
+    padding:var(--space-12) 0;
+
+}
+
+
+/* ==========================================================
+   SECTION HEADER
+========================================================== */
+
+.section-header{
+
+    margin-bottom:var(--space-9);
+
+}
+
+.section-title{
+
+    font-family:var(--font-heading);
+
+    font-size:clamp(2rem,4vw,3rem);
+
+    margin-bottom:var(--space-4);
+
+    color:var(--heading);
+
+}
+
+.section-subtitle{
+
+    max-width:720px;
+
+    color:var(--text-light);
+
+    margin-inline:auto;
+
+    line-height:var(--lh-relaxed);
+
+}
+
+
+/* ==========================================================
+   GRID
+========================================================== */
+
+.grid{
+
+    display:grid;
+
+    gap:var(--space-7);
+
+}
+
+.grid-2{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+.grid-3{
+
+    grid-template-columns:repeat(3,1fr);
+
+}
+
+.grid-4{
+
+    grid-template-columns:repeat(4,1fr);
+
+}
+
+
+/* ==========================================================
+   FLEX
+========================================================== */
+
+.flex{
+
+    display:flex;
+
+}
+
+.flex-center{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+.flex-between{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+}
+
+.flex-column{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+
+/* ==========================================================
+   STACK
+========================================================== */
+
+.stack{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:var(--space-6);
+
+}
+
+
+/* ==========================================================
+   CLUSTER
+========================================================== */
+
+.cluster{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:var(--space-4);
+
+    align-items:center;
+
+}
+
+
+/* ==========================================================
+   TEXT
+========================================================== */
+
+.text-center{
+
+    text-align:center;
+
+}
+
+.text-left{
+
+    text-align:left;
+
+}
+
+.text-right{
+
+    text-align:right;
+
+}
+
+
+/* ==========================================================
+   WIDTH
+========================================================== */
+
+.w-100{
+
+    width:100%;
+
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media(max-width:1024px){
+
+    .grid-4{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .section{
+
+        padding:var(--space-9) 0;
+
+    }
+
+    .section-header{
+
+        margin-bottom:var(--space-7);
+
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .flex-between{
+
+        flex-direction:column;
+
+        gap:var(--space-5);
+
+    }
+
+}

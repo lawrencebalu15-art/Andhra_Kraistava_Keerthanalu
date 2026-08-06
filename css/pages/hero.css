@@ -1,0 +1,42 @@
+.hero-intro{
+    width: 100%;
+    background:url('/assets/backgrounds/main.png')center/cover no-repeat;
+    z-index: -100px;
+
+}
+
+
+.hero-intro-content{
+
+    max-width: 900px;
+
+    margin: 0 auto;
+
+
+    text-align: center;
+
+}
+.hero-title{
+    font-family: "Ponnala",
+        "Noto Serif Telugu",
+        serif;
+    
+    position: relative;
+    padding: auto;
+
+}
+
+.hero-buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+
+}
+

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hymn | Andhra Kraistava Keerthanalu</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages/hymn.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+</head>
+
+<body>
+
+<div id="navbar"></div>
+<div id="searchModalContainer"></div>
+
+<main>
+    <section class="hymn-hero">
+
+    <div class="container">
+
+        <a href="hymns.html" class="back-link">
+            ← Back to Hymns
+        </a>
+
+        <div class="hero-grid">
+
+            <!-- Left Side -->
+            <div class="hero-content">
+
+                <span class="hero-number" id="hymnNumber"></span>
+
+                <h1 id="hymnTitle"></h1>
+
+                <p id="hymnEnglishTitle" class="hero-english"></p>
+
+            </div>
+
+            <!-- Right Side -->
+            <a href="#" id="authorCard" class="author-card">
+
+            <div class="author-photo-wrapper">
+
+                <img
+                    id="authorImage"
+                    src="assets/authors/default-author.jpg"
+                    alt="Author">
+
+</div>
+
+<span class="author-label">
+    Hymn Author
+</span>
+
+<h3 id="authorName"></h3>
+
+<p id="authorEnglishName"></p>
+
+<span class="author-link">
+    View Author Profile →
+</span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+    <section class="metadata-section">
+
+    <div class="container">
+
+        <div class="metadata-grid">
+
+            <div class="metadata-card">
+
+                <span class="metadata-label">
+                    Hymn Number
+                </span>
+
+                <span id="metaNumber" class="metadata-value"></span>
+
+            </div>
+
+           <div class="metadata-card">
+
+    <span class="metadata-label">
+        Collection
+    </span>
+
+    <span class="metadata-value">
+        Andhra Kraistava Keerthanalu
+    </span>
+
+</div>
+            <div class="metadata-card">
+
+                <span class="metadata-label">
+                    Language
+                </span>
+
+                <span class="metadata-value">
+                    Telugu
+                </span>
+
+            </div>
+
+            <div class="metadata-card">
+
+                <span class="metadata-label">
+                    Recordings
+                </span>
+
+                <span id="recordingCount" class="metadata-value">
+                    0
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+    <section class="container">
+
+        <div class="youtube-section">
+
+            <h3>YouTube Recordings</h3>
+
+            <div id="youtubeLinks"></div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<div id="footer"></div>
+
+<script type="module" src="js/main.js"></script>
+<script type="module" src="js/pages/hymn.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,880 @@
+/* ===================================
+   SECTION HEADER
+=================================== */
+
+.section-header{
+
+    display:flex;
+    background: none;
+    justify-content:space-between;
+    
+
+
+    align-items:end;
+
+    margin-bottom:50px;
+
+    gap:0px;
+
+}
+
+.section-label{
+
+    display:inline-block;
+
+    margin-bottom:12px;
+
+    color:var(--accent); 
+
+    text-transform:uppercase;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+}
+
+.section-title{
+    color:rgb(241, 0, 0)}
+/* ===================================
+   GRID
+=================================== */
+
+.cards-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:20px;
+
+}
+
+/* ===================================
+   CARD
+=================================== */
+
+.card{
+
+    background:url('/assets/backgrounds/card.png') center/cover no-repeat;
+
+    padding:35px;
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    transition:.35s;
+
+    cursor:pointer;
+
+}
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:var(--shadow);
+
+    border-color:var(--secondary);
+
+}
+
+.card-number{
+
+    display:inline-block;
+
+    margin-bottom:18px;
+
+    color:var(--accent);
+
+    font-size:.9rem;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+}
+
+.card h3{
+
+    font-family:var(--font-telugu);
+
+    font-size:1.6rem;
+
+    margin-bottom:10px;
+
+    color:rgb(231, 165, 0);
+
+}
+
+.card p{
+
+    color:antiquewhite;
+
+    margin-bottom:12px;
+
+}
+
+.card small{
+
+    color:beige;
+
+}
+/* ===================================
+   AUTHORS
+=================================== */
+
+.authors-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:30px;
+
+}
+
+.author-card{
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    padding:35px;
+
+    transition:.35s;
+
+}
+
+.author-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:var(--shadow);
+
+}
+
+.author-avatar{
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:50%;
+
+    background:var(--primary);
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:1.3rem;
+
+    font-weight:700;
+
+    margin-bottom:24px;
+
+}
+
+.author-card h3{
+
+    font-family:var(--font-heading);
+
+    font-size:1.5rem;
+
+    margin-bottom:10px;
+
+}
+
+.author-role{
+
+    color:var(--accent);
+
+    font-weight:600;
+
+    margin-bottom:18px;
+
+}
+
+.author-description{
+
+    color:var(--text-light);
+
+    margin-bottom:25px;
+
+    line-height:1.8;
+
+}
+
+.author-link{
+
+    color:var(--primary);
+
+    font-weight:600;
+
+}
+
+.author-link:hover{
+
+    color:var(--secondary);
+
+}
+/* ===================================
+   STATISTICS
+=================================== */
+
+.stats{
+
+    background:var(--primary);
+
+    padding:30px 0;
+
+    color:#fff;
+
+}
+
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:30px;
+
+}
+
+.stat-card{
+
+    text-align:center;
+
+    padding:5px;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    transition:.35s;
+
+}
+
+.stat-card:hover{
+
+    transform:translateY(-8px);
+
+    background:rgba(255,255,255,.15);
+
+}
+
+.stat-card h2{
+
+    font-family:var(--font-heading);
+
+    font-size:3rem;
+
+    margin-bottom:12px;
+
+    color:#fff;
+
+}
+
+.stat-card p{
+
+    font-size:1.05rem;
+
+    color:rgba(255,255,255,.85);
+
+}
+/* ===================================
+INTERVIEWS
+=================================== */
+
+.interview-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:30px;
+
+}
+
+.interview-card{
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    overflow:hidden;
+
+    transition:.35s;
+
+}
+
+.interview-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:var(--shadow);
+
+}
+
+.interview-image{
+
+    height:220px;
+
+    overflow:hidden;
+
+}
+
+.interview-image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    transition:.5s;
+
+}
+
+.interview-card:hover img{
+
+    transform:scale(1.08);
+
+}
+
+.interview-content{
+
+    padding:28px;
+
+}
+
+.interview-category{
+
+    display:inline-block;
+
+    margin-bottom:14px;
+
+    color:var(--accent);
+
+    font-size:.85rem;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+}
+
+.interview-content h3{
+
+    font-family:var(--font-heading);
+
+    font-size:1.5rem;
+
+    margin-bottom:14px;
+
+    color:var(--primary);
+
+}
+
+.interview-content p{
+
+    color:var(--text-light);
+
+    margin-bottom:22px;
+
+    line-height:1.8;
+
+}
+/* ===================================
+   BOOKS
+=================================== */
+
+.books-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:30px;
+
+}
+
+.book-card{
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    overflow:hidden;
+
+    transition:.35s;
+
+}
+
+.book-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:var(--shadow);
+
+}
+
+.book-cover{
+
+    height:320px;
+
+    overflow:hidden;
+
+    background:#eee;
+
+}
+
+.book-cover img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    transition:.4s;
+
+}
+
+.book-card:hover img{
+
+    transform:scale(1.05);
+
+}
+
+.book-content{
+
+    padding:28px;
+
+}
+
+.book-category{
+
+    display:inline-block;
+
+    margin-bottom:12px;
+
+    color:var(--accent);
+
+    font-size:.85rem;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+}
+
+.book-content h3{
+
+    font-family:var(--font-heading);
+
+    font-size:1.5rem;
+
+    margin-bottom:14px;
+
+    color:var(--primary);
+
+}
+
+.book-content p{
+
+    color:var(--text-light);
+
+    margin-bottom:20px;
+
+    line-height:1.8;
+
+}
+/* ===================================
+   VIDEOS
+=================================== */
+
+.videos-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:30px;
+
+}
+
+.video-card{
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    overflow:hidden;
+
+    transition:.35s;
+
+}
+
+.video-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:var(--shadow);
+
+}
+
+.video-thumbnail{
+
+    position:relative;
+
+    height:230px;
+
+    overflow:hidden;
+
+}
+
+.video-thumbnail img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    transition:.4s;
+
+}
+
+.video-card:hover img{
+
+    transform:scale(1.05);
+
+}
+
+.play-button{
+
+    position:absolute;
+
+    inset:0;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:3rem;
+
+    color:white;
+
+    background:rgba(0,0,0,.25);
+
+    transition:.3s;
+
+}
+
+.video-card:hover .play-button{
+
+    background:rgba(0,0,0,.45);
+
+}
+
+.video-content{
+
+    padding:28px;
+
+}
+
+.video-category{
+
+    display:inline-block;
+
+    margin-bottom:12px;
+
+    color:var(--accent);
+
+    font-size:.85rem;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+}
+
+.video-content h3{
+
+    font-family:var(--font-heading);
+
+    color:var(--primary);
+
+    margin-bottom:14px;
+
+    font-size:1.5rem;
+
+}
+
+.video-content p{
+
+    color:var(--text-light);
+
+    line-height:1.8;
+
+}
+/* ===================================
+   MISSION
+=================================== */
+
+.mission{
+
+    padding:110px 0;
+
+    background:var(--background);
+
+}
+
+.mission-grid{
+
+    display:grid;
+
+    grid-template-columns:1.1fr .9fr;
+
+    gap:70px;
+
+    align-items:center;
+
+}
+
+.mission-content p{
+
+    margin-bottom:24px;
+
+    color:var(--text-light);
+
+    line-height:1.9;
+
+    font-size:1.05rem;
+
+}
+
+.mission-buttons{
+
+    display:flex;
+
+    gap:18px;
+
+    margin-top:35px;
+
+    flex-wrap:wrap;
+
+}
+
+.mission-box{
+
+    display:grid;
+
+    gap:22px;
+
+}
+
+.mission-item{
+
+    background:white;
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    padding:30px;
+
+    transition:.35s;
+
+}
+
+.mission-item:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:var(--shadow);
+
+}
+
+.mission-item h3{
+
+    font-size:2rem;
+
+    margin-bottom:15px;
+
+}
+
+.mission-item h4{
+
+    font-family:var(--font-heading);
+
+    font-size:1.4rem;
+
+    margin-bottom:12px;
+
+    color:var(--primary);
+
+}
+
+.mission-item p{
+
+    color:var(--text-light);
+
+    line-height:1.7;
+
+}
+/* ===================================
+   FOOTER
+=================================== */
+
+.footer{
+
+    background:var(--primary);
+
+    color:#fff;
+
+    padding:80px 0 30px;
+
+}
+
+.footer-grid{
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr 1fr 1.2fr;
+
+    gap:50px;
+
+    margin-bottom:60px;
+
+}
+
+.footer-logo{
+
+    font-family:var(--font-telugu);
+
+    font-size:1.8rem;
+
+    margin-bottom:20px;
+
+}
+
+.footer-column h4{
+
+    margin-bottom:22px;
+
+    font-size:1.1rem;
+
+}
+
+.footer-column p{
+
+    color:rgba(255,255,255,.8);
+
+    line-height:1.8;
+
+}
+
+.footer-column ul{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+}
+
+.footer-column a{
+
+    color:rgba(255,255,255,.8);
+
+    transition:.3s;
+
+}
+
+.footer-column a:hover{
+
+    color:white;
+
+    padding-left:8px;
+
+}
+
+.social-links{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+    margin-top:12px;
+
+}
+
+.footer-bottom{
+
+    border-top:1px solid rgba(255,255,255,.15);
+
+    padding-top:25px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:20px;
+
+}
+
+#backToTop{
+
+    background:white;
+
+    color:var(--primary);
+
+    border:none;
+
+    border-radius:50px;
+
+    padding:12px 20px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+#backToTop:hover{
+
+    background:var(--accent);
+
+    color:white;
+
+}

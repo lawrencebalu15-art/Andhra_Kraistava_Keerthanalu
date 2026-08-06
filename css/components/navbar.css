@@ -1,0 +1,320 @@
+/* ==========================================
+   HEADER
+========================================== */
+
+.header{
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid #e5e7eb;
+background:
+        linear-gradient(
+            rgba(255,250,240,.95),
+            rgba(252,245,228,.96)
+        );
+
+    box-shadow: 0 2px 15px rgba(0,0,0,.05);
+
+}
+
+/* ==========================================
+   NAVBAR
+========================================== */
+
+.navbar{
+    max-width: 100%;
+    margin: 0 auto;
+    height: 75px;
+    padding: 0 40px;
+    border-radius: 0 0 50px 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+}
+
+/* ==========================================
+   MENU
+========================================== */
+
+.nav-menu{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    list-style: none;
+
+    gap: 42px;
+
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item{
+    position: relative;
+}
+
+.nav-link{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    text-decoration: none;
+
+    color: #000000;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    height: 75px;
+
+    transition: .3s ease;
+
+    position: relative;
+}
+
+.nav-link:hover{
+    color: var(--accent);
+}
+
+/* underline */
+
+.nav-link::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+
+    bottom:18px;
+
+    width:0;
+
+    height:2px;
+
+    background:var(--accent);
+
+    transform:translateX(-50%);
+
+    transition:.3s;
+
+}
+
+.nav-link:hover::after,
+
+.nav-link.active::after{
+
+    width:100%;
+
+}
+
+.nav-link.active{
+
+    color:var(--accent);
+
+}
+
+/* ==========================================
+   SEARCH
+========================================== */
+
+.nav-actions{
+
+    position:absolute;
+
+    right:40px;
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+.search-btn{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    border:1px solid #e5e7eb;
+
+    background:#fff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.search-btn:hover{
+
+    background:var(--accent);
+
+    color:#fff;
+
+}
+/* ==========================================
+   DROPDOWN
+========================================== */
+
+.dropdown-menu{
+    position:absolute;
+    top:100%;
+    left:50%;
+    transform:translateX(-50%);
+
+    min-width:220px;
+
+    background:#fff;
+
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.25s ease;
+
+    overflow:hidden;
+}
+
+.dropdown:hover .dropdown-menu{
+    opacity:1;
+    visibility:visible;
+}
+
+.dropdown-menu a{
+    display:block;
+
+    padding:14px 20px;
+
+    color:#333;
+
+    text-decoration:none;
+
+    transition:.25s;
+}
+
+.dropdown-menu a:hover{
+    background:#f8f8f8;
+    color:var(--accent);
+}
+
+/* ==========================================
+   MOBILE BUTTON
+========================================== */
+
+.menu-toggle{
+    display:none;
+
+    position:absolute;
+    left:20px;
+
+    width:42px;
+    height:42px;
+
+    border:none;
+    background:none;
+
+    cursor:pointer;
+
+    font-size:22px;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width:992px){
+
+    .navbar{
+        justify-content:flex-end;
+        padding:0 20px;
+    }
+
+    .menu-toggle{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+    }
+
+    .nav-menu{
+
+        position:absolute;
+
+        top:75px;
+        left:0;
+        right:0;
+
+        background:#fff;
+
+        display:none;
+        flex-direction:column;
+
+        gap:0;
+
+        box-shadow:0 10px 20px rgba(0,0,0,.08);
+
+        border-top:1px solid #eee;
+    }
+
+    .nav-menu.active{
+        display:flex;
+    }
+
+    .nav-item{
+        width:100%;
+    }
+
+    .nav-link{
+
+        height:auto;
+
+        padding:18px 24px;
+
+        justify-content:space-between;
+    }
+
+    .nav-link::after{
+        display:none;
+    }
+
+    .dropdown-menu{
+
+        position:static;
+
+        transform:none;
+
+        border:none;
+
+        border-radius:0;
+
+        box-shadow:none;
+
+        opacity:1;
+
+        visibility:visible;
+
+        display:none;
+    }
+
+    .dropdown.active .dropdown-menu{
+        display:block;
+    }
+
+    .nav-actions{
+        right:70px;
+    }
+}

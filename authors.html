@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Andhra Kraistava Keerthanalu | Authors</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+    <!-- Dynamic Header -->
+    <div id="pageHeaderContainer"></div>
+
+    <!-- Navbar -->
+    <div id="navbar"></div>
+
+    <main>
+
+        <!-- ======================================================
+            HERO
+        ======================================================= -->
+
+        <section class="authors-hero">
+
+            <div class="container">
+
+                <span class="section-label">
+                    KAVULU
+                </span>
+
+                <h1 class="page-title telugu">
+                    ఆంధ్ర క్రైస్తవ కీర్తన రచయితలు
+                </h1>
+
+                <p class="page-description">
+                    Discover the blessed men and women who enriched Telugu Christian
+                    literature through hymns, poems, and spiritual writings that
+                    continue to inspire believers today.
+                </p>
+
+                <a href="#authors" class="btn btn-primary">
+                    Explore Authors
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- ======================================================
+            STATISTICS
+        ======================================================= -->
+
+        <section class="stats">
+
+            <div class="container">
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+                        <h2 id="totalHymns">0</h2>
+                        <p>Telugu Hymns</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h2 id="totalAuthors">0</h2>
+                        <p>Hymn Writers</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h2 id="totalBooks">0</h2>
+                        <p>Books</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h2>Growing</h2>
+                        <p>Digital Archive</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ======================================================
+            SEARCH
+        ======================================================= -->
+
+        <section class="authors-search section">
+
+            <div class="container">
+
+                <div class="search-wrapper">
+
+                    <input
+                        id="authorSearch"
+                        class="search-input"
+                        type="text"
+                        placeholder="Search authors...">
+
+                    <!-- Hidden until Categories are implemented -->
+                    <select
+                        id="authorCategory"
+                        class="search-select"
+                        style="display:none;">
+
+                        <option value="all">All Categories</option>
+
+                    </select>
+
+                    <select
+                        id="authorSort"
+                        class="search-select">
+
+                        <option value="az">
+                            Sort A-Z
+                        </option>
+
+                        <option value="za">
+                            Sort Z-A
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ======================================================
+            AUTHORS
+        ======================================================= -->
+
+        <section
+            id="authors"
+            class="section">
+
+            <div class="container">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            AUTHORS
+                        </span>
+
+                        <h2>
+                            Featured Authors
+                        </h2>
+
+                    </div>
+
+                </div>
+
+                <!-- Loading -->
+
+                <div
+                    id="authorsLoading"
+                    class="loading-state">
+
+                    <i class="fas fa-spinner fa-spin"></i>
+
+                    <p>
+                        Loading authors...
+                    </p>
+
+                </div>
+
+                <!-- Grid -->
+
+                <div
+                    id="authorsGrid"
+                    class="authors-grid">
+
+                </div>
+
+                <!-- Empty State -->
+
+                <div
+                    id="authorsEmpty"
+                    class="empty-state"
+                    style="display:none;">
+
+                    <i class="fas fa-user-slash"></i>
+
+                    <h3>
+                        No Authors Found
+                    </h3>
+
+                    <p>
+                        Try a different search.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Global Search -->
+
+    <div id="searchModal"></div>
+
+    <!-- Footer -->
+
+    <div id="footer"></div>
+
+
+    <!-- Scripts -->
+
+    <script type="module" src="js/main.js"></script>
+
+    <script type="module" src="js/pages/authors.js"></script>
+
+</body>
+
+</html>

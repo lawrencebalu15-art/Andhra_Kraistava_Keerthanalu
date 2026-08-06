@@ -1,0 +1,200 @@
+.global-search{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(15,23,42,.45);
+
+    backdrop-filter:blur(12px);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:flex-start;
+
+    padding-top:8vh;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.25s;
+
+    z-index:9999;
+
+}
+
+.global-search.active{
+
+    opacity:1;
+
+    visibility:visible;
+
+}
+
+.search-panel{
+
+    width:min(760px,92%);
+
+    background:#fff;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    box-shadow:0 25px 60px rgba(0,0,0,.25);
+
+    transform:translateY(-20px);
+
+    transition:.25s;
+
+}
+
+.global-search.active .search-panel{
+
+    transform:translateY(0);
+
+}
+
+.search-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    padding:18px 24px;
+
+    border-bottom:1px solid #ececec;
+
+}
+
+.search-icon{
+
+    width:22px;
+
+    height:22px;
+
+    stroke:#888;
+
+    fill:none;
+
+    stroke-width:2;
+
+}
+
+.search-header input{
+
+    flex:1;
+
+    border:none;
+
+    outline:none;
+
+    font-size:18px;
+
+    background:none;
+
+}
+
+.close-search{
+
+    border:none;
+
+    background:none;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+}
+
+.search-results{
+
+    max-height:520px;
+
+    overflow-y:auto;
+
+}
+
+.search-empty{
+
+    padding:32px;
+
+}
+
+.popular-searches{
+
+    margin-top:24px;
+
+}
+
+.popular-chip{
+
+    margin:6px;
+
+    padding:8px 16px;
+
+    border:none;
+
+    border-radius:999px;
+
+    background:#eef2f7;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.popular-chip:hover{
+
+    background:#dbe7f5;
+
+}
+.search-result{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+    padding:16px 24px;
+
+    text-decoration:none;
+
+    color:inherit;
+
+    border-bottom:1px solid #eee;
+
+    transition:.2s;
+
+}
+
+.search-result:hover{
+
+    background:#f8f8f8;
+
+}
+
+.result-icon{
+
+    font-size:24px;
+
+}
+
+.result-content h4{
+
+    margin:0;
+
+}
+
+.result-content small{
+
+    color:#666;
+
+}

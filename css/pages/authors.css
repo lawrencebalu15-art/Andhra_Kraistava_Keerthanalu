@@ -1,0 +1,131 @@
+/* ===================================
+   HERO
+=================================== */
+
+.authors-hero{
+
+    padding:30px 0 90px;
+
+    background:linear-gradient(
+        135deg,
+        var(--background),
+        #fff
+    );
+
+    text-align:center;
+
+}
+
+.page-title{
+
+    font-size:clamp(2.5rem,5vw,4rem);
+
+    margin-bottom:20px;
+
+    color:var(--primary);
+
+}
+
+.page-description{
+
+    max-width:760px;
+
+    margin:0 auto 40px;
+
+    color:var(--text-light);
+
+    font-size:1.1rem;
+
+    line-height:1.8;
+
+}
+
+
+/* ===================================
+   SEARCH
+=================================== */
+
+.search-wrapper{
+
+    display:flex;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+}
+
+.search-input{
+
+    flex:1;
+
+    min-width:320px;
+
+    padding:16px 20px;
+
+    border:1px solid var(--border);
+
+    border-radius:10px;
+
+    font-size:1rem;
+
+}
+
+.search-select{
+
+    padding:16px 20px;
+
+    border:1px solid var(--border);
+
+    border-radius:10px;
+
+    background:white;
+
+    cursor:pointer;
+
+}
+
+
+/* ===================================
+   AUTHORS PAGE
+=================================== */
+
+.authors-grid{
+
+    margin-top:50px;
+
+}
+/* ===================================
+   AUTHORS STATISTICS
+=================================== */
+
+.authors-stats{
+
+    background: var(--primary);
+
+    padding: 90px 0;
+
+}
+.loading-state{
+    text-align:center;
+    padding:60px 20px;
+}
+
+.loading-state i{
+    font-size:2rem;
+    color:var(--primary-color);
+    margin-bottom:10px;
+}
+
+.empty-state{
+    text-align:center;
+    padding:80px 20px;
+}
+
+.empty-state i{
+    font-size:3rem;
+    color:#999;
+    margin-bottom:20px;
+}

@@ -1,0 +1,32 @@
+.visitor-counter {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 8px 16px;
+
+    background: rgba(255,255,255,.08);
+    backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 999px;
+
+    font-size: .9rem;
+    font-weight: 500;
+
+    color: var(--text-color);
+
+    transition: all .3s ease;
+}
+
+.visitor-counter:hover {
+    transform: translateY(-2px);
+}
+
+.visitor-counter-icon {
+    color: var(--primary-color);
+}
+
+.visitor-counter-number {
+    font-weight: 700;
+}

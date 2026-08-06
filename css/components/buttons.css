@@ -1,0 +1,287 @@
+/* ==========================================================
+   AKK DESIGN SYSTEM
+   BUTTONS
+   Version: 1.0
+========================================================== */
+
+
+/* ==========================================================
+   BASE BUTTON
+========================================================== */
+
+.btn{
+
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:var(--space-2);
+
+    padding:14px 28px;
+
+    font-family:var(--font-body);
+    font-size:var(--fs-base);
+    font-weight:var(--fw-semibold);
+
+    border:none;
+    border-radius:var(--radius-md);
+
+    cursor:pointer;
+
+    transition:
+        background var(--transition),
+        color var(--transition),
+        border-color var(--transition),
+        transform var(--transition-fast),
+        box-shadow var(--transition);
+
+    user-select:none;
+    white-space:nowrap;
+}
+
+.btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:var(--shadow-md);
+
+}
+
+.btn:active{
+
+    transform:translateY(0);
+
+}
+
+.btn:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+    pointer-events:none;
+
+}
+
+
+/* ==========================================================
+   PRIMARY
+========================================================== */
+
+.btn-primary{
+
+    background:var(--primary);
+
+    color:var(--white);
+
+}
+
+.btn-primary:hover{
+
+    background:var(--primary-dark);
+
+}
+
+
+/* ==========================================================
+   SECONDARY
+========================================================== */
+
+.btn-secondary{
+
+    background:var(--secondary);
+
+    color:var(--white);
+
+}
+
+.btn-secondary:hover{
+
+    background:var(--secondary-dark);
+
+}
+
+
+/* ==========================================================
+   ACCENT
+========================================================== */
+
+.btn-accent{
+
+    background:var(--accent);
+
+    color:var(--white);
+
+}
+
+.btn-accent:hover{
+
+    background:var(--accent-dark);
+
+}
+
+
+/* ==========================================================
+   OUTLINE
+========================================================== */
+
+.btn-outline{
+
+    background:transparent;
+
+    color:var(--primary);
+
+    border:2px solid var(--primary);
+
+}
+
+.btn-outline:hover{
+
+    background:var(--primary);
+
+    color:var(--white);
+
+}
+
+
+/* ==========================================================
+   GHOST
+========================================================== */
+
+.btn-ghost{
+
+    background:transparent;
+
+    color:var(--primary);
+
+}
+
+.btn-ghost:hover{
+
+    background:var(--surface-hover);
+
+}
+
+
+/* ==========================================================
+   LIGHT
+========================================================== */
+
+.btn-light{
+
+    background:var(--surface);
+
+    color:var(--heading);
+
+    border:1px solid var(--border);
+
+}
+
+.btn-light:hover{
+
+    background:var(--surface-hover);
+
+}
+
+
+/* ==========================================================
+   BUTTON SIZES
+========================================================== */
+
+.btn-sm{
+
+    padding:10px 18px;
+
+    font-size:var(--fs-sm);
+
+}
+
+.btn-md{
+
+    padding:14px 28px;
+
+}
+
+.btn-lg{
+
+    padding:18px 36px;
+
+    font-size:var(--fs-lg);
+
+}
+
+
+/* ==========================================================
+   FULL WIDTH
+========================================================== */
+
+.btn-block{
+
+    display:flex;
+
+    width:100%;
+
+}
+
+
+/* ==========================================================
+   ICON BUTTON
+========================================================== */
+
+.btn-icon{
+
+    width:48px;
+
+    height:48px;
+
+    padding:0;
+
+    border-radius:50%;
+
+}
+
+
+/* ==========================================================
+   ROUNDED BUTTON
+========================================================== */
+
+.btn-pill{
+
+    border-radius:var(--radius-round);
+
+}
+
+
+/* ==========================================================
+   BUTTON GROUP
+========================================================== */
+
+.btn-group{
+
+    display:flex;
+
+    gap:var(--space-3);
+
+    flex-wrap:wrap;
+
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media(max-width:768px){
+
+    .btn{
+
+        width:100%;
+
+    }
+
+    .btn-group{
+
+        flex-direction:column;
+
+    }
+
+}

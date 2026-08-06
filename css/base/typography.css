@@ -1,0 +1,283 @@
+/* ==========================================================
+   AKK DESIGN SYSTEM
+   TYPOGRAPHY
+========================================================== */
+
+/* ==========================================================
+   BODY
+========================================================== */
+
+body{
+    font-family:var(--font-body);
+    font-size:var(--fs-base);
+    font-weight:var(--fw-normal);
+    line-height:var(--lh-normal);
+
+    color:var(--text);
+    background:var(--background);
+
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+
+    text-rendering:optimizeLegibility;
+}
+
+/* ==========================================================
+   HEADINGS
+========================================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+
+    font-family:var(--font-heading);
+
+    color:var(--heading);
+
+    font-weight:var(--fw-bold);
+
+    line-height:var(--lh-tight);
+
+    margin-bottom:var(--space-4);
+
+}
+
+h1{
+    font-size:clamp(2.5rem,5vw,4rem);
+}
+
+h2{
+    font-size:clamp(2rem,4vw,3rem);
+}
+
+h3{
+    font-size:clamp(1.6rem,3vw,2.2rem);
+}
+
+h4{
+    font-size:1.5rem;
+}
+
+h5{
+    font-size:1.25rem;
+}
+
+h6{
+    font-size:1rem;
+}
+
+/* ==========================================================
+   PARAGRAPHS
+========================================================== */
+
+p{
+
+    margin-bottom:var(--space-5);
+
+    color:var(--text);
+
+    line-height:var(--lh-relaxed);
+
+}
+
+/* ==========================================================
+   LINKS
+========================================================== */
+
+a{
+
+    color:inherit;
+
+    text-decoration:none;
+
+    transition:var(--transition);
+
+}
+
+a:hover{
+
+    color:var(--accent);
+
+}
+
+/* ==========================================================
+   LISTS
+========================================================== */
+
+ul,
+ol{
+
+    margin-bottom:var(--space-5);
+
+    padding-left:var(--space-6);
+
+}
+
+li{
+
+    margin-bottom:var(--space-2);
+
+}
+
+/* ==========================================================
+   EMPHASIS
+========================================================== */
+
+strong{
+
+    font-weight:var(--fw-bold);
+
+}
+
+em{
+
+    font-style:italic;
+
+}
+
+small{
+
+    font-size:var(--fs-sm);
+
+    color:var(--text-light);
+
+}
+
+/* ==========================================================
+   CODE
+========================================================== */
+
+code{
+
+    font-family:monospace;
+
+    background:var(--surface-alt);
+
+    padding:2px 6px;
+
+    border-radius:var(--radius-sm);
+
+    font-size:.9em;
+
+}
+
+/* ==========================================================
+   SELECTION
+========================================================== */
+
+::selection{
+
+    background:var(--accent);
+
+    color:var(--white);
+
+}
+
+/* ==========================================================
+   TELUGU TEXT
+========================================================== */
+
+.telugu{
+
+    font-family:var(--font-telugu);
+
+    line-height:1.9;
+
+    letter-spacing:.02em;
+
+}
+
+/* ==========================================================
+   TELUGU BODY
+========================================================== */
+
+.telugu-body{
+
+    font-family:var(--font-body-telugu);
+
+    line-height:2;
+
+}
+
+/* ==========================================================
+   TEXT UTILITIES
+========================================================== */
+
+.text-center{
+
+    text-align:center;
+
+}
+
+.text-left{
+
+    text-align:left;
+
+}
+
+.text-right{
+
+    text-align:right;
+
+}
+
+.text-muted{
+
+    color:var(--text-light);
+
+}
+
+.text-accent{
+
+    color:var(--accent);
+
+}
+
+.text-primary{
+
+    color:var(--primary);
+
+}
+
+.text-secondary{
+
+    color:var(--secondary);
+
+}
+
+/* ==========================================================
+   FONT WEIGHT UTILITIES
+========================================================== */
+
+.fw-light{
+
+    font-weight:var(--fw-light);
+
+}
+
+.fw-normal{
+
+    font-weight:var(--fw-normal);
+
+}
+
+.fw-medium{
+
+    font-weight:var(--fw-medium);
+
+}
+
+.fw-semibold{
+
+    font-weight:var(--fw-semibold);
+
+}
+
+.fw-bold{
+
+    font-weight:var(--fw-bold);
+
+}
