@@ -3,34 +3,41 @@ import { supabase } from "../supabase.js";
 let songsList = [];
 
 async function loadSongs() {
+    console.log("loadSongs started");
 
-    const { data, error } = await supabase
-        .from("hymns")
-        .select(`
-            *,
-            authors(name),
-            books(name),
-            categories(name)
-        `);
+    try {
+        const { data, error } = await supabase
+            .from("hymns")
+            .select(`
+                *,
+                authors(name),
+                books(name),
+                categories(name)
+            `);
 
-    if (error) {
-        console.error(error);
-        return;
+        console.log("Supabase response:", { data, error });
+
+        if (error) {
+            console.error("Supabase error:", error);
+            return;
+        }
+
+        songsList = data.map(song => ({
+            ...song,
+            author: song.authors?.name || "Unknown",
+            book: song.books?.name || "",
+            category: song.categories?.name || "",
+            titleTelugu: song.title_telugu,
+            titleEnglish: song.title_english,
+            youtubeLinks: song.youtube_links || []
+        }));
+
+        console.log("Loaded", songsList.length, "songs");
+
+        initialize();
+    } catch (err) {
+        console.error("loadSongs crashed:", err);
     }
-
-    songsList = data.map(song => ({
-        ...song,
-        author: song.authors?.name || "Unknown",
-        book: song.books?.name || "",
-        category: song.categories?.name || "",
-        titleTelugu: song.title_telugu,
-        titleEnglish: song.title_english,
-        youtubeLinks: song.youtube_links || []
-    }));
-
-    console.log("Loaded", songsList.length, "songs");
-
-    initialize();
 }
 
 loadSongs();
