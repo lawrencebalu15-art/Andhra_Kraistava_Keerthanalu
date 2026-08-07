@@ -8,7 +8,7 @@ let editingHymn = null;
 import { showToast } from "./utils.js";
 
 
-import { supabase } from "../../js/supabase.js";
+import { supabase } from "./supabase.js";
 
 /* ==========================================
 MODAL
