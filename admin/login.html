@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login | Andhra Kraistava Keerthanalu</title>
+
+    <link rel="stylesheet" href="./css/admin.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body class="login-page">
+
+    <div class="login-container">
+
+        <div class="login-card">
+
+            <div class="login-logo">
+
+                <h1>Andhra Kraistava Keerthanalu</h1>
+
+                <p>Content Management System</p>
+
+            </div>
+
+            <form id="loginForm">
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                        required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required>
+
+                </div>
+
+                <div class="login-options">
+
+                    <label class="remember-me">
+
+                        <input
+                            type="checkbox"
+                            id="rememberMe">
+
+                        <span>Remember Me</span>
+
+                    </label>
+
+                </div>
+
+                <button
+                    type="submit"
+                    id="loginButton"
+                    class="login-btn">
+
+                    Sign In
+
+                </button>
+
+                <p
+                    id="loginError"
+                    class="error-message">
+
+                </p>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <script type="module" src="./js/auth.js"></script>
+
+</body>
+
+</html>
