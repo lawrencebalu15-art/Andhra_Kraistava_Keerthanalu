@@ -1,23 +1,22 @@
 /**
- * ==========================================
+ * ===========================================
  * Andhra Kraistava Keerthanalu
- * Global Search
- * ==========================================
+ * Global Search (Supabase Version)
+ * ===========================================
  */
 
-import { searchSongs } from "./utils/hymn-utils.js";
+import { supabase } from "./supabase.js";
 
 let initialized = false;
 
 /* ==========================================
-   INITIALIZE GLOBAL SEARCH
+   INITIALIZE
 ========================================== */
 
 export function initializeGlobalSearch() {
 
     if (initialized) return;
 
-    // Wait until navbar and modal are loaded
     setTimeout(() => {
 
         const openButton = document.getElementById("openSearch");
@@ -39,14 +38,9 @@ export function initializeGlobalSearch() {
 
         initialized = true;
 
-        /* ==========================================
-           OPEN SEARCH
-        ========================================== */
-
         function openSearch() {
 
             modal.classList.add("active");
-
             document.body.style.overflow = "hidden";
 
             input.value = "";
@@ -57,29 +51,20 @@ export function initializeGlobalSearch() {
 
         }
 
-        /* ==========================================
-           CLOSE SEARCH
-        ========================================== */
-
         function closeSearch() {
 
             modal.classList.remove("active");
-
             document.body.style.overflow = "";
 
         }
-
-        /* ==========================================
-           BUTTON EVENTS
-        ========================================== */
 
         openButton.addEventListener("click", openSearch);
 
         closeButton.addEventListener("click", closeSearch);
 
-        modal.addEventListener("click", (event) => {
+        modal.addEventListener("click", (e) => {
 
-            if (event.target === modal) {
+            if (e.target === modal) {
 
                 closeSearch();
 
@@ -87,20 +72,16 @@ export function initializeGlobalSearch() {
 
         });
 
-        document.addEventListener("keydown", (event) => {
+        document.addEventListener("keydown", (e) => {
 
-            if (
-                (event.ctrlKey || event.metaKey) &&
-                event.key.toLowerCase() === "k"
-            ) {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
 
-                event.preventDefault();
-
+                e.preventDefault();
                 openSearch();
 
             }
 
-            if (event.key === "Escape") {
+            if (e.key === "Escape") {
 
                 closeSearch();
 
@@ -112,56 +93,154 @@ export function initializeGlobalSearch() {
            LIVE SEARCH
         ========================================== */
 
+        let debounce;
+
         input.addEventListener("input", () => {
 
-            const query = input.value
-                .trim()
-                .toLowerCase();
+            clearTimeout(debounce);
 
-            if (!query) {
+            debounce = setTimeout(async () => {
 
-                renderEmpty(resultsContainer);
+                const query = input.value.trim();
 
-                return;
+                if (!query) {
 
-            }
+                    renderEmpty(resultsContainer);
+                    return;
 
-            const results = searchSongs(query => {
+                }
 
-                return (
+                const results = await searchSongs(query);
 
-                    String(song.number ?? "")
-                        .includes(query)
+                renderResults(resultsContainer, results);
 
-                    ||
-
-                    (song.titleTelugu ?? "")
-                        .toLowerCase()
-                        .includes(query)
-
-                    ||
-
-                    (song.titleEnglish ?? "")
-                        .toLowerCase()
-                        .includes(query)
-
-                    ||
-
-                    (song.author ?? "")
-                        .toLowerCase()
-                        .includes(query)
-
-                );
-
-            });
-
-            renderResults(resultsContainer, results);
+            }, 250);
 
         });
 
         renderEmpty(resultsContainer);
 
     }, 200);
+
+}
+
+/* ==========================================
+   SEARCH DATABASE
+========================================== */
+
+async function searchSongs(query) {
+
+    const isNumber = /^\d+$/.test(query);
+
+    let request = supabase
+        .from("hymns")
+        .select(`
+            number,
+            title_telugu,
+            title_english,
+            authors(name)
+        `);
+
+    if (isNumber) {
+
+        request = request.eq("number", Number(query));
+
+    } else {
+
+        // Search Telugu title first
+        let response = await supabase
+            .from("hymns")
+            .select(`
+                number,
+                title_telugu,
+                title_english,
+                authors(name)
+            `)
+            .ilike("title_telugu", `%${query}%`)
+            .limit(20);
+
+        if (!response.error && response.data.length > 0) {
+
+            return response.data.map(song => ({
+                number: song.number,
+                titleTelugu: song.title_telugu,
+                titleEnglish: song.title_english,
+                author: song.authors?.name || ""
+            }));
+
+        }
+
+        // Search English title
+        response = await supabase
+            .from("hymns")
+            .select(`
+                number,
+                title_telugu,
+                title_english,
+                authors(name)
+            `)
+            .ilike("title_english", `%${query}%`)
+            .limit(20);
+
+        if (!response.error && response.data.length > 0) {
+
+            return response.data.map(song => ({
+                number: song.number,
+                titleTelugu: song.title_telugu,
+                titleEnglish: song.title_english,
+                author: song.authors?.name || ""
+            }));
+
+        }
+
+        // Search author
+        response = await supabase
+            .from("hymns")
+            .select(`
+                number,
+                title_telugu,
+                title_english,
+                authors(name)
+            `)
+            .limit(20);
+
+        if (response.error) {
+
+            console.error(response.error);
+            return [];
+
+        }
+
+        return response.data
+            .filter(song =>
+                (song.authors?.name || "")
+                    .toLowerCase()
+                    .includes(query.toLowerCase())
+            )
+            .map(song => ({
+                number: song.number,
+                titleTelugu: song.title_telugu,
+                titleEnglish: song.title_english,
+                author: song.authors?.name || ""
+            }));
+
+    }
+
+    const { data, error } = await request.limit(20);
+
+    if (error) {
+
+        console.error(error);
+        return [];
+
+    }
+
+    return data.map(song => ({
+        number: song.number,
+        titleTelugu: song.title_telugu,
+        titleEnglish: song.title_english,
+        author: song.authors?.name || ""
+    }));
 
 }
 
@@ -174,15 +253,10 @@ function renderResults(container, results) {
     if (!results.length) {
 
         container.innerHTML = `
-
             <div class="search-empty">
-
                 <h2>No Results Found</h2>
-
                 <p>Try another search term.</p>
-
             </div>
-
         `;
 
         return;
@@ -196,9 +270,7 @@ function renderResults(container, results) {
             class="search-result">
 
             <div class="result-icon">
-
                 🎵
-
             </div>
 
             <div class="result-content">
@@ -206,11 +278,9 @@ function renderResults(container, results) {
                 <h4>${song.titleTelugu || "Untitled"}</h4>
 
                 <small>
-
                     Hymn ${song.number}
-
-                    ${song.titleEnglish ? `• ${song.titleEnglish}` : ""}
-
+                    ${song.titleEnglish ? ` • ${song.titleEnglish}` : ""}
+                    ${song.author ? ` • ${song.author}` : ""}
                 </small>
 
             </div>
@@ -228,19 +298,12 @@ function renderResults(container, results) {
 function renderEmpty(container) {
 
     container.innerHTML = `
-
         <div class="search-empty">
-
             <h2>Search Everything</h2>
-
             <p>
-
                 Search hymns, authors, books, interviews and more.
-
             </p>
-
         </div>
-
     `;
 
 }
