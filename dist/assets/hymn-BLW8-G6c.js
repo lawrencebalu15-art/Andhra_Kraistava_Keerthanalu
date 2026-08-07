@@ -1,4 +1,4 @@
-import{s as c}from"./supabase-C4TjTvDq.js";import"./main-CCVxK76c.js";const d=new URLSearchParams(window.location.search),l=Number(d.get("id"));async function g(){const{data:e,error:t}=await c.from("hymns").select(`
+import{s as c}from"./main-BCvRdaWF.js";const d=new URLSearchParams(window.location.search),l=Number(d.get("id"));async function g(){const{data:e,error:t}=await c.from("hymns").select(`
             *,
             authors(name),
             books(name),
