@@ -9,6 +9,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
+        // Public Website
         main: resolve(__dirname, "index.html"),
         hymns: resolve(__dirname, "hymns.html"),
         hymn: resolve(__dirname, "hymn.html"),
@@ -20,6 +21,19 @@ export default defineConfig({
         about: resolve(__dirname, "about.html"),
         contact: resolve(__dirname, "contact.html"),
         support: resolve(__dirname, "support.html"),
+
+        // Admin
+        adminLogin: resolve(__dirname, "admin/login.html"),
+        adminDashboard: resolve(__dirname, "admin/dashboard.html"),
+        adminIndex: resolve(__dirname, "admin/index.html"),
+
+        adminHymns: resolve(__dirname, "admin/pages/hymns.html"),
+        adminAuthors: resolve(__dirname, "admin/pages/authors.html"),
+        adminBooks: resolve(__dirname, "admin/pages/books.html"),
+        adminCategories: resolve(__dirname, "admin/pages/categories.html"),
+        adminMedia: resolve(__dirname, "admin/pages/media.html"),
+        adminUsers: resolve(__dirname, "admin/pages/users.html"),
+        adminSettings: resolve(__dirname, "admin/pages/settings.html"),
       },
     },
   },
