@@ -1,6 +1,5 @@
 import { requireAuth, logout } from "./auth.js";
 import { supabase } from "./supabase.js";
-
 /* ==========================================
    START
 ========================================== */

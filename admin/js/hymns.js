@@ -5,6 +5,7 @@ const PAGE_SIZE = 50;
 
 let currentPage = 1;
 let editingHymn = null;
+
 import { showToast } from "./utils.js";
 
 

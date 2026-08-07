@@ -581,6 +581,11 @@ body{
 .page-header{
 
     display:flex;
+    font-size:25px;
+    font-weight:1000;
+    text-transform:capitalize;
+    background: URL('../images/admin-header-bg.jpg') no-repeat center center;
+    padding: 15px;
     justify-content:space-between;
     align-items:center;
     margin-bottom:30px;
@@ -594,6 +599,7 @@ body{
     color:#fff;
     padding:12px 20px;
     border-radius:10px;
+    border:1px solid #060606;
     cursor:pointer;
     font-weight:600;
 
@@ -613,10 +619,10 @@ body{
 
 .search-input{
 
-    width:350px;
+    width:500px;
     max-width:100%;
-    padding:12px 16px;
-    border:1px solid #dbe2ea;
+    padding:15px 16px;
+    border:2px solid #9db9d9;
     border-radius:10px;
     font-size:15px;
 
