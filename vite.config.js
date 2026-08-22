@@ -27,6 +27,7 @@ export default defineConfig({
         adminDashboard: resolve(__dirname, "admin/dashboard.html"),
         adminIndex: resolve(__dirname, "admin/index.html"),
 
+        adminInterviews: resolve(__dirname, "admin/pages/interviews.html"),
         adminHymns: resolve(__dirname, "admin/pages/hymns.html"),
         adminAuthors: resolve(__dirname, "admin/pages/authors.html"),
         adminBooks: resolve(__dirname, "admin/pages/books.html"),
