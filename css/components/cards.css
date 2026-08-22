@@ -23,8 +23,7 @@
     display:inline-block;
 
     margin-bottom:12px;
-
-    color:var(--accent); 
+    
 
     text-transform:uppercase;
 
@@ -35,7 +34,11 @@
 }
 
 .section-title{
-    color:rgb(241, 0, 0)}
+    color:rgb(0, 0, 0)}
+
+.section-subtitle{
+    color: black;
+}
 /* ===================================
    GRID
 =================================== */
@@ -48,6 +51,10 @@
 
     gap:20px;
 
+}
+
+.section{
+background:rgba(250, 235, 215, 0.44);
 }
 
 /* ===================================
@@ -121,390 +128,307 @@
     color:beige;
 
 }
+
 /* ===================================
    AUTHORS
 =================================== */
 
-.authors-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
-
-    gap:30px;
-
+.authors-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
 }
 
-.author-card{
-
-    background:var(--surface);
-
-    border:1px solid var(--border);
-
-    border-radius:16px;
-
-    padding:35px;
-
-    transition:.35s;
-
+.author-card {
+    background-color: #fdfaf2; /* Warm, aged paper base */
+    border-radius: 16px;
+    padding: 35px;
+    transition: .35s;
+    position: relative; 
+    overflow: hidden;   
+    z-index: 1;
+    
+    /* VINTAGE INNER BORDER: Creates a gorgeous double-frame effect inside the card */
+    box-shadow: 
+        inset 0 0 0 2px #3b0202, /* Inner dark burgundy ring */
+        inset 0 0 0 4px #fdfaf2, /* Spacing gap */
+        inset 0 0 0 5px #d4af37, /* Delicate outer gold frame ring */
+        0 4px 15px rgba(59, 2, 2, 0.03);
 }
 
-.author-card:hover{
-
-    transform:translateY(-8px);
-
-    box-shadow:var(--shadow);
-
+/* VINTAGE GRAPHIC TEXTURE: Adds an explicit, beautifully visible musical scroll pattern */
+.author-card::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 0;
+    
+    /* Uses a highly stylized vintage music note pattern overlay */
+    background-image: url('https://transparenttextures.com'); 
+    background-repeat: repeat;
+    
+    /* Elegant vignette shading that darkens the edges like burned parchment */
+    background: radial-gradient(
+        circle at 90% 90%, 
+        rgba(212, 175, 55, 0.15) 0%, 
+        rgba(59, 2, 2, 0.03) 100%
+    );
+    
+    opacity: 0.8;
+    z-index: -1;
+    pointer-events: none;
 }
 
-.author-avatar{
-
-    width:70px;
-
-    height:70px;
-
-    border-radius:50%;
-
-    background:var(--primary);
-
-    color:white;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-size:1.3rem;
-
-    font-weight:700;
-
-    margin-bottom:24px;
-
+/* Hover State Enhancement */
+.author-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 
+        inset 0 0 0 2px #d4af37, /* Frame flips to golden-dominant on hover */
+        inset 0 0 0 4px #fdfaf2, 
+        inset 0 0 0 5px #3b0202,
+        0 16px 30px rgba(59, 2, 2, 0.12); /* Deep warm shadow pop */
 }
 
-.author-card h3{
 
-    font-family:var(--font-heading);
-
-    font-size:1.5rem;
-
-    margin-bottom:10px;
-
+.author-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #3b0202; /* Theme Burgundy */
+    color: #f5f5dc;      /* Theme Cream text */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    border: 2px solid rgba(212, 175, 55, 0.2); /* Soft gold ring */
 }
 
-.author-role{
-
-    color:var(--accent);
-
-    font-weight:600;
-
-    margin-bottom:18px;
-
+.author-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #1a1a1a;
 }
 
-.author-description{
-
-    color:var(--text-light);
-
-    margin-bottom:25px;
-
-    line-height:1.8;
-
+.author-role {
+    color: #d4af37; /* Clean branding gold color matching theme accent */
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
 }
 
-.author-link{
-
-    color:var(--primary);
-
-    font-weight:600;
-
+.author-description {
+    color: #555555; /* Softened from pitch black for easier reading */
+    margin-bottom: 25px;
+    line-height: 1.8;
 }
 
-.author-link:hover{
+.author-link {
+    color: #3b0202; /* Burgundy base text */
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    transition: color .25s ease;
+}
 
-    color:var(--secondary);
-
+.author-link:hover {
+    color: #d4af37; /* Changes to theme gold on hover */
 }
 /* ===================================
    STATISTICS
 =================================== */
-
-.stats{
-
-    background:var(--primary);
-
-    padding:30px 0;
-
-    color:#fff;
-
+.stats {
+    background: #3b0202; /* Deep burgundy background matching your branding */
+    padding: 40px 0;
+    color: #fff;
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
 }
 
-.stats-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(4,1fr);
-
-    gap:30px;
-
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
 }
 
-.stat-card{
-
-    text-align:center;
-
-    padding:5px;
-
-    border-radius:16px;
-
-    background:rgba(255,255,255,.08);
-
-    border:1px solid rgba(255,255,255,.12);
-
-    transition:.35s;
-
+.stat-card {
+    text-align: center;
+    padding: 20px 10px; /* Increased vertical padding for layout balance */
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(212, 175, 55, 0.15); /* Soft gold tint borders */
+    transition: .35s ease;
 }
 
-.stat-card:hover{
-
-    transform:translateY(-8px);
-
-    background:rgba(255,255,255,.15);
-
+.stat-card:hover {
+    transform: translateY(-8px);
+    background: rgba(212, 175, 55, 0.08); /* Glows subtle gold on hover */
+    border-color: #d4af37;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
-.stat-card h2{
-
-    font-family:var(--font-heading);
-
-    font-size:3rem;
-
-    margin-bottom:12px;
-
-    color:#fff;
-
+.stat-card h2 {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    margin-bottom: 8px;
+    color: #ffcc00; /* Bright gold for prominent metric counts */
+    font-weight: 700;
 }
 
-.stat-card p{
-
-    font-size:1.05rem;
-
-    color:rgba(255,255,255,.85);
-
+.stat-card p {
+    font-size: 1rem;
+    color: #f5f5dc; /* High-readability soft cream subtext */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
 }
+
 /* ===================================
-INTERVIEWS
+   INTERVIEWS
 =================================== */
-
-.interview-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
-
-    gap:30px;
-
+.interview-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
 }
 
-.interview-card{
-
-    background:var(--surface);
-
-    border:1px solid var(--border);
-
-    border-radius:16px;
-
-    overflow:hidden;
-
-    transition:.35s;
-
+.interview-card {
+    background: #ffffff;
+    border: 1px solid rgba(59, 2, 2, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: .35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 4px 15px rgba(59, 2, 2, 0.02);
 }
 
-.interview-card:hover{
-
-    transform:translateY(-8px);
-
-    box-shadow:var(--shadow);
-
+.interview-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(212, 175, 55, 0.4);
+    box-shadow: 0 16px 30px rgba(59, 2, 2, 0.08); /* Warm signature shadow */
 }
 
-.interview-image{
-
-    height:220px;
-
-    overflow:hidden;
-
+.interview-image {
+    height: 220px;
+    overflow: hidden;
+    background: #fdfaf2;
 }
 
-.interview-image img{
-
-    width:100%;
-
-    height:100%;
-
-    object-fit:cover;
-
-    transition:.5s;
-
+.interview-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .5s ease;
 }
 
-.interview-card:hover img{
-
-    transform:scale(1.08);
-
+.interview-card:hover img {
+    transform: scale(1.06);
 }
 
-.interview-content{
-
-    padding:28px;
-
+.interview-content {
+    padding: 28px;
 }
 
-.interview-category{
-
-    display:inline-block;
-
-    margin-bottom:14px;
-
-    color:var(--accent);
-
-    font-size:.85rem;
-
-    font-weight:700;
-
-    text-transform:uppercase;
-
+.interview-category {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: #d4af37; /* Clean champagne gold category labels */
+    font-size: .85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.interview-content h3{
-
-    font-family:var(--font-heading);
-
-    font-size:1.5rem;
-
-    margin-bottom:14px;
-
-    color:var(--primary);
-
+.interview-content h3 {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+    color: #3b0202; /* Deep burgundy for titles */
+    font-weight: 700;
 }
 
-.interview-content p{
-
-    color:var(--text-light);
-
-    margin-bottom:22px;
-
-    line-height:1.8;
-
+.interview-content p {
+    color: #555555; /* Soft charcoal-gray layout readability */
+    margin-bottom: 22px;
+    line-height: 1.7;
 }
+
 /* ===================================
    BOOKS
 =================================== */
-
-.books-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
-
-    gap:30px;
-
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
 }
 
-.book-card{
-
-    background:var(--surface);
-
-    border:1px solid var(--border);
-
-    border-radius:16px;
-
-    overflow:hidden;
-
-    transition:.35s;
-
+.book-card {
+    background: #ffffff;
+    border: 1px solid rgba(59, 2, 2, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: .35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 4px 15px rgba(59, 2, 2, 0.02);
 }
 
-.book-card:hover{
-
-    transform:translateY(-8px);
-
-    box-shadow:var(--shadow);
-
+.book-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(212, 175, 55, 0.4);
+    box-shadow: 0 16px 30px rgba(59, 2, 2, 0.08);
 }
 
-.book-cover{
-
-    height:320px;
-
-    overflow:hidden;
-
-    background:#eee;
-
+.book-cover {
+    height: 340px; /* Slightly heightened to display vertical book ratios beautifully */
+    overflow: hidden;
+    background: #fdfaf2;
+    border-bottom: 1px solid rgba(59, 2, 2, 0.05);
 }
 
-.book-cover img{
-
-    width:100%;
-
-    height:100%;
-
-    object-fit:cover;
-
-    transition:.4s;
-
+.book-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .5s ease;
 }
 
-.book-card:hover img{
-
-    transform:scale(1.05);
-
+.book-card:hover img {
+    transform: scale(1.04);
 }
 
-.book-content{
-
-    padding:28px;
-
+.book-content {
+    padding: 28px;
 }
 
-.book-category{
-
-    display:inline-block;
-
-    margin-bottom:12px;
-
-    color:var(--accent);
-
-    font-size:.85rem;
-
-    font-weight:700;
-
-    text-transform:uppercase;
-
+.book-category {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: #d4af37; /* Theme gold branding text */
+    font-size: .85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.book-content h3{
-
-    font-family:var(--font-heading);
-
-    font-size:1.5rem;
-
-    margin-bottom:14px;
-
-    color:var(--primary);
-
+.book-content h3 {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+    color: #3b0202; /* Theme burgundy branding text */
+    font-weight: 700;
 }
 
-.book-content p{
-
-    color:var(--text-light);
-
-    margin-bottom:20px;
-
-    line-height:1.8;
-
+.book-content p {
+    color: #555555;
+    margin-bottom: 20px;
+    line-height: 1.7;
 }
+
 /* ===================================
    VIDEOS
 =================================== */
@@ -633,248 +557,446 @@ INTERVIEWS
 
 .video-content p{
 
-    color:var(--text-light);
+    color:black;
 
     line-height:1.8;
 
 }
+
 /* ===================================
-   MISSION
+   GLOBAL & CONTAINER SETUPS
 =================================== */
-
-.mission{
-
-    padding:110px 0;
-
-    background:var(--background);
-
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
-.mission-grid{
-
-    display:grid;
-
-    grid-template-columns:1.1fr .9fr;
-
-    gap:70px;
-
-    align-items:center;
-
+.section-label {
+    display: inline-block;
+    color: #d4af37; /* Theme Gold */
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
 }
 
-.mission-content p{
-
-    margin-bottom:24px;
-
-    color:var(--text-light);
-
-    line-height:1.9;
-
-    font-size:1.05rem;
-
+.section-title {
+    font-family: var(--font-heading);
+    color: #3b0202; /* Theme Burgundy */
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 20px;
 }
 
-.mission-buttons{
-
-    display:flex;
-
-    gap:18px;
-
-    margin-top:35px;
-
-    flex-wrap:wrap;
-
+/* ===================================
+   MISSION SECTION (Restructured Row)
+=================================== */
+.mission {
+    padding: 90px 0;
+    background: #ffffff;
 }
 
-.mission-box{
-
-    display:grid;
-
-    gap:22px;
-
+.mission-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    align-items: center;
 }
 
-.mission-item{
-
-    background:white;
-
-    border:1px solid var(--border);
-
-    border-radius:16px;
-
-    padding:30px;
-
-    transition:.35s;
-
+.mission-content p {
+    color: #555555;
+    line-height: 1.8;
+    font-size: 1.05rem;
+    margin-bottom: 20px;
 }
 
-.mission-item:hover{
-
-    transform:translateY(-6px);
-
-    box-shadow:var(--shadow);
-
+/* Row-based list layout for mission items */
+.mission-box {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-.mission-item h3{
-
-    font-size:2rem;
-
-    margin-bottom:15px;
-
+.mission-item {
+    background: #fdfbf7; /* Off-white tint background */
+    border: 1px solid rgba(59, 2, 2, 0.06);
+    border-radius: 12px;
+    padding: 20px 25px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.mission-item h4{
-
-    font-family:var(--font-heading);
-
-    font-size:1.4rem;
-
-    margin-bottom:12px;
-
-    color:var(--primary);
-
+.mission-item:hover {
+    transform: translateX(6px); /* Elegant rightward slide gesture */
+    border-color: rgba(212, 175, 55, 0.3);
+    box-shadow: 0 8px 20px rgba(59, 2, 2, 0.04);
 }
 
-.mission-item p{
-
-    color:var(--text-light);
-
-    line-height:1.7;
-
+.mission-icon {
+    font-size: 1.6rem;
+    color: #d4af37; /* Gold finish vector font icon */
+    background: rgba(59, 2, 2, 0.05);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
+
+.mission-item-text h4 {
+    color: #3b0202;
+    font-size: 1.15rem;
+    margin-bottom: 4px;
+    font-weight: 700;
+}
+
+.mission-item-text p {
+    color: #666666;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* ===================================
+   BUTTON LAYOUTS
+=================================== */
+.mission-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 26px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: .3s ease;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: #3b0202;
+    color: #ffffff;
+    border: 1px solid #3b0202;
+}
+
+.btn-primary:hover {
+    background: #ffcc00;
+    color: #3b0202;
+    border-color: #ffcc00;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 204, 0, 0.2);
+}
+
+.btn-outline {
+    background: transparent;
+    color: #3b0202;
+    border: 2px solid #3b0202;
+}
+
+.btn-outline:hover {
+    background: #3b0202;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+/* ===================================
+   ABOUT & FEATURES GRID
+=================================== */
+.intro-section {
+    padding: 90px 0;
+    background: #fdfbf7; /* Warm tan/cream backdrop zone */
+    border-top: 1px solid rgba(59, 2, 2, 0.05);
+}
+
+.intro-content {
+    max-width: 800px;
+    margin: 0 auto 55px auto;
+    text-align: center;
+}
+
+.intro-text {
+    color: #555555;
+    line-height: 1.8;
+    font-size: 1.05rem;
+    margin-bottom: 20px;
+}
+
+/* Multi-attribute Feature layout format */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Arranges elements horizontally into 4 columns */
+    gap: 25px;
+}
+
+.feature-card {
+    background: #ffffff;
+    border: 1px solid rgba(59, 2, 2, 0.06);
+    border-radius: 16px;
+    padding: 30px 20px;
+    text-align: center;
+    transition: .35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01);
+}
+
+.feature-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(212, 175, 55, 0.4);
+    box-shadow: 0 12px 25px rgba(59, 2, 2, 0.06);
+}
+
+.feature-card .feature-icon {
+    font-size: 1.8rem;
+    color: #3b0202; /* Rich burgundy icons */
+    margin-bottom: 18px;
+    display: inline-block;
+}
+
+.feature-card h3 {
+    color: #3b0202;
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.feature-card p {
+    color: #666666;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ===================================
+   RESPONSIVE SCALING LAYOUT
+=================================== */
+@media (max-width: 992px) {
+    .mission-grid {
+        grid-template-columns: 1fr; /* Stack mission sections into 1 vertical column */
+        gap: 40px;
+    }
+    
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+    }
+}
+
+@media (max-width: 576px) {
+    .features-grid {
+        grid-template-columns: 1fr; /* 1 column on mobile screens */
+    }
+}
+
+
+/* ===================================
+   CULTURAL & SPIRITUAL SIGNIFICANCE
+=================================== */
+.significance-section {
+    padding: 90px 0;
+    background:rgba(250, 235, 215, 0.44);/* Alternates cleanly with the warm cream intro section above it */
+  border-top: 1px solid rgba(59, 2, 2, 0.05);
+}
+
+/* Splits the long block of text into an attractive, modern 2-column layout */
+.significance-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    align-items: center;
+    margin-top: 35px;
+}
+
+.significance-main-text p {
+    color: #444444;
+    line-height: 1.85;
+    font-size: 1.05rem;
+    margin-bottom: 24px;
+}
+
+.significance-main-text p:last-child {
+    margin-bottom: 0;
+}
+
+/* Beautiful Callout Box for the primary descriptive statement */
+.significance-highlight-box {
+    background: #fdfbf7; /* Warm cream container fill */
+    border-left: 4px solid #3b0202; /* Thick burgundy accent block line indicator */
+    padding: 35px;
+    border-radius: 4px 16px 16px 4px;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(59, 2, 2, 0.02);
+}
+
+.significance-highlight-box .quote-icon {
+    font-size: 1.5rem;
+    color: #d4af37; /* Theme gold accent quote emblem */
+    margin-bottom: 12px;
+}
+
+.highlight-quote {
+    color: #3b0202; /* Burgundy text color for readability emphasis */
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.7;
+    margin: 0;
+    font-style: italic;
+}
+
+/* ===================================
+   SIGNIFICANCE RESPONSIVE SETUPS
+=================================== */
+@media (max-width: 992px) {
+    .significance-grid {
+        grid-template-columns: 1fr; /* Stacks column layers neatly into single vertical feeds on smaller devices */
+        gap: 40px;
+    }
+}
+
+
 /* ===================================
    FOOTER
 =================================== */
 
-.footer{
-
-    background:var(--primary);
-
-    color:#fff;
-
-    padding:80px 0 30px;
-
+.footer {
+    background: #3b0202; /* Theme Burgundy */
+    color: #f5f5dc;      /* Warm cream readable text */
+    padding: 80px 0 30px;
+    border-top: 1px solid rgba(212, 175, 55, 0.2); /* Golden boundary divider */
 }
 
-.footer-grid{
-
-    display:grid;
-
-    grid-template-columns:2fr 1fr 1fr 1.2fr;
-
-    gap:50px;
-
-    margin-bottom:60px;
-
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.2fr;
+    gap: 50px;
+    margin-bottom: 60px;
 }
 
-.footer-logo{
-
-    font-family:var(--font-telugu);
-
-    font-size:1.8rem;
-
-    margin-bottom:20px;
-
+.footer-logo {
+    font-family: var(--font-telugu);
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #ffcc00; /* Glowing gold for the main Telugu header logo */
 }
 
-.footer-column h4{
-
-    margin-bottom:22px;
-
-    font-size:1.1rem;
-
+.footer-column h4 {
+    margin-bottom: 22px;
+    font-size: 1.1rem;
+    color: #ffcc00; /* Distinct gold for individual column headers */
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.footer-column p{
-
-    color:rgba(255,255,255,.8);
-
-    line-height:1.8;
-
+.footer-column p {
+    color: #e5dfd3; /* Softened off-white for body reading paragraphs */
+    line-height: 1.8;
 }
 
-.footer-column ul{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:14px;
-
+.footer-column ul {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    list-style: none; /* Strip default list bullets if any remain */
+    padding: 0;
+    margin: 0;
 }
 
-.footer-column a{
-
-    color:rgba(255,255,255,.8);
-
-    transition:.3s;
-
+.footer-column a {
+    color: #e5dfd3; /* Tinted anchor links */
+    text-decoration: none;
+    transition: .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.footer-column a:hover{
-
-    color:white;
-
-    padding-left:8px;
-
+.footer-column a:hover {
+    color: #ffcc00; /* Highlights gold on hover */
+    padding-left: 8px; /* Classic slide interactive effect */
 }
 
-.social-links{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:12px;
-
-    margin-top:12px;
-
+.social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 12px;
 }
 
-.footer-bottom{
-
-    border-top:1px solid rgba(255,255,255,.15);
-
-    padding-top:25px;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    flex-wrap:wrap;
-
-    gap:20px;
-
+.footer-bottom {
+    border-top: 1px solid rgba(212, 175, 55, 0.15); /* Accent gold hairline rule */
+    padding-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    color: rgba(245, 245, 220, 0.6); /* Soft copyright text */
+    font-size: 0.9rem;
 }
 
-#backToTop{
-
-    background:white;
-
-    color:var(--primary);
-
-    border:none;
-
-    border-radius:50px;
-
-    padding:12px 20px;
-
-    cursor:pointer;
-
-    font-weight:600;
-
-    transition:.3s;
-
+#backToTop {
+    background: #fdfaf2; /* Soft ivory button capsule background */
+    color: #3b0202;      /* Burgundy arrow/text glyphs inside */
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 50px;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
-#backToTop:hover{
+#backToTop:hover {
+    background: #ffcc00; /* Swaps background to glowing gold on active mouse pointer hover */
+    color: #3b0202;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(255, 204, 0, 0.2);
+}
 
-    background:var(--accent);
 
-    color:white;
 
+/* Container to enforce 16:9 aspect ratio */
+.video-embed-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 Ratio */
+    height: 0;
+    overflow: hidden;
+    border-radius: 12px 12px 0 0; /* Keeps top rounded corners matching your cards */
+}
+
+/* Make the iframe fill the container completely */
+.video-embed-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Keeps the player framework responsive and uniformly shaped */
+.interview-card .video-embed-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* Fixed widescreen aspect ratio mapping */
+    height: 0;
+    overflow: hidden;
+    border-radius: 12px 12px 0 0; /* Keeps corner rounding clean */
+}
+
+.interview-card .video-embed-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
 }

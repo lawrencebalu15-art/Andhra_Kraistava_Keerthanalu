@@ -30,15 +30,15 @@ async function init() {
 
 async function loadComponents() {
 
-    const sidebarHTML = await fetch("./components/sidebar.html")
-        .then(res => res.text());
+const sidebarHTML = await fetch("./components/sidebar.html")
+    .then(res => res.text());
 
-    document.getElementById("sidebar").innerHTML = sidebarHTML;
+document.getElementById("sidebar").innerHTML = sidebarHTML;
 
-    const navbarHTML = await fetch("./components/navbar.html")
-        .then(res => res.text());
+const navbarHTML = await fetch("./components/navbar.html")
+    .then(res => res.text());
 
-    document.getElementById("navbar").innerHTML = navbarHTML;
+document.getElementById("navbar").innerHTML = navbarHTML;
 
 }
 

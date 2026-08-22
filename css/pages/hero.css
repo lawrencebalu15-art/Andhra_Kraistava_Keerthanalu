@@ -1,42 +1,64 @@
-.hero-intro{
+.hero-intro {
     width: 100%;
-    background:url('/assets/backgrounds/main.png')center/cover no-repeat;
-    z-index: -100px;
-
-}
-
-
-.hero-intro-content{
-
-    max-width: 900px;
-
-    margin: 0 auto;
-
-
-    text-align: center;
-
-}
-.hero-title{
-    font-family: "Ponnala",
-        "Noto Serif Telugu",
-        serif;
-    
+background:rgba(250, 235, 215, 0.44);
+    padding: 60px 20px;       /* Adds breathing room to the top and bottom of the section */
     position: relative;
-    padding: auto;
-
 }
 
-.hero-buttons{
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    gap:20px;
-
-    flex-wrap:wrap;
-
+/* Category labels like "HYMNS" and "AUTHORS" */
+.hero-intro .section-label, 
+.hero-intro p:first-of-type {
+             /* Deep burgundy to anchor your branding */
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 14px;
 }
 
+.hero-intro-content {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.hero-title {
+    font-family: "Ponnala", "Noto Serif Telugu", serif;
+    font-size: 42px;          /* Clean, prominent layout sizing */
+    color: #1a1a1a;           /* Soft charcoal-black for highly readable titles */
+    margin: 10px 0 20px 0;
+    font-weight: 800;
+}
+
+/* Subtext underneath the main title */
+.hero-subtitle {
+    color: #555555;           /* Muted slate-gray for readable body text */
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.hero-buttons {
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 25px;
+}
+
+.mission{
+background:rgba(250, 235, 215, 0.44);
+}
+
+.intro-section{
+background:rgba(250, 235, 215, 0.44);
+}
+
+/* Apply this structure to your main wrapper layout container */
+/* Strip unwanted text margin bleed pushing your section grids away from the footer block */
+/* Strip unwanted text margin bleed pushing your section grids away from the footer block */
+.header, section, footer, #footer, .intro-section p, .mission p {
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+}

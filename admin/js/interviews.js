@@ -2,18 +2,19 @@ import { supabase } from "./supabase.js";
 import { showToast } from "./utils.js";
 import { requireAuth, logout } from "./auth.js";
 
+
 /* =========================================================
    STATE
 ========================================================= */
 
-let authors = [];
-let filteredAuthors = [];
-let authorMediaList = [];
+let interviews = [];
+let filteredInterviews = [];
+let mediaList = [];
 
-let editingAuthor = null;
-let authorToDelete = null;
+let editingInterview = null;
+let interviewToDelete = null;
 
-const PAGE_SIZE = 50;
+const PAGE_SIZE = 20;
 let currentPage = 1;
 
 
@@ -21,28 +22,60 @@ let currentPage = 1;
    DOM ELEMENTS
 ========================================================= */
 
-const modal = document.getElementById("authorModal");
+const modal =
+    document.getElementById("interviewModal");
 
-const addButton = document.getElementById("addAuthorButton");
-const closeButton = document.getElementById("closeModal");
-const cancelButton = document.getElementById("cancelModal");
+const addButton =
+    document.getElementById("addInterviewButton");
 
-const authorForm = document.getElementById("authorForm");
+const closeButton =
+    document.getElementById("closeModal");
 
-const authorName = document.getElementById("authorName");
-const authorMedia = document.getElementById("authorMedia");
+const cancelButton =
+    document.getElementById("cancelModal");
 
-const authorPhotoPreview =
-    document.getElementById("authorPhotoPreview");
+const interviewForm =
+    document.getElementById("interviewForm");
 
-const authorPhotoPreviewImage =
-    document.getElementById("authorPhotoPreviewImage");
+
+const interviewTitle =
+    document.getElementById("interviewTitle");
+
+const interviewee =
+    document.getElementById("interviewee");
+
+const category =
+    document.getElementById("category");
+
+const description =
+    document.getElementById("description");
+
+const interviewMedia =
+    document.getElementById("interviewMedia");
+
+const youtubeUrl =
+    document.getElementById("youtubeUrl");
+
+const featured =
+    document.getElementById("featured");
+
+const published =
+    document.getElementById("published");
+
+
+const interviewPhotoPreview =
+    document.getElementById("interviewPhotoPreview");
+
+const interviewPhotoPreviewImage =
+    document.getElementById("interviewPhotoPreviewImage");
+
 
 const modalTitle =
-    document.getElementById("authorModalTitle");
+    document.getElementById("interviewModalTitle");
 
 const saveButton =
     document.getElementById("saveButton");
+
 
 const loadingState =
     document.getElementById("loadingState");
@@ -53,11 +86,15 @@ const errorState =
 const emptyState =
     document.getElementById("emptyState");
 
+const emptyMessage =
+    document.getElementById("emptyMessage");
+
 const tableContainer =
     document.getElementById("tableContainer");
 
 const tableBody =
-    document.getElementById("authorsTableBody");
+    document.getElementById("interviewsTableBody");
+
 
 const pagination =
     document.getElementById("pagination");
@@ -70,6 +107,7 @@ const nextPage =
 
 const pageInfo =
     document.getElementById("pageInfo");
+
 
 const searchInput =
     document.getElementById("searchInput");
@@ -97,76 +135,117 @@ const confirmDelete =
 ========================================================= */
 
 function notify(message, type = "success") {
+
     try {
+
         showToast(message, type);
+
     } catch {
+
         try {
+
             showToast(message);
+
         } catch {
+
             console.log(message);
+
         }
+
     }
+
 }
 
 
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
 function escapeHtml(value) {
+
     return String(value ?? "")
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+
 }
 
 
+/* =========================================================
+   GET MEDIA
+========================================================= */
+
 function getMediaById(mediaId) {
+
     if (!mediaId) {
+
         return null;
+
     }
 
-    return authorMediaList.find(
+
+    return mediaList.find(
         media =>
             String(media.id) === String(mediaId)
     );
+
 }
 
 
+/* =========================================================
+   PUBLIC MEDIA URL
+========================================================= */
+
 function getPublicMediaUrl(storagePath) {
+
     if (!storagePath) {
+
         return "";
+
     }
+
 
     const { data } =
         supabase.storage
             .from("media")
             .getPublicUrl(storagePath);
 
+
     return data?.publicUrl || "";
+
 }
 
 
-function getAuthorPhotoUrl(author) {
-    /*
-     * First preference:
-     * existing photo_url stored in authors table.
-     */
-    if (author?.photo_url) {
-        return author.photo_url;
+/* =========================================================
+   GET INTERVIEW IMAGE
+========================================================= */
+
+function getInterviewImageUrl(interview) {
+
+    if (!interview?.media_id) {
+
+        return "";
+
     }
 
-    /*
-     * Second preference:
-     * media_id -> media table -> storage_path.
-     */
-    const media = getMediaById(author?.media_id);
 
-    if (media?.storage_path) {
-        return getPublicMediaUrl(
-            media.storage_path
-        );
+    const media =
+        getMediaById(interview.media_id);
+
+
+    if (!media?.storage_path) {
+
+        return "";
+
     }
 
-    return "";
+
+    return getPublicMediaUrl(
+        media.storage_path
+    );
+
 }
 
 
@@ -175,51 +254,80 @@ function getAuthorPhotoUrl(author) {
 ========================================================= */
 
 function openModal() {
+
     modal.classList.add("active");
-}
 
-
-function resetAuthorForm() {
-    authorForm.reset();
-
-    editingAuthor = null;
-
-    modalTitle.textContent =
-        "Add New Author";
-
-    saveButton.textContent =
-        "Save Author";
-
-    saveButton.disabled = false;
-
-    authorPhotoPreview.classList.add(
-        "hidden"
-    );
-
-    authorPhotoPreviewImage.src = "";
 }
 
 
 function closeModal() {
+
     modal.classList.remove("active");
 
-    resetAuthorForm();
+    resetForm();
+
 }
 
 
 /* =========================================================
-   ADD AUTHOR
+   RESET FORM
+========================================================= */
+
+function resetForm() {
+
+    interviewForm.reset();
+
+    editingInterview = null;
+
+
+    modalTitle.textContent =
+        "Add New Interview";
+
+
+    saveButton.textContent =
+        "Save Interview";
+
+
+    saveButton.disabled = false;
+
+
+    category.value =
+        "Interview";
+
+
+    featured.value =
+        "false";
+
+
+    published.value =
+        "true";
+
+
+    interviewPhotoPreview.classList.add(
+        "hidden"
+    );
+
+
+    interviewPhotoPreviewImage.src =
+        "";
+
+}
+
+
+/* =========================================================
+   ADD INTERVIEW BUTTON
 ========================================================= */
 
 addButton.addEventListener(
     "click",
     async () => {
 
-        resetAuthorForm();
+        resetForm();
 
-        await loadAuthorMedia();
+        await loadMedia();
 
         openModal();
+
     }
 );
 
@@ -240,44 +348,18 @@ cancelButton.addEventListener(
 );
 
 
-/*
- * Close when clicking outside modal
- */
+/* =========================================================
+   CLOSE MODAL ON BACKDROP
+========================================================= */
+
 modal.addEventListener(
     "click",
     event => {
 
         if (event.target === modal) {
+
             closeModal();
-        }
 
-    }
-);
-
-
-/*
- * Escape key
- */
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if (event.key !== "Escape") {
-            return;
-        }
-
-        if (
-            modal.classList.contains("active")
-        ) {
-            closeModal();
-        }
-
-        if (
-            confirmModal.classList.contains(
-                "active"
-            )
-        ) {
-            closeDeleteModal();
         }
 
     }
@@ -285,16 +367,53 @@ document.addEventListener(
 
 
 /* =========================================================
-   MEDIA
+   ESCAPE KEY
 ========================================================= */
 
-async function loadAuthorMedia() {
+document.addEventListener(
+    "keydown",
+    event => {
 
-    authorMedia.innerHTML = `
+        if (event.key !== "Escape") {
+
+            return;
+
+        }
+
+
+        if (
+            modal.classList.contains("active")
+        ) {
+
+            closeModal();
+
+        }
+
+
+        if (
+            confirmModal.classList.contains("active")
+        ) {
+
+            closeDeleteModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   LOAD MEDIA
+========================================================= */
+
+async function loadMedia() {
+
+    interviewMedia.innerHTML = `
         <option value="">
-            No Photo
+            No Thumbnail
         </option>
     `;
+
 
     try {
 
@@ -313,11 +432,15 @@ async function loadAuthorMedia() {
                 }
             );
 
+
         if (error) {
+
             throw error;
+
         }
 
-        authorMediaList =
+
+        mediaList =
             (data || []).filter(
                 media =>
                     media.file_type?.startsWith(
@@ -325,7 +448,8 @@ async function loadAuthorMedia() {
                     )
             );
 
-        authorMediaList.forEach(
+
+        mediaList.forEach(
             media => {
 
                 const option =
@@ -333,21 +457,26 @@ async function loadAuthorMedia() {
                         "option"
                     );
 
+
                 option.value =
                     media.id;
+
 
                 option.textContent =
                     media.file_name;
 
+
                 option.dataset.storagePath =
                     media.storage_path;
 
-                authorMedia.appendChild(
+
+                interviewMedia.appendChild(
                     option
                 );
 
             }
         );
+
 
     } catch (error) {
 
@@ -356,110 +485,129 @@ async function loadAuthorMedia() {
             error
         );
 
-        authorMediaList = [];
+
+        mediaList = [];
+
 
         notify(
-            "Unable to load author photos.",
+            "Unable to load media.",
             "error"
         );
+
     }
+
 }
 
 
 /* =========================================================
-   PHOTO PREVIEW
+   IMAGE PREVIEW
 ========================================================= */
 
-function updateAuthorPhotoPreview() {
+function updatePhotoPreview() {
 
     const selectedOption =
-        authorMedia.options[
-            authorMedia.selectedIndex
+        interviewMedia.options[
+            interviewMedia.selectedIndex
         ];
+
 
     const storagePath =
         selectedOption?.dataset?.storagePath;
 
+
     if (!storagePath) {
 
-        authorPhotoPreview.classList.add(
+        interviewPhotoPreview.classList.add(
             "hidden"
         );
 
-        authorPhotoPreviewImage.src = "";
+        interviewPhotoPreviewImage.src =
+            "";
 
         return;
+
     }
+
 
     const publicUrl =
         getPublicMediaUrl(
             storagePath
         );
 
+
     if (!publicUrl) {
 
-        authorPhotoPreview.classList.add(
+        interviewPhotoPreview.classList.add(
             "hidden"
         );
 
-        authorPhotoPreviewImage.src = "";
+        interviewPhotoPreviewImage.src =
+            "";
 
         return;
+
     }
 
-    authorPhotoPreviewImage.src =
+
+    interviewPhotoPreviewImage.src =
         publicUrl;
 
-    authorPhotoPreview.classList.remove(
+
+    interviewPhotoPreview.classList.remove(
         "hidden"
     );
+
 }
 
 
-authorMedia.addEventListener(
+interviewMedia.addEventListener(
     "change",
-    updateAuthorPhotoPreview
+    updatePhotoPreview
 );
 
 
 /* =========================================================
-   LOAD AUTHORS
+   LOAD INTERVIEWS
 ========================================================= */
 
-async function loadAuthors() {
+async function loadInterviews() {
 
     showLoading();
+
 
     try {
 
         /*
-         * ---------------------------------------------------
-         * LOAD AUTHORS
-         * ---------------------------------------------------
+         * LOAD INTERVIEWS
          */
 
         const {
-            data: authorData,
-            error: authorError
+            data,
+            error
         } = await supabase
-            .from("authors")
+            .from("interviews")
             .select("*")
             .order(
-                "id",
+                "created_at",
                 {
-                    ascending: true
+                    ascending: false
                 }
             );
 
-        if (authorError) {
-            throw authorError;
+
+        if (error) {
+
+            throw error;
+
         }
 
 
+        interviews =
+            data || [];
+
+
         /*
-         * ---------------------------------------------------
          * LOAD MEDIA
-         * ---------------------------------------------------
          */
 
         const {
@@ -471,134 +619,59 @@ async function loadAuthors() {
                 "id,file_name,storage_path,file_type"
             );
 
+
         if (mediaError) {
+
             throw mediaError;
+
         }
 
-        authorMediaList =
+
+        mediaList =
             mediaData || [];
 
 
         /*
-         * ---------------------------------------------------
-         * LOAD HYMNS
-         * ---------------------------------------------------
-         *
-         * We use author_id to calculate how many
-         * hymns belong to each author.
-         */
-
-        const {
-            data: hymnData,
-            error: hymnError
-        } = await supabase
-            .from("hymns")
-            .select("author_id");
-
-        if (hymnError) {
-            throw hymnError;
-        }
-
-
-        /*
-         * ---------------------------------------------------
-         * COUNT HYMNS PER AUTHOR
-         * ---------------------------------------------------
-         */
-
-        const hymnCounts = {};
-
-        (hymnData || []).forEach(
-            hymn => {
-
-                if (!hymn.author_id) {
-                    return;
-                }
-
-                const authorId =
-                    String(
-                        hymn.author_id
-                    );
-
-                hymnCounts[authorId] =
-                    (
-                        hymnCounts[
-                            authorId
-                        ] || 0
-                    ) + 1;
-
-            }
-        );
-
-
-        /*
-         * ---------------------------------------------------
-         * COMBINE AUTHOR DATA
-         * ---------------------------------------------------
-         */
-
-        authors =
-            (authorData || []).map(
-                author => {
-
-                    const photoUrl =
-                        getAuthorPhotoUrl(
-                            author
-                        );
-
-                    return {
-                        ...author,
-
-                        hymnCount:
-                            hymnCounts[
-                                String(
-                                    author.id
-                                )
-                            ] || 0,
-
-                        photoUrl
-                    };
-
-                }
-            );
-
-
-        /*
-         * ---------------------------------------------------
          * INITIAL STATE
-         * ---------------------------------------------------
          */
 
-        filteredAuthors =
-            [...authors];
-
-        currentPage = 1;
+        filteredInterviews =
+            [...interviews];
 
 
-        if (authors.length === 0) {
+        currentPage =
+            1;
+
+
+        if (interviews.length === 0) {
 
             showEmpty(
-                "No authors found."
+                "No interviews found."
             );
 
             return;
+
         }
 
 
         renderCurrentPage();
 
+
     } catch (error) {
 
         console.error(
-            "Error loading authors:",
+            "Error loading interviews:",
             error
         );
 
+
         showError(
             error?.message ||
-            "Unable to load authors."
+            "Unable to load interviews."
         );
+
     }
+
 }
 
 
@@ -606,86 +679,187 @@ async function loadAuthors() {
    RENDER TABLE
 ========================================================= */
 
-function renderTable(authorList) {
+function renderTable(interviewList) {
 
     tableBody.innerHTML =
-        authorList
+        interviewList
             .map(
-                (author, index) => {
+                (interview, index) => {
+
+                    /*
+                     * Find original position
+                     * so search results don't
+                     * always display as No. 1.
+                     */
 
                     const originalIndex =
-    authors.findIndex(
-        originalAuthor => originalAuthor.id === author.id
-    ) + 1;
+                        interviews.findIndex(
+                            item =>
+                                item.id ===
+                                interview.id
+                        ) + 1;
 
-                    const photoUrl =
-                        author.photoUrl;
+
+                    const imageUrl =
+                        getInterviewImageUrl(
+                            interview
+                        );
+
+
+                    const featuredBadge =
+                        interview.featured
+                            ? `
+                                <span class="status-badge success">
+                                    Yes
+                                </span>
+                              `
+                            : `
+                                <span class="status-badge">
+                                    No
+                                </span>
+                              `;
+
+
+                    const publishedBadge =
+                        interview.published
+                            ? `
+                                <span class="status-badge success">
+                                    Published
+                                </span>
+                              `
+                            : `
+                                <span class="status-badge warning">
+                                    Draft
+                                </span>
+                              `;
 
 
                     return `
+
                         <tr>
+
+
+                            <!-- NUMBER -->
 
                             <td>
                                 ${originalIndex}
                             </td>
 
+
+                            <!-- THUMBNAIL -->
+
                             <td>
 
                                 ${
-                                    photoUrl
+                                    imageUrl
+
                                         ? `
+
                                             <img
                                                 src="${escapeHtml(
-                                                    photoUrl
+                                                    imageUrl
                                                 )}"
-                                                alt="Author"
+                                                alt="Interview"
                                                 class="author-table-photo"
-                                                loading="lazy"
-                                            >
-                                        `
+                                                loading="lazy">
+
+                                          `
+
                                         : `
+
                                             <div class="author-table-placeholder">
                                                 —
                                             </div>
-                                        `
+
+                                          `
                                 }
 
                             </td>
 
+
+                            <!-- TITLE -->
+
                             <td>
+
+                                <strong>
+                                    ${escapeHtml(
+                                        interview.title
+                                    )}
+                                </strong>
+
+                            </td>
+
+
+                            <!-- INTERVIEWEE -->
+
+                            <td>
+
                                 ${escapeHtml(
-                                    author.name ||
+                                    interview.interviewee ||
                                     "-"
                                 )}
+
                             </td>
 
+
+                            <!-- CATEGORY -->
+
                             <td>
-                                ${
-                                    author.hymnCount
-                                }
+
+                                ${escapeHtml(
+                                    interview.category ||
+                                    "Interview"
+                                )}
+
                             </td>
+
+
+                            <!-- FEATURED -->
+
+                            <td>
+
+                                ${featuredBadge}
+
+                            </td>
+
+
+                            <!-- PUBLISHED -->
+
+                            <td>
+
+                                ${publishedBadge}
+
+                            </td>
+
+
+                            <!-- ACTIONS -->
 
                             <td>
 
                                 <button
                                     type="button"
                                     class="table-btn edit-btn"
-                                    data-id="${author.id}"
-                                >
+                                    data-id="${interview.id}">
+
                                     Edit
+
                                 </button>
+
 
                                 <button
                                     type="button"
                                     class="table-btn delete-btn"
-                                    data-id="${author.id}"
-                                >
+                                    data-id="${interview.id}">
+
                                     Delete
+
                                 </button>
 
                             </td>
 
+
                         </tr>
+
                     `;
 
                 }
@@ -694,6 +868,7 @@ function renderTable(authorList) {
 
 
     attachEditEvents();
+
     attachDeleteEvents();
 
 
@@ -701,17 +876,21 @@ function renderTable(authorList) {
         "hidden"
     );
 
+
     errorState.classList.add(
         "hidden"
     );
+
 
     emptyState.classList.add(
         "hidden"
     );
 
+
     tableContainer.classList.remove(
         "hidden"
     );
+
 }
 
 
@@ -722,9 +901,7 @@ function renderTable(authorList) {
 function attachEditEvents() {
 
     document
-        .querySelectorAll(
-            ".edit-btn"
-        )
+        .querySelectorAll(".edit-btn")
         .forEach(
             button => {
 
@@ -741,6 +918,7 @@ function attachEditEvents() {
 
             }
         );
+
 }
 
 
@@ -749,108 +927,177 @@ function attachEditEvents() {
 ========================================================= */
 
 async function startEdit(
-    authorId
+    interviewId
 ) {
 
-    const author =
-        authors.find(
+    const interview =
+        interviews.find(
             item =>
                 String(item.id) ===
-                String(authorId)
+                String(interviewId)
         );
 
-    if (!author) {
+
+    if (!interview) {
+
         return;
+
     }
 
 
-    /*
-     * Set edit state FIRST.
-     */
-    editingAuthor =
-        author.id;
+    editingInterview =
+        interview.id;
 
 
-    /*
-     * Set modal information.
-     */
     modalTitle.textContent =
-        "Edit Author";
+        "Edit Interview";
+
 
     saveButton.textContent =
-        "Update Author";
+        "Update Interview";
 
 
     /*
-     * IMPORTANT:
-     * Populate the name field.
+     * Populate fields
      */
-    authorName.value =
-        author.name || "";
+
+    interviewTitle.value =
+        interview.title || "";
+
+
+    interviewee.value =
+        interview.interviewee || "";
+
+
+    category.value =
+        interview.category ||
+        "Interview";
+
+
+    description.value =
+        interview.description || "";
+
+
+    youtubeUrl.value =
+        interview.youtube_url || "";
+
+
+    featured.value =
+        interview.featured
+            ? "true"
+            : "false";
+
+
+    published.value =
+        interview.published
+            ? "true"
+            : "false";
 
 
     /*
-     * Load media before selecting
-     * the current photo.
+     * Load media
      */
-    await loadAuthorMedia();
+
+    await loadMedia();
 
 
-    authorMedia.value =
-        author.media_id || "";
+    interviewMedia.value =
+        interview.media_id || "";
 
 
-    updateAuthorPhotoPreview();
+    updatePhotoPreview();
 
 
     openModal();
+
 }
 
 
 /* =========================================================
-   SAVE / UPDATE AUTHOR
+   SAVE / UPDATE
 ========================================================= */
 
-authorForm.addEventListener(
+interviewForm.addEventListener(
     "submit",
     async event => {
 
         event.preventDefault();
 
 
-        const name =
-            authorName.value.trim();
+        /*
+         * GET VALUES
+         */
+
+        const title =
+            interviewTitle.value.trim();
+
+
+        const intervieweeValue =
+            interviewee.value.trim();
+
+
+        const categoryValue =
+            category.value.trim() ||
+            "Interview";
+
+
+        const descriptionValue =
+            description.value.trim();
+
+
+        const youtubeValue =
+            youtubeUrl.value.trim();
+
+
+        const selectedMediaId =
+            interviewMedia.value ||
+            null;
+
+
+        const featuredValue =
+            featured.value === "true";
+
+
+        const publishedValue =
+            published.value === "true";
 
 
         /*
-         * Validation
+         * VALIDATION
          */
-        if (!name) {
+
+        if (!title) {
 
             notify(
-                "Please enter an author name.",
+                "Please enter an interview title.",
                 "error"
             );
 
-            authorName.focus();
+
+            interviewTitle.focus();
 
             return;
+
         }
 
 
         /*
-         * Prevent duplicate submissions.
+         * PREVENT DOUBLE SUBMIT
          */
+
         if (saveButton.disabled) {
+
             return;
+
         }
 
 
-        saveButton.disabled = true;
+        saveButton.disabled =
+            true;
 
 
         const isEditing =
-            editingAuthor !== null;
+            editingInterview !== null;
 
 
         saveButton.textContent =
@@ -861,72 +1108,71 @@ authorForm.addEventListener(
 
         try {
 
-            const selectedMediaId =
-                authorMedia.value ||
-                null;
-
-
             /*
-             * Get selected media.
+             * PAYLOAD
              */
-            const selectedMedia =
-                getMediaById(
-                    selectedMediaId
-                );
-
-
-            /*
-             * Build photo URL.
-             *
-             * We keep both media_id and
-             * photo_url synchronized.
-             */
-            let photoUrl = null;
-
-
-            if (
-                selectedMedia?.storage_path
-            ) {
-
-                photoUrl =
-                    getPublicMediaUrl(
-                        selectedMedia.storage_path
-                    );
-            }
-
 
             const payload = {
-                name,
+
+                title,
+
+                description:
+                    descriptionValue ||
+                    null,
+
+                category:
+                    categoryValue,
+
+                interviewee:
+                    intervieweeValue ||
+                    null,
+
                 media_id:
                     selectedMediaId,
-                photo_url:
-                    photoUrl
+
+                youtube_url:
+                    youtubeValue ||
+                    null,
+
+                featured:
+                    featuredValue,
+
+                published:
+                    publishedValue
+
             };
 
 
             /*
              * UPDATE
              */
+
             if (isEditing) {
 
                 const {
                     error
                 } = await supabase
-                    .from("authors")
-                    .update(payload)
+                    .from("interviews")
+                    .update({
+                        ...payload,
+                        updated_at:
+                            new Date().toISOString()
+                    })
                     .eq(
                         "id",
-                        editingAuthor
+                        editingInterview
                     );
 
 
                 if (error) {
+
                     throw error;
+
                 }
 
 
                 notify(
-                    "Author updated successfully.",
+                    "Interview updated successfully.",
                     "success"
                 );
 
@@ -936,56 +1182,58 @@ authorForm.addEventListener(
             /*
              * INSERT
              */
+
             else {
 
                 const {
                     error
                 } = await supabase
-                    .from("authors")
-                    .insert(
-                        [payload]
-                    );
+                    .from("interviews")
+                    .insert([
+                        payload
+                    ]);
 
 
                 if (error) {
+
                     throw error;
+
                 }
 
 
                 notify(
-                    "Author added successfully.",
+                    "Interview added successfully.",
                     "success"
                 );
+
             }
 
 
             /*
-             * Close modal and refresh data.
+             * CLOSE + REFRESH
              */
+
             closeModal();
 
-            await loadAuthors();
+
+            await loadInterviews();
+
 
         } catch (error) {
 
             console.error(
-                "Author save error:",
+                "Interview save error:",
                 error
             );
 
 
-            /*
-             * RLS error gets a clearer message.
-             */
             if (
-                error?.code ===
-                    "42501" ||
-                error?.code ===
-                    "PGRST301"
+                error?.code === "42501" ||
+                error?.code === "PGRST301"
             ) {
 
                 notify(
-                    "Supabase blocked this operation because of the authors table RLS policy.",
+                    "Supabase blocked this operation because of the interviews table RLS policy.",
                     "error"
                 );
 
@@ -993,22 +1241,24 @@ authorForm.addEventListener(
 
                 notify(
                     error?.message ||
-                    "Unable to save author.",
+                    "Unable to save interview.",
                     "error"
                 );
+
             }
+
 
         } finally {
 
-            /*
-             * Always unlock button.
-             */
-            saveButton.disabled = false;
+            saveButton.disabled =
+                false;
+
 
             saveButton.textContent =
-                editingAuthor !== null
-                    ? "Update Author"
-                    : "Save Author";
+                editingInterview !== null
+                    ? "Update Interview"
+                    : "Save Interview";
+
         }
 
     }
@@ -1022,9 +1272,7 @@ authorForm.addEventListener(
 function attachDeleteEvents() {
 
     document
-        .querySelectorAll(
-            ".delete-btn"
-        )
+        .querySelectorAll(".delete-btn")
         .forEach(
             button => {
 
@@ -1041,6 +1289,7 @@ function attachDeleteEvents() {
 
             }
         );
+
 }
 
 
@@ -1049,32 +1298,36 @@ function attachDeleteEvents() {
 ========================================================= */
 
 function openDeleteModal(
-    authorId
+    interviewId
 ) {
 
-    const author =
-        authors.find(
+    const interview =
+        interviews.find(
             item =>
                 String(item.id) ===
-                String(authorId)
+                String(interviewId)
         );
 
-    if (!author) {
+
+    if (!interview) {
+
         return;
+
     }
 
 
-    authorToDelete =
-        author;
+    interviewToDelete =
+        interview;
 
 
     confirmMessage.textContent =
-        `Are you sure you want to delete "${author.name}"? This action cannot be undone.`;
+        `Are you sure you want to delete "${interview.title}"? This action cannot be undone.`;
 
 
     confirmModal.classList.add(
         "active"
     );
+
 }
 
 
@@ -1084,11 +1337,14 @@ function openDeleteModal(
 
 function closeDeleteModal() {
 
-    authorToDelete = null;
+    interviewToDelete =
+        null;
+
 
     confirmModal.classList.remove(
         "active"
     );
+
 }
 
 
@@ -1110,17 +1366,23 @@ confirmDelete.addEventListener(
     "click",
     async () => {
 
-        if (!authorToDelete) {
+        if (!interviewToDelete) {
+
             return;
+
         }
 
 
         if (confirmDelete.disabled) {
+
             return;
+
         }
 
 
-        confirmDelete.disabled = true;
+        confirmDelete.disabled =
+            true;
+
 
         confirmDelete.textContent =
             "Deleting...";
@@ -1128,23 +1390,25 @@ confirmDelete.addEventListener(
 
         try {
 
-            const authorId =
-                authorToDelete.id;
+            const interviewId =
+                interviewToDelete.id;
 
 
             const {
                 error
             } = await supabase
-                .from("authors")
+                .from("interviews")
                 .delete()
                 .eq(
                     "id",
-                    authorId
+                    interviewId
                 );
 
 
             if (error) {
+
                 throw error;
+
             }
 
 
@@ -1152,38 +1416,34 @@ confirmDelete.addEventListener(
 
 
             notify(
-                "Author deleted successfully.",
+                "Interview deleted successfully.",
                 "success"
             );
 
 
-            /*
-             * Reload everything so:
-             *
-             * - author list updates
-             * - hymn counts update
-             * - pagination updates
-             */
-            await loadAuthors();
+            await loadInterviews();
+
 
         } catch (error) {
 
             console.error(
-                "Author delete error:",
+                "Interview delete error:",
                 error
             );
 
 
             notify(
                 error?.message ||
-                "Unable to delete author. Make sure the author is not being used by any hymns.",
+                "Unable to delete interview.",
                 "error"
             );
+
 
         } finally {
 
             confirmDelete.disabled =
                 false;
+
 
             confirmDelete.textContent =
                 "Delete";
@@ -1200,11 +1460,11 @@ confirmDelete.addEventListener(
 
 searchInput.addEventListener(
     "input",
-    searchAuthors
+    searchInterviews
 );
 
 
-function searchAuthors() {
+function searchInterviews() {
 
     const query =
         searchInput.value
@@ -1213,60 +1473,86 @@ function searchAuthors() {
 
 
     /*
-     * Empty search
+     * EMPTY SEARCH
      */
+
     if (!query) {
 
-        filteredAuthors =
-            [...authors];
+        filteredInterviews =
+            [...interviews];
 
-        currentPage = 1;
+
+        currentPage =
+            1;
+
 
         renderCurrentPage();
 
         return;
+
     }
 
 
     /*
-     * Filter authors.
+     * SEARCH TITLE
+     * OR INTERVIEWEE
+     * OR CATEGORY
      */
-    filteredAuthors =
-        authors.filter(
-            author => {
 
-                const name =
+    filteredInterviews =
+        interviews.filter(
+            interview => {
+
+                const title =
                     (
-                        author.name ||
+                        interview.title ||
                         ""
                     ).toLowerCase();
 
 
-                return name.includes(
-                    query
+                const person =
+                    (
+                        interview.interviewee ||
+                        ""
+                    ).toLowerCase();
+
+
+                const categoryName =
+                    (
+                        interview.category ||
+                        ""
+                    ).toLowerCase();
+
+
+                return (
+                    title.includes(query) ||
+                    person.includes(query) ||
+                    categoryName.includes(query)
                 );
 
             }
         );
 
 
-    currentPage = 1;
+    currentPage =
+        1;
 
 
     if (
-        filteredAuthors.length ===
-        0
+        filteredInterviews.length === 0
     ) {
 
         showEmpty(
-            "No authors match your search."
+            "No interviews match your search."
         );
 
         return;
+
     }
 
 
     renderCurrentPage();
+
 }
 
 
@@ -1278,19 +1564,16 @@ function renderCurrentPage() {
 
     const start =
         (
-            currentPage -
-            1
-        ) *
-        PAGE_SIZE;
+            currentPage - 1
+        ) * PAGE_SIZE;
 
 
     const end =
-        start +
-        PAGE_SIZE;
+        start + PAGE_SIZE;
 
 
     const pageData =
-        filteredAuthors.slice(
+        filteredInterviews.slice(
             start,
             end
         );
@@ -1302,21 +1585,23 @@ function renderCurrentPage() {
 
 
     updatePagination();
+
 }
 
+
+/* =========================================================
+   UPDATE PAGINATION
+========================================================= */
 
 function updatePagination() {
 
     const totalPages =
         Math.ceil(
-            filteredAuthors.length /
+            filteredInterviews.length /
             PAGE_SIZE
         );
 
 
-    /*
-     * No pagination needed.
-     */
     if (totalPages <= 1) {
 
         pagination.classList.add(
@@ -1324,6 +1609,7 @@ function updatePagination() {
         );
 
         return;
+
     }
 
 
@@ -1341,8 +1627,8 @@ function updatePagination() {
 
 
     nextPage.disabled =
-        currentPage ===
-        totalPages;
+        currentPage === totalPages;
+
 }
 
 
@@ -1355,10 +1641,14 @@ prevPage.addEventListener(
     () => {
 
         if (currentPage <= 1) {
+
             return;
+
         }
 
+
         currentPage--;
+
 
         renderCurrentPage();
 
@@ -1376,7 +1666,7 @@ nextPage.addEventListener(
 
         const totalPages =
             Math.ceil(
-                filteredAuthors.length /
+                filteredInterviews.length /
                 PAGE_SIZE
             );
 
@@ -1385,11 +1675,14 @@ nextPage.addEventListener(
             currentPage >=
             totalPages
         ) {
+
             return;
+
         }
 
 
         currentPage++;
+
 
         renderCurrentPage();
 
@@ -1407,23 +1700,32 @@ function showLoading() {
         "hidden"
     );
 
+
     errorState.classList.add(
         "hidden"
     );
+
 
     emptyState.classList.add(
         "hidden"
     );
 
+
     tableContainer.classList.add(
         "hidden"
     );
 
+
     pagination.classList.add(
         "hidden"
     );
+
 }
 
+
+/* =========================================================
+   SHOW ERROR
+========================================================= */
 
 function showError(
     message
@@ -1433,17 +1735,21 @@ function showError(
         "hidden"
     );
 
+
     errorState.classList.remove(
         "hidden"
     );
+
 
     emptyState.classList.add(
         "hidden"
     );
 
+
     tableContainer.classList.add(
         "hidden"
     );
+
 
     pagination.classList.add(
         "hidden"
@@ -1451,57 +1757,60 @@ function showError(
 
 
     const errorText =
-        errorState.querySelector(
-            "p"
-        );
+        errorState.querySelector("p");
 
 
     if (errorText) {
 
         errorText.textContent =
             message ||
-            "Something went wrong while loading the authors.";
+            "Something went wrong while loading interviews.";
 
     }
+
 }
 
 
+/* =========================================================
+   SHOW EMPTY
+========================================================= */
+
 function showEmpty(
-    message = "No authors found."
+    message = "No interviews found."
 ) {
 
     loadingState.classList.add(
         "hidden"
     );
 
+
     errorState.classList.add(
         "hidden"
     );
+
 
     emptyState.classList.remove(
         "hidden"
     );
 
+
     tableContainer.classList.add(
         "hidden"
     );
+
 
     pagination.classList.add(
         "hidden"
     );
 
 
-    const emptyMessage =
-        document.getElementById(
-            "emptyMessage"
-        );
-
-
     if (emptyMessage) {
 
         emptyMessage.textContent =
             message;
+
     }
+
 }
 
 
@@ -1517,7 +1826,9 @@ confirmModal.addEventListener(
             event.target ===
             confirmModal
         ) {
+
             closeDeleteModal();
+
         }
 
     }
@@ -1570,23 +1881,30 @@ document.addEventListener(
         try {
 
             /*
-             * Make sure the user is authenticated
-             * before accessing the authors data.
+             * Check authentication
              */
+
             await requireAuth();
 
-            await loadAuthors();
+
+            /*
+             * Load interviews
+             */
+
+            await loadInterviews();
+
 
         } catch (error) {
 
             console.error(
-                "Authors initialization error:",
+                "Interviews initialization error:",
                 error
             );
 
+
             showError(
                 error?.message ||
-                "Unable to initialize Authors page."
+                "Unable to initialize Interviews page."
             );
 
         }

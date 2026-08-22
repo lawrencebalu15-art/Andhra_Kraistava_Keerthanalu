@@ -1,13 +1,13 @@
 let hymns = [];
 let filteredHymns = [];
 
-const PAGE_SIZE = 50;
-
+let PAGE_SIZE = 50;
 let currentPage = 1;
 let editingHymn = null;
 
 import { showToast } from "./utils.js";
 
+import { requireAuth, logout } from "./auth.js";
 
 import { supabase } from "./supabase.js";
 
@@ -106,6 +106,18 @@ document.addEventListener("keydown", (e) => {
     }
 
 });
+
+
+function loadUser(user) {
+
+    document.getElementById("adminName").textContent =
+        user.email.split("@")[0];
+
+    document.getElementById("adminEmail").textContent =
+        user.email;
+
+}
+
 /* ==========================================
 SAVE HYMN
 ========================================== */
@@ -116,99 +128,206 @@ hymnForm.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
-    const saveButton = document.getElementById("saveButton");
+    const saveButton =
+        document.getElementById("saveButton");
 
-setButtonLoading(
-    saveButton,
-    editingHymn
-        ? "Updating..."
-        : "Saving..."
-);
+    const isEditing =
+        Boolean(editingHymn);
 
-    const hymn = {
 
-        number: Number(document.getElementById("number").value),
+    /* ==========================================
+       BUTTON LOADING
+    ========================================== */
 
-        title_telugu: document.getElementById("title_telugu").value,
+    setButtonLoading(
+        saveButton,
+        isEditing
+            ? "Updating..."
+            : "Saving..."
+    );
 
-        title_english: document.getElementById("title_english").value,
 
-        author_id: Number(document.getElementById("author").value) || null,
+    try {
 
-book_id: Number(document.getElementById("book").value) || null,
+        /* ==========================================
+           BUILD HYMN
+        ========================================== */
 
-category_id: Number(document.getElementById("category").value) || null,
-        language: document.getElementById("language").value,
+        const hymn = {
 
-        slug: document.getElementById("slug").value,
+            number:
+                Number(
+                    document.getElementById("number").value
+                ),
 
-        youtube_links: document
-            .getElementById("youtube_links")
-            .value
-            .split("\n")
-            .filter(link => link.trim() !== ""),
+            title_telugu:
+                document
+                    .getElementById("title_telugu")
+                    .value
+                    .trim(),
 
-        is_featured: document.getElementById("featured").checked
+            title_english:
+                document
+                    .getElementById("title_english")
+                    .value
+                    .trim(),
 
-    };
+            author_id:
+                Number(
+                    document.getElementById("author").value
+                ) || null,
 
-if (!(await validateForm(hymn))) {
+            book_id:
+                Number(
+                    document.getElementById("book").value
+                ) || null,
 
-    resetButton(saveButton);
+            category_id:
+                Number(
+                    document.getElementById("category").value
+                ) || null,
 
-    return;
+            language:
+                document.getElementById("language").value,
 
-}
+            slug:
+                document.getElementById("slug").value.trim(),
 
-    console.log(hymn);
+            youtube_links:
+                document
+                    .getElementById("youtube_links")
+                    .value
+                    .split("\n")
+                    .map(link => link.trim())
+                    .filter(link => link !== ""),
 
-    let data;
-    let error;
+            is_featured:
+                document.getElementById("featured").checked
 
-if (editingHymn) {
+        };
 
-const { data, error } = await supabase
-    .from("hymns")
-    .update(hymn)
-    .eq("id", editingHymn)
-    .select();
 
-console.log("Editing ID:", editingHymn);
-console.log("Sending:", hymn);
-console.log("Returned:", data);
-console.log("Error:", error);
-}
-else {
+        /* ==========================================
+           VALIDATION
+        ========================================== */
 
-    ({ error } = await supabase
-        .from("hymns")
-        .insert([hymn]));
+        const valid =
+            await validateForm(hymn);
 
-}
 
-    if (error) {
+        if (!valid) {
 
-        console.error(error);
+            return;
 
-        alert(error.message);
+        }
+
+
+        /* ==========================================
+           DATABASE OPERATION
+        ========================================== */
+
+        let error = null;
+
+
+        if (isEditing) {
+
+            const result =
+                await supabase
+
+                    .from("hymns")
+
+                    .update(hymn)
+
+                    .eq(
+                        "id",
+                        editingHymn
+                    );
+
+
+            error =
+                result.error;
+
+        }
+
+        else {
+
+            const result =
+                await supabase
+
+                    .from("hymns")
+
+                    .insert([
+                        hymn
+                    ]);
+
+
+            error =
+                result.error;
+
+        }
+
+
+        /* ==========================================
+           ERROR
+        ========================================== */
+
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        /* ==========================================
+           SUCCESS
+        ========================================== */
+
+        showToast(
+
+            isEditing
+                ? "Hymn updated successfully."
+                : "Hymn added successfully.",
+
+            "success"
+
+        );
+
+
+        closeModal();
+
+
+        await loadHymns();
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Hymn save error:",
+            error
+        );
+
+
+        showToast(
+            error.message ||
+            "Unable to save hymn.",
+            "error"
+        );
+
+    }
+
+    finally {
+
+        /*
+         * VERY IMPORTANT:
+         * Always re-enable the button,
+         * whether save succeeds or fails.
+         */
 
         resetButton(saveButton);
 
-        return;
-
     }
- const message = editingHymn
-    ? "Successfully updated hymn."
-    : "Hymn added successfully.";
-
-showToast(message, "success");
-
-    closeModal();
-
-hymnForm.reset();
-
-await loadHymns();
-
 
 });
 
@@ -224,6 +343,8 @@ const pageInfo = document.getElementById("pageInfo");
 
 document.addEventListener("DOMContentLoaded", async () => {
 
+    await loadPageSize();
+
     await loadAuthors();
 
     await loadBooks();
@@ -234,6 +355,44 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     resetButton(saveButton);
 });
+
+async function loadPageSize() {
+
+    try {
+
+        const {
+            data,
+            error
+        } = await supabase
+            .from("cms_settings")
+            .select("items_per_page")
+            .eq("id", 1)
+            .single();
+
+        if (error) {
+            throw error;
+        }
+
+        PAGE_SIZE =
+            Number(data.items_per_page) || 50;
+
+        console.log(
+            "Items per page:",
+            PAGE_SIZE
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Failed to load page size:",
+            error
+        );
+
+        PAGE_SIZE = 50;
+
+    }
+
+}
 
 async function loadHymns() {
 
@@ -752,11 +911,11 @@ function resetButton(button) {
 
     button.disabled = false;
 
-    button.textContent = button.dataset.originalText;
+    button.textContent =
+        button.dataset.originalText ||
+        "Save Hymn";
 
 }
-
-
 
 /* ==========================================
    SLUG GENERATOR

@@ -24,7 +24,6 @@ async function init() {
 }
 
 async function loadData() {
-
     loading.style.display = "block";
     authorsGrid.innerHTML = "";
     empty.style.display = "none";
@@ -64,18 +63,13 @@ async function loadData() {
 }
 
 function updateStatistics() {
-
     document.getElementById("totalAuthors").textContent = authors.length;
-
     document.getElementById("totalHymns").textContent = hymns.length;
-
     document.getElementById("totalBooks").textContent = 0;
 }
 
 function renderAuthors() {
-
     if (filteredAuthors.length === 0) {
-
         authorsGrid.innerHTML = "";
         empty.style.display = "block";
         return;
@@ -88,8 +82,10 @@ function renderAuthors() {
         .join("");
 }
 
+/* ==========================================================
+   REFRESHED: CLEAN DISPLAY TEMPLATE STRINGS (No buttons, fully clickable)
+========================================================== */
 function createAuthorCard(author) {
-
     const hymnCount = hymns.filter(
         hymn => hymn.author_id === author.id
     ).length;
@@ -99,42 +95,35 @@ function createAuthorCard(author) {
         "https://placehold.co/400x400?text=Author";
 
     return `
-        <div class="author-card">
+        <div class="author-card" onclick="window.location.href='author.html?id=${author.id}'">
 
-            <div class="author-image">
+            <div class="author-image-wrapper">
                 <img
                     src="${image}"
                     alt="${author.name}">
             </div>
 
             <div class="author-content">
-
                 <h3>${author.name}</h3>
-
-                <p>
+                <p class="bio-coming">
                     ${author.bio || "Biography coming soon..."}
                 </p>
-
-                <div class="author-meta">
-                    🎵 ${hymnCount} Hymns
+                <div class="author-hymn-count">
+                    <i class="fas fa-music"></i> ${hymnCount} Hymns
                 </div>
-
-                <a
-                    href="author.html?id=${author.id}"
-                    class="btn btn-primary">
-
-                    View Author
-
-                </a>
-
+                
+                <!-- Added a sleek, text-based button link -->
+                <span class="view-author-link">
+                    View Author <i class="fas fa-arrow-right"></i>
+                </span>
             </div>
 
         </div>
     `;
 }
 
-function setupEvents() {
 
+function setupEvents() {
     if (searchInput) {
         searchInput.addEventListener("input", filterAuthors);
     }
@@ -145,11 +134,9 @@ function setupEvents() {
 }
 
 function filterAuthors() {
-
     const keyword = searchInput.value.toLowerCase().trim();
 
     filteredAuthors = authors.filter(author => {
-
         const name = (author.name || "").toLowerCase();
         const bio = (author.bio || "").toLowerCase();
 
@@ -160,13 +147,10 @@ function filterAuthors() {
     });
 
     if (sortSelect.value === "za") {
-
         filteredAuthors.sort((a, b) =>
             b.name.localeCompare(a.name)
         );
-
     } else {
-
         filteredAuthors.sort((a, b) =>
             a.name.localeCompare(b.name)
         );

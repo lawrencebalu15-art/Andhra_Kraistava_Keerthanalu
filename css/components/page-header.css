@@ -1,8 +1,8 @@
 .page-header{
-    position: relative;
-    height: 430px;
+    position:relative;
     overflow: hidden;
-
+    height: 450px;
+    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -17,7 +17,7 @@
         url("../assets/backgrounds/header.jpg");
 
     background-position: center;
-    background-size: cover;
+    background-size:contain;
     background-repeat: no-repeat;
 }
 .page-header-bg {

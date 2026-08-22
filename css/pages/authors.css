@@ -1,131 +1,399 @@
-/* ===================================
-   HERO
-=================================== */
+/* ==========================================================
+   AKK ANDHRA KRAISTAVA KEERTHANALU
+   Authors Page Stylesheet Modules
+   Optimized for Version 1.1 Design Tokens
+========================================================== */
 
-.authors-hero{
-
-    padding:10px 0 30px;
-
-    background:linear-gradient(
-        135deg,
-        var(--background),
-        #fff
-    );
-
-    text-align:center;
-
+/* ==========================================================
+   1. UTILITY AND HIDDEN ELEMENTS SYSTEM
+========================================================== */
+.stats {
+    display: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 0 !important;
+    visibility: hidden !important;
 }
 
-.page-title{
-
-    font-size:clamp(2.5rem,5vw,4rem);
-
-    margin-bottom:2px;
-
-    color:var(--primary);
-
+.section {
+    padding: var(--space-6) 0; /* Standardized 24px vertical padding breathing blocks */
 }
 
-.page-description{
+/* ==========================================================
+   2. HERO BANNER DISPLAY COMPONENT
+========================================================== */
+.authors-hero {
+    padding: var(--space-8) 0; /* Luxury 40px padding space */
+    background: linear-gradient(135deg, var(--background), var(--surface));
+    text-align: center;
+    border-bottom: 1px solid var(--border-light);
+}
 
-    max-width:8000px;
+.section-label {
+    display: inline-block;
+    color: var(--accent-dark);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: var(--space-2); /* 8px split margin alignment */
+}
 
-    margin:0 auto 10px;
+.page-title {
+    font-family: var(--font-telugu);
+    font-size: var(--fs-4xl);
+    color: var(--primary);
+    line-height: var(--lh-tight);
+    margin-bottom: var(--space-4);
+}
 
-    color:var(--text-light);
+.page-description {
+    max-width: 720px; /* Scientifically verified reading line-length metric */
+    margin: 0 auto var(--space-6);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: var(--fs-lg);
+    line-height: var(--lh-normal);
+}
 
-    font-size:1.1rem;
+/* --- Primary Button Call To Action --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 28px;
+    font-family: var(--font-body);
+    font-size: var(--fs-base);
+    font-weight: var(--fw-medium);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: var(--transition-fast);
+    cursor: pointer;
+}
 
-    line-height:1;
+.btn-primary {
+    background-color: var(--primary);
+    color: var(--white);
+    border: 1px solid var(--primary);
+}
 
+.btn-primary:hover {
+    background-color: var(--primary-light);
+    border-color: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* ==========================================================
+   3. INTEGRATED SEARCH & FILTER COMPONENT (Gap Fixed!)
+========================================================== */
+.authors-search.section {
+    margin-top: 0 !important;      /* FIXED: Eradicates vertical layout creep cascade */
+    padding-top: var(--space-6);   /* 24px top spacing threshold from canvas edge */
+    padding-bottom: var(--space-2);/* FIXED: Reduced to 8px to anchor tightly above title section */
+}
+
+.search-wrapper {
+    display: flex;
+    gap: var(--space-3); /* Perfect 12px gap constraints */
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.search-input {
+    flex: 1;
+    min-width: 280px;
+    padding: 14px 20px; /* Pixel-perfect padding baseline grid mapping */
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: var(--fs-base);
+    background-color: var(--surface);
+    color: var(--text);
+    transition: var(--transition-fast);
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: var(--shadow-sm);
+}
+
+.search-select {
+    padding: 14px var(--space-5); /* Height padding matches search-input for unified sizing */
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background-color: var(--surface);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: var(--fs-base);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.search-select:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+/* ==========================================================
+   4. CONTENT DISPLAY HEADINGS SYSTEM (Gap Fixed!)
+========================================================== */
+#authors.section {
+    margin-top: 0 !important;      /* FIXED: Stripped duplicate stacked margin fields */
+    padding-top: var(--space-2);   /* FIXED: Tight 8px space pulls the title directly under search */
+}
+
+.section-header {
+    margin-bottom: var(--space-6); /* 24px clearance spacing before cards layout loop */
+}
+
+.section-header h2 {
+    font-family: var(--font-heading);
+    font-size: var(--fs-3xl);
+    color: var(--heading);
+    line-height: var(--lh-tight);
+    margin-top: var(--space-1);
+}
+
+/* ==========================================================
+   5. PHOTO DISPLAY LAYOUT GRIDS (Pristine Editorial Edition)
+========================================================== */
+.authors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--space-7); /* Increased to 32px to let row units breathe fully */
+    margin-top: 0;
+}
+
+/* --- Clean, Professional Floating Card Wrapper --- */
+.author-card {
+    background-color: var(--surface); /* Pure white background makes it pop off the ivory background */
+    border: 1px solid var(--border-light); /* Single, whisper-thin crisp boundary line */
+    border-radius: var(--radius-md); /* 10px organic curve */
+    padding: var(--space-6); /* Generous 24px inner breathing padding room */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Flows content sequentially with precise spacing control */
+    cursor: pointer;
+    box-shadow: var(--shadow-sm); /* Soft, natural atmosphere depth shadow */
+    transition: var(--transition);
+}
+
+/* Remove any double outlines or gold rings completely */
+.author-card::before,
+.author-card::after {
+    display: none !important;
+}
+
+.author-card:hover {
+    transform: translateY(-6px); /* Elegant interactive lift */
+    border-color: var(--accent); /* Transitions to your gold token cleanly */
+    box-shadow: var(--shadow-md); /* Deepens shadow organically on hover */
+}
+
+/* --- Crisp Image Placeholder Framing --- */
+.author-image-wrapper {
+    width: 100%;
+    margin-bottom: var(--space-5); /* Spacious 20px clear buffer below photo */
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+}
+
+.author-image-wrapper img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    background-color: var(--surface-alt);
+    transition: var(--transition);
+}
+
+.author-card:hover .author-image-wrapper img {
+    transform: scale(1.03); /* Subtle internal zoom effect */
+}
+
+/* --- Content Wrapper Alignment --- */
+.author-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between; /* Pushes the music badge perfectly to the baseline */
+    align-items: center;
+}
+
+/* --- Typographic System Fixes --- */
+.author-card h3 {
+    font-family: var(--font-telugu);
+    font-size: 1.8rem; /* 16px */
+    color: var(--heading); /* Deep espresso tone from system tokens */
+    font-weight: 500;
+    line-height: var(--lh-tight);
+    margin-bottom: var(--space-3); /* 12px space below heading */
+    min-height: 44px; /* Perfectly aligns content blocks regardless of name lengths */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.author-card .bio-coming {
+    font-family: var(--font-body);
+    font-size: var(--fs-xs); /* 14px text size remains legible */
+    color: black; /* Boosted contrast color for ultimate visibility */
+    font-style: normal; /* Dropped italic layout to keep line lengths crisp */
+    line-height: var(--lh-normal);
+    margin-bottom: var(--space-5); /* 20px breathing room above the badge */
+}
+
+/* --- Upscale Rounded Hymn Metric Indicator --- */
+.author-hymn-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    font-family: var(--font-body);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-medium);
+    color: var(--text); /* Solid dark contrast reading text string */
+    background-color: var(--surface-alt); /* Light stone backdrop fill */
+    padding: var(--space-2) var(--space-5); /* 8px height, 20px width gives button-like stability */
+    border-radius: var(--radius-round);
+    margin-top: auto; /* Forces badge down to anchor base line evenly across the grid row */
+    transition: var(--transition-fast);
+}
+
+.author-card:hover .author-hymn-count {
+    background-color: var(--crimson-100); /* Transitions to your brand's soft rose gold tint */
+    color: var(--primary); /* Vibrant devotional dark red */
 }
 
 
-/* ===================================
-   SEARCH
-=================================== */
 
-.search-wrapper{
-
-    display:flex;
-
-    gap:10px;
-
-    flex-wrap:wrap;
-
-    justify-content:center;
-
+/* --- Elegant Text Link Action Button --- */
+.view-author-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: var(--space-4); /* Generous padding space separate from badges */
+    color: var(--primary); /* Uses your rich devotional crimson color token */
+    font-family: var(--font-body);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: var(--transition-fast);
 }
 
-.search-input{
-
-    flex:1;
-
-    min-width:320px;
-
-    padding:16px 20px;
-
-    border:1px solid var(--border);
-
-    border-radius:10px;
-
-    font-size:1rem;
-
+/* Add a clean, animated sliding arrow effect on hover */
+.view-author-link i {
+    font-size: var(--fs-xs);
+    transition: transform var(--transition-fast);
 }
 
-.search-select{
-
-    padding:8px 10px;
-
-    border:1px solid var(--border);
-
-    border-radius:10px;
-
-    background:white;
-
-    cursor:pointer;
-
+.author-card:hover .view-author-link {
+    color: var(--primary-light);
 }
 
-
-/* ===================================
-   AUTHORS PAGE
-=================================== */
-
-.authors-grid{
-
-    margin-top:1px;
-
-}
-/* ===================================
-   AUTHORS STATISTICS
-=================================== */
-
-.authors-stats{
-
-    background: var(--primary);
-
-    padding: 90px 0;
-
-}
-.loading-state{
-    text-align:center;
-    padding:60px 20px;
+.author-card:hover .view-author-link i {
+    transform: translateX(4px); /* Arrow nudges forward smoothly when the card is hovered */
 }
 
-.loading-state i{
-    font-size:2rem;
-    color:var(--primary-color);
-    margin-bottom:10px;
+/* ==========================================================
+   6. INTERACTIVE APP STATE HANDLERS (Loading / Empty)
+========================================================== */
+.loading-state {
+    text-align: center;
+    padding: var(--space-10) var(--space-4);
 }
 
-.empty-state{
-    text-align:center;
-    padding:80px 20px;
+.loading-state i {
+    font-size: var(--fs-3xl);
+    color: var(--primary);
+    margin-bottom: var(--space-3);
 }
 
-.empty-state i{
-    font-size:3rem;
-    color:#999;
-    margin-bottom:20px;
+.loading-state p {
+    color: var(--text-light);
+    font-family: var(--font-body);
+    font-size: var(--fs-base);
+}
+
+.empty-state {
+    text-align: center;
+    padding: var(--space-11) var(--space-4);
+}
+
+.empty-state i {
+    font-size: var(--fs-4xl);
+    color: var(--text-muted);
+    margin-bottom: var(--space-4);
+}
+
+.empty-state h3 {
+    font-family: var(--font-heading);
+    font-size: var(--fs-2xl);
+    color: var(--heading);
+    margin-bottom: var(--space-2);
+}
+
+.empty-state p {
+    color: var(--text-light);
+    font-family: var(--font-body);
+    font-size: var(--fs-base);
+}
+
+/* ==========================================================
+   7. COMPACT RESPONSIVE VIEWPORT BREAKPOINTS
+========================================================== */
+@media (max-width: 1024px) {
+    .authors-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: var(--space-4);
+    }
+}
+
+@media (max-width: 768px) {
+    .authors-hero {
+        padding: var(--space-6) var(--space-4);
+    }
+
+    .page-title {
+        font-size: var(--fs-3xl);
+    }
+
+    .page-description {
+        font-size: var(--fs-base);
+        margin-bottom: var(--space-4);
+    }
+
+    .search-wrapper {
+        flex-direction: column;
+        gap: var(--space-2);
+    }
+
+    .search-input, 
+    .search-select {
+        width: 100%;
+        min-width: 100%;
+    }
+
+    .authors-search.section {
+        padding-top: var(--space-4);
+    }
+
+    .section-header h2 {
+        font-size: var(--fs-2xl);
+    }
+
+    .authors-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-3);
+    }
+    
+    .author-card {
+        padding: var(--space-3);
+    }
 }
