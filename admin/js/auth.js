@@ -123,7 +123,7 @@ if (loginForm) {
 
         }
 
-        window.location.replace("admin/dashboard.html");
+        window.location.replace("./dashboard.html");
 
     });
 
