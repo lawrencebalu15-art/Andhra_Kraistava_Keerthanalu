@@ -1,0 +1,246 @@
+/* ==========================================================
+   SUPPORT PAGE
+========================================================== */
+
+
+/* ==========================================================
+   PAGE
+========================================================== */
+
+.support-page {
+    background: #f7f4ee;
+}
+
+
+/* ==========================================================
+   INTRO
+========================================================== */
+
+.support-page .section:first-child {
+    padding-bottom: 55px;
+}
+
+.support-page .section:first-child .container {
+    max-width: 850px;
+
+    text-align: center;
+}
+
+
+/* ==========================================================
+   SUPPORT PURPOSE GRID
+========================================================== */
+
+.support-page .support-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 22px;
+
+    margin-top: 40px;
+}
+
+
+/* ==========================================================
+   SUPPORT CARDS
+========================================================== */
+
+.support-page .support-card {
+    position: relative;
+
+    min-height: 220px;
+
+    padding: 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5ddd2;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 9px 30px rgba(50, 35, 20, 0.05);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.support-page .support-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 16px 40px rgba(50, 35, 20, 0.09);
+}
+
+
+/* Remove old background imagery */
+
+.support-page .support-card,
+.support-page .support-card::before,
+.support-page .support-card::after {
+    background-image: none !important;
+}
+
+
+/* ==========================================================
+   NUMBER
+========================================================== */
+
+.support-page .support-card::before {
+    content: attr(data-number);
+
+    display: block;
+
+    margin-bottom: 20px;
+
+    color: #a97820;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 2px;
+}
+
+
+/* ==========================================================
+   TITLE
+========================================================== */
+
+.support-page .support-card h3 {
+    margin: 0 0 12px;
+
+    color: #51291e;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 22px;
+}
+
+.support-page .support-card p {
+    margin: 0;
+
+    color: #65615b;
+
+    font-size: 14px;
+
+    line-height: 1.75;
+}
+
+
+/* ==========================================================
+   INFORMATION CONTRIBUTION
+========================================================== */
+
+.support-page .section .card {
+    background: #ffffff;
+
+    border: 1px solid #e5ddd2;
+
+    box-shadow:
+        0 10px 32px rgba(50, 35, 20, 0.05);
+}
+
+
+/* ==========================================================
+   SUPPORT CTA
+========================================================== */
+
+.support-page .support-cta {
+
+    max-width: 900px;
+
+    margin: 60px auto 0;
+
+    padding: 55px 45px;
+
+    text-align: center;
+
+    background: #51291e;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 15px 40px rgba(50, 35, 20, 0.10);
+}
+
+.support-page .support-cta h2 {
+    margin-top: 0;
+
+    color: #ffffff !important;
+
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+.support-page .support-cta p {
+    max-width: 700px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    color: rgba(255, 255, 255, 0.78);
+}
+
+
+/* ==========================================================
+   SUPPORT BUTTONS
+========================================================== */
+
+.support-page .support-cta .btn {
+    margin-top: 18px;
+}
+
+
+/* ==========================================================
+   THANK YOU
+========================================================== */
+
+.support-page .thank-you {
+    max-width: 850px;
+
+    margin: 24px auto 0;
+
+    padding: 35px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px solid #e5ddd2;
+
+    border-radius: 16px;
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media (max-width: 950px) {
+
+    .support-page .support-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .support-page .support-grid {
+        grid-template-columns: 1fr;
+
+        gap: 16px;
+    }
+
+    .support-page .support-card {
+        min-height: auto;
+
+        padding: 24px;
+    }
+
+    .support-page .support-cta {
+        padding: 40px 24px;
+    }
+}

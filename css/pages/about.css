@@ -1,0 +1,256 @@
+/* ==========================================================
+   ABOUT PAGE
+========================================================== */
+
+
+/* ==========================================================
+   PAGE
+========================================================== */
+
+.about-page {
+    background: #f7f4ee;
+}
+
+
+/* ==========================================================
+   INTRO
+========================================================== */
+
+.about-page > main > .section:first-child {
+    padding-bottom: 55px;
+}
+
+.about-page > main > .section:first-child .container {
+    max-width: 900px;
+
+    text-align: center;
+}
+
+.about-page > main > .section:first-child .section-title {
+    max-width: 850px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    color: #51291e;
+}
+
+
+/* ==========================================================
+   MISSION
+========================================================== */
+
+.about-page .mission-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(360px, 0.8fr);
+
+    gap: 75px;
+
+    align-items: center;
+}
+
+.about-page .mission-content {
+    max-width: 650px;
+}
+
+.about-page .mission-content p {
+    color: #625e58;
+
+    font-size: 16px;
+
+    line-height: 1.85;
+}
+
+
+/* ==========================================================
+   MISSION ITEMS
+========================================================== */
+
+.about-page .mission-box {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+.about-page .mission-item {
+    display: grid;
+
+    grid-template-columns: 58px 90px 1fr;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5ddd2;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 7px 25px rgba(50, 35, 20, 0.04);
+}
+
+.about-page .mission-item h3 {
+    margin: 0;
+
+    color: #a97820;
+}
+
+.about-page .mission-item h4 {
+    margin: 0;
+
+    color: #51291e;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 17px;
+}
+
+.about-page .mission-item p {
+    margin: 0;
+
+    color: #67635d;
+
+    font-size: 13px;
+
+    line-height: 1.55;
+}
+
+
+/* ==========================================================
+   RESEARCH / FEATURE CARD
+========================================================== */
+
+.about-page .card {
+    background: #ffffff;
+
+    border: 1px solid #e5ddd2;
+
+    box-shadow:
+        0 10px 35px rgba(50, 35, 20, 0.05);
+}
+
+
+/* Any old decorative background gets removed */
+
+.about-page .card[style*="background"],
+.about-page .card[style*="background-image"] {
+    background-image: none !important;
+}
+
+
+/* ==========================================================
+   PUBLICATION
+========================================================== */
+
+.about-page .mission-grid .mission-box {
+    justify-content: center;
+}
+
+.about-page .mission-grid .mission-box .mission-item {
+    grid-template-columns: 50px 1fr;
+}
+
+
+/* ==========================================================
+   WEBSITE CARDS
+========================================================== */
+
+.about-page .cards-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 22px;
+}
+
+.about-page .cards-grid .card {
+    padding: 28px;
+
+    min-height: 190px;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.about-page .cards-grid .card:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 15px 40px rgba(50, 35, 20, 0.09);
+}
+
+.about-page .cards-grid .card h3 {
+    color: #51291e;
+
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+.about-page .author-link {
+    color: #8b621f;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* ==========================================================
+   CTA
+========================================================== */
+
+.about-page .section:last-child .container > div {
+    max-width: 850px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media (max-width: 950px) {
+
+    .about-page .mission-grid {
+        grid-template-columns: 1fr;
+
+        gap: 45px;
+    }
+
+    .about-page .mission-content {
+        max-width: none;
+    }
+
+    .about-page .cards-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .about-page .mission-item {
+        grid-template-columns: 48px 1fr;
+
+        gap: 12px;
+    }
+
+    .about-page .mission-item h4,
+    .about-page .mission-item p {
+        grid-column: 2;
+    }
+
+    .about-page .cards-grid {
+        grid-template-columns: 1fr;
+    }
+}

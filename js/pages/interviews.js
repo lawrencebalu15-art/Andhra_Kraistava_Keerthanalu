@@ -1,26 +1,474 @@
-import { supabase } from "../../js/supabase.js";
+import { supabase } from "../supabase.js";
+
+/* ==========================================================
+   DOM ELEMENTS
+========================================================== */
+
+const interviewsGrid = document.getElementById("interviewsGrid");
+const loadingState = document.getElementById("interviewsLoading");
+const errorState = document.getElementById("interviewsError");
+const emptyState = document.getElementById("interviewsEmpty");
 
 
-/* ==========================================
-   DOM
-========================================== */
+/* ==========================================================
+   INITIALIZE
+========================================================== */
 
-const grid =
-    document.getElementById("interviewsGrid");
-
-const loading =
-    document.getElementById("interviewsLoading");
-
-const errorState =
-    document.getElementById("interviewsError");
-
-const emptyState =
-    document.getElementById("interviewsEmpty");
+init();
 
 
-/* ==========================================
-   HELPERS
-========================================== */
+async function init() {
+
+    if (!interviewsGrid) {
+        console.error("Interviews grid element not found.");
+        return;
+    }
+
+    showLoading();
+
+    try {
+
+        const interviews = await loadInterviews();
+
+        if (!interviews.length) {
+            showEmpty();
+            return;
+        }
+
+        renderInterviews(interviews);
+
+    } catch (error) {
+
+        console.error("Failed to load interviews:", error);
+
+        showError();
+    }
+}
+
+
+/* ==========================================================
+   LOAD INTERVIEWS
+========================================================== */
+
+async function loadInterviews() {
+
+    /*
+     * Public users should only receive published interviews.
+     *
+     * The database RLS policy also enforces this, but keeping
+     * the filter here makes the public-page intent explicit.
+     */
+
+    const {
+        data: interviews,
+        error: interviewsError
+    } = await supabase
+        .from("interviews")
+        .select(`
+            id,
+            title,
+            description,
+            category,
+            interviewee,
+            media_id,
+            youtube_url,
+            featured,
+            published,
+            created_at
+        `)
+        .eq("published", true)
+        .order("created_at", {
+            ascending: false
+        });
+
+    if (interviewsError) {
+        throw interviewsError;
+    }
+
+    if (!interviews || interviews.length === 0) {
+        return [];
+    }
+
+
+    /* ======================================================
+       LOAD MEDIA
+    ====================================================== */
+
+    const mediaIds = [
+        ...new Set(
+            interviews
+                .map(interview => interview.media_id)
+                .filter(Boolean)
+        )
+    ];
+
+
+    let mediaMap = new Map();
+
+
+    if (mediaIds.length > 0) {
+
+        const {
+            data: media,
+            error: mediaError
+        } = await supabase
+            .from("media")
+            .select("id, storage_path")
+            .in("id", mediaIds);
+
+        if (mediaError) {
+            throw mediaError;
+        }
+
+
+        /*
+         * Convert media rows into:
+         *
+         * media.id -> public image URL
+         */
+
+        if (media) {
+
+            media.forEach(item => {
+
+                if (!item.storage_path) {
+                    return;
+                }
+
+                const {
+                    data: publicUrlData
+                } = supabase
+                    .storage
+                    .from("media")
+                    .getPublicUrl(item.storage_path);
+
+                if (publicUrlData?.publicUrl) {
+
+                    mediaMap.set(
+                        item.id,
+                        publicUrlData.publicUrl
+                    );
+                }
+
+            });
+        }
+    }
+
+
+    /* ======================================================
+       COMBINE INTERVIEW + MEDIA DATA
+    ====================================================== */
+
+    return interviews.map(interview => ({
+
+        ...interview,
+
+        imageUrl:
+            mediaMap.get(interview.media_id) ||
+            getYouTubeThumbnail(interview.youtube_url)
+
+    }));
+
+}
+
+
+/* ==========================================================
+   RENDER INTERVIEWS
+========================================================== */
+
+function renderInterviews(interviews) {
+
+    interviewsGrid.innerHTML = interviews
+        .map(createInterviewCard)
+        .join("");
+
+    hideAllStates();
+}
+
+
+/* ==========================================================
+   CREATE INTERVIEW CARD
+========================================================== */
+
+function createInterviewCard(interview) {
+
+    const title =
+        interview.title ||
+        "Untitled Interview";
+
+    const category =
+        interview.category ||
+        "Interview";
+
+    const interviewee =
+        interview.interviewee ||
+        "";
+
+    const description =
+        interview.description ||
+        "Watch this interview and discover the story behind Telugu Christian hymn heritage.";
+
+    const youtubeUrl =
+        interview.youtube_url ||
+        "#";
+
+    const imageUrl =
+        interview.imageUrl ||
+        "https://placehold.co/1280x720?text=Interview";
+
+
+    return `
+        <article class="interview-card">
+
+            <div class="video-embed-container">
+
+                ${
+                    youtubeUrl !== "#"
+                        ? `
+                            <a
+                                href="${escapeAttribute(youtubeUrl)}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Watch ${escapeAttribute(title)} on YouTube"
+                            >
+                                <img
+                                    src="${escapeAttribute(imageUrl)}"
+                                    alt="${escapeAttribute(title)}"
+                                    loading="lazy"
+                                    onerror="this.src='https://placehold.co/1280x720?text=Interview';"
+                                >
+
+                                <span
+                                    class="interview-play-button"
+                                    aria-hidden="true"
+                                >
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        width="28"
+                                        height="28"
+                                        fill="currentColor"
+                                    >
+                                        <path d="M8 5v14l11-7z"></path>
+                                    </svg>
+                                </span>
+                            </a>
+                        `
+                        : `
+                            <img
+                                src="${escapeAttribute(imageUrl)}"
+                                alt="${escapeAttribute(title)}"
+                                loading="lazy"
+                                onerror="this.src='https://placehold.co/1280x720?text=Interview';"
+                            >
+                        `
+                }
+
+            </div>
+
+
+            <div class="interview-content">
+
+                <span class="interview-category">
+                    ${escapeHtml(category)}
+                </span>
+
+
+                <h3>
+                    ${escapeHtml(title)}
+                </h3>
+
+
+                ${
+                    interviewee
+                        ? `
+                            <p class="interview-interviewee">
+                                ${escapeHtml(interviewee)}
+                            </p>
+                        `
+                        : ""
+                }
+
+
+                <p>
+                    ${escapeHtml(description)}
+                </p>
+
+
+                ${
+                    youtubeUrl !== "#"
+                        ? `
+                            <a
+                                href="${escapeAttribute(youtubeUrl)}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="author-link"
+                            >
+                                Watch Interview on YouTube →
+                            </a>
+                        `
+                        : ""
+                }
+
+            </div>
+
+        </article>
+    `;
+}
+
+
+/* ==========================================================
+   YOUTUBE THUMBNAIL
+========================================================== */
+
+function getYouTubeThumbnail(url) {
+
+    if (!url) {
+        return null;
+    }
+
+    try {
+
+        const parsedUrl = new URL(url);
+
+        let videoId = null;
+
+
+        /* ----------------------------------------------
+           youtu.be/VIDEO_ID
+        ---------------------------------------------- */
+
+        if (parsedUrl.hostname === "youtu.be") {
+
+            videoId =
+                parsedUrl.pathname
+                    .split("/")
+                    .filter(Boolean)[0];
+
+        }
+
+
+        /* ----------------------------------------------
+           youtube.com/watch?v=VIDEO_ID
+        ---------------------------------------------- */
+
+        else if (
+            parsedUrl.hostname.includes("youtube.com")
+        ) {
+
+            videoId =
+                parsedUrl.searchParams.get("v");
+
+
+            /* ------------------------------------------
+               /embed/VIDEO_ID
+            ------------------------------------------ */
+
+            if (!videoId) {
+
+                const embedMatch =
+                    parsedUrl.pathname.match(
+                        /\/embed\/([^/?]+)/
+                    );
+
+                if (embedMatch) {
+                    videoId = embedMatch[1];
+                }
+            }
+
+
+            /* ------------------------------------------
+               /shorts/VIDEO_ID
+            ------------------------------------------ */
+
+            if (!videoId) {
+
+                const shortsMatch =
+                    parsedUrl.pathname.match(
+                        /\/shorts\/([^/?]+)/
+                    );
+
+                if (shortsMatch) {
+                    videoId = shortsMatch[1];
+                }
+            }
+
+        }
+
+
+        if (!videoId) {
+            return null;
+        }
+
+
+        /*
+         * maxresdefault provides the highest-quality
+         * standard YouTube thumbnail when available.
+         */
+
+        return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+
+    } catch (error) {
+
+        console.warn(
+            "Unable to generate YouTube thumbnail:",
+            error
+        );
+
+        return null;
+    }
+}
+
+
+/* ==========================================================
+   UI STATES
+========================================================== */
+
+function showLoading() {
+
+    interviewsGrid.innerHTML = "";
+
+    loadingState?.classList.remove("hidden");
+    errorState?.classList.add("hidden");
+    emptyState?.classList.add("hidden");
+}
+
+
+function showError() {
+
+    interviewsGrid.innerHTML = "";
+
+    loadingState?.classList.add("hidden");
+    errorState?.classList.remove("hidden");
+    emptyState?.classList.add("hidden");
+}
+
+
+function showEmpty() {
+
+    interviewsGrid.innerHTML = "";
+
+    loadingState?.classList.add("hidden");
+    errorState?.classList.add("hidden");
+    emptyState?.classList.remove("hidden");
+}
+
+
+function hideAllStates() {
+
+    loadingState?.classList.add("hidden");
+    errorState?.classList.add("hidden");
+    emptyState?.classList.add("hidden");
+}
+
+
+/* ==========================================================
+   SECURITY / HTML HELPERS
+========================================================== */
+
+/*
+ * Interview data comes from Supabase and may contain user-
+ * entered text. Escape HTML before injecting it into the DOM.
+ */
 
 function escapeHtml(value) {
 
@@ -30,477 +478,10 @@ function escapeHtml(value) {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
-
 }
 
 
-/* ==========================================
-   GET MEDIA URL
-========================================== */
+function escapeAttribute(value) {
 
-function getMediaUrl(storagePath) {
-
-    if (!storagePath) {
-
-        return "";
-
-    }
-
-
-    const {
-        data
-    } = supabase.storage
-        .from("media")
-        .getPublicUrl(storagePath);
-
-
-    return data?.publicUrl || "";
-
+    return escapeHtml(value);
 }
-
-
-/* ==========================================
-   LOAD INTERVIEWS
-========================================== */
-
-async function loadInterviews() {
-
-    try {
-
-        showLoading();
-
-
-        /*
-         * Load only published interviews.
-         */
-
-        const {
-            data,
-            error
-        } = await supabase
-            .from("interviews")
-            .select(`
-                id,
-                title,
-                description,
-                category,
-                interviewee,
-                media_id,
-                youtube_url,
-                featured,
-                published,
-                created_at
-            `)
-            .eq(
-                "published",
-                true
-            )
-            .order(
-                "created_at",
-                {
-                    ascending: false
-                }
-            );
-
-
-        if (error) {
-
-            throw error;
-
-        }
-
-
-        if (
-            !data ||
-            data.length === 0
-        ) {
-
-            showEmpty();
-
-            return;
-
-        }
-
-
-        /*
-         * Load media separately.
-         *
-         * This matches the CMS architecture
-         * where interviews store media_id.
-         */
-
-        const mediaIds =
-            data
-                .map(
-                    interview =>
-                        interview.media_id
-                )
-                .filter(Boolean);
-
-
-        let mediaList = [];
-
-
-        if (mediaIds.length > 0) {
-
-            const {
-                data: mediaData,
-                error: mediaError
-            } = await supabase
-                .from("media")
-                .select(
-                    "id,file_name,storage_path,file_type"
-                )
-                .in(
-                    "id",
-                    mediaIds
-                );
-
-
-            if (mediaError) {
-
-                throw mediaError;
-
-            }
-
-
-            mediaList =
-                mediaData || [];
-
-        }
-
-
-        /*
-         * Render
-         */
-
-        renderInterviews(
-            data,
-            mediaList
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Failed to load interviews:",
-            error
-        );
-
-
-        showError();
-
-    }
-
-}
-
-
-/* ==========================================
-   RENDER INTERVIEWS
-========================================== */
-
-function renderInterviews(
-    interviews,
-    mediaList
-) {
-
-    grid.innerHTML = "";
-
-
-    interviews.forEach(
-        interview => {
-
-            const media =
-                mediaList.find(
-                    item =>
-                        String(item.id) ===
-                        String(interview.media_id)
-                );
-
-
-            const imageUrl =
-                media
-                    ? getMediaUrl(
-                        media.storage_path
-                    )
-                    : "";
-
-
-            const card =
-                document.createElement(
-                    "article"
-                );
-
-
-            card.className =
-                "interview-card";
-
-
-            /*
-             * Image
-             */
-
-            const imageHtml =
-                imageUrl
-
-                    ? `
-                        <div class="interview-image">
-
-                            <img
-                                src="${escapeHtml(imageUrl)}"
-                                alt="${escapeHtml(interview.title)}"
-                                loading="lazy">
-
-                        </div>
-                      `
-
-                    : `
-                        <div class="interview-image">
-
-                            <div
-                                class="interview-image-placeholder">
-
-                                Interview
-
-                            </div>
-
-                        </div>
-                      `;
-
-
-            /*
-             * Featured badge
-             */
-
-            const featuredHtml =
-                interview.featured
-
-                    ? `
-                        <span class="interview-featured">
-                            Featured
-                        </span>
-                      `
-
-                    : "";
-
-
-            /*
-             * Interviewee
-             */
-
-            const intervieweeHtml =
-                interview.interviewee
-
-                    ? `
-                        <p class="interview-interviewee">
-
-                            ${escapeHtml(
-                                interview.interviewee
-                            )}
-
-                        </p>
-                      `
-
-                    : "";
-
-
-            /*
-             * YouTube button
-             */
-
-            const youtubeHtml =
-                interview.youtube_url
-
-                    ? `
-                        <a
-                            href="${escapeHtml(
-                                interview.youtube_url
-                            )}"
-                            class="author-link"
-                            target="_blank"
-                            rel="noopener noreferrer">
-
-                            Watch Interview →
-
-                        </a>
-                      `
-
-                    : "";
-
-
-            card.innerHTML = `
-
-                ${imageHtml}
-
-
-                <div class="interview-content">
-
-
-                    <div class="interview-meta">
-
-                        <span class="interview-category">
-
-                            ${escapeHtml(
-                                interview.category ||
-                                "Interview"
-                            )}
-
-                        </span>
-
-
-                        ${featuredHtml}
-
-                    </div>
-
-
-                    <h3>
-
-                        ${escapeHtml(
-                            interview.title
-                        )}
-
-                    </h3>
-
-
-                    ${intervieweeHtml}
-
-
-                    <p>
-
-                        ${escapeHtml(
-                            interview.description ||
-                            "Discover the story and ministry behind this interview."
-                        )}
-
-                    </p>
-
-
-                    ${youtubeHtml}
-
-
-                </div>
-
-            `;
-
-
-            grid.appendChild(
-                card
-            );
-
-        }
-    );
-
-
-    showContent();
-
-}
-
-
-/* ==========================================
-   LOADING STATE
-========================================== */
-
-function showLoading() {
-
-    loading.classList.remove(
-        "hidden"
-    );
-
-    errorState.classList.add(
-        "hidden"
-    );
-
-    emptyState.classList.add(
-        "hidden"
-    );
-
-    grid.classList.add(
-        "hidden"
-    );
-
-}
-
-
-/* ==========================================
-   CONTENT STATE
-========================================== */
-
-function showContent() {
-
-    loading.classList.add(
-        "hidden"
-    );
-
-    errorState.classList.add(
-        "hidden"
-    );
-
-    emptyState.classList.add(
-        "hidden"
-    );
-
-    grid.classList.remove(
-        "hidden"
-    );
-
-}
-
-
-/* ==========================================
-   EMPTY STATE
-========================================== */
-
-function showEmpty() {
-
-    loading.classList.add(
-        "hidden"
-    );
-
-    errorState.classList.add(
-        "hidden"
-    );
-
-    grid.classList.add(
-        "hidden"
-    );
-
-    emptyState.classList.remove(
-        "hidden"
-    );
-
-}
-
-
-/* ==========================================
-   ERROR STATE
-========================================== */
-
-function showError() {
-
-    loading.classList.add(
-        "hidden"
-    );
-
-    emptyState.classList.add(
-        "hidden"
-    );
-
-    grid.classList.add(
-        "hidden"
-    );
-
-    errorState.classList.remove(
-        "hidden"
-    );
-
-}
-
-
-/* ==========================================
-   INITIALIZE
-========================================== */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    loadInterviews
-);

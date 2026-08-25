@@ -21,10 +21,23 @@
 @import url("components/page-header.css");
 
 @import url("pages/hero.css");
-@import url("pages/hymns.css");
-@import url("pages/authors.css");
-@import url("pages/responsive.css");
 
+@import url("pages/hymns.css");
+
+@import url("pages/authors.css");
+
+@import url("pages/books.css");
+
+
+@import url("pages/gallery.css");
+
+@import url("pages/about.css");
+
+@import url("pages/support.css");
+
+@import url("pages/contact.css");
+
+@import url("pages/responsive.css");
 
 @import "./effects/hero-scene.css";
 @import url("./effects/glass.css");
