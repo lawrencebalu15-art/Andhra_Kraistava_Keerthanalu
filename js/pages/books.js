@@ -5,26 +5,13 @@ import { supabase } from "../supabase.js";
    DOM ELEMENTS
 ========================================================== */
 
-const booksGrid =
-    document.getElementById("booksGrid");
-
-const loadingState =
-    document.getElementById("booksLoading");
-
-const errorState =
-    document.getElementById("booksError");
-
-const emptyState =
-    document.getElementById("booksEmpty");
-
-const emptyMessage =
-    document.getElementById("booksEmptyMessage");
-
-const searchInput =
-    document.getElementById("bookSearch");
-
-const retryButton =
-    document.getElementById("booksRetry");
+const booksGrid = document.getElementById("booksGrid");
+const loadingState = document.getElementById("booksLoading");
+const errorState = document.getElementById("booksError");
+const emptyState = document.getElementById("booksEmpty");
+const emptyMessage = document.getElementById("booksEmptyMessage");
+const searchInput = document.getElementById("bookSearch");
+const retryButton = document.getElementById("booksRetry");
 
 
 /* ==========================================================
@@ -32,7 +19,6 @@ const retryButton =
 ========================================================== */
 
 let books = [];
-
 let filteredBooks = [];
 
 
@@ -40,11 +26,7 @@ let filteredBooks = [];
    INITIALIZE
 ========================================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
-
-    loadBooks();
-
-});
+loadBooks();
 
 
 /* ==========================================================
@@ -57,13 +39,14 @@ async function loadBooks() {
 
     try {
 
+        console.log("[Books] Loading books from Supabase...");
+
+
         const {
             data,
             error
         } = await supabase
-
             .from("books")
-
             .select(`
                 id,
                 name,
@@ -73,20 +56,33 @@ async function loadBooks() {
                 media_id,
                 created_at
             `)
-
             .order("created_at", {
                 ascending: false
             });
 
 
         if (error) {
+
+            console.error(
+                "[Books] Supabase books query failed:",
+                error
+            );
+
             throw error;
+
         }
+
+
+        console.log(
+            "[Books] Books received:",
+            data
+        );
 
 
         if (!data || data.length === 0) {
 
             books = [];
+            filteredBooks = [];
 
             showEmpty();
 
@@ -97,6 +93,9 @@ async function loadBooks() {
 
         /* ==================================================
            LOAD MEDIA
+
+           Media failure should NOT prevent books from
+           appearing.
         ================================================== */
 
         const mediaIds = [
@@ -108,7 +107,7 @@ async function loadBooks() {
         ];
 
 
-        let mediaMap = new Map();
+        const mediaMap = new Map();
 
 
         if (mediaIds.length > 0) {
@@ -117,23 +116,22 @@ async function loadBooks() {
                 data: media,
                 error: mediaError
             } = await supabase
-
                 .from("media")
-
                 .select(`
                     id,
                     storage_path
                 `)
-
                 .in("id", mediaIds);
 
 
             if (mediaError) {
-                throw mediaError;
-            }
 
+                console.warn(
+                    "[Books] Media query failed. Books will still be displayed:",
+                    mediaError
+                );
 
-            if (media) {
+            } else if (media) {
 
                 media.forEach(item => {
 
@@ -145,11 +143,8 @@ async function loadBooks() {
                     const {
                         data: publicUrlData
                     } = supabase
-
                         .storage
-
                         .from("media")
-
                         .getPublicUrl(
                             item.storage_path
                         );
@@ -191,13 +186,19 @@ async function loadBooks() {
         filteredBooks = [...books];
 
 
+        console.log(
+            "[Books] Final books:",
+            books
+        );
+
+
         renderBooks();
 
 
     } catch (error) {
 
         console.error(
-            "Failed to load books:",
+            "[Books] Failed to load books:",
             error
         );
 
@@ -271,9 +272,6 @@ function createBookCard(book) {
 
         <article class="book-card">
 
-
-            <!-- BOOK COVER -->
-
             <div class="book-cover">
 
                 <img
@@ -281,6 +279,7 @@ function createBookCard(book) {
                     alt="${escapeAttribute(title)}"
                     loading="lazy"
                     onerror="
+                        this.onerror=null;
                         this.src='assets/images/books/book-placeholder.jpg';
                     "
                 >
@@ -288,22 +287,15 @@ function createBookCard(book) {
             </div>
 
 
-            <!-- BOOK CONTENT -->
-
             <div class="book-content">
 
-
                 <span class="book-category">
-
                     ${escapeHtml(category)}
-
                 </span>
 
 
                 <h3>
-
                     ${escapeHtml(title)}
-
                 </h3>
 
 
@@ -324,14 +316,10 @@ function createBookCard(book) {
 
 
                 <p>
-
                     ${escapeHtml(description)}
-
                 </p>
 
-
             </div>
-
 
         </article>
 
@@ -397,15 +385,10 @@ function handleSearch(event) {
 
 
             return (
-
                 name.includes(query) ||
-
                 description.includes(query) ||
-
                 category.includes(query) ||
-
                 author.includes(query)
-
             );
 
         });
@@ -510,15 +493,10 @@ function hideStates() {
 function escapeHtml(value) {
 
     return String(value ?? "")
-
         .replace(/&/g, "&amp;")
-
         .replace(/</g, "&lt;")
-
         .replace(/>/g, "&gt;")
-
         .replace(/"/g, "&quot;")
-
         .replace(/'/g, "&#039;");
 
 }
