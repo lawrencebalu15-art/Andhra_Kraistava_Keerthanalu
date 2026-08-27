@@ -23,48 +23,68 @@ let filteredBooks = [];
 
 
 /* ==========================================================
-   INITIALIZE
+   INITIALIZATION
 ========================================================== */
 
-loadBooks();
+document.addEventListener("DOMContentLoaded", () => {
+
+    if (!booksGrid) {
+
+        console.error(
+            "[Books] booksGrid element was not found."
+        );
+
+        return;
+
+    }
+
+    loadBooks();
+
+});
 
 
 /* ==========================================================
-   LOAD BOOKS
+   LOAD BOOKS FROM SUPABASE
 ========================================================== */
 
 async function loadBooks() {
 
     showLoading();
 
+    console.log(
+        "[Books] Loading books from Supabase..."
+    );
+
+
     try {
-
-        console.log("[Books] Loading books from Supabase...");
-
 
         const {
             data,
             error
         } = await supabase
+
             .from("books")
+
             .select(`
                 id,
                 name,
+                slug,
                 description,
-                category,
-                author,
-                media_id,
                 created_at
             `)
-            .order("created_at", {
-                ascending: false
-            });
+
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
 
 
         if (error) {
 
             console.error(
-                "[Books] Supabase books query failed:",
+                "[Books] Supabase query failed:",
                 error
             );
 
@@ -79,117 +99,18 @@ async function loadBooks() {
         );
 
 
-        if (!data || data.length === 0) {
+        books = data || [];
 
-            books = [];
-            filteredBooks = [];
+        filteredBooks = [...books];
+
+
+        if (books.length === 0) {
 
             showEmpty();
 
             return;
 
         }
-
-
-        /* ==================================================
-           LOAD MEDIA
-
-           Media failure should NOT prevent books from
-           appearing.
-        ================================================== */
-
-        const mediaIds = [
-            ...new Set(
-                data
-                    .map(book => book.media_id)
-                    .filter(Boolean)
-            )
-        ];
-
-
-        const mediaMap = new Map();
-
-
-        if (mediaIds.length > 0) {
-
-            const {
-                data: media,
-                error: mediaError
-            } = await supabase
-                .from("media")
-                .select(`
-                    id,
-                    storage_path
-                `)
-                .in("id", mediaIds);
-
-
-            if (mediaError) {
-
-                console.warn(
-                    "[Books] Media query failed. Books will still be displayed:",
-                    mediaError
-                );
-
-            } else if (media) {
-
-                media.forEach(item => {
-
-                    if (!item.storage_path) {
-                        return;
-                    }
-
-
-                    const {
-                        data: publicUrlData
-                    } = supabase
-                        .storage
-                        .from("media")
-                        .getPublicUrl(
-                            item.storage_path
-                        );
-
-
-                    if (
-                        publicUrlData &&
-                        publicUrlData.publicUrl
-                    ) {
-
-                        mediaMap.set(
-                            item.id,
-                            publicUrlData.publicUrl
-                        );
-
-                    }
-
-                });
-
-            }
-
-        }
-
-
-        /* ==================================================
-           COMBINE BOOK + MEDIA DATA
-        ================================================== */
-
-        books = data.map(book => ({
-
-            ...book,
-
-            imageUrl:
-                mediaMap.get(book.media_id) || null
-
-        }));
-
-
-        filteredBooks = [...books];
-
-
-        console.log(
-            "[Books] Final books:",
-            books
-        );
 
 
         renderBooks();
@@ -202,7 +123,10 @@ async function loadBooks() {
             error
         );
 
-        showError();
+        showError(
+            error?.message ||
+            "Unable to load books."
+        );
 
     }
 
@@ -248,24 +172,9 @@ function createBookCard(book) {
         "Untitled Book";
 
 
-    const category =
-        book.category ||
-        "Publication";
-
-
     const description =
         book.description ||
         "A publication documenting Telugu Christian hymn heritage.";
-
-
-    const author =
-        book.author ||
-        "";
-
-
-    const imageUrl =
-        book.imageUrl ||
-        "assets/images/books/book-placeholder.jpg";
 
 
     return `
@@ -274,15 +183,13 @@ function createBookCard(book) {
 
             <div class="book-cover">
 
-                <img
-                    src="${escapeAttribute(imageUrl)}"
-                    alt="${escapeAttribute(title)}"
-                    loading="lazy"
-                    onerror="
-                        this.onerror=null;
-                        this.src='assets/images/books/book-placeholder.jpg';
-                    "
-                >
+                <div class="book-cover-placeholder">
+
+                    <span>
+                        📖
+                    </span>
+
+                </div>
 
             </div>
 
@@ -290,7 +197,7 @@ function createBookCard(book) {
             <div class="book-content">
 
                 <span class="book-category">
-                    ${escapeHtml(category)}
+                    Publication
                 </span>
 
 
@@ -299,25 +206,24 @@ function createBookCard(book) {
                 </h3>
 
 
-                ${
-                    author
-                        ? `
-                            <p
-                                style="
-                                    margin-bottom:8px;
-                                    font-weight:600;
-                                "
-                            >
-                                ${escapeHtml(author)}
-                            </p>
-                        `
-                        : ""
-                }
-
-
                 <p>
                     ${escapeHtml(description)}
                 </p>
+
+
+                ${
+                    book.slug
+                        ? `
+                            <a
+                                href="#"
+                                class="book-link"
+                                data-slug="${escapeAttribute(book.slug)}"
+                            >
+                                View Publication
+                            </a>
+                        `
+                        : ""
+                }
 
             </div>
 
@@ -365,30 +271,27 @@ function handleSearch(event) {
         books.filter(book => {
 
             const name =
-                (book.name || "")
-                    .toLowerCase();
+                String(
+                    book.name || ""
+                ).toLowerCase();
+
+
+            const slug =
+                String(
+                    book.slug || ""
+                ).toLowerCase();
 
 
             const description =
-                (book.description || "")
-                    .toLowerCase();
-
-
-            const category =
-                (book.category || "")
-                    .toLowerCase();
-
-
-            const author =
-                (book.author || "")
-                    .toLowerCase();
+                String(
+                    book.description || ""
+                ).toLowerCase();
 
 
             return (
                 name.includes(query) ||
-                description.includes(query) ||
-                category.includes(query) ||
-                author.includes(query)
+                slug.includes(query) ||
+                description.includes(query)
             );
 
         });
@@ -419,69 +322,131 @@ if (retryButton) {
 
 function showLoading() {
 
-    booksGrid.classList.add("hidden");
+    if (booksGrid) {
+        booksGrid.classList.add("hidden");
+    }
 
-    loadingState.classList.remove("hidden");
+    if (loadingState) {
+        loadingState.classList.remove("hidden");
+    }
 
-    errorState.classList.add("hidden");
+    if (errorState) {
+        errorState.classList.add("hidden");
+    }
 
-    emptyState.classList.add("hidden");
+    if (emptyState) {
+        emptyState.classList.add("hidden");
+    }
 
 }
 
 
-function showError() {
+function showError(message) {
 
-    booksGrid.classList.add("hidden");
+    if (booksGrid) {
+        booksGrid.classList.add("hidden");
+    }
 
-    loadingState.classList.add("hidden");
+    if (loadingState) {
+        loadingState.classList.add("hidden");
+    }
 
-    errorState.classList.remove("hidden");
+    if (errorState) {
+        errorState.classList.remove("hidden");
+    }
 
-    emptyState.classList.add("hidden");
+    if (emptyState) {
+        emptyState.classList.add("hidden");
+    }
+
+
+    const errorMessage =
+        document.getElementById(
+            "booksErrorMessage"
+        );
+
+
+    if (errorMessage) {
+
+        errorMessage.textContent =
+            message;
+
+    }
 
 }
 
 
 function showEmpty() {
 
-    booksGrid.classList.add("hidden");
+    if (booksGrid) {
+        booksGrid.classList.add("hidden");
+    }
 
-    loadingState.classList.add("hidden");
+    if (loadingState) {
+        loadingState.classList.add("hidden");
+    }
 
-    errorState.classList.add("hidden");
+    if (errorState) {
+        errorState.classList.add("hidden");
+    }
 
-    emptyState.classList.remove("hidden");
+    if (emptyState) {
+        emptyState.classList.remove("hidden");
+    }
 
-    emptyMessage.textContent =
-        "Books and publications will appear here as they are added to the library.";
+
+    if (emptyMessage) {
+
+        emptyMessage.textContent =
+            "Books and publications will appear here as they are added to the library.";
+
+    }
 
 }
 
 
 function showSearchEmpty() {
 
-    booksGrid.classList.add("hidden");
+    if (booksGrid) {
+        booksGrid.classList.add("hidden");
+    }
 
-    loadingState.classList.add("hidden");
+    if (loadingState) {
+        loadingState.classList.add("hidden");
+    }
 
-    errorState.classList.add("hidden");
+    if (errorState) {
+        errorState.classList.add("hidden");
+    }
 
-    emptyState.classList.remove("hidden");
+    if (emptyState) {
+        emptyState.classList.remove("hidden");
+    }
 
-    emptyMessage.textContent =
-        "No books match your search.";
+
+    if (emptyMessage) {
+
+        emptyMessage.textContent =
+            "No books match your search.";
+
+    }
 
 }
 
 
 function hideStates() {
 
-    loadingState.classList.add("hidden");
+    if (loadingState) {
+        loadingState.classList.add("hidden");
+    }
 
-    errorState.classList.add("hidden");
+    if (errorState) {
+        errorState.classList.add("hidden");
+    }
 
-    emptyState.classList.add("hidden");
+    if (emptyState) {
+        emptyState.classList.add("hidden");
+    }
 
 }
 
@@ -493,11 +458,31 @@ function hideStates() {
 function escapeHtml(value) {
 
     return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
 
