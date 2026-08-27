@@ -1,0 +1,103 @@
+/* ==========================================================
+   AUTHOR — INFORMATION COMING SOON
+========================================================== */
+
+.author-coming-soon {
+    min-height: 480px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 90px 24px;
+    background: var(--color-background, #f7f1e7);
+    text-align: center;
+}
+
+.author-coming-soon__content {
+    width: min(760px, 100%);
+    padding: 70px 50px;
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid rgba(100, 70, 45, 0.14);
+    border-radius: 18px;
+    box-shadow: 0 14px 40px rgba(40, 30, 20, 0.06);
+}
+
+.author-coming-soon__eyebrow {
+    display: inline-block;
+    margin-bottom: 18px;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: #a87822;
+}
+
+.author-coming-soon h1 {
+    margin: 0 0 24px;
+
+    color: #1f2d42;
+    font-size: clamp(2.4rem, 5vw, 4.2rem);
+    line-height: 1.1;
+    font-weight: 700;
+}
+
+.author-coming-soon p {
+    max-width: 650px;
+    margin: 0 auto 12px;
+
+    color: #625f5a;
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+.author-coming-soon__divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+
+    margin-top: 34px;
+}
+
+.author-coming-soon__divider::before,
+.author-coming-soon__divider::after {
+    content: "";
+    width: 90px;
+    height: 1px;
+    background: rgba(168, 120, 34, 0.35);
+}
+
+.author-coming-soon__divider span {
+    color: #b17b1f;
+    font-size: 1rem;
+}
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width: 640px) {
+
+    .author-coming-soon {
+        min-height: 420px;
+        padding: 60px 18px;
+    }
+
+    .author-coming-soon__content {
+        padding: 50px 24px;
+    }
+
+    .author-coming-soon h1 {
+        font-size: 2.4rem;
+    }
+
+    .author-coming-soon p {
+        font-size: 0.98rem;
+    }
+
+    .author-coming-soon__divider::before,
+    .author-coming-soon__divider::after {
+        width: 55px;
+    }
+
+}
