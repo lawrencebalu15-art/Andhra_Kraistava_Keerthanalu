@@ -1,28 +1,32 @@
-/* ==========================================================
+/* =========================================================
    ADMIN BOOKS
    Andhra Kraistava Keerthanalu CMS
-========================================================== */
+========================================================= */
 
 import { supabase } from "./supabase.js";
 import { showToast } from "./utils.js";
-import { requireAuth, logout } from "./auth.js";
+import { requireAuth } from "./auth.js";
 
 
-/* ==========================================================
+/* =========================================================
+   STATE
+========================================================= */
+
+let books = [];
+let filteredBooks = [];
+
+let editingBook = null;
+
+
+/* =========================================================
    DOM
-========================================================== */
+========================================================= */
 
 const addBookButton =
     document.getElementById("addBookButton");
 
 const emptyAddBookButton =
     document.getElementById("emptyAddBookButton");
-
-const cancelBookButton =
-    document.getElementById("cancelBookButton");
-
-const retryBooksButton =
-    document.getElementById("retryBooksButton");
 
 const bookFormPanel =
     document.getElementById("bookFormPanel");
@@ -39,28 +43,14 @@ const bookId =
 const bookName =
     document.getElementById("bookName");
 
-const bookAuthor =
-    document.getElementById("bookAuthor");
-
-const bookCategory =
-    document.getElementById("bookCategory");
-
 const bookDescription =
     document.getElementById("bookDescription");
 
-const bookCover =
-    document.getElementById("bookCover");
-
-const bookCoverPreview =
-    document.getElementById("bookCoverPreview");
-
-const bookCoverPreviewImage =
-    document.getElementById(
-        "bookCoverPreviewImage"
-    );
-
 const saveBookButton =
     document.getElementById("saveBookButton");
+
+const cancelBookButton =
+    document.getElementById("cancelBookButton");
 
 const booksLoading =
     document.getElementById("booksLoading");
@@ -75,66 +65,181 @@ const booksErrorMessage =
     document.getElementById("booksErrorMessage");
 
 const booksTableWrapper =
-    document.getElementById(
-        "booksTableWrapper"
-    );
+    document.getElementById("booksTableWrapper");
 
 const booksTableBody =
-    document.getElementById(
-        "booksTableBody"
-    );
+    document.getElementById("booksTableBody");
 
 const booksCount =
     document.getElementById("booksCount");
 
 
-/* ==========================================================
-   STATE
-========================================================== */
+/* =========================================================
+   CREATE SLUG FIELD
+   =========================================================
 
-let books = [];
+   Your database has a slug column, so we create the
+   field dynamically if it is not already present in HTML.
 
-let editingBook = null;
+========================================================= */
 
-
-/* ==========================================================
-   INITIALIZE
-========================================================== */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    initializeBooks
-);
+let bookSlug = document.getElementById("bookSlug");
 
 
-async function initializeBooks() {
+function ensureSlugField() {
 
-    try {
-
-        await requireAuth();
-
-    } catch (error) {
-
-        console.error(
-            "Authentication failed:",
-            error
-        );
-
+    if (bookSlug) {
         return;
+    }
 
+    if (!bookName) {
+        return;
+    }
+
+    const nameGroup =
+        bookName.closest(".form-group") ||
+        bookName.parentElement;
+
+
+    if (!nameGroup) {
+        return;
     }
 
 
-    setupEvents();
+    const slugGroup =
+        document.createElement("div");
 
-    await loadBooks();
+    slugGroup.className =
+        "form-group";
+
+
+    slugGroup.innerHTML = `
+
+        <label for="bookSlug">
+            Slug
+        </label>
+
+        <input
+            type="text"
+            id="bookSlug"
+            name="slug"
+            placeholder="book-name"
+            autocomplete="off"
+        >
+
+        <small>
+            Used for the book's web address.
+        </small>
+
+    `;
+
+
+    nameGroup.insertAdjacentElement(
+        "afterend",
+        slugGroup
+    );
+
+
+    bookSlug =
+        document.getElementById(
+            "bookSlug"
+        );
 
 }
 
 
-/* ==========================================================
+/* =========================================================
+   REMOVE UNSUPPORTED FIELDS
+=========================================================
+
+   The current database does NOT contain:
+
+   author
+   category
+   media_id
+
+   Therefore these fields should not be used.
+
+   This also makes the current HTML safe while we
+   transition it to the simpler Books structure.
+
+========================================================= */
+
+function removeUnsupportedFields() {
+
+    const unsupportedIds = [
+        "bookAuthor",
+        "bookCategory",
+        "bookCover"
+    ];
+
+
+    unsupportedIds.forEach(id => {
+
+        const element =
+            document.getElementById(id);
+
+
+        if (!element) {
+            return;
+        }
+
+
+        const group =
+            element.closest(".form-group") ||
+            element.parentElement;
+
+
+        if (group) {
+            group.remove();
+        }
+
+    });
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async () => {
+
+        try {
+
+            await requireAuth();
+
+            ensureSlugField();
+
+            removeUnsupportedFields();
+
+            setupEvents();
+
+            await loadBooks();
+
+        } catch (error) {
+
+            console.error(
+                "Books initialization error:",
+                error
+            );
+
+            showError(
+                error?.message ||
+                "Unable to initialize the Books page."
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
    EVENTS
-========================================================== */
+========================================================= */
 
 function setupEvents() {
 
@@ -156,29 +261,45 @@ function setupEvents() {
     );
 
 
-    retryBooksButton?.addEventListener(
-        "click",
-        loadBooks
-    );
-
-
     bookForm?.addEventListener(
         "submit",
-        handleBookSubmit
+        handleSubmit
     );
 
 
-    bookCover?.addEventListener(
-        "change",
-        handleCoverPreview
+    bookName?.addEventListener(
+        "input",
+        () => {
+
+            /*
+             * Only automatically update the slug
+             * while adding a new book.
+             *
+             * During editing, we don't unexpectedly
+             * change an existing slug.
+             */
+
+            if (
+                !editingBook &&
+                bookSlug
+            ) {
+
+                bookSlug.value =
+                    generateSlug(
+                        bookName.value
+                    );
+
+            }
+
+        }
     );
 
 }
 
 
-/* ==========================================================
+/* =========================================================
    LOAD BOOKS
-========================================================== */
+========================================================= */
 
 async function loadBooks() {
 
@@ -197,10 +318,8 @@ async function loadBooks() {
             .select(`
                 id,
                 name,
+                slug,
                 description,
-                category,
-                author,
-                media_id,
                 created_at
             `)
 
@@ -217,17 +336,21 @@ async function loadBooks() {
         }
 
 
-        books = data || [];
+        books =
+            data || [];
 
 
-        /*
-         * Load media records separately.
-         *
-         * This avoids relying on a particular
-         * foreign-key relationship name.
-         */
+        filteredBooks =
+            [...books];
 
-        await attachMediaToBooks();
+
+        if (!books.length) {
+
+            showEmpty();
+
+            return;
+
+        }
 
 
         renderBooks();
@@ -239,6 +362,7 @@ async function loadBooks() {
             error
         );
 
+
         showError(
             error?.message ||
             "Unable to load books."
@@ -249,131 +373,18 @@ async function loadBooks() {
 }
 
 
-/* ==========================================================
-   ATTACH MEDIA
-========================================================== */
-
-async function attachMediaToBooks() {
-
-    const mediaIds =
-        books
-
-            .map(book => book.media_id)
-
-            .filter(Boolean);
-
-
-    if (!mediaIds.length) {
-        return;
-    }
-
-
-    const {
-        data,
-        error
-    } = await supabase
-
-        .from("media")
-
-        .select(`
-            id,
-            file_name,
-            storage_path,
-            file_type
-        `)
-
-        .in(
-            "id",
-            mediaIds
-        );
-
-
-    if (error) {
-
-        console.warn(
-            "Could not load book media:",
-            error
-        );
-
-        return;
-
-    }
-
-
-    const mediaMap =
-        new Map(
-            (data || []).map(
-                media => [
-                    media.id,
-                    media
-                ]
-            )
-        );
-
-
-    books =
-        books.map(book => {
-
-            const media =
-                mediaMap.get(
-                    book.media_id
-                );
-
-
-            if (!media) {
-                return book;
-            }
-
-
-            const {
-                data: publicUrlData
-            } =
-                supabase
-                    .storage
-                    .from("media")
-                    .getPublicUrl(
-                        media.storage_path
-                    );
-
-
-            return {
-
-                ...book,
-
-                media,
-
-                coverUrl:
-                    publicUrlData?.publicUrl ||
-                    ""
-
-            };
-
-        });
-
-}
-
-
-/* ==========================================================
-   RENDER
-========================================================== */
+/* =========================================================
+   RENDER BOOKS
+========================================================= */
 
 function renderBooks() {
 
     booksCount.textContent =
-        books.length;
-
-
-    if (!books.length) {
-
-        showEmpty();
-
-        return;
-
-    }
+        filteredBooks.length;
 
 
     booksTableBody.innerHTML =
-        books
+        filteredBooks
             .map(
                 (book, index) =>
                     createBookRow(
@@ -384,44 +395,36 @@ function renderBooks() {
             .join("");
 
 
-    attachRowEvents();
-
-
     hideStates();
+
 
     booksTableWrapper.hidden =
         false;
 
+
+    attachRowEvents();
+
 }
 
 
-/* ==========================================================
-   BOOK ROW
-========================================================== */
+/* =========================================================
+   CREATE TABLE ROW
+========================================================= */
 
 function createBookRow(
     book,
     index
 ) {
 
-    const cover =
-        book.coverUrl
-            ? `
-                <img
-                    src="${escapeAttribute(book.coverUrl)}"
-                    alt="${escapeAttribute(
-                        book.name ||
-                        "Book cover"
-                    )}"
-                    class="book-table-cover"
-                    loading="lazy"
-                >
-            `
-            : `
-                <div class="book-table-placeholder">
-                    <span>📖</span>
-                </div>
-            `;
+    const description =
+        book.description
+            ? escapeHtml(
+                truncate(
+                    book.description,
+                    100
+                )
+            )
+            : "No description";
 
 
     return `
@@ -429,68 +432,34 @@ function createBookRow(
         <tr>
 
             <td>
-                ${cover}
-            </td>
 
-
-            <td>
-
-                <div class="book-table-title">
-
-                    <strong>
-                        ${escapeHtml(
-                            book.name ||
-                            "Untitled Book"
-                        )}
-                    </strong>
-
-
-                    ${
-                        book.description
-                            ? `
-                                <small>
-                                    ${escapeHtml(
-                                        truncate(
-                                            book.description,
-                                            90
-                                        )
-                                    )}
-                                </small>
-                            `
-                            : ""
-                    }
-
-                </div>
+                <strong>
+                    ${escapeHtml(
+                        book.name ||
+                        "Untitled Book"
+                    )}
+                </strong>
 
             </td>
 
 
             <td>
 
-                ${
-                    book.author
-                        ? escapeHtml(
-                            book.author
-                        )
-                        : "—"
-                }
+                <code>
+                    ${escapeHtml(
+                        book.slug ||
+                        "—"
+                    )}
+                </code>
 
             </td>
 
 
             <td>
 
-                ${
-                    book.category
-                        ? `
-                            <span class="book-category-badge">
-                                ${escapeHtml(
-                                    book.category
-                                )}
-                            </span>
-                        `
-                        : "—"
-                }
+                <span>
+                    ${description}
+                </span>
 
             </td>
 
@@ -508,13 +477,12 @@ function createBookRow(
 
                 <div
                     class="table-actions"
-                    data-book-index="${index}"
                 >
 
                     <button
                         type="button"
                         class="btn btn-sm btn-secondary edit-book"
-                        data-id="${book.id}"
+                        data-index="${index}"
                     >
                         Edit
                     </button>
@@ -523,7 +491,7 @@ function createBookRow(
                     <button
                         type="button"
                         class="btn btn-sm btn-danger delete-book"
-                        data-id="${book.id}"
+                        data-index="${index}"
                     >
                         Delete
                     </button>
@@ -539,9 +507,9 @@ function createBookRow(
 }
 
 
-/* ==========================================================
+/* =========================================================
    ROW EVENTS
-========================================================== */
+========================================================= */
 
 function attachRowEvents() {
 
@@ -555,14 +523,21 @@ function attachRowEvents() {
                 "click",
                 () => {
 
-                    const id =
+                    const index =
                         Number(
-                            button.dataset.id
+                            button.dataset.index
                         );
 
-                    openEditBook(
-                        id
-                    );
+
+                    const book =
+                        filteredBooks[index];
+
+
+                    if (book) {
+                        openEditBook(
+                            book
+                        );
+                    }
 
                 }
             );
@@ -580,14 +555,21 @@ function attachRowEvents() {
                 "click",
                 () => {
 
-                    const id =
+                    const index =
                         Number(
-                            button.dataset.id
+                            button.dataset.index
                         );
 
-                    deleteBook(
-                        id
-                    );
+
+                    const book =
+                        filteredBooks[index];
+
+
+                    if (book) {
+                        deleteBook(
+                            book
+                        );
+                    }
 
                 }
             );
@@ -597,182 +579,194 @@ function attachRowEvents() {
 }
 
 
-/* ==========================================================
-   ADD BOOK
-========================================================== */
+/* =========================================================
+   OPEN ADD FORM
+========================================================= */
 
 function openAddBookForm() {
 
     editingBook = null;
 
 
-    bookForm.reset();
+    bookForm?.reset();
 
 
-    bookId.value = "";
+    if (bookId) {
+        bookId.value = "";
+    }
 
 
-    bookFormTitle.textContent =
-        "Add Book";
+    ensureSlugField();
 
 
-    saveBookButton.textContent =
-        "Save Book";
+    if (bookSlug) {
+        bookSlug.value = "";
+    }
 
 
-    clearCoverPreview();
+    if (bookFormTitle) {
+
+        bookFormTitle.textContent =
+            "Add Book";
+
+    }
 
 
-    bookCover.required =
-        false;
+    if (saveBookButton) {
+
+        saveBookButton.textContent =
+            "Save Book";
+
+    }
 
 
-    bookFormPanel.hidden =
-        false;
+    if (bookFormPanel) {
+
+        bookFormPanel.hidden =
+            false;
 
 
-    bookFormPanel.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
+        bookFormPanel.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    }
 
 
     setTimeout(
         () => bookName?.focus(),
-        250
+        200
     );
 
 }
 
 
-/* ==========================================================
-   EDIT BOOK
-========================================================== */
+/* =========================================================
+   OPEN EDIT FORM
+========================================================= */
 
-function openEditBook(id) {
-
-    const book =
-        books.find(
-            item =>
-                Number(item.id) ===
-                Number(id)
-        );
-
-
-    if (!book) {
-
-        showToast(
-            "Book could not be found.",
-            "error"
-        );
-
-        return;
-
-    }
-
+function openEditBook(
+    book
+) {
 
     editingBook =
         book;
 
 
-    bookId.value =
-        book.id;
+    ensureSlugField();
 
 
-    bookName.value =
-        book.name || "";
+    if (bookId) {
+        bookId.value =
+            book.id;
+    }
 
 
-    bookAuthor.value =
-        book.author || "";
+    if (bookName) {
 
-
-    bookCategory.value =
-        book.category || "";
-
-
-    bookDescription.value =
-        book.description || "";
-
-
-    bookCover.value =
-        "";
-
-
-    bookFormTitle.textContent =
-        "Edit Book";
-
-
-    saveBookButton.textContent =
-        "Update Book";
-
-
-    bookCover.required =
-        false;
-
-
-    if (book.coverUrl) {
-
-        showCoverPreview(
-            book.coverUrl
-        );
-
-    } else {
-
-        clearCoverPreview();
+        bookName.value =
+            book.name || "";
 
     }
 
 
-    bookFormPanel.hidden =
-        false;
+    if (bookSlug) {
+
+        bookSlug.value =
+            book.slug || "";
+
+    }
 
 
-    bookFormPanel.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
+    if (bookDescription) {
+
+        bookDescription.value =
+            book.description || "";
+
+    }
+
+
+    if (bookFormTitle) {
+
+        bookFormTitle.textContent =
+            "Edit Book";
+
+    }
+
+
+    if (saveBookButton) {
+
+        saveBookButton.textContent =
+            "Update Book";
+
+    }
+
+
+    if (bookFormPanel) {
+
+        bookFormPanel.hidden =
+            false;
+
+
+        bookFormPanel.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    }
 
 }
 
 
-/* ==========================================================
+/* =========================================================
    CLOSE FORM
-========================================================== */
+========================================================= */
 
 function closeBookForm() {
 
     editingBook = null;
 
 
-    bookForm.reset();
+    bookForm?.reset();
 
 
-    bookId.value = "";
+    if (bookId) {
+        bookId.value = "";
+    }
 
 
-    bookFormTitle.textContent =
-        "Add Book";
+    if (bookFormTitle) {
+
+        bookFormTitle.textContent =
+            "Add Book";
+
+    }
 
 
-    saveBookButton.textContent =
-        "Save Book";
+    if (saveBookButton) {
+
+        saveBookButton.textContent =
+            "Save Book";
+
+    }
 
 
-    clearCoverPreview();
+    if (bookFormPanel) {
 
+        bookFormPanel.hidden =
+            true;
 
-    bookFormPanel.hidden =
-        true;
+    }
 
 }
 
 
-/* ==========================================================
+/* =========================================================
    SUBMIT
-========================================================== */
+========================================================= */
 
-async function handleBookSubmit(
+async function handleSubmit(
     event
 ) {
 
@@ -780,29 +774,56 @@ async function handleBookSubmit(
 
 
     const name =
-        bookName.value.trim();
-
-
-    const author =
-        bookAuthor.value.trim();
-
-
-    const category =
-        bookCategory.value.trim();
+        bookName?.value.trim() || "";
 
 
     const description =
-        bookDescription.value.trim();
+        bookDescription?.value.trim() || "";
+
+
+    let slug =
+        bookSlug?.value.trim() || "";
 
 
     if (!name) {
 
-        showToast(
+        showNotification(
             "Please enter the book name.",
             "error"
         );
 
-        bookName.focus();
+
+        bookName?.focus();
+
+        return;
+
+    }
+
+
+    /*
+     * Generate slug if the user leaves it empty.
+     */
+
+    if (!slug) {
+
+        slug =
+            generateSlug(
+                name
+            );
+
+    }
+
+
+    /*
+     * Make sure the slug is valid.
+     */
+
+    if (!slug) {
+
+        showNotification(
+            "Unable to generate a valid slug.",
+            "error"
+        );
 
         return;
 
@@ -816,49 +837,20 @@ async function handleBookSubmit(
 
     try {
 
-        let mediaId =
-            editingBook?.media_id ||
-            null;
-
-
-        /*
-         * Upload a new cover only when
-         * the administrator selected one.
-         */
-
-        if (
-            bookCover.files &&
-            bookCover.files.length
-        ) {
-
-            mediaId =
-                await uploadBookCover(
-                    bookCover.files[0]
-                );
-
-        }
-
-
         const payload = {
 
             name,
 
+            slug,
+
             description:
-                description || null,
-
-            category:
-                category || null,
-
-            author:
-                author || null,
-
-            media_id:
-                mediaId
+                description ||
+                null
 
         };
 
 
-        let error;
+        let error = null;
 
 
         if (editingBook) {
@@ -894,11 +886,29 @@ async function handleBookSubmit(
 
 
         if (error) {
+
+            /*
+             * Friendly message for duplicate slug.
+             */
+
+            if (
+                error.code ===
+                "23505"
+            ) {
+
+                throw new Error(
+                    "That slug is already being used. Please choose another slug."
+                );
+
+            }
+
+
             throw error;
+
         }
 
 
-        showToast(
+        showNotification(
             editingBook
                 ? "Book updated successfully."
                 : "Book added successfully.",
@@ -915,12 +925,12 @@ async function handleBookSubmit(
     } catch (error) {
 
         console.error(
-            "Book save failed:",
+            "Book save error:",
             error
         );
 
 
-        showToast(
+        showNotification(
             error?.message ||
             "Unable to save the book.",
             "error"
@@ -937,163 +947,13 @@ async function handleBookSubmit(
 }
 
 
-/* ==========================================================
-   UPLOAD COVER
-========================================================== */
-
-async function uploadBookCover(
-    file
-) {
-
-    if (
-        !file ||
-        !file.type.startsWith(
-            "image/"
-        )
-    ) {
-
-        throw new Error(
-            "Please select a valid image file."
-        );
-
-    }
-
-
-    /*
-     * Keep file names unique.
-     */
-
-    const extension =
-        getFileExtension(
-            file.name
-        );
-
-
-    const safeName =
-        slugify(
-            file.name
-                .replace(
-                    /\.[^/.]+$/,
-                    ""
-                )
-        );
-
-
-    const filePath =
-        `books/${Date.now()}-${safeName}.${extension}`;
-
-
-    const {
-        error: uploadError
-    } = await supabase
-
-        .storage
-
-        .from("media")
-
-        .upload(
-            filePath,
-            file,
-            {
-                cacheControl:
-                    "3600",
-
-                upsert:
-                    false
-
-            }
-        );
-
-
-    if (uploadError) {
-        throw uploadError;
-    }
-
-
-    /*
-     * Register the uploaded file in the
-     * existing media table.
-     *
-     * We intentionally keep this aligned
-     * with the project's existing media
-     * architecture.
-     */
-
-    const {
-        data: mediaRecord,
-        error: mediaError
-    } = await supabase
-
-        .from("media")
-
-        .insert({
-
-            file_name:
-                file.name,
-
-            file_type:
-                file.type,
-
-            storage_path:
-                filePath
-
-        })
-
-        .select(
-            "id"
-        )
-
-        .single();
-
-
-    if (mediaError) {
-
-        /*
-         * If the media database record fails,
-         * remove the orphaned Storage file.
-         */
-
-        await supabase
-
-            .storage
-
-            .from("media")
-
-            .remove([
-                filePath
-            ]);
-
-
-        throw mediaError;
-
-    }
-
-
-    return mediaRecord.id;
-
-}
-
-
-/* ==========================================================
+/* =========================================================
    DELETE BOOK
-========================================================== */
+========================================================= */
 
 async function deleteBook(
-    id
+    book
 ) {
-
-    const book =
-        books.find(
-            item =>
-                Number(item.id) ===
-                Number(id)
-        );
-
-
-    if (!book) {
-        return;
-    }
-
 
     const confirmed =
         window.confirm(
@@ -1107,10 +967,6 @@ async function deleteBook(
 
 
     try {
-
-        /*
-         * Delete the database record first.
-         */
 
         const {
             error
@@ -1131,62 +987,7 @@ async function deleteBook(
         }
 
 
-        /*
-         * If the book has a media record,
-         * remove the media database record
-         * and Storage file as well.
-         *
-         * This prevents unused book covers
-         * from accumulating.
-         */
-
-        if (
-            book.media &&
-            book.media.storage_path
-        ) {
-
-            await supabase
-
-                .storage
-
-                .from("media")
-
-                .remove([
-                    book.media.storage_path
-                ]);
-
-        }
-
-
-        if (book.media_id) {
-
-            const {
-                error: mediaDeleteError
-            } = await supabase
-
-                .from("media")
-
-                .delete()
-
-                .eq(
-                    "id",
-                    book.media_id
-                );
-
-
-            if (mediaDeleteError) {
-
-                console.warn(
-                    "Book deleted, but media record could not be removed:",
-                    mediaDeleteError
-                );
-
-            }
-
-        }
-
-
-        showToast(
+        showNotification(
             "Book deleted successfully.",
             "success"
         );
@@ -1198,12 +999,12 @@ async function deleteBook(
     } catch (error) {
 
         console.error(
-            "Book deletion failed:",
+            "Book deletion error:",
             error
         );
 
 
-        showToast(
+        showNotification(
             error?.message ||
             "Unable to delete the book.",
             "error"
@@ -1214,142 +1015,110 @@ async function deleteBook(
 }
 
 
-/* ==========================================================
-   COVER PREVIEW
-========================================================== */
+/* =========================================================
+   SLUG GENERATOR
+========================================================= */
 
-function handleCoverPreview() {
-
-    const file =
-        bookCover.files?.[0];
-
-
-    if (!file) {
-
-        /*
-         * When editing, keep the existing
-         * cover visible if there is one.
-         */
-
-        if (
-            editingBook?.coverUrl
-        ) {
-
-            showCoverPreview(
-                editingBook.coverUrl
-            );
-
-        } else {
-
-            clearCoverPreview();
-
-        }
-
-        return;
-
-    }
-
-
-    if (
-        !file.type.startsWith(
-            "image/"
-        )
-    ) {
-
-        showToast(
-            "Please select an image file.",
-            "error"
-        );
-
-        bookCover.value = "";
-
-        return;
-
-    }
-
-
-    const objectUrl =
-        URL.createObjectURL(
-            file
-        );
-
-
-    showCoverPreview(
-        objectUrl
-    );
-
-
-    bookCoverPreviewImage.onload =
-        () => {
-
-            URL.revokeObjectURL(
-                objectUrl
-            );
-
-        };
-
-}
-
-
-function showCoverPreview(
-    url
+function generateSlug(
+    value
 ) {
 
-    bookCoverPreviewImage.src =
-        url;
+    return String(
+        value || ""
+    )
 
+        .toLowerCase()
 
-    bookCoverPreview.hidden =
-        false;
+        .trim()
+
+        .normalize(
+            "NFD"
+        )
+
+        .replace(
+            /[\u0300-\u036f]/g,
+            ""
+        )
+
+        .replace(
+            /[^a-z0-9\s-]/g,
+            ""
+        )
+
+        .replace(
+            /\s+/g,
+            "-"
+        )
+
+        .replace(
+            /-+/g,
+            "-"
+        )
+
+        .replace(
+            /^-+|-+$/g,
+            ""
+        );
 
 }
 
 
-function clearCoverPreview() {
-
-    bookCoverPreview.hidden =
-        true;
-
-    bookCoverPreviewImage.src =
-        "";
-
-}
-
-
-/* ==========================================================
+/* =========================================================
    STATES
-========================================================== */
+========================================================= */
 
 function showLoading() {
 
-    booksLoading.hidden =
-        false;
+    if (booksLoading) {
+        booksLoading.hidden =
+            false;
+    }
 
-    booksEmpty.hidden =
-        true;
 
-    booksError.hidden =
-        true;
+    if (booksEmpty) {
+        booksEmpty.hidden =
+            true;
+    }
 
-    booksTableWrapper.hidden =
-        true;
+
+    if (booksError) {
+        booksError.hidden =
+            true;
+    }
+
+
+    if (booksTableWrapper) {
+        booksTableWrapper.hidden =
+            true;
+    }
 
 }
 
 
 function showEmpty() {
 
-    booksLoading.hidden =
-        true;
+    if (booksLoading) {
+        booksLoading.hidden =
+            true;
+    }
 
-    booksEmpty.hidden =
-        false;
 
-    booksError.hidden =
-        true;
+    if (booksEmpty) {
+        booksEmpty.hidden =
+            false;
+    }
 
-    booksTableWrapper.hidden =
-        true;
+
+    if (booksError) {
+        booksError.hidden =
+            true;
+    }
+
+
+    if (booksTableWrapper) {
+        booksTableWrapper.hidden =
+            true;
+    }
 
 }
 
@@ -1358,17 +1127,28 @@ function showError(
     message
 ) {
 
-    booksLoading.hidden =
-        true;
+    if (booksLoading) {
+        booksLoading.hidden =
+            true;
+    }
 
-    booksEmpty.hidden =
-        true;
 
-    booksError.hidden =
-        false;
+    if (booksEmpty) {
+        booksEmpty.hidden =
+            true;
+    }
 
-    booksTableWrapper.hidden =
-        true;
+
+    if (booksError) {
+        booksError.hidden =
+            false;
+    }
+
+
+    if (booksTableWrapper) {
+        booksTableWrapper.hidden =
+            true;
+    }
 
 
     if (booksErrorMessage) {
@@ -1383,21 +1163,29 @@ function showError(
 
 function hideStates() {
 
-    booksLoading.hidden =
-        true;
+    if (booksLoading) {
+        booksLoading.hidden =
+            true;
+    }
 
-    booksEmpty.hidden =
-        true;
 
-    booksError.hidden =
-        true;
+    if (booksEmpty) {
+        booksEmpty.hidden =
+            true;
+    }
+
+
+    if (booksError) {
+        booksError.hidden =
+            true;
+    }
 
 }
 
 
-/* ==========================================================
+/* =========================================================
    SAVE STATE
-========================================================== */
+========================================================= */
 
 function setSavingState(
     saving
@@ -1414,11 +1202,13 @@ function setSavingState(
 
     saveBookButton.textContent =
         saving
+
             ? (
                 editingBook
                     ? "Updating..."
                     : "Saving..."
             )
+
             : (
                 editingBook
                     ? "Update Book"
@@ -1428,9 +1218,46 @@ function setSavingState(
 }
 
 
-/* ==========================================================
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showNotification(
+    message,
+    type = "success"
+) {
+
+    try {
+
+        showToast(
+            message,
+            type
+        );
+
+    } catch {
+
+        try {
+
+            showToast(
+                message
+            );
+
+        } catch {
+
+            console.log(
+                message
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
    HELPERS
-========================================================== */
+========================================================= */
 
 function formatDate(
     value
@@ -1450,7 +1277,9 @@ function formatDate(
             date.getTime()
         )
     ) {
+
         return "—";
+
     }
 
 
@@ -1489,63 +1318,14 @@ function truncate(
 
 
     return (
-        text.slice(
-            0,
-            length
-        ).trim() +
+        text
+            .slice(
+                0,
+                length
+            )
+            .trim() +
         "..."
     );
-
-}
-
-
-function getFileExtension(
-    fileName
-) {
-
-    const parts =
-        String(
-            fileName || ""
-        ).split(".");
-
-
-    return (
-        parts.length > 1
-            ? parts.pop()
-            : "jpg"
-    )
-        .toLowerCase()
-        .replace(
-            /[^a-z0-9]/g,
-            ""
-        );
-
-}
-
-
-function slugify(
-    value
-) {
-
-    return String(
-        value || "book"
-    )
-
-        .toLowerCase()
-
-        .trim()
-
-        .replace(
-            /[^a-z0-9]+/g,
-            "-"
-        )
-
-        .replace(
-            /^-+|-+$/g,
-            ""
-        )
-
-        || "book";
 
 }
 
@@ -1582,16 +1362,5 @@ function escapeHtml(
             /'/g,
             "&#039;"
         );
-
-}
-
-
-function escapeAttribute(
-    value
-) {
-
-    return escapeHtml(
-        value
-    );
 
 }
