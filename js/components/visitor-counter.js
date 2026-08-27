@@ -1,33 +1,27 @@
-/**
- * ==========================================
- * Visitor Counter
- * ==========================================
- */
+import { supabase } from "../supabase.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+export async function initializeVisitorCounter() {
+    const counter = document.getElementById("visitorCounter");
 
-    const container = document.getElementById("visitorCounter");
-
-    if (!container) return;
-
-    const STORAGE_KEY = "akk-visitor-count";
-
-    let count = Number(localStorage.getItem(STORAGE_KEY));
-
-    if (Number.isNaN(count) || count <= 0) {
-        count = 1;
-    } else {
-        count++;
+    if (!counter) {
+        console.warn("Visitor counter element not found.");
+        return;
     }
 
-    localStorage.setItem(STORAGE_KEY, count);
+    try {
+        const { data, error } = await supabase.rpc(
+            "increment_visitor_count"
+        );
 
-    container.innerHTML = `
-        <div class="visitor-counter">
-            <span class="visitor-counter-icon">👁</span>
-            <span>Visitors</span>
-            <span class="visitor-counter-number">${count.toLocaleString()}</span>
-        </div>
-    `;
+        if (error) {
+            console.error("Visitor counter error:", error);
+            return;
+        }
 
-});
+        counter.textContent =
+            `👁 Visitors: ${Number(data).toLocaleString("en-IN")}`;
+
+    } catch (error) {
+        console.error("Visitor counter error:", error);
+    }
+}

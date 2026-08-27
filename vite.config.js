@@ -33,6 +33,7 @@ export default defineConfig({
         adminBooks: resolve(__dirname, "admin/pages/books.html"),
         adminCategories: resolve(__dirname, "admin/pages/categories.html"),
         adminMedia: resolve(__dirname, "admin/pages/media.html"),
+        adminMessages: resolve(__dirname, "admin/pages/messages.html"),
         adminUsers: resolve(__dirname, "admin/pages/users.html"),
         adminSettings: resolve(__dirname, "admin/pages/settings.html"),
       },

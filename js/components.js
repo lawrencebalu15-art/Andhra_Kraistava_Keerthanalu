@@ -3,6 +3,7 @@
 // Components Loader
 // ==========================================
 
+
 import {
     initializeNavigation,
     setActiveNavLink
@@ -12,6 +13,9 @@ import {
     initializeGlobalSearch
 } from "./global-search.js";
 
+import {
+    initializeVisitorCounter
+} from "./components/visitor-counter.js";
 /* ==========================================
    LOAD SINGLE COMPONENT
 ========================================== */
@@ -75,5 +79,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     setActiveNavLink();
 
     initializeGlobalSearch();
+    
+    initializeVisitorCounter();
+
 
 });
