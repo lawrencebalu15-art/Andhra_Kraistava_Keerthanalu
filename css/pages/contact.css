@@ -1,6 +1,8 @@
 /* ==========================================================
    CONTACT PAGE
    Andhra Kraistava Keerthanalu
+
+   This stylesheet is ONLY for contact.html
 ========================================================== */
 
 
@@ -9,7 +11,12 @@
 ========================================================== */
 
 .contact-page {
-    background: #f7f4ee;
+    background: #f7f3eb;
+    color: #292d34;
+}
+
+.contact-page main {
+    overflow: hidden;
 }
 
 
@@ -17,60 +24,77 @@
    CONTACT SECTION
 ========================================================== */
 
-.contact-section {
-    padding: 100px 0;
+.contact-page .contact-section {
+    padding: 90px 0 80px;
 }
 
-.contact-container {
+.contact-page .contact-container {
     width: min(1180px, calc(100% - 48px));
     margin: 0 auto;
 }
 
-.contact-grid {
+.contact-page .contact-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(420px, 0.85fr);
-    gap: 80px;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(420px, 0.82fr);
+
+    gap: 75px;
+
     align-items: center;
 }
 
 
 /* ==========================================================
-   LEFT CONTENT
+   LEFT / INTRODUCTION
 ========================================================== */
 
-.contact-intro {
+.contact-page .contact-intro {
     max-width: 650px;
 }
 
-.contact-label {
+.contact-page .contact-label {
     display: inline-block;
+
     margin-bottom: 14px;
 
-    color: #a97820;
+    color: #a87518;
 
     font-size: 12px;
     font-weight: 700;
+
     letter-spacing: 2px;
     text-transform: uppercase;
 }
 
-.contact-intro h1 {
-    margin: 0 0 28px;
+.contact-page .contact-intro h1 {
+    margin: 0 0 25px;
 
-    color: #51291e;
+    color: #54261e;
 
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(42px, 5vw, 64px);
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(42px, 5vw, 62px);
+    font-weight: 700;
+
     line-height: 1.08;
 }
 
-.contact-intro > p {
-    margin: 0 0 20px;
+.contact-page .contact-intro > p {
+    margin: 0 0 19px;
 
-    color: #5e5a55;
+    color: #625e58;
 
     font-size: 16px;
     line-height: 1.85;
+}
+
+.contact-page .contact-intro > p:last-of-type {
+    margin-bottom: 0;
 }
 
 
@@ -78,70 +102,92 @@
    INFORMATION CARDS
 ========================================================== */
 
-.contact-info-list {
+.contact-page .contact-info-list {
     display: flex;
-    flex-direction: column;
-    gap: 16px;
 
-    margin-top: 38px;
+    flex-direction: column;
+
+    gap: 14px;
+
+    margin-top: 34px;
 }
 
-.contact-info-card {
+.contact-page .contact-info-card {
     display: grid;
-    grid-template-columns: 64px 1fr;
-    gap: 20px;
+
+    grid-template-columns: 58px minmax(0, 1fr);
+
+    gap: 18px;
+
     align-items: center;
 
-    padding: 22px 24px;
+    padding: 20px 22px;
 
-    background: #ffffff;
+    background: #fffdf9;
 
-    border: 1px solid #e7dfd2;
+    border: 1px solid #e6ded2;
+
     border-radius: 14px;
 
-    box-shadow: 0 8px 25px rgba(57, 37, 22, 0.04);
+    box-shadow:
+        0 7px 25px rgba(57, 37, 22, 0.045);
 
     transition:
         transform 0.25s ease,
-        box-shadow 0.25s ease;
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
 }
 
-.contact-info-card:hover {
+.contact-page .contact-info-card:hover {
     transform: translateY(-3px);
 
-    box-shadow: 0 14px 35px rgba(57, 37, 22, 0.08);
+    border-color: #d9c8ad;
+
+    box-shadow:
+        0 14px 35px rgba(57, 37, 22, 0.08);
 }
 
-.contact-info-icon {
-    width: 54px;
-    height: 54px;
 
+/* ==========================================================
+   INFORMATION ICON
+========================================================== */
+
+.contact-page .contact-info-icon {
     display: flex;
+
     align-items: center;
     justify-content: center;
 
+    width: 52px;
+    height: 52px;
+
+    background: #f7ecd9;
+
     border-radius: 50%;
 
-    background: #f7eedf;
+    color: #95671f;
 
-    color: #96671f;
-
-    font-size: 21px;
-}
-
-.contact-info-card h3 {
-    margin: 0 0 5px;
-
-    color: #51291e;
-
-    font-family: Georgia, "Times New Roman", serif;
     font-size: 20px;
 }
 
-.contact-info-card p {
+.contact-page .contact-info-card h3 {
+    margin: 0 0 6px;
+
+    color: #54261e;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 19px;
+    line-height: 1.3;
+}
+
+.contact-page .contact-info-card p {
     margin: 0;
 
-    color: #67635d;
+    color: #68635d;
 
     font-size: 14px;
     line-height: 1.65;
@@ -149,81 +195,109 @@
 
 
 /* ==========================================================
-   FORM CARD
+   CONTACT FORM CARD
 ========================================================== */
 
-.contact-form-card {
+.contact-page .contact-form-card {
+    width: 100%;
+    box-sizing: border-box;
+
     padding: 42px;
 
-    background: #ffffff;
+    background: #fffdf9;
 
     border: 1px solid #e5ddd1;
+
     border-radius: 18px;
 
-    box-shadow: 0 20px 60px rgba(57, 37, 22, 0.08);
+    box-shadow:
+        0 18px 55px rgba(57, 37, 22, 0.075);
 }
 
-.contact-form-icon {
-    width: 62px;
-    height: 62px;
 
+/* ==========================================================
+   FORM ICON
+========================================================== */
+
+.contact-page .contact-form-icon {
     display: flex;
+
     align-items: center;
     justify-content: center;
 
-    margin: 0 auto 20px;
+    width: 60px;
+    height: 60px;
+
+    margin: 0 auto 18px;
+
+    background: #f7ecd9;
 
     border-radius: 50%;
 
-    background: #f7eedf;
+    color: #95671f;
 
-    color: #96671f;
-
-    font-size: 24px;
+    font-size: 23px;
 }
 
-.contact-form-header {
+
+/* ==========================================================
+   FORM HEADER
+========================================================== */
+
+.contact-page .contact-form-header {
     text-align: center;
 }
 
-.contact-form-header h2 {
+.contact-page .contact-form-header .contact-label {
+    margin-bottom: 10px;
+}
+
+.contact-page .contact-form-header h2 {
     margin: 0;
 
-    color: #51291e;
+    color: #54261e;
 
-    font-family: Georgia, "Times New Roman", serif;
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
     font-size: 34px;
+    font-weight: 700;
+
     line-height: 1.2;
 }
 
 
 /* ==========================================================
-   DIVIDER
+   DECORATIVE DIVIDER
 ========================================================== */
 
-.contact-divider {
+.contact-page .contact-divider {
     display: flex;
+
     align-items: center;
+
     gap: 14px;
 
-    margin: 26px 0 30px;
+    margin: 25px 0 29px;
 }
 
-.contact-divider::before,
-.contact-divider::after {
+.contact-page .contact-divider::before,
+.contact-page .contact-divider::after {
     content: "";
 
     flex: 1;
 
     height: 1px;
 
-    background: #dfc48e;
+    background: #ddc69c;
 }
 
-.contact-divider span {
-    color: #a97820;
+.contact-page .contact-divider span {
+    color: #a87518;
 
-    font-size: 16px;
+    font-size: 15px;
 }
 
 
@@ -231,39 +305,49 @@
    FORM
 ========================================================== */
 
-.contact-form {
+.contact-page .contact-form {
     display: flex;
+
     flex-direction: column;
-    gap: 19px;
+
+    gap: 18px;
 }
 
-.contact-field {
+.contact-page .contact-field {
     display: flex;
+
     flex-direction: column;
+
     gap: 7px;
 }
 
-.contact-field label {
-    color: #332d28;
+.contact-page .contact-field label {
+    color: #37312b;
 
     font-size: 14px;
     font-weight: 600;
 }
 
-.contact-field input,
-.contact-field select,
-.contact-field textarea {
+
+/* ==========================================================
+   INPUTS
+========================================================== */
+
+.contact-page .contact-field input,
+.contact-page .contact-field select,
+.contact-page .contact-field textarea {
     width: 100%;
     box-sizing: border-box;
 
-    padding: 14px 15px;
+    padding: 13px 14px;
 
     background: #ffffff;
 
-    border: 1px solid #d9d2c8;
+    border: 1px solid #d8d1c7;
+
     border-radius: 8px;
 
-    color: #302b27;
+    color: #302c28;
 
     font-family: inherit;
     font-size: 15px;
@@ -272,53 +356,88 @@
 
     transition:
         border-color 0.2s ease,
-        box-shadow 0.2s ease;
+        box-shadow 0.2s ease,
+        background 0.2s ease;
 }
 
-.contact-field input,
-.contact-field select {
+
+/* INPUT / SELECT HEIGHT */
+
+.contact-page .contact-field input,
+.contact-page .contact-field select {
     height: 52px;
 }
 
-.contact-field textarea {
+
+/* TEXTAREA */
+
+.contact-page .contact-field textarea {
     min-height: 145px;
 
     resize: vertical;
 }
 
-.contact-field input::placeholder,
-.contact-field textarea::placeholder {
+
+/* PLACEHOLDER */
+
+.contact-page .contact-field input::placeholder,
+.contact-page .contact-field textarea::placeholder {
     color: #aaa49c;
 }
 
-.contact-field input:focus,
-.contact-field select:focus,
-.contact-field textarea:focus {
-    border-color: #a97820;
+
+/* FOCUS */
+
+.contact-page .contact-field input:focus,
+.contact-page .contact-field select:focus,
+.contact-page .contact-field textarea:focus {
+    border-color: #a87518;
+
+    background: #fffefa;
 
     box-shadow:
-        0 0 0 3px rgba(169, 120, 32, 0.10);
+        0 0 0 3px rgba(168, 117, 24, 0.10);
 }
 
 
 /* ==========================================================
-   SUBMIT
+   SELECT
 ========================================================== */
 
-.contact-submit {
+.contact-page .contact-field select {
+    cursor: pointer;
+
+    appearance: auto;
+}
+
+
+/* ==========================================================
+   SUBMIT BUTTON
+========================================================== */
+
+.contact-page .contact-submit {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
     width: 100%;
     min-height: 54px;
 
-    margin-top: 3px;
+    margin-top: 2px;
+
+    padding: 13px 20px;
 
     border: 0;
+
     border-radius: 8px;
 
-    background: #51291e;
+    background: #54261e;
 
     color: #ffffff;
 
     font-family: inherit;
+
     font-size: 15px;
     font-weight: 600;
 
@@ -330,67 +449,86 @@
         box-shadow 0.25s ease;
 }
 
-.contact-submit:hover {
-    background: #3e1d16;
+.contact-page .contact-submit:hover {
+    background: #3f1c16;
 
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 
     box-shadow:
-        0 8px 20px rgba(81, 41, 30, 0.18);
+        0 9px 22px rgba(84, 38, 30, 0.18);
 }
 
-.contact-submit i {
+.contact-page .contact-submit:active {
+    transform: translateY(0);
+}
+
+.contact-page .contact-submit:focus-visible {
+    outline: 3px solid rgba(168, 117, 24, 0.28);
+
+    outline-offset: 3px;
+}
+
+.contact-page .contact-submit i {
     margin-right: 8px;
 }
 
 
 /* ==========================================================
-   STATUS
+   STATUS MESSAGE
 ========================================================== */
 
-.contact-status {
+.contact-page .contact-status {
+    min-height: 20px;
+
     margin: 0;
 
+    color: #6c665f;
+
     font-size: 13px;
+
     line-height: 1.5;
 
     text-align: center;
 }
 
-.contact-status.success {
-    color: #3c7049;
+.contact-page .contact-status.success {
+    color: #3f754b;
 }
 
-.contact-status.error {
-    color: #a13e32;
+.contact-page .contact-status.error {
+    color: #a33d31;
 }
 
 
 /* ==========================================================
-   PRIVACY
+   PRIVACY NOTE
 ========================================================== */
 
-.contact-privacy {
+.contact-page .contact-privacy {
     display: flex;
-    justify-content: center;
+
     align-items: flex-start;
+    justify-content: center;
 
-    gap: 10px;
+    gap: 9px;
 
-    margin-top: 22px;
+    margin-top: 20px;
 
     color: #77716a;
 
     font-size: 12px;
+
     line-height: 1.6;
 
     text-align: center;
 }
 
-.contact-privacy i {
+.contact-page .contact-privacy i {
+    flex-shrink: 0;
+
     margin-top: 2px;
 
-    color: #a97820;
+    color: #a87518;
 }
 
 
@@ -398,74 +536,280 @@
    CONTRIBUTION SECTION
 ========================================================== */
 
-.contact-page main > .section:last-child {
-    padding-top: 20px;
+.contact-page main > .section {
+    padding-top: 60px;
+    padding-bottom: 80px;
 }
 
-.contact-page main > .section:last-child .card {
-    background: #ffffff;
+
+/*
+   Overrides the inline styles currently present
+   in contact.html.
+*/
+
+.contact-page main > .section .card {
+    width: min(850px, calc(100% - 48px));
+
+    box-sizing: border-box;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    padding: 48px 45px;
+
+    background: #fffdf9;
 
     border: 1px solid #e5ddd1;
 
+    border-radius: 16px;
+
     box-shadow:
-        0 12px 35px rgba(57, 37, 22, 0.05);
+        0 12px 35px rgba(57, 37, 22, 0.055);
+
+    text-align: center;
+}
+
+.contact-page main > .section .card .section-label {
+    display: inline-block;
+
+    margin-bottom: 12px;
+}
+
+.contact-page main > .section .card h2 {
+    margin: 0 0 18px;
+
+    color: #54261e;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(30px, 4vw, 43px);
+
+    line-height: 1.15;
+}
+
+.contact-page main > .section .card p {
+    max-width: 720px;
+
+    margin: 0 auto 15px;
+
+    color: #65605a;
+
+    font-size: 15px;
+
+    line-height: 1.8;
+}
+
+.contact-page main > .section .card p:last-of-type {
+    margin-bottom: 0;
+}
+
+.contact-page main > .section .card strong {
+    color: #54261e;
 }
 
 
 /* ==========================================================
-   RESPONSIVE
+   CONTRIBUTION BUTTON
+
+   Removes dependency on the inline margin-top
+   in contact.html.
 ========================================================== */
 
-@media (max-width: 950px) {
+.contact-page main > .section .card .btn {
+    display: inline-flex;
 
-    .contact-grid {
-        grid-template-columns: 1fr;
-        gap: 60px;
-    }
+    align-items: center;
+    justify-content: center;
 
-    .contact-intro {
-        max-width: 760px;
-    }
-
-    .contact-form-card {
-        max-width: 650px;
-        width: 100%;
-        box-sizing: border-box;
-        margin: 0 auto;
-    }
+    margin-top: 18px !important;
 }
 
 
-@media (max-width: 600px) {
+/* ==========================================================
+   ACCESSIBILITY
+========================================================== */
 
-    .contact-section {
-        padding: 65px 0;
+.contact-page button:disabled {
+    opacity: 0.65;
+
+    cursor: not-allowed;
+
+    transform: none !important;
+
+    box-shadow: none !important;
+}
+
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media (max-width: 1000px) {
+
+    .contact-page .contact-grid {
+        grid-template-columns: 1fr;
+
+        gap: 55px;
     }
 
-    .contact-container {
+    .contact-page .contact-intro {
+        max-width: 760px;
+
+        margin: 0 auto;
+    }
+
+    .contact-page .contact-form-card {
+        max-width: 680px;
+
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+}
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width: 650px) {
+
+    .contact-page .contact-section {
+        padding: 60px 0 55px;
+    }
+
+    .contact-page .contact-container {
         width: calc(100% - 32px);
     }
 
-    .contact-intro h1 {
-        font-size: 42px;
+
+    /* INTRO */
+
+    .contact-page .contact-intro h1 {
+        font-size: 40px;
+
+        line-height: 1.1;
     }
 
-    .contact-form-card {
-        padding: 30px 22px;
+    .contact-page .contact-intro > p {
+        font-size: 15px;
+
+        line-height: 1.75;
     }
 
-    .contact-info-card {
-        grid-template-columns: 52px 1fr;
+
+    /* INFO CARDS */
+
+    .contact-page .contact-info-list {
+        margin-top: 28px;
+
+        gap: 12px;
+    }
+
+    .contact-page .contact-info-card {
+        grid-template-columns: 48px minmax(0, 1fr);
+
         gap: 14px;
-        padding: 18px;
+
+        padding: 17px;
     }
 
-    .contact-info-icon {
-        width: 48px;
-        height: 48px;
+    .contact-page .contact-info-icon {
+        width: 46px;
+        height: 46px;
+
+        font-size: 18px;
     }
 
-    .contact-form-header h2 {
+    .contact-page .contact-info-card h3 {
+        font-size: 18px;
+    }
+
+    .contact-page .contact-info-card p {
+        font-size: 13px;
+    }
+
+
+    /* FORM */
+
+    .contact-page .contact-form-card {
+        padding: 30px 21px;
+
+        border-radius: 15px;
+    }
+
+    .contact-page .contact-form-icon {
+        width: 55px;
+        height: 55px;
+
+        font-size: 21px;
+    }
+
+    .contact-page .contact-form-header h2 {
         font-size: 30px;
     }
+
+
+    /* CONTRIBUTION */
+
+    .contact-page main > .section {
+        padding-top: 30px;
+        padding-bottom: 55px;
+    }
+
+    .contact-page main > .section .card {
+        width: calc(100% - 32px);
+
+        padding: 38px 22px;
+    }
+
+    .contact-page main > .section .card h2 {
+        font-size: 31px;
+    }
+
+    .contact-page main > .section .card p {
+        font-size: 14px;
+
+        line-height: 1.75;
+    }
+
 }
+
+
+/* ==========================================================
+   SMALL MOBILE
+========================================================== */
+
+@media (max-width: 420px) {
+
+    .contact-page .contact-intro h1 {
+        font-size: 35px;
+    }
+
+    .contact-page .contact-form-card {
+        padding: 27px 17px;
+    }
+
+    .contact-page .contact-form-header h2 {
+        font-size: 27px;
+    }
+
+    .contact-page .contact-field input,
+    .contact-page .contact-field select {
+        height: 50px;
+    }
+
+    .contact-page main > .section .card {
+        padding: 32px 18px;
+    }
+
+    .contact-page main > .section .card h2 {
+        font-size: 28px;
+    }
+
+}
+
+

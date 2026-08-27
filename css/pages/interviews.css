@@ -1,0 +1,535 @@
+/* ==========================================================
+   INTERVIEWS PAGE
+   Andhra Kraistava Keerthanalu
+========================================================== */
+
+
+/* ==========================================================
+   PAGE
+========================================================== */
+
+.interviews-page {
+    background: #f7f3eb;
+    color: #302c28;
+}
+
+
+/* ==========================================================
+   PAGE HEADER
+========================================================== */
+
+.interviews-page .page-header {
+    height: 200px;
+    padding: 72px 0 78px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f8f4ec 0%,
+            #f4eee4 100%
+        );
+
+    border-bottom: 1px solid #e7ddd0;
+
+    text-align: center;
+}
+
+.interviews-page .page-header .container {
+    max-width: 850px;
+
+    margin: 0 auto;
+}
+
+.interviews-page .section-label {
+    display: inline-block;
+
+    margin-bottom: 10px;
+
+    color: #a87518;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.interviews-page .page-title {
+    margin: 0 0 18px;
+
+    color: #54261e !important;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(40px, 5vw, 56px);
+
+    font-weight: 700;
+
+    line-height: 1.1;
+
+    opacity: 1 !important;
+}
+
+.interviews-page .page-subtitle {
+    max-width: 720px;
+
+    margin: 0 auto;
+
+    color: #625e58 !important;
+
+    font-size: 16px;
+
+    line-height: 1.8;
+
+    opacity: 1 !important;
+}
+
+
+/* ==========================================================
+   INTERVIEW SECTION
+========================================================== */
+
+.interviews-page main > .section {
+    padding: 70px 0 90px;
+
+    background: #f7f3eb;
+}
+
+
+/* ==========================================================
+   INTERVIEW GRID
+========================================================== */
+
+.interviews-page .interview-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 28px;
+
+    width: 100%;
+
+    margin: 0 auto;
+}
+
+
+/* ==========================================================
+   INTERVIEW CARD
+========================================================== */
+
+.interviews-page .interview-card {
+    position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+
+    overflow: hidden;
+
+    min-width: 0;
+
+    background: #ffffff;
+
+    border: 1px solid #e4ddd3;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 8px 28px rgba(50, 35, 20, 0.07);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.interviews-page .interview-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 16px 38px rgba(50, 35, 20, 0.12);
+}
+
+
+/* ==========================================================
+   CARD IMAGE
+========================================================== */
+
+.interviews-page .interview-card-image {
+    position: relative;
+
+    width: 100%;
+
+    aspect-ratio: 16 / 10;
+
+    overflow: hidden;
+
+    background: #e8e4de;
+}
+
+.interviews-page .interview-card-image img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition:
+        transform 0.5s ease;
+}
+
+.interviews-page .interview-card:hover
+.interview-card-image img {
+    transform: scale(1.04);
+}
+
+
+/* ==========================================================
+   IMAGE PLACEHOLDER
+========================================================== */
+
+.interviews-page .interview-placeholder {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e9e5df,
+            #ddd8d0
+        );
+
+    color: #85817b;
+
+    font-size: 25px;
+    font-weight: 600;
+}
+
+
+/* ==========================================================
+   CARD CONTENT
+========================================================== */
+
+.interviews-page .interview-card-content {
+    display: flex;
+
+    flex-direction: column;
+
+    flex: 1;
+
+    padding: 24px;
+}
+
+
+/* ==========================================================
+   CARD LABEL
+========================================================== */
+
+.interviews-page .interview-card-label {
+    margin-bottom: 10px;
+
+    color: #a87518;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+}
+
+
+/* ==========================================================
+   CARD TITLE
+========================================================== */
+
+.interviews-page .interview-card h2,
+.interviews-page .interview-card h3,
+.interviews-page .interview-card-title {
+    margin: 0 0 12px;
+
+    color: #54261e !important;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 24px;
+
+    font-weight: 700;
+
+    line-height: 1.3;
+
+    opacity: 1 !important;
+}
+
+
+/* ==========================================================
+   CARD DESCRIPTION
+========================================================== */
+
+.interviews-page .interview-card p {
+    margin: 0 0 14px;
+
+    color: #625e58 !important;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+    opacity: 1 !important;
+}
+
+
+/* ==========================================================
+   CARD META
+========================================================== */
+
+.interviews-page .interview-meta {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px 16px;
+
+    margin-top: auto;
+    padding-top: 10px;
+
+    color: #77716a;
+
+    font-size: 13px;
+}
+
+
+/* ==========================================================
+   CARD BUTTON
+========================================================== */
+
+.interviews-page .interview-card .btn {
+    align-self: flex-start;
+
+    margin-top: 18px;
+}
+
+
+/* ==========================================================
+   STATE MESSAGE
+========================================================== */
+
+.interviews-page .state-message {
+    width: min(700px, calc(100% - 40px));
+
+    margin: 20px auto;
+
+    padding: 45px 30px;
+
+    box-sizing: border-box;
+
+    color: #625e58;
+
+    text-align: center;
+
+    background: #fffdf9;
+
+    border: 1px solid #e4ddd3;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 8px 28px rgba(50, 35, 20, 0.05);
+
+    font-size: 15px;
+
+    line-height: 1.7;
+}
+
+
+/* ==========================================================
+   STATE MESSAGE HEADING
+========================================================== */
+
+.interviews-page .state-message h3 {
+    margin: 12px 0;
+
+    color: #54261e !important;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 24px;
+
+    font-weight: 700;
+}
+
+
+/* ==========================================================
+   STATE ICON
+========================================================== */
+
+.interviews-page .state-message i {
+    display: block;
+
+    margin-bottom: 15px;
+
+    color: #a87518;
+
+    font-size: 34px;
+}
+
+
+/* ==========================================================
+   HIDDEN
+========================================================== */
+
+.interviews-page .hidden {
+    display: none !important;
+}
+
+
+/* ==========================================================
+   ERROR STATE
+========================================================== */
+
+.interviews-page #interviewsError {
+    color: #7a4a40;
+
+    border-color: #ead8d2;
+}
+
+.interviews-page #interviewsError i {
+    color: #a34a3c;
+}
+
+
+/* ==========================================================
+   EMPTY STATE
+========================================================== */
+
+.interviews-page #interviewsEmpty {
+    padding: 55px 30px;
+}
+
+.interviews-page #interviewsEmpty::before {
+    content: "♪";
+
+    display: block;
+
+    margin-bottom: 15px;
+
+    color: #a87518;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 40px;
+}
+
+
+/* ==========================================================
+   LOADING STATE
+========================================================== */
+
+.interviews-page #interviewsLoading {
+    color: #77716a;
+}
+
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media (max-width: 1000px) {
+
+    .interviews-page .interview-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 22px;
+    }
+
+    .interviews-page .page-header {
+        padding: 65px 0 60px;
+    }
+}
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width: 650px) {
+
+    .interviews-page .page-header {
+        padding: 55px 20px 50px;
+    }
+
+    .interviews-page .page-title {
+        font-size: 38px;
+    }
+
+    .interviews-page .page-subtitle {
+        font-size: 14px;
+
+        line-height: 1.7;
+    }
+
+    .interviews-page main > .section {
+        padding: 50px 0 65px;
+    }
+
+    .interviews-page .interview-grid {
+        grid-template-columns: 1fr;
+
+        gap: 18px;
+    }
+
+    .interviews-page .interview-card-content {
+        padding: 21px;
+    }
+
+    .interviews-page .interview-card h2,
+    .interviews-page .interview-card h3,
+    .interviews-page .interview-card-title {
+        font-size: 22px;
+    }
+
+    .interviews-page .state-message {
+        width: calc(100% - 32px);
+
+        padding: 38px 20px;
+    }
+}
+
+
+/* ==========================================================
+   SMALL MOBILE
+========================================================== */
+
+@media (max-width: 420px) {
+
+    .interviews-page .page-title {
+        font-size: 33px;
+    }
+
+    .interviews-page .page-subtitle {
+        font-size: 13px;
+    }
+
+    .interviews-page .interview-card-content {
+        padding: 18px;
+    }
+}
