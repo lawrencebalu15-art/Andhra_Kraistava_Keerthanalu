@@ -10,7 +10,7 @@ const supabase = createClient(
 );
 
 const DOMAIN =
-    "https://andhrakraistavakeerthanalukavulu.com";
+    "https://www.andhrakraistavakeerthanalukavulu.com";
 
 async function generateSitemap() {
 
@@ -66,7 +66,7 @@ ${urls.join("")}
 </urlset>
 `;
 
-    fs.writeFileSync("sitemap.xml", sitemap);
+    fs.writeFileSync("public/sitemap.xml", sitemap);
 
     console.log(
         `Sitemap generated successfully with ${urls.length} URLs.`
