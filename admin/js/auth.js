@@ -23,7 +23,7 @@ export async function logout() {
 
     await supabase.auth.signOut();
 
-    window.location.href = "./login.html";
+    window.location.href = "/admin/login.html";
 
 }
 
@@ -51,7 +51,7 @@ export async function requireAuth() {
 
     if (!user) {
 
-        window.location.replace("./login.html");
+        window.location.replace("/admin/login.html");
         return null;
 
     }
@@ -70,7 +70,7 @@ export async function redirectIfLoggedIn() {
 
     if (user) {
 
-        window.location.replace("./dashboard.html");
+        window.location.replace("/admin/dashboard.html");
 
     }
 
@@ -123,7 +123,7 @@ if (loginForm) {
 
         }
 
-        window.location.replace("./dashboard.html");
+        window.location.replace("/admin/dashboard.html");
 
     });
 
