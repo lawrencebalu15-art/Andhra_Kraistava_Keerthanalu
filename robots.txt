@@ -4,4 +4,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /admin
 
-Sitemap: https://andhrakraistavakeerthanalukavulu.com/sitemap.xml
+Sitemap: https://www.andhrakraistavakeerthanalukavulu.com/sitemap.xml

@@ -1,14 +1,17 @@
 import { supabase } from "./supabase.js";
 
-async function testConnection() {
+const { data, error } = await supabase
+    .from("hymns")
+    .select("*")
+    .eq("number", 1)
+    .single();
 
-    const { data, error } = await supabase
-        .from("hymns")
-        .select("*");
+if (error) {
+    console.error("ERROR:", error);
+} else {
+    console.log("COLUMNS:");
+    console.log(Object.keys(data).join("\n"));
 
-    console.log("Data:", data);
-    console.log("Error:", error);
-
+    console.log("FULL HYMN:");
+    console.log(JSON.stringify(data, null, 2));
 }
-
-testConnection();

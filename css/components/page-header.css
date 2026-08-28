@@ -54,7 +54,7 @@
 
     text-shadow:
         0 2px 8px rgba(0,0,0,.7),
-        0 0 20px rgba(255,215,0,.25),
+        0 0 20px rgba(255, 217, 0, 0.326),
         0 0 40px rgba(255,215,0,.15);
 
 
@@ -62,7 +62,7 @@
         "Noto Serif Telugu",
         serif  ;
 
-    font-size: clamp(2.8rem,4.5vw,4.5rem);
+    font-size: clamp(6rem,6vw,6rem);
 
     line-height:1.15;
     font-weight:200;

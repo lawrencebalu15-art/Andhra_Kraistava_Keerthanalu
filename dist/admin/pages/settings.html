@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Settings | AKK CMS</title>
+
+
+  <script type="module" crossorigin src="/assets/adminSettings-Cz57jb0E.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/supabase-C4TjTvDq.js">
+  <link rel="modulepreload" crossorigin href="/assets/common-CauTVTzm.js">
+  <link rel="stylesheet" crossorigin href="/assets/admin-CtpF2mkr.css">
+</head>
+
+<body>
+
+    <div class="dashboard-layout">
+
+        <!-- Sidebar -->
+        <aside id="sidebar"></aside>
+
+
+        <!-- Main -->
+        <main class="dashboard-main">
+
+            <!-- Navbar -->
+            <header id="navbar"></header>
+
+
+            <!-- Content -->
+            <section class="page-content">
+
+                <div class="page-header">
+
+                    <div>
+
+                        <h1>
+                            Settings
+                        </h1>
+
+                        <p>
+                            Manage your CMS preferences and administration settings.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==========================================
+                     ADMIN PROFILE
+                =========================================== -->
+
+                <div class="settings-card">
+
+                    <div class="settings-card-header">
+
+                        <div>
+
+                            <h2>
+                                Admin Profile
+                            </h2>
+
+                            <p>
+                                Information about the currently signed-in administrator.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="settings-grid">
+
+                        <div class="settings-field">
+
+                            <label>
+                                Name
+                            </label>
+
+                            <input
+                                id="profileName"
+                                type="text"
+                                value="Administrator"
+                                readonly
+                            >
+
+                        </div>
+
+
+                        <div class="settings-field">
+
+                            <label>
+                                Email
+                            </label>
+
+                            <input
+                                id="profileEmail"
+                                type="email"
+                                value="Loading..."
+                                readonly
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==========================================
+                     CMS SETTINGS
+                =========================================== -->
+
+                <div class="settings-card">
+
+                    <div class="settings-card-header">
+
+                        <div>
+
+                            <h2>
+                                CMS Settings
+                            </h2>
+
+                            <p>
+                                Configure the basic behavior of the administration panel.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="settings-grid">
+
+                        <div class="settings-field">
+
+                            <label for="siteName">
+                                Site Name
+                            </label>
+
+                            <input
+                                id="siteName"
+                                type="text"
+                                value="Andhra Kraistava Keerthanalu"
+                            >
+
+                        </div>
+
+
+                        <div class="settings-field">
+
+                            <label for="defaultLanguage">
+                                Default Language
+                            </label>
+
+                            <select
+                                id="defaultLanguage">
+
+                                <option value="telugu">
+                                    Telugu
+                                </option>
+
+                                <option value="english">
+                                    English
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="settings-field">
+
+                            <label for="itemsPerPage">
+                                Items Per Page
+                            </label>
+
+                            <select
+                                id="itemsPerPage">
+
+                                <option value="25">
+                                    25
+                                </option>
+
+                                <option value="50" selected>
+                                    50
+                                </option>
+
+                                <option value="100">
+                                    100
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="settings-field">
+
+                            <label for="theme">
+                                Appearance
+                            </label>
+
+                            <select
+                                id="theme">
+
+                                <option value="light" selected>
+                                    Light
+                                </option>
+
+                                <option value="dark">
+                                    Dark
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==========================================
+                     SYSTEM INFORMATION
+                =========================================== -->
+
+                <div class="settings-card">
+
+                    <div class="settings-card-header">
+
+                        <div>
+
+                            <h2>
+                                System Information
+                            </h2>
+
+                            <p>
+                                Basic information about this CMS installation.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="system-info-grid">
+
+                        <div>
+
+                            <span>
+                                Application
+                            </span>
+
+                            <strong>
+                                AKK CMS
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Version
+                            </span>
+
+                            <strong>
+                                1.0.0
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Environment
+                            </span>
+
+                            <strong>
+                                Local Development
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Database
+                            </span>
+
+                            <strong>
+                                Supabase
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==========================================
+                     ACTIONS
+                =========================================== -->
+
+                <div class="settings-actions">
+
+                    <button
+                        id="resetSettings"
+                        type="button"
+                        class="btn-secondary">
+
+                        Reset
+
+                    </button>
+
+
+                    <button
+                        id="saveSettings"
+                        type="button"
+                        class="btn-primary">
+
+                        Save Settings
+
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="settingsMessage"
+                    class="settings-message hidden">
+                </div>
+
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- Shared Admin -->
+
+
+
+    <!-- Settings -->
+
+
+
+    <div
+        id="toastContainer"
+        class="toast-container">
+    </div>
+
+</body>
+
+</html>

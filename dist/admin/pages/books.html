@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Books | AKK CMS
+    </title>
+
+
+
+  <script type="module" crossorigin src="/assets/adminBooks-DoXnXURP.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/supabase-C4TjTvDq.js">
+  <link rel="modulepreload" crossorigin href="/assets/common-CauTVTzm.js">
+  <link rel="modulepreload" crossorigin href="/assets/utils-B1kQYoMr.js">
+  <link rel="modulepreload" crossorigin href="/assets/auth-BTxupRwK.js">
+  <link rel="stylesheet" crossorigin href="/assets/admin-CtpF2mkr.css">
+</head>
+
+
+<body>
+
+
+    <div class="dashboard-layout">
+
+
+        <!-- ==================================================
+             SIDEBAR
+        =================================================== -->
+
+        <aside id="sidebar"></aside>
+
+
+
+        <!-- ==================================================
+             MAIN
+        =================================================== -->
+
+        <main class="dashboard-main">
+
+
+            <!-- ==================================================
+                 NAVBAR
+            =================================================== -->
+
+            <header id="navbar"></header>
+
+
+
+            <!-- ==================================================
+                 PAGE CONTENT
+            =================================================== -->
+
+            <section class="page-content">
+
+
+                <!-- ==================================================
+                     PAGE HEADER
+                =================================================== -->
+
+                <div class="page-header">
+
+                    <div>
+
+                        <h1>
+                            Books
+                        </h1>
+
+                        <p>
+                            Manage and preserve Christian hymn books
+                            and publications.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="addBookButton"
+                        class="btn btn-primary"
+                    >
+
+                        <span>
+                            +
+                        </span>
+
+                        Add Book
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- ==================================================
+                     BOOK FORM
+                =================================================== -->
+
+                <div
+                    id="bookFormPanel"
+                    class="admin-card books-form-panel"
+                    hidden
+                >
+
+                    <div class="admin-card-header">
+
+                        <div>
+
+                            <h2 id="bookFormTitle">
+                                Add Book
+                            </h2>
+
+                            <p>
+                                Add information about a book or publication.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <form
+                        id="bookForm"
+                        class="admin-form"
+                    >
+
+                        <!-- Hidden ID -->
+
+                        <input
+                            type="hidden"
+                            id="bookId"
+                            name="id"
+                        >
+
+
+
+                        <!-- ==================================================
+                             BOOK NAME
+                        =================================================== -->
+
+                        <div class="form-group">
+
+                            <label for="bookName">
+                                Book Name
+                                <span>*</span>
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="bookName"
+                                name="name"
+                                placeholder="Enter the book name"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <!-- ==================================================
+                             AUTHOR
+                        =================================================== -->
+
+                        <div class="form-group">
+
+                            <label for="bookAuthor">
+                                Author
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="bookAuthor"
+                                name="author"
+                                placeholder="Enter author name"
+                            >
+
+                        </div>
+
+
+
+                        <!-- ==================================================
+                             CATEGORY
+                        =================================================== -->
+
+                        <div class="form-group">
+
+                            <label for="bookCategory">
+                                Category
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="bookCategory"
+                                name="category"
+                                placeholder="Example: Hymns, Christian Literature"
+                            >
+
+                        </div>
+
+
+
+                        <!-- ==================================================
+                             DESCRIPTION
+                        =================================================== -->
+
+                        <div class="form-group">
+
+                            <label for="bookDescription">
+                                Description
+                            </label>
+
+
+                            <textarea
+                                id="bookDescription"
+                                name="description"
+                                rows="6"
+                                placeholder="Enter a short description of the book..."
+                            ></textarea>
+
+                        </div>
+
+
+
+                        <!-- ==================================================
+                             COVER IMAGE
+                        =================================================== -->
+
+                        <div class="form-group">
+
+                            <label for="bookCover">
+                                Book Cover
+                            </label>
+
+
+                            <input
+                                type="file"
+                                id="bookCover"
+                                name="cover"
+                                accept="image/*"
+                            >
+
+
+                            <small>
+                                Upload a JPG, PNG or WebP image.
+                            </small>
+
+
+                            <div
+                                id="bookCoverPreview"
+                                class="book-cover-preview"
+                                hidden
+                            >
+
+                                <img
+                                    id="bookCoverPreviewImage"
+                                    src=""
+                                    alt="Book cover preview"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- ==================================================
+                             FORM ACTIONS
+                        =================================================== -->
+
+                        <div class="form-actions">
+
+                            <button
+                                type="button"
+                                id="cancelBookButton"
+                                class="btn btn-secondary"
+                            >
+                                Cancel
+                            </button>
+
+
+                            <button
+                                type="submit"
+                                id="saveBookButton"
+                                class="btn btn-primary"
+                            >
+                                Save Book
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+
+                <!-- ==================================================
+                     BOOKS LIST
+                =================================================== -->
+
+                <div class="admin-card books-list-card">
+
+
+                    <div class="admin-card-header">
+
+                        <div>
+
+                            <h2>
+                                Book Collection
+                            </h2>
+
+                            <p>
+                                Books currently stored in the collection.
+                            </p>
+
+                        </div>
+
+
+                        <span
+                            id="booksCount"
+                            class="admin-count"
+                        >
+                            0
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- ==================================================
+                         LOADING
+                    =================================================== -->
+
+                    <div
+                        id="booksLoading"
+                        class="books-state"
+                    >
+
+                        <div class="loading-spinner"></div>
+
+                        <p>
+                            Loading books...
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- ==================================================
+                         EMPTY
+                    =================================================== -->
+
+                    <div
+                        id="booksEmpty"
+                        class="books-state"
+                        hidden
+                    >
+
+                        <div class="books-empty-icon">
+                            📚
+                        </div>
+
+
+                        <h3>
+                            No books yet
+                        </h3>
+
+
+                        <p>
+                            Your book collection is currently empty.
+                            Add the first book to begin building the archive.
+                        </p>
+
+
+                        <button
+                            type="button"
+                            id="emptyAddBookButton"
+                            class="btn btn-primary"
+                        >
+                            Add First Book
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- ==================================================
+                         ERROR
+                    =================================================== -->
+
+                    <div
+                        id="booksError"
+                        class="books-state"
+                        hidden
+                    >
+
+                        <div class="books-empty-icon">
+                            !
+                        </div>
+
+
+                        <h3>
+                            Unable to load books
+                        </h3>
+
+
+                        <p id="booksErrorMessage">
+                            Something went wrong while loading the books.
+                        </p>
+
+
+                        <button
+                            type="button"
+                            id="retryBooksButton"
+                            class="btn btn-secondary"
+                        >
+                            Try Again
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- ==================================================
+                         TABLE
+                    =================================================== -->
+
+                    <div
+                        id="booksTableWrapper"
+                        class="books-table-wrapper"
+                        hidden
+                    >
+
+                        <table class="admin-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Cover
+                                    </th>
+
+                                    <th>
+                                        Book
+                                    </th>
+
+                                    <th>
+                                        Author
+                                    </th>
+
+                                    <th>
+                                        Category
+                                    </th>
+
+                                    <th>
+                                        Added
+                                    </th>
+
+                                    <th>
+                                        Actions
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody
+                                id="booksTableBody"
+                            ></tbody>
+
+                        </table>
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         TOAST
+    =================================================== -->
+
+    <div
+        id="toastContainer"
+        class="toast-container"
+    ></div>
+
+
+
+    <!-- ==================================================
+         SHARED ADMIN SCRIPT
+    =================================================== -->
+
+
+
+    <!-- ==================================================
+         BOOKS SCRIPT
+    =================================================== -->
+
+
+
+</body>
+
+</html>

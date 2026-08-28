@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Media | AKK CMS</title>
+
+
+  <script type="module" crossorigin src="/assets/adminMedia-B2e-Sh7S.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/supabase-C4TjTvDq.js">
+  <link rel="modulepreload" crossorigin href="/assets/common-CauTVTzm.js">
+  <link rel="stylesheet" crossorigin href="/assets/admin-CtpF2mkr.css">
+</head>
+
+
+<body>
+
+    <div class="dashboard-layout">
+
+        <!-- Sidebar -->
+        <aside id="sidebar"></aside>
+
+
+        <!-- Main -->
+        <main class="dashboard-main">
+
+            <!-- Navbar -->
+            <header id="navbar"></header>
+
+
+            <!-- Content -->
+            <section class="page-content">
+
+
+                <!-- Page Header -->
+
+                <div class="page-header">
+
+                    <div>
+
+                        <h1>
+                            Media
+                        </h1>
+
+                        <p>
+                            Manage images and media used across Andhra Kraistava Keerthanalu.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        id="uploadButton"
+                        class="btn-primary">
+
+                        + Upload Media
+
+                    </button>
+
+                </div>
+
+
+                <!-- ==========================================
+                     MEDIA TOOLBAR
+                =========================================== -->
+
+                <div class="toolbar">
+
+                    <input
+                        type="search"
+                        id="searchInput"
+                        class="search-input"
+                        placeholder="Search media..."
+                    >
+
+                </div>
+
+
+                <!-- ==========================================
+                     MEDIA STATS
+                =========================================== -->
+
+                <div class="media-stats">
+
+                    <div class="media-stat-card">
+
+                        <span>
+                            Total Files
+                        </span>
+
+                        <strong id="totalFiles">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="media-stat-card">
+
+                        <span>
+                            Images
+                        </span>
+
+                        <strong id="totalImages">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="media-stat-card">
+
+                        <span>
+                            Storage
+                        </span>
+
+                        <strong id="totalStorage">
+                            0 KB
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==========================================
+                     LOADING
+                =========================================== -->
+
+                <div
+                    id="loadingState"
+                    class="state-card">
+
+                    <h3>
+                        Loading Media...
+                    </h3>
+
+                    <p>
+                        Please wait.
+                    </p>
+
+                </div>
+
+
+                <!-- ==========================================
+                     EMPTY
+                =========================================== -->
+
+                <div
+                    id="emptyState"
+                    class="state-card hidden">
+
+                    <div class="media-empty-icon">
+                        🖼️
+                    </div>
+
+                    <h3>
+                        No Media Yet
+                    </h3>
+
+                    <p>
+                        Upload your first image to start building
+                        the media library.
+                    </p>
+
+                    <button
+                        id="emptyUploadButton"
+                        class="btn-primary">
+
+                        + Upload Media
+
+                    </button>
+
+                </div>
+
+
+                <!-- ==========================================
+                     MEDIA GRID
+                =========================================== -->
+
+                <div
+                    id="mediaGrid"
+                    class="media-grid hidden">
+                </div>
+
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- ==========================================
+         UPLOAD MODAL
+    =========================================== -->
+
+    <div
+        id="uploadModal"
+        class="modal">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h2>
+                    Upload Media
+                </h2>
+
+                <button
+                    id="closeUploadModal"
+                    class="modal-close">
+
+                    &times;
+
+                </button>
+
+            </div>
+
+
+            <form id="uploadForm">
+
+                <div class="form-group">
+
+                    <label for="mediaFile">
+                        Select Image
+                    </label>
+
+                    <input
+                        type="file"
+                        id="mediaFile"
+                        accept="image/*"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Preview -->
+
+                <div
+                    id="uploadPreview"
+                    class="upload-preview hidden">
+
+                    <img
+                        id="previewImage"
+                        src=""
+                        alt="Preview"
+                    >
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button
+                        type="button"
+                        id="cancelUpload"
+                        class="btn-secondary">
+
+                        Cancel
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        id="saveUpload"
+                        class="primary-btn">
+
+                        Add to Media Library
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         MEDIA PREVIEW MODAL
+    =========================================== -->
+
+    <div
+        id="previewModal"
+        class="modal">
+
+        <div class="media-preview-modal">
+
+            <button
+                id="closePreviewModal"
+                class="modal-close">
+
+                &times;
+
+            </button>
+
+
+            <img
+                id="fullPreviewImage"
+                src=""
+                alt="Media Preview"
+            >
+
+            <div
+                id="previewFileName"
+                class="media-preview-name">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Shared Admin -->
+
+
+
+    <!-- Media -->
+
+
+
+    <div
+        id="toastContainer"
+        class="toast-container">
+    </div>
+
+
+</body>
+
+</html>

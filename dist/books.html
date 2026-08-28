@@ -1,30 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Andhra Kraistava Keerthanalu</title>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Explore books documenting Telugu Christian hymns, their meanings, authors, poets and history."
+    >
+
+    <title>Books | Andhra Kraistava Keerthanalu</title>
 
 
+
+    <link
+    rel="canonical"
+    href="https://andhrakraistavakeerthanalukavulu.com/books.html">
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     >
-      <script type="module" crossorigin src="/assets/supabase-C4TjTvDq.js"></script>
-      <script type="module" crossorigin src="/assets/main-CCVxK76c.js"></script>
-      <script type="module" crossorigin src="/assets/page-header-Bl-XMcri.js"></script>
-      <script type="module" crossorigin src="/assets/home-DLORaSFx.js"></script>
-      <link rel="stylesheet" crossorigin href="/assets/main-DwBlLvv-.css">
-    </head>
-    <body>
-        <div id="pageheadercontainer"></div>
-        <div id="navbar"></div>
-        <main>
+  <script type="module" crossorigin src="/assets/books-DmfnKszY.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/supabase-C4TjTvDq.js">
+  <link rel="modulepreload" crossorigin href="/assets/main-DZT5cO3Q.js">
+  <link rel="stylesheet" crossorigin href="/assets/main-CDCyj-Q8.css">
+</head>
 
-        </main>
+
+<body class="books-page">
+
+    <!-- ==========================
+         NAVBAR
+    =========================== -->
+
+    <div id="navbar"></div>
+
+
+    <main>
+
+        <!-- ==========================
+             HERO
+        =========================== -->
+
+        <section class="section">
+
+            <div class="container">
+
+                <div
+                    style="
+                        max-width:850px;
+                        margin:0 auto 55px;
+                        text-align:center;
+                    "
+                >
+
+                    <span class="section-label">
+                        Library
+                    </span>
+
+                    <h1 class="section-title">
+                        Books & Publications
+                    </h1>
+
+                    <p class="section-subtitle">
+                        Explore books and publications documenting Telugu
+                        Christian hymns, their meanings, poets, authors,
+                        history and heritage.
+                    </p>
+
+                </div>
+
+
+                <!-- ==========================
+                     SEARCH
+                =========================== -->
+
+                <div
+                    class="search-container"
+                    style="
+                        max-width:700px;
+                        margin:0 auto 45px;
+                    "
+                >
+
+                    <div
+                        style="
+                            position:relative;
+                            display:flex;
+                            align-items:center;
+                        "
+                    >
+
+                        <i
+                            class="fas fa-magnifying-glass"
+                            style="
+                                position:absolute;
+                                left:18px;
+                                pointer-events:none;
+                            "
+                        ></i>
+
+                        <input
+                            type="search"
+                            id="bookSearch"
+                            placeholder="Search books..."
+                            autocomplete="off"
+                            style="
+                                width:100%;
+                                padding:15px 18px 15px 48px;
+                            "
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==========================
+                     LOADING
+                =========================== -->
+
+                <div
+                    id="booksLoading"
+                    class="empty-state"
+                >
+
+                    <i class="fas fa-spinner fa-spin"></i>
+
+                    <h3>
+                        Loading books...
+                    </h3>
+
+                    <p>
+                        Please wait while the library is loaded.
+                    </p>
+
+                </div>
+
+
+                <!-- ==========================
+                     ERROR
+                =========================== -->
+
+                <div
+                    id="booksError"
+                    class="empty-state hidden"
+                >
+
+                    <i class="fas fa-circle-exclamation"></i>
+
+                    <h3>
+                        Unable to load books
+                    </h3>
+
+                    <p>
+                        Something went wrong while loading the library.
+                        Please try again later.
+                    </p>
+
+                    <button
+                        id="booksRetry"
+                        class="btn btn-primary"
+                        type="button"
+                    >
+                        Try Again
+                    </button>
+
+                </div>
+
+
+                <!-- ==========================
+                     EMPTY
+                =========================== -->
+
+                <div
+                    id="booksEmpty"
+                    class="empty-state hidden"
+                >
+
+                    <i class="fas fa-book-open"></i>
+
+                    <h3>
+                        No books available yet
+                    </h3>
+
+                    <p id="booksEmptyMessage">
+                        Books and publications will appear here as they are
+                        added to the library.
+                    </p>
+
+                </div>
+
+
+                <!-- ==========================
+                     BOOK GRID
+                =========================== -->
+
+                <div
+                    id="booksGrid"
+                    class="books-grid hidden"
+                ></div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- ==========================
+             ABOUT THE COLLECTION
+        =========================== -->
+
+        <section class="section">
+
+            <div class="container">
+
+                <div
+                    class="card"
+                    style="
+                        max-width:900px;
+                        margin:0 auto;
+                        text-align:center;
+                    "
+                >
+
+                    <span class="section-label">
+                        About the Collection
+                    </span>
+
+                    <h2>
+                        Preserving the heritage behind the hymns
+                    </h2>
+
+                    <p>
+                        The books collected and prepared through this work aim
+                        to preserve the rich heritage of Telugu Christian
+                        hymns. They bring together the meanings of the songs,
+                        information about their poets and authors, and the
+                        historical background that helps future generations
+                        understand their significance.
+                    </p>
+
+                    <p>
+                        More publications will be added to this library as the
+                        research and documentation work continues.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ==========================
+         SEARCH / FOOTER
+    =========================== -->
+
     <div id="searchModal"></div>
+
     <div id="footer"></div>
 
 
-    </body>
+    <!-- ==========================
+         JAVASCRIPT
+    =========================== -->
+
+
+
+</body>
+
 </html>

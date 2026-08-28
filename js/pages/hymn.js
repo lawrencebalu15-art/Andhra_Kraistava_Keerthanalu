@@ -71,6 +71,42 @@ function renderHymn(hymn) {
     document.getElementById("hymnEnglishTitle").textContent =
         hymn.title_english || "";
 
+
+
+
+        /* ==========================================
+       SEO METADATA
+    ========================================== */
+
+    const titleTelugu = hymn.title_telugu || "Untitled Hymn";
+    const titleEnglish = hymn.title_english || "";
+    const authorName = hymn.authors?.name || "Unknown Author";
+
+    document.title =
+        `Hymn ${hymn.number} - ${titleTelugu} | Andhra Kraistava Keerthanalu`;
+
+    const description =
+        `Hymn No. ${hymn.number}: ${titleTelugu}` +
+        `${titleEnglish ? ` (${titleEnglish})` : ""}` +
+        ` by ${authorName}. Explore this Telugu Christian hymn from Andhra Kraistava Keerthanalu.`;
+
+    let descriptionTag =
+        document.querySelector('meta[name="description"]');
+
+    if (descriptionTag) {
+        descriptionTag.setAttribute("content", description);
+    }
+
+    let canonicalTag =
+        document.querySelector('link[rel="canonical"]');
+
+    if (canonicalTag) {
+        canonicalTag.setAttribute(
+            "href",
+            `https://andhrakraistavakeerthanalukavulu.com/hymn.html?id=${encodeURIComponent(hymn.number)}`
+        );
+    }
+
     /* Author */
 
     //document.getElementById("authorName").textContent =
