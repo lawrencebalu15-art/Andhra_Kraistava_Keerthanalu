@@ -66,12 +66,13 @@ async function loadBooks() {
             .from("books")
 
             .select(`
-                id,
-                name,
-                slug,
-                description,
-                created_at
-            `)
+    id,
+    name,
+    slug,
+    description,
+    cover_url,
+    created_at
+`)
 
             .order(
                 "created_at",

@@ -73,6 +73,17 @@ const booksTableBody =
 const booksCount =
     document.getElementById("booksCount");
 
+const bookCover =
+    document.getElementById("bookCover");
+
+const bookCoverPreview =
+    document.getElementById("bookCoverPreview");
+
+const bookCoverPreviewImage =
+    document.getElementById("bookCoverPreviewImage");
+
+let selectedCoverFile = null;
+
 
 /* =========================================================
    CREATE SLUG FIELD
@@ -168,11 +179,9 @@ function ensureSlugField() {
 function removeUnsupportedFields() {
 
     const unsupportedIds = [
-        "bookAuthor",
-        "bookCategory",
-        "bookCover"
-    ];
-
+    "bookAuthor",
+    "bookCategory"
+];
 
     unsupportedIds.forEach(id => {
 
@@ -260,6 +269,10 @@ function setupEvents() {
         closeBookForm
     );
 
+    bookCover?.addEventListener(
+    "change",
+    handleCoverSelection
+);
 
     bookForm?.addEventListener(
         "submit",
@@ -297,6 +310,112 @@ function setupEvents() {
 }
 
 
+
+function handleCoverSelection(event) {
+
+    const file = event.target.files?.[0];
+
+    if (!file) {
+        selectedCoverFile = null;
+        return;
+    }
+
+    if (!file.type.startsWith("image/")) {
+
+        showNotification(
+            "Please select an image file.",
+            "error"
+        );
+
+        event.target.value = "";
+
+        return;
+    }
+
+    const maxSize =
+        5 * 1024 * 1024;
+
+    if (file.size > maxSize) {
+
+        showNotification(
+            "Book cover must be smaller than 5 MB.",
+            "error"
+        );
+
+        event.target.value = "";
+
+        return;
+    }
+
+    selectedCoverFile = file;
+
+    const previewUrl =
+        URL.createObjectURL(file);
+
+    if (bookCoverPreviewImage) {
+        bookCoverPreviewImage.src =
+            previewUrl;
+    }
+
+    if (bookCoverPreview) {
+        bookCoverPreview.hidden = false;
+    }
+}
+
+
+async function uploadBookCover(file) {
+
+    if (!file) {
+        return null;
+    }
+
+    const extension =
+        file.name
+            .split(".")
+            .pop()
+            .toLowerCase();
+
+    const safeExtension =
+        ["jpg", "jpeg", "png", "webp"].includes(extension)
+            ? extension
+            : "jpg";
+
+    const fileName =
+        `book-${Date.now()}-${crypto.randomUUID()}.${safeExtension}`;
+
+    const filePath =
+        `covers/${fileName}`;
+
+
+    const {
+        error: uploadError
+    } = await supabase.storage
+        .from("book-covers")
+        .upload(
+            filePath,
+            file,
+            {
+                cacheControl: "3600",
+                upsert: false,
+                contentType: file.type
+            }
+        );
+
+
+    if (uploadError) {
+        throw uploadError;
+    }
+
+
+    const {
+        data
+    } = supabase.storage
+        .from("book-covers")
+        .getPublicUrl(filePath);
+
+
+    return data.publicUrl;
+}
 /* =========================================================
    LOAD BOOKS
 ========================================================= */
@@ -316,12 +435,13 @@ async function loadBooks() {
             .from("books")
 
             .select(`
-                id,
-                name,
-                slug,
-                description,
-                created_at
-            `)
+    id,
+    name,
+    slug,
+    description,
+    cover_url,
+    created_at
+`)
 
             .order(
                 "created_at",
@@ -716,6 +836,27 @@ function openEditBook(
 
     }
 
+    if (bookCoverPreviewImage) {
+
+    if (book.cover_url) {
+
+        bookCoverPreviewImage.src =
+            book.cover_url;
+
+        if (bookCoverPreview) {
+            bookCoverPreview.hidden = false;
+        }
+
+    } else {
+
+        bookCoverPreviewImage.src = "";
+
+        if (bookCoverPreview) {
+            bookCoverPreview.hidden = true;
+        }
+
+    }selectedCoverFile = null;
+}
 }
 
 
@@ -837,17 +978,31 @@ async function handleSubmit(
 
     try {
 
-        const payload = {
+    let coverUrl =
+    editingBook?.cover_url || null;
 
-            name,
 
-            slug,
+if (selectedCoverFile) {
 
-            description:
-                description ||
-                null
+    coverUrl =
+        await uploadBookCover(
+            selectedCoverFile
+        );
+}
 
-        };
+       const payload = {
+
+    name,
+
+    slug,
+
+    description:
+        description || null,
+
+    cover_url:
+        coverUrl
+
+};
 
 
         let error = null;
