@@ -182,17 +182,26 @@ function createBookCard(book) {
 
         <article class="book-card">
 
-            <div class="book-cover">
+           <div class="book-cover">
 
+    ${
+        book.cover_url
+            ? `
+                <img
+                    src="${escapeAttribute(book.cover_url)}"
+                    alt="${escapeAttribute(title)}"
+                    class="book-cover-image"
+                    loading="lazy"
+                >
+            `
+            : `
                 <div class="book-cover-placeholder">
-
-                    <span>
-                        📖
-                    </span>
-
+                    <span>📖</span>
                 </div>
+            `
+    }
 
-            </div>
+</div>
 
 
             <div class="book-content">
