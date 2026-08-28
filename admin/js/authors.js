@@ -32,6 +32,18 @@ const authorForm = document.getElementById("authorForm");
 const authorName = document.getElementById("authorName");
 const authorMedia = document.getElementById("authorMedia");
 
+const authorBio =
+    document.getElementById("authorBio");
+
+const authorBirthYear =
+    document.getElementById("authorBirthYear");
+
+const authorDeathYear =
+    document.getElementById("authorDeathYear");
+
+const authorCountry =
+    document.getElementById("authorCountry");
+
 const authorPhotoPreview =
     document.getElementById("authorPhotoPreview");
 
@@ -785,22 +797,27 @@ async function startEdit(
      * IMPORTANT:
      * Populate the name field.
      */
-    authorName.value =
-        author.name || "";
+authorName.value =
+    author.name || "";
 
+authorBio.value =
+    author.bio || "";
 
-    /*
-     * Load media before selecting
-     * the current photo.
-     */
-    await loadAuthorMedia();
+authorBirthYear.value =
+    author.birth_year ?? "";
 
+authorDeathYear.value =
+    author.death_year ?? "";
 
-    authorMedia.value =
-        author.media_id || "";
+authorCountry.value =
+    author.country || "";
 
+await loadAuthorMedia();
 
-    updateAuthorPhotoPreview();
+authorMedia.value =
+    author.media_id || "";
+
+updateAuthorPhotoPreview();
 
 
     openModal();
@@ -896,13 +913,30 @@ authorForm.addEventListener(
 
 
             const payload = {
-                name,
-                media_id:
-                    selectedMediaId,
-                photo_url:
-                    photoUrl
-            };
+    name,
 
+    media_id:
+        selectedMediaId,
+
+    photo_url:
+        photoUrl,
+
+    bio:
+        authorBio.value.trim() || null,
+
+    birth_year:
+        authorBirthYear.value
+            ? Number(authorBirthYear.value)
+            : null,
+
+    death_year:
+        authorDeathYear.value
+            ? Number(authorDeathYear.value)
+            : null,
+
+    country:
+        authorCountry.value.trim() || null
+};
 
             /*
              * UPDATE

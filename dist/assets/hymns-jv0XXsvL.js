@@ -1,4 +1,4 @@
-import{s as p}from"./supabase-C4TjTvDq.js";import"./main-DZT5cO3Q.js";import{s as f}from"./page-header-Bl-XMcri.js";let s=[];async function L(){console.log("loadSongs started");try{const{data:e,error:n}=await p.from("hymns").select(`
+import{s as p}from"./supabase-C4TjTvDq.js";import"./main-4yU1RJkU.js";import{s as f}from"./page-header-Bl-XMcri.js";let s=[];async function L(){console.log("loadSongs started");try{const{data:e,error:n}=await p.from("hymns").select(`
                 *,
                 authors(name),
                 books(name),

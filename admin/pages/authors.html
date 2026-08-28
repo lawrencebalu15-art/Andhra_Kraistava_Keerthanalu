@@ -73,36 +73,113 @@
 
                             <div class="form-grid">
 
-                                <div class="form-group full">
+    <!-- AUTHOR NAME -->
+    <div class="form-group full">
 
-                                    <label for="authorName">
-                                        Author Name
-                                    </label>
+        <label for="authorName">
+            Author Name
+        </label>
 
-                                    <input
-                                        type="text"
-                                        id="authorName"
-                                        placeholder="Enter author name"
-                                        required>
+        <input
+            type="text"
+            id="authorName"
+            placeholder="Enter author name"
+            required>
 
-                                </div>
-                                <div class="form-group full">
-    <label for="authorMedia">
-        Author Photo
-    </label>
-
-    <select id="authorMedia">
-        <option value="">No Photo</option>
-    </select>
-
-    <div id="authorPhotoPreview" class="author-photo-preview hidden">
-        <img id="authorPhotoPreviewImage" src="" alt="Author Photo">
     </div>
+
+
+    <!-- AUTHOR PHOTO -->
+    <div class="form-group full">
+
+        <label for="authorMedia">
+            Author Photo
+        </label>
+
+        <select id="authorMedia">
+            <option value="">
+                No Photo
+            </option>
+        </select>
+
+        <div
+            id="authorPhotoPreview"
+            class="author-photo-preview hidden">
+
+            <img
+                id="authorPhotoPreviewImage"
+                src=""
+                alt="Author Photo">
+
+        </div>
+
+    </div>
+
+
+    <!-- BIOGRAPHY -->
+    <div class="form-group full">
+
+        <label for="authorBio">
+            Biography
+        </label>
+
+        <textarea
+            id="authorBio"
+            rows="6"
+            placeholder="Write a short biography of the author..."></textarea>
+
+    </div>
+
+
+    <!-- BIRTH YEAR -->
+    <div class="form-group">
+
+        <label for="authorBirthYear">
+            Birth Year
+        </label>
+
+        <input
+            type="number"
+            id="authorBirthYear"
+            placeholder="e.g. 1920"
+            min="0"
+            max="2100">
+
+    </div>
+
+
+    <!-- DEATH YEAR -->
+    <div class="form-group">
+
+        <label for="authorDeathYear">
+            Death Year
+        </label>
+
+        <input
+            type="number"
+            id="authorDeathYear"
+            placeholder="e.g. 1985"
+            min="0"
+            max="2100">
+
+    </div>
+
+
+    <!-- COUNTRY -->
+    <div class="form-group full">
+
+        <label for="authorCountry">
+            Country / Region
+        </label>
+
+        <input
+            type="text"
+            id="authorCountry"
+            placeholder="e.g. India">
+
+    </div>
+
 </div>
-
-                            </div>
-
-
                             <div class="modal-footer">
 
                                 <button

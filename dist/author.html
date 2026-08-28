@@ -1,75 +1,343 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Andhra Kraistava Keerthanalu - Kavulu</title>
 
-       
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Author | Andhra Kraistava Keerthanalu
+    </title>
+
+    <meta
+        name="description"
+        content="Explore the life, biography, and hymns of Telugu Christian hymn writers."
+    >
+
+
+
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     >
-      <script type="module" crossorigin src="/assets/supabase-C4TjTvDq.js"></script>
-      <script type="module" crossorigin src="/assets/main-DZT5cO3Q.js"></script>
-      <script type="module" crossorigin src="/assets/page-header-Bl-XMcri.js"></script>
-      <script type="module" crossorigin src="/assets/home-C3LSLZmA.js"></script>
-      <link rel="stylesheet" crossorigin href="/assets/main-CDCyj-Q8.css">
-    </head>
-    <body>
-                    <!-- ===================================
-    PAGE HERO
-==================================== -->
+
+    <link
+        rel="canonical"
+        href="https://andhrakraistavakeerthanalukavulu.com/author.html"
+    >
+
+  <script type="module" crossorigin src="/assets/supabase-C4TjTvDq.js"></script>
+  <script type="module" crossorigin src="/assets/main-4yU1RJkU.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-Bn23CWn4.css">
+  <link rel="stylesheet" crossorigin href="/assets/author-Cxfp4tyk.css">
+</head>
 
 
-        <div id="navbar"></div>
-        <main>
+<body>
 
 
-            <section class="author-coming-soon">
-    <div class="author-coming-soon__content">
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
 
-        <span class="author-coming-soon__eyebrow">
-            AUTHOR ARCHIVE
-        </span>
+    <div id="navbar"></div>
 
-        <h1>Information Coming Soon</h1>
 
-        <p>
-            We are currently gathering and preserving
-            information about this hymn writer.
-        </p>
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
 
-        <p>
-            More details will be added to the archive
-            as research and historical sources become available.
-        </p>
+    <main>
 
-        <div class="author-coming-soon__divider">
-            <span>✦</span>
-        </div>
 
-    </div>
-</section>
-        </main>
-        <script>
-        window.va = window.va || function () {
-            (window.vaq = window.vaq || []).push(arguments);
-        };
-    </script>
+        <section class="author-profile">
 
-    <script>
-        window.si = window.si || function () {
-            (window.siq = window.siq || []).push(arguments);
-        };
-    </script>
 
-    <script defer src="/_vercel/speed-insights/script.js"></script>
-    <script defer src="/_vercel/insights/script.js"></script>
+            <div class="container">
 
+
+                <!-- =================================================
+                     LOADING
+                ================================================== -->
+
+                <div
+                    id="authorLoading"
+                    class="author-state"
+                >
+
+                    <div class="author-spinner"></div>
+
+                    <p>
+                        Loading author...
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     ERROR
+                ================================================== -->
+
+                <div
+                    id="authorError"
+                    class="author-state hidden"
+                >
+
+                    <div class="author-state-icon">
+
+                        <i
+                            class="fa-solid fa-circle-exclamation"
+                        ></i>
+
+                    </div>
+
+
+                    <h2>
+                        Author Not Found
+                    </h2>
+
+
+                    <p id="authorErrorMessage">
+                        We couldn't find this author.
+                    </p>
+
+
+                    <a
+                        href="authors.html"
+                        class="btn btn-outline"
+                    >
+                        ← Back to Authors
+                    </a>
+
+                </div>
+
+
+                <!-- =================================================
+                     AUTHOR CONTENT
+                ================================================== -->
+
+                <div
+                    id="authorContent"
+                    class="hidden"
+                >
+
+
+                    <!-- =============================================
+                         PROFILE HEADER
+                    ============================================== -->
+
+                    <div class="author-profile-card">
+
+
+                        <!-- PHOTO -->
+
+                        <div class="author-photo-wrapper">
+
+
+                            <div
+                                id="authorAvatar"
+                                class="author-avatar-large"
+                            >
+                                ?
+                            </div>
+
+
+                            <img
+                                id="authorPhoto"
+                                class="author-photo hidden"
+                                src=""
+                                alt=""
+                            >
+
+                        </div>
+
+
+                        <!-- INFORMATION -->
+
+                        <div class="author-profile-info">
+
+
+                            <span class="section-label">
+                                HYMN WRITER
+                            </span>
+
+
+                            <h1 id="authorName">
+                                Author Name
+                            </h1>
+
+
+                            <div
+                                id="authorDates"
+                                class="author-dates hidden"
+                            >
+                            </div>
+
+
+                            <div
+                                id="authorCountry"
+                                class="author-country hidden"
+                            >
+
+                                <i
+                                    class="fa-solid fa-location-dot"
+                                ></i>
+
+
+                                <span></span>
+
+                            </div>
+
+
+                            <div class="author-stat">
+
+                                <strong
+                                    id="authorHymnCount"
+                                >
+                                    0
+                                </strong>
+
+
+                                <span>
+                                    Hymns in Archive
+                                </span>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =============================================
+                         BIOGRAPHY
+                    ============================================== -->
+
+                    <section class="author-biography">
+
+
+                        <div class="section-header">
+
+
+                            <div>
+
+                                <span class="section-label">
+                                    BIOGRAPHY
+                                </span>
+
+
+                                <h2 class="section-title">
+                                    About the Hymn Writer
+                                </h2>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div
+                            id="authorBio"
+                            class="author-bio-content"
+                        >
+
+                            <p>
+                                Biography information is
+                                currently being prepared
+                                for this archive.
+                            </p>
+
+                        </div>
+
+
+                    </section>
+
+
+                    <!-- =============================================
+                         HYMNS
+                    ============================================== -->
+
+                    <section class="author-hymns">
+
+
+                        <div class="section-header">
+
+
+                            <div>
+
+                                <span class="section-label">
+                                    ARCHIVE
+                                </span>
+
+
+                                <h2 class="section-title">
+                                    Hymns by This Author
+                                </h2>
+
+
+                                <p
+                                    id="authorHymnsSubtitle"
+                                    class="section-subtitle"
+                                >
+                                    Hymns associated with
+                                    this writer.
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div
+                            id="authorHymns"
+                            class="author-hymns-list"
+                        >
+                        </div>
+
+
+                    </section>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =====================================================
+         GLOBAL SEARCH
+    ====================================================== -->
 
     <div id="searchModal"></div>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
     <div id="footer"></div>
-    </body>
+
+
+    <!-- =====================================================
+         SCRIPTS
+    ====================================================== -->
+
+
+
+
+</body>
 
 </html>

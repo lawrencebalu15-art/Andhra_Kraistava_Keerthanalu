@@ -15,6 +15,6 @@ import "./lazy-loading.js";
 
 import "./animations/gsap-init.js";
 
-
+import "./pages/author.js";
 
 //import "./test-db.js";
