@@ -1,47 +1,19 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "rewrites": [
+
+  "routes": [
     {
-      "source": "/",
+      "src": "^/$",
       "has": [
         {
           "type": "host",
           "value": "cms.andhrakraistavakeerthanalukavulu.com"
         }
       ],
-      "destination": "/admin/login.html"
-    },
-    {
-      "source": "/login.html",
-      "has": [
-        {
-          "type": "host",
-          "value": "cms.andhrakraistavakeerthanalukavulu.com"
-        }
-      ],
-      "destination": "/admin/login.html"
-    },
-    {
-      "source": "/dashboard.html",
-      "has": [
-        {
-          "type": "host",
-          "value": "cms.andhrakraistavakeerthanalukavulu.com"
-        }
-      ],
-      "destination": "/admin/dashboard.html"
-    },
-    {
-      "source": "/pages/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "cms.andhrakraistavakeerthanalukavulu.com"
-        }
-      ],
-      "destination": "/admin/pages/:path*"
+      "dest": "/admin/login.html"
     }
   ],
+
   "headers": [
     {
       "source": "/sitemap.xml",
