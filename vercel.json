@@ -1,16 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "cms.andhrakraistavakeerthanalukavulu.com"
-        }
-      ],
-      "destination": "/api/:path*"
-    },
-    {
       "source": "/:path*",
       "has": [
         {
