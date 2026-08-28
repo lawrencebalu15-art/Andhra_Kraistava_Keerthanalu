@@ -705,21 +705,6 @@ cancelUpload.addEventListener(
 );
 
 
-uploadModal.addEventListener(
-    "click",
-    event => {
-
-        if (
-            event.target ===
-            uploadModal
-        ) {
-
-            closeUpload();
-
-        }
-
-    }
-);
 
 
 /* ==========================================

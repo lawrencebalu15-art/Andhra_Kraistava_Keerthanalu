@@ -818,21 +818,7 @@ cancelMessageButton?.addEventListener(
 );
 
 
-messageModal?.addEventListener(
-    "click",
-    event => {
 
-        if (
-            event.target ===
-            messageModal
-        ) {
-
-            closeModal();
-
-        }
-
-    }
-);
 
 
 /* ==========================================================

@@ -348,22 +348,6 @@ cancelButton.addEventListener(
 );
 
 
-/* =========================================================
-   CLOSE MODAL ON BACKDROP
-========================================================= */
-
-modal.addEventListener(
-    "click",
-    event => {
-
-        if (event.target === modal) {
-
-            closeModal();
-
-        }
-
-    }
-);
 
 
 /* =========================================================

@@ -252,19 +252,6 @@ cancelButton.addEventListener(
 );
 
 
-/*
- * Close when clicking outside modal
- */
-modal.addEventListener(
-    "click",
-    event => {
-
-        if (event.target === modal) {
-            closeModal();
-        }
-
-    }
-);
 
 
 /*

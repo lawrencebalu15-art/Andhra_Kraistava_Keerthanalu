@@ -83,17 +83,6 @@ closeButton.addEventListener("click", closeModal);
 
 cancelButton.addEventListener("click", closeModal);
 
-/* Close when clicking outside */
-
-modal.addEventListener("click", (e) => {
-
-    if (e.target === modal) {
-
-        closeModal();
-
-    }
-
-});
 
 /* Close with Escape */
 
