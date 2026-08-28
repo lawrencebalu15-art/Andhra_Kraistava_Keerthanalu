@@ -9,14 +9,14 @@ background:rgba(250, 235, 215, 0.44);
 .hero-intro .section-label, 
 .hero-intro p:first-of-type {
              /* Deep burgundy to anchor your branding */
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-size: 14px;
+    font-weight: 500;
+
+    letter-spacing: 1px;
+    font-size: 18px;
 }
 
 .hero-intro-content {
-    max-width: 900px;
+    max-width:1000px;
     margin: 0 auto;
     text-align: center;
 }

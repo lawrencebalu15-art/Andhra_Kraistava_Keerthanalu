@@ -34,10 +34,16 @@
 }
 
 .section-title{
-    color:rgb(0, 0, 0)}
+    color:rgb(0, 0, 0)
+}
 
 .section-subtitle{
     color: black;
+}
+
+.section-subtitle p{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    
 }
 /* ===================================
    GRID
