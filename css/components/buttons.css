@@ -9,24 +9,22 @@
    BASE BUTTON
 ========================================================== */
 
-.btn{
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
 
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:var(--space-2);
+    padding: 18px 28px;
 
-    padding:14px 28px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 30px; /* increase this */
+    font-weight: var(--fw-semibold);
 
-    font-family:var(--font-body);
-    font-size:var(--fs-base);
-    font-weight:var(--fw-semibold);
+    border: none;
+    border-radius: var(--radius-md);
 
-    border:none;
-    border-radius:var(--radius-md);
-
-    cursor:pointer;
-
+    cursor: pointer;
     transition:
         background var(--transition),
         color var(--transition),
@@ -34,8 +32,12 @@
         transform var(--transition-fast),
         box-shadow var(--transition);
 
-    user-select:none;
-    white-space:nowrap;
+    user-select: none;
+    white-space: nowrap;
+}
+.btn {
+    font-size: 22px;
+    padding: 16px 30px;
 }
 
 .btn:hover{
@@ -69,6 +71,7 @@
 
 .btn-primary{
 
+    font-size: 18px;
     background:var(--primary);
 
     color:var(--white);
