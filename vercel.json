@@ -1,16 +1,4 @@
 {
-  "rewrites": [
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "cms.andhrakraistavakeerthanalukavulu.com"
-        }
-      ],
-      "destination": "/admin/:path*"
-    }
-  ],
   "headers": [
     {
       "source": "/sitemap.xml",
