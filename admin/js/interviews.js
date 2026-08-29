@@ -10,6 +10,7 @@ import { requireAuth, logout } from "./auth.js";
 let interviews = [];
 let filteredInterviews = [];
 let mediaList = [];
+let authorsList = [];
 
 let editingInterview = null;
 let interviewToDelete = null;
@@ -41,8 +42,8 @@ const interviewForm =
 const interviewTitle =
     document.getElementById("interviewTitle");
 
-const interviewee =
-    document.getElementById("interviewee");
+const interviewAuthor =
+    document.getElementById("interviewAuthor");
 
 const category =
     document.getElementById("category");
@@ -291,6 +292,9 @@ function resetForm() {
     saveButton.disabled = false;
 
 
+    interviewAuthor.value =
+        "";
+
     category.value =
         "Interview";
 
@@ -324,7 +328,10 @@ addButton.addEventListener(
 
         resetForm();
 
-        await loadMedia();
+        await Promise.all([
+            loadAuthors(),
+            loadMedia()
+        ]);
 
         openModal();
 
@@ -551,6 +558,67 @@ interviewMedia.addEventListener(
 
 
 /* =========================================================
+   LOAD AUTHORS FOR INTERVIEW ASSIGNMENT
+========================================================= */
+
+async function loadAuthors() {
+
+    if (!interviewAuthor) return;
+
+    interviewAuthor.innerHTML = `
+        <option value="">Loading authors...</option>
+    `;
+
+    try {
+        const { data, error } = await supabase
+            .from("authors")
+            .select("id,name,is_active")
+            .eq("is_active", true)
+            .order("name", { ascending: true });
+
+        if (error) throw error;
+
+        authorsList = data || [];
+
+        interviewAuthor.innerHTML = `
+            <option value="">Select an author</option>
+        `;
+
+        authorsList.forEach(author => {
+            const option = document.createElement("option");
+            option.value = author.id;
+            option.textContent = author.name || `Author #${author.id}`;
+            interviewAuthor.appendChild(option);
+        });
+
+        if (!authorsList.length) {
+            interviewAuthor.innerHTML = `
+                <option value="">No active authors found</option>
+            `;
+        }
+    } catch (error) {
+        console.error("Error loading authors:", error);
+        authorsList = [];
+        interviewAuthor.innerHTML = `
+            <option value="">Unable to load authors</option>
+        `;
+        notify("Unable to load authors.", "error");
+    }
+}
+
+
+function getAuthorName(authorId) {
+    if (!authorId) return "";
+
+    const author = authorsList.find(
+        item => String(item.id) === String(authorId)
+    );
+
+    return author?.name || "";
+}
+
+
+/* =========================================================
    LOAD INTERVIEWS
 ========================================================= */
 
@@ -774,11 +842,12 @@ function renderTable(interviewList) {
                             </td>
 
 
-                            <!-- INTERVIEWEE -->
+                            <!-- AUTHOR -->
 
                             <td>
 
                                 ${escapeHtml(
+                                    getAuthorName(interview.author_id) ||
                                     interview.interviewee ||
                                     "-"
                                 )}
@@ -949,8 +1018,10 @@ async function startEdit(
         interview.title || "";
 
 
-    interviewee.value =
-        interview.interviewee || "";
+    await loadAuthors();
+
+    interviewAuthor.value =
+        interview.author_id || "";
 
 
     category.value =
@@ -1016,8 +1087,13 @@ interviewForm.addEventListener(
             interviewTitle.value.trim();
 
 
-        const intervieweeValue =
-            interviewee.value.trim();
+        const selectedAuthorId =
+            interviewAuthor.value || null;
+
+        const selectedAuthor =
+            authorsList.find(
+                author => String(author.id) === String(selectedAuthorId)
+            );
 
 
         const categoryValue =
@@ -1057,11 +1133,19 @@ interviewForm.addEventListener(
                 "error"
             );
 
-
             interviewTitle.focus();
-
             return;
+        }
 
+        if (!selectedAuthorId) {
+
+            notify(
+                "Please select an author.",
+                "error"
+            );
+
+            interviewAuthor.focus();
+            return;
         }
 
 
@@ -1107,8 +1191,12 @@ interviewForm.addEventListener(
                 category:
                     categoryValue,
 
+                author_id:
+                    selectedAuthorId,
+
+                // Keep the legacy text field synchronized.
                 interviewee:
-                    intervieweeValue ||
+                    selectedAuthor?.name ||
                     null,
 
                 media_id:
@@ -1496,6 +1584,7 @@ function searchInterviews() {
 
                 const person =
                     (
+                        getAuthorName(interview.author_id) ||
                         interview.interviewee ||
                         ""
                     ).toLowerCase();
@@ -1872,9 +1961,10 @@ document.addEventListener(
 
 
             /*
-             * Load interviews
+             * Load authors and interviews
              */
 
+            await loadAuthors();
             await loadInterviews();
 
 

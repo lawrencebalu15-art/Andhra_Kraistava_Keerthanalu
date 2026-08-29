@@ -9,7 +9,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1.0">
 
-    <title>Interviews | AKK CMS</title>
+    <title>Interviews | AKKK CMS</title>
 
     <link
         rel="stylesheet"
@@ -87,7 +87,7 @@
                     type="text"
                     id="searchInput"
                     class="search-input"
-                    placeholder="Search by interview title or interviewee">
+                    placeholder="Search by interview title, author or category">
 
             </div>
 
@@ -173,7 +173,7 @@
 
                             <th>Title</th>
 
-                            <th>Interviewee</th>
+                            <th>Author</th>
 
                             <th>Category</th>
 
@@ -295,18 +295,21 @@
 
 
 
-                <!-- INTERVIEWEE -->
+                <!-- AUTHOR -->
 
                 <div class="form-group">
 
-                    <label for="interviewee">
-                        Interviewee
+                    <label for="interviewAuthor">
+                        Author / Interviewee
                     </label>
 
-                    <input
-                        type="text"
-                        id="interviewee"
-                        placeholder="Enter interviewee name">
+                    <select
+                        id="interviewAuthor"
+                        required>
+                        <option value="">
+                            Select an author
+                        </option>
+                    </select>
 
                 </div>
 
