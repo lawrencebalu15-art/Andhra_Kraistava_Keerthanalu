@@ -17,8 +17,9 @@ export default defineConfig({
         author: resolve(__dirname, "author.html"),
         books: resolve(__dirname, "books.html"),
         interviews: resolve(__dirname, "interviews.html"),
-        gallery: resolve(__dirname, "gallery.html"),
-        about: resolve(__dirname, "about.html"),
+greetings: resolve(__dirname, "greetings.html"),
+gallery: resolve(__dirname, "gallery.html"),
+about: resolve(__dirname, "about.html"),
         contact: resolve(__dirname, "contact.html"),
         support: resolve(__dirname, "support.html"),
 
@@ -28,8 +29,9 @@ export default defineConfig({
         adminIndex: resolve(__dirname, "admin/index.html"),
 
         adminInterviews: resolve(__dirname, "admin/pages/interviews.html"),
-        adminHymns: resolve(__dirname, "admin/pages/hymns.html"),
-        adminAuthors: resolve(__dirname, "admin/pages/authors.html"),
+adminGreetings: resolve(__dirname, "admin/pages/greetings.html"),
+adminHymns: resolve(__dirname, "admin/pages/hymns.html"),
+adminAuthors: resolve(__dirname, "admin/pages/authors.html"),
         adminBooks: resolve(__dirname, "admin/pages/books.html"),
         adminCategories: resolve(__dirname, "admin/pages/categories.html"),
         adminMedia: resolve(__dirname, "admin/pages/media.html"),
