@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Greetings | AKK CMS</title>
+
+  <script type="module" crossorigin src="/assets/adminGreetings-LDWNGyKO.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/supabase-C4TjTvDq.js">
+  <link rel="modulepreload" crossorigin href="/assets/common-DAz3qKPy.js">
+  <link rel="modulepreload" crossorigin href="/assets/utils-B1kQYoMr.js">
+  <link rel="modulepreload" crossorigin href="/assets/auth-BTxupRwK.js">
+  <link rel="stylesheet" crossorigin href="/assets/admin-CtpF2mkr.css">
+</head>
+
+<body>
+
+    <div class="dashboard-layout">
+
+        <!-- Sidebar -->
+        <aside id="sidebar"></aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+
+            <!-- Navbar -->
+            <header id="navbar"></header>
+
+            <section class="page-content">
+
+                <!-- PAGE HEADER -->
+                <div class="page-header">
+
+                    <div>
+                        <h1>Greetings</h1>
+
+                        <p>
+                            Manage all greetings and YouTube Shorts.
+                        </p>
+                    </div>
+
+                    <button
+                        id="addGreetingButton"
+                        class="btn-primary">
+                        + Add Greeting
+                    </button>
+
+                </div>
+
+
+                <!-- ==========================
+                     ADD / EDIT GREETING MODAL
+                =========================== -->
+
+                <div
+                    id="greetingModal"
+                    class="modal">
+
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+
+                            <h2 id="greetingModalTitle">
+                                Add New Greeting
+                            </h2>
+
+                            <button
+                                id="closeModal"
+                                class="modal-close">
+                                &times;
+                            </button>
+
+                        </div>
+
+
+                        <form id="greetingForm">
+
+                            <div class="form-grid">
+
+                                <!-- TITLE -->
+                                <div class="form-group full">
+
+                                    <label for="greetingTitle">
+                                        Greeting Title
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="greetingTitle"
+                                        placeholder="e.g. Birthday Blessings"
+                                        required>
+
+                                </div>
+
+
+                                <!-- SENDER -->
+                                <div class="form-group full">
+
+                                    <label for="senderName">
+                                        From / Sender Name
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="senderName"
+                                        placeholder="e.g. John & Family"
+                                        required>
+
+                                </div>
+
+
+                                <!-- CATEGORY -->
+                                <div class="form-group">
+
+                                    <label for="greetingCategory">
+                                        Category
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="greetingCategory"
+                                        placeholder="e.g. Birthday, Anniversary">
+
+                                </div>
+
+
+                                <!-- YOUTUBE URL -->
+                                <div class="form-group">
+
+                                    <label for="youtubeUrl">
+                                        YouTube Shorts URL
+                                    </label>
+
+                                    <input
+                                        type="url"
+                                        id="youtubeUrl"
+                                        placeholder="https://youtube.com/shorts/... "
+                                        required>
+
+                                </div>
+
+
+                                <!-- DESCRIPTION -->
+                                <div class="form-group full">
+
+                                    <label for="greetingDescription">
+                                        Description
+                                    </label>
+
+                                    <textarea
+                                        id="greetingDescription"
+                                        rows="5"
+                                        placeholder="Write a short description..."></textarea>
+
+                                </div>
+
+
+                                <!-- THUMBNAIL -->
+                                <div class="form-group full">
+
+                                    <label for="thumbnailUrl">
+                                        Thumbnail URL
+                                    </label>
+
+                                    <input
+                                        type="url"
+                                        id="thumbnailUrl"
+                                        placeholder="Optional thumbnail URL">
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="modal-footer">
+
+                                <button
+                                    type="button"
+                                    id="cancelModal"
+                                    class="btn-secondary">
+                                    Cancel
+                                </button>
+
+                                <button
+                                    id="saveButton"
+                                    type="submit"
+                                    class="primary-btn">
+                                    Save Greeting
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==========================
+                     TOOLBAR
+                =========================== -->
+
+                <div class="toolbar">
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        class="search-input"
+                        placeholder="Search greeting or sender">
+
+                </div>
+
+
+                <!-- ==========================
+                     LOADING
+                =========================== -->
+
+                <div
+                    id="loadingState"
+                    class="state-card">
+
+                    <h3>Loading Greetings...</h3>
+
+                    <p>
+                        Please wait.
+                    </p>
+
+                </div>
+
+
+                <!-- ==========================
+                     ERROR
+                =========================== -->
+
+                <div
+                    id="errorState"
+                    class="state-card hidden">
+
+                    <h3>Unable to Load Greetings</h3>
+
+                    <p>
+                        Something went wrong while loading greetings.
+                    </p>
+
+                </div>
+
+
+                <!-- ==========================
+                     EMPTY
+                =========================== -->
+
+                <div
+                    id="emptyState"
+                    class="state-card hidden">
+
+                    <h3>No Greetings Found</h3>
+
+                    <p id="emptyMessage">
+                        No greetings found.
+                    </p>
+
+                </div>
+
+
+                <!-- ==========================
+                     GREETINGS TABLE
+                =========================== -->
+
+                <div
+                    id="tableContainer"
+                    class="table-container hidden">
+
+                    <table class="admin-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>No.</th>
+
+                                <th>Thumbnail</th>
+
+                                <th>Greeting</th>
+
+                                <th>From</th>
+
+                                <th>Category</th>
+
+                                <th>Status</th>
+
+                                <th>Actions</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="greetingsTableBody">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- ==========================
+                     PAGINATION
+                =========================== -->
+
+                <div
+                    id="pagination"
+                    class="pagination hidden">
+
+                    <button
+                        id="prevPage"
+                        class="pagination-btn">
+                        ← Previous
+                    </button>
+
+                    <span id="pageInfo"></span>
+
+                    <button
+                        id="nextPage"
+                        class="pagination-btn">
+                        Next →
+                    </button>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- ==========================
+         ARCHIVE CONFIRMATION
+    =========================== -->
+
+    <div
+        id="confirmModal"
+        class="modal">
+
+        <div class="confirm-card">
+
+            <div class="confirm-icon">
+                📦
+            </div>
+
+            <h2 id="confirmTitle">
+                Archive Greeting
+            </h2>
+
+            <p id="confirmMessage">
+                Are you sure you want to archive this greeting?
+            </p>
+
+            <div class="confirm-actions">
+
+                <button
+                    id="cancelDelete"
+                    class="btn-secondary">
+                    Cancel
+                </button>
+
+                <button
+                    id="confirmDelete">
+                    Archive
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- COMMON ADMIN LOGIC -->
+
+
+
+    <!-- GREETINGS PAGE LOGIC -->
+
+
+
+    <!-- TOAST -->
+
+    <div
+        id="toastContainer"
+        class="toast-container">
+    </div>
+
+</body>
+
+</html>

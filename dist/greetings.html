@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Greetings | Andhra Kraistava Keerthanalu</title>
+
+
+    <style>
+        /* =========================================================
+           GREETINGS PAGE
+           ========================================================= */
+
+        /* ---------- Page Header ---------- */
+        
+
+        .greetings-page .page-header {
+            height: 10px;
+            min-height: 260px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            background: #f8f4ec;
+            border-bottom: 1px solid rgba(59, 2, 2, 0.08);
+            padding: 65px 20px;
+        }
+
+        .greetings-page .page-header .container {
+            width: 100%;
+        }
+
+        .greetings-page .section-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #d4af37;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .greetings-page .page-title {
+            margin: 0 0 18px;
+            color: #3b0202;
+            font-family: var(--font-heading);
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            line-height: 1.05;
+        }
+
+        .greetings-page .page-subtitle {
+            max-width: 720px;
+            margin: 0 auto;
+            color: #5f5b56;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+
+        /* ---------- Greetings Section ---------- */
+
+        .greetings-page .section {
+            background: #f8f4ec;
+            padding: 70px 20px 90px;
+        }
+
+
+        /* ---------- Grid ---------- */
+
+        .greetings-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 30px;
+            align-items: start;
+        }
+
+
+        /* ---------- Greeting Card ---------- */
+
+        .greeting-card {
+            background: #ffffff;
+            border: 1px solid rgba(59, 2, 2, 0.1);
+            border-radius: 16px;
+            overflow: hidden;
+
+            transition:
+                transform 0.35s ease,
+                border-color 0.35s ease,
+                box-shadow 0.35s ease;
+
+            box-shadow:
+                0 4px 15px rgba(59, 2, 2, 0.04);
+        }
+
+        .greeting-card:hover {
+            transform: translateY(-8px);
+
+            border-color:
+                rgba(212, 175, 55, 0.5);
+
+            box-shadow:
+                0 16px 30px rgba(59, 2, 2, 0.08);
+        }
+
+
+        /* ---------- YouTube Video ---------- */
+
+        .greeting-video {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            background: #000;
+            overflow: hidden;
+        }
+
+        .greeting-video iframe {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+
+        /* ---------- Card Content ---------- */
+
+        .greeting-content {
+            padding: 24px;
+        }
+
+        .greeting-category {
+            display: inline-block;
+            margin-bottom: 10px;
+
+            color: #d4af37;
+
+            font-size: 0.8rem;
+            font-weight: 700;
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .greeting-content h3 {
+            margin: 0 0 10px;
+
+            color: #3b0202;
+
+            font-family: var(--font-heading);
+            font-size: 1.35rem;
+            line-height: 1.35;
+        }
+
+        .greeting-content p {
+            margin: 0 0 16px;
+
+            color: #555;
+            line-height: 1.7;
+        }
+
+
+        /* ---------- Sender ---------- */
+
+        .greeting-sender {
+            margin-bottom: 18px;
+
+            color: #3b0202;
+
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+
+        /* ---------- YouTube Link ---------- */
+
+        .greeting-watch {
+            display: inline-block;
+
+            color: #3b0202;
+
+            font-weight: 700;
+            text-decoration: none;
+
+            transition:
+                color 0.25s ease,
+                transform 0.25s ease;
+        }
+
+        .greeting-watch:hover {
+            color: #d4af37;
+        }
+
+
+        /* ---------- Loading / Error / Empty ---------- */
+
+        .greetings-state {
+            width: 100%;
+            padding: 70px 20px;
+
+            color: #666;
+
+            text-align: center;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+
+            .greetings-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .greetings-page .page-header {
+                min-height: 220px;
+                padding: 55px 20px;
+            }
+
+            .greetings-page .page-title {
+                font-size: 2.8rem;
+            }
+
+            .greetings-page .page-subtitle {
+                font-size: 0.95rem;
+            }
+
+            .greetings-page .section {
+                padding: 50px 15px 70px;
+            }
+
+            .greetings-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .greeting-content {
+                padding: 22px;
+            }
+
+        }
+
+
+        @media (max-width: 400px) {
+
+            .greetings-page .page-title {
+                font-size: 2.4rem;
+            }
+
+            .greeting-content {
+                padding: 20px;
+            }
+
+        }
+    </style>
+  <script type="module" crossorigin src="/assets/greetings-BTo4rZxi.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/supabase-C4TjTvDq.js">
+  <link rel="modulepreload" crossorigin href="/assets/main-Dtr4gIiF.js">
+  <link rel="stylesheet" crossorigin href="/assets/main-CgsYzvLt.css">
+</head>
+
+
+<body class="greetings-page">
+
+    <!-- Navigation -->
+    <div id="navbar"></div>
+
+
+    <main>
+
+        <!-- =====================================================
+             GREETINGS HEADER
+             ===================================================== -->
+
+        <section class="page-header">
+
+            <div class="container">
+
+                <span class="section-label">
+                    Greetings
+                </span>
+
+                <h1 class="page-title">
+                    Greetings
+                </h1>
+
+                <p class="page-subtitle">
+                    Messages of love, faith, and blessing
+                    shared with our community.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             GREETINGS
+             ===================================================== -->
+
+        <section class="section">
+
+            <div class="container">
+
+                <!-- Loading -->
+
+                <div
+                    id="greetingsLoading"
+                    class="greetings-state">
+
+                    Loading greetings...
+
+                </div>
+
+
+                <!-- Error -->
+
+                <div
+                    id="greetingsError"
+                    class="greetings-state hidden">
+
+                    Unable to load greetings.
+                    Please try again later.
+
+                </div>
+
+
+                <!-- Empty -->
+
+                <div
+                    id="greetingsEmpty"
+                    class="greetings-state hidden">
+
+                    No greetings are available yet.
+
+                </div>
+
+
+                <!-- Greeting Cards -->
+
+                <div
+                    id="greetingsGrid"
+                    class="greetings-grid">
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Search -->
+
+    <div id="searchModal"></div>
+
+
+    <!-- Footer -->
+
+    <div id="footer"></div>
+
+
+    <!-- Main Website JS -->
+
+
+
+    <!-- Greetings JS -->
+
+
+</body>
+
+</html>
