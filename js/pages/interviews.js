@@ -1,13 +1,30 @@
 import { supabase } from "../supabase.js";
 
+
 /* ==========================================================
    DOM ELEMENTS
 ========================================================== */
 
-const interviewsGrid = document.getElementById("interviewsGrid");
-const loadingState = document.getElementById("interviewsLoading");
-const errorState = document.getElementById("interviewsError");
-const emptyState = document.getElementById("interviewsEmpty");
+const authorsGrid =
+    document.getElementById("interviewAuthors");
+
+const interviewsGrid =
+    document.getElementById("interviewsGrid");
+
+const authorHeader =
+    document.getElementById("authorHeader");
+
+const backToAuthors =
+    document.getElementById("backToAuthors");
+
+const loadingState =
+    document.getElementById("interviewsLoading");
+
+const errorState =
+    document.getElementById("interviewsError");
+
+const emptyState =
+    document.getElementById("interviewsEmpty");
 
 
 /* ==========================================================
@@ -19,51 +36,361 @@ init();
 
 async function init() {
 
-    if (!interviewsGrid) {
-        console.error("Interviews grid element not found.");
-        return;
-    }
-
     showLoading();
+
 
     try {
 
-        const interviews = await loadInterviews();
+        const params =
+            new URLSearchParams(window.location.search);
 
-        if (!interviews.length) {
-            showEmpty();
+        const authorId =
+            params.get("author");
+
+
+        /*
+         * If an author ID exists in the URL,
+         * show that author's interviews.
+         */
+
+        if (authorId) {
+
+            await loadAuthorInterviews(authorId);
+
             return;
+
         }
 
-        renderInterviews(interviews);
+
+        /*
+         * Otherwise show the author list.
+         */
+
+        await loadAuthorsWithInterviews();
+
 
     } catch (error) {
 
-        console.error("Failed to load interviews:", error);
+        console.error(
+            "Failed to load interviews:",
+            error
+        );
 
         showError();
+
     }
+
 }
 
 
 /* ==========================================================
-   LOAD INTERVIEWS
+   LOAD AUTHORS WITH INTERVIEWS
 ========================================================== */
 
-async function loadInterviews() {
+async function loadAuthorsWithInterviews() {
+
+
+    const {
+        data: interviews,
+        error
+    } = await supabase
+
+        .from("interviews")
+
+        .select(`
+            author_id
+        `)
+
+        .eq("published", true)
+
+        .not("author_id", "is", null);
+
+
+    if (error) {
+        throw error;
+    }
+
+
+    if (!interviews || interviews.length === 0) {
+
+        showEmpty();
+
+        return;
+
+    }
+
 
     /*
-     * Public users should only receive published interviews.
-     *
-     * The database RLS policy also enforces this, but keeping
-     * the filter here makes the public-page intent explicit.
+     * Get unique author IDs.
+     */
+
+    const authorIds = [
+        ...new Set(
+            interviews
+                .map(item => item.author_id)
+                .filter(Boolean)
+        )
+    ];
+
+
+    if (!authorIds.length) {
+
+        showEmpty();
+
+        return;
+
+    }
+
+
+    /*
+     * Load the actual authors from
+     * the existing authors table.
+     */
+
+    const {
+        data: authors,
+        error: authorsError
+    } = await supabase
+
+        .from("authors")
+
+        .select(`
+            id,
+            name,
+            photo_url,
+            is_active
+        `)
+
+        .in("id", authorIds)
+
+        .eq("is_active", true)
+
+        .order("name");
+
+
+    if (authorsError) {
+        throw authorsError;
+    }
+
+
+    if (!authors || authors.length === 0) {
+
+        showEmpty();
+
+        return;
+
+    }
+
+
+    /*
+     * Count interviews per author.
+     */
+
+    const interviewCounts = new Map();
+
+
+    interviews.forEach(interview => {
+
+        const id = interview.author_id;
+
+        interviewCounts.set(
+            id,
+            (interviewCounts.get(id) || 0) + 1
+        );
+
+    });
+
+
+    /*
+     * Combine author + interview count.
+     */
+
+    const authorsWithCounts =
+        authors.map(author => ({
+
+            ...author,
+
+            interviewCount:
+                interviewCounts.get(author.id) || 0
+
+        }));
+
+
+    renderAuthors(authorsWithCounts);
+
+}
+
+
+/* ==========================================================
+   RENDER AUTHOR LIST
+========================================================== */
+
+function renderAuthors(authors) {
+
+    authorsGrid.innerHTML =
+        authors
+            .map(createAuthorCard)
+            .join("");
+
+
+    authorsGrid.classList.remove("hidden");
+
+    interviewsGrid.classList.add("hidden");
+
+    authorHeader.classList.add("hidden");
+
+    backToAuthors.classList.add("hidden");
+
+    hideAllStates();
+
+}
+
+
+/* ==========================================================
+   CREATE AUTHOR CARD
+========================================================== */
+
+function createAuthorCard(author) {
+
+    const name =
+        author.name ||
+        "Unknown Author";
+
+
+    const count =
+        author.interviewCount || 0;
+
+
+    const interviewText =
+        count === 1
+            ? "1 Interview"
+            : `${count} Interviews`;
+
+
+    const photo =
+        author.photo_url;
+
+
+    const initials =
+        getInitials(name);
+
+
+    return `
+
+        <a
+            href="interviews.html?author=${encodeURIComponent(author.id)}"
+            class="interview-author-card"
+            aria-label="View interviews with ${escapeAttribute(name)}"
+        >
+
+            ${
+                photo
+                    ? `
+
+                        <img
+                            src="${escapeAttribute(photo)}"
+                            alt="${escapeAttribute(name)}"
+                            class="interview-author-photo"
+                            loading="lazy"
+                            onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
+                        >
+
+                        <span
+                            class="interview-author-placeholder hidden"
+                            aria-hidden="true"
+                        >
+                            ${escapeHtml(initials)}
+                        </span>
+
+                    `
+                    : `
+
+                        <span
+                            class="interview-author-placeholder"
+                            aria-hidden="true"
+                        >
+                            ${escapeHtml(initials)}
+                        </span>
+
+                    `
+            }
+
+
+            <div class="interview-author-info">
+
+                <h3>
+                    ${escapeHtml(name)}
+                </h3>
+
+                <div class="interview-author-count">
+                    ${interviewText}
+                </div>
+
+            </div>
+
+
+            <span
+                class="interview-author-arrow"
+                aria-hidden="true"
+            >
+                →
+            </span>
+
+        </a>
+
+    `;
+
+}
+
+
+/* ==========================================================
+   LOAD ONE AUTHOR + INTERVIEWS
+========================================================== */
+
+async function loadAuthorInterviews(authorId) {
+
+
+    /*
+     * Load author.
+     */
+
+    const {
+        data: author,
+        error: authorError
+    } = await supabase
+
+        .from("authors")
+
+        .select(`
+            id,
+            name,
+            photo_url,
+            is_active
+        `)
+
+        .eq("id", authorId)
+
+        .eq("is_active", true)
+
+        .single();
+
+
+    if (authorError) {
+        throw authorError;
+    }
+
+
+    /*
+     * Load this author's published interviews.
      */
 
     const {
         data: interviews,
         error: interviewsError
     } = await supabase
+
         .from("interviews")
+
         .select(`
             id,
             title,
@@ -72,27 +399,36 @@ async function loadInterviews() {
             interviewee,
             media_id,
             youtube_url,
-            featured,
-            published,
-            created_at
+            created_at,
+            author_id
         `)
+
+        .eq("author_id", authorId)
+
         .eq("published", true)
+
         .order("created_at", {
             ascending: false
         });
+
 
     if (interviewsError) {
         throw interviewsError;
     }
 
+
     if (!interviews || interviews.length === 0) {
-        return [];
+
+        showEmpty();
+
+        return;
+
     }
 
 
-    /* ======================================================
-       LOAD MEDIA
-    ====================================================== */
+    /*
+     * Load media images.
+     */
 
     const mediaIds = [
         ...new Set(
@@ -112,20 +448,18 @@ async function loadInterviews() {
             data: media,
             error: mediaError
         } = await supabase
+
             .from("media")
+
             .select("id, storage_path")
+
             .in("id", mediaIds);
+
 
         if (mediaError) {
             throw mediaError;
         }
 
-
-        /*
-         * Convert media rows into:
-         *
-         * media.id -> public image URL
-         */
 
         if (media) {
 
@@ -135,54 +469,147 @@ async function loadInterviews() {
                     return;
                 }
 
+
                 const {
                     data: publicUrlData
                 } = supabase
+
                     .storage
                     .from("media")
-                    .getPublicUrl(item.storage_path);
+                    .getPublicUrl(
+                        item.storage_path
+                    );
 
-                if (publicUrlData?.publicUrl) {
+
+                if (
+                    publicUrlData?.publicUrl
+                ) {
 
                     mediaMap.set(
                         item.id,
                         publicUrlData.publicUrl
                     );
+
                 }
 
             });
+
         }
+
     }
 
 
-    /* ======================================================
-       COMBINE INTERVIEW + MEDIA DATA
-    ====================================================== */
+    /*
+     * Add image URL.
+     */
 
-    return interviews.map(interview => ({
+    const interviewsWithImages =
+        interviews.map(interview => ({
 
-        ...interview,
+            ...interview,
 
-        imageUrl:
-            mediaMap.get(interview.media_id) ||
-            getYouTubeThumbnail(interview.youtube_url)
+            imageUrl:
+                mediaMap.get(
+                    interview.media_id
+                ) ||
+                getYouTubeThumbnail(
+                    interview.youtube_url
+                )
 
-    }));
+        }));
+
+
+    renderAuthorInterviews(
+        author,
+        interviewsWithImages
+    );
 
 }
 
 
 /* ==========================================================
-   RENDER INTERVIEWS
+   RENDER AUTHOR INTERVIEWS
 ========================================================== */
 
-function renderInterviews(interviews) {
+function renderAuthorInterviews(
+    author,
+    interviews
+) {
 
-    interviewsGrid.innerHTML = interviews
-        .map(createInterviewCard)
-        .join("");
+    const name =
+        author.name ||
+        "Unknown Author";
+
+
+    const initials =
+        getInitials(name);
+
+
+    /*
+     * Author header.
+     */
+
+    authorHeader.innerHTML = `
+
+        ${
+            author.photo_url
+                ? `
+
+                    <img
+                        src="${escapeAttribute(author.photo_url)}"
+                        alt="${escapeAttribute(name)}"
+                    >
+
+                `
+                : `
+
+                    <span class="placeholder">
+                        ${escapeHtml(initials)}
+                    </span>
+
+                `
+        }
+
+
+        <div>
+
+            <h2>
+                ${escapeHtml(name)}
+            </h2>
+
+            <p>
+                ${
+                    interviews.length === 1
+                        ? "1 Interview"
+                        : `${interviews.length} Interviews`
+                }
+            </p>
+
+        </div>
+
+    `;
+
+
+    /*
+     * Interview cards.
+     */
+
+    interviewsGrid.innerHTML =
+        interviews
+            .map(createInterviewCard)
+            .join("");
+
+
+    authorHeader.classList.remove("hidden");
+
+    backToAuthors.classList.remove("hidden");
+
+    interviewsGrid.classList.remove("hidden");
+
+    authorsGrid.classList.add("hidden");
 
     hideAllStates();
+
 }
 
 
@@ -196,21 +623,20 @@ function createInterviewCard(interview) {
         interview.title ||
         "Untitled Interview";
 
+
     const category =
         interview.category ||
         "Interview";
 
-    const interviewee =
-        interview.interviewee ||
-        "";
 
     const description =
         interview.description ||
-        "Watch this interview and discover the story behind Telugu Christian hymn heritage.";
+        "Discover the story behind Telugu Christian hymn heritage.";
+
 
     const youtubeUrl =
-        interview.youtube_url ||
-        "#";
+        interview.youtube_url;
+
 
     const imageUrl =
         interview.imageUrl ||
@@ -218,19 +644,23 @@ function createInterviewCard(interview) {
 
 
     return `
+
         <article class="interview-card">
 
-            <div class="video-embed-container">
+
+            <div class="interview-video">
 
                 ${
-                    youtubeUrl !== "#"
+                    youtubeUrl
                         ? `
+
                             <a
                                 href="${escapeAttribute(youtubeUrl)}"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label="Watch ${escapeAttribute(title)} on YouTube"
                             >
+
                                 <img
                                     src="${escapeAttribute(imageUrl)}"
                                     alt="${escapeAttribute(title)}"
@@ -238,28 +668,25 @@ function createInterviewCard(interview) {
                                     onerror="this.src='https://placehold.co/1280x720?text=Interview';"
                                 >
 
+
                                 <span
-                                    class="interview-play-button"
+                                    class="interview-play"
                                     aria-hidden="true"
                                 >
-                                    <svg
-                                        viewBox="0 0 24 24"
-                                        width="28"
-                                        height="28"
-                                        fill="currentColor"
-                                    >
-                                        <path d="M8 5v14l11-7z"></path>
-                                    </svg>
+                                    ▶
                                 </span>
+
                             </a>
+
                         `
                         : `
+
                             <img
                                 src="${escapeAttribute(imageUrl)}"
                                 alt="${escapeAttribute(title)}"
                                 loading="lazy"
-                                onerror="this.src='https://placehold.co/1280x720?text=Interview';"
                             >
+
                         `
                 }
 
@@ -278,33 +705,24 @@ function createInterviewCard(interview) {
                 </h3>
 
 
-                ${
-                    interviewee
-                        ? `
-                            <p class="interview-interviewee">
-                                ${escapeHtml(interviewee)}
-                            </p>
-                        `
-                        : ""
-                }
-
-
-                <p>
+                <p class="interview-description">
                     ${escapeHtml(description)}
                 </p>
 
 
                 ${
-                    youtubeUrl !== "#"
+                    youtubeUrl
                         ? `
+
                             <a
                                 href="${escapeAttribute(youtubeUrl)}"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                class="author-link"
+                                class="interview-youtube"
                             >
                                 Watch Interview on YouTube →
                             </a>
+
                         `
                         : ""
                 }
@@ -312,7 +730,9 @@ function createInterviewCard(interview) {
             </div>
 
         </article>
+
     `;
+
 }
 
 
@@ -326,18 +746,20 @@ function getYouTubeThumbnail(url) {
         return null;
     }
 
+
     try {
 
-        const parsedUrl = new URL(url);
+        const parsedUrl =
+            new URL(url);
+
 
         let videoId = null;
 
 
-        /* ----------------------------------------------
-           youtu.be/VIDEO_ID
-        ---------------------------------------------- */
-
-        if (parsedUrl.hostname === "youtu.be") {
+        if (
+            parsedUrl.hostname ===
+            "youtu.be"
+        ) {
 
             videoId =
                 parsedUrl.pathname
@@ -347,21 +769,15 @@ function getYouTubeThumbnail(url) {
         }
 
 
-        /* ----------------------------------------------
-           youtube.com/watch?v=VIDEO_ID
-        ---------------------------------------------- */
-
         else if (
-            parsedUrl.hostname.includes("youtube.com")
+            parsedUrl.hostname.includes(
+                "youtube.com"
+            )
         ) {
 
             videoId =
                 parsedUrl.searchParams.get("v");
 
-
-            /* ------------------------------------------
-               /embed/VIDEO_ID
-            ------------------------------------------ */
 
             if (!videoId) {
 
@@ -370,15 +786,14 @@ function getYouTubeThumbnail(url) {
                         /\/embed\/([^/?]+)/
                     );
 
+
                 if (embedMatch) {
-                    videoId = embedMatch[1];
+                    videoId =
+                        embedMatch[1];
                 }
+
             }
 
-
-            /* ------------------------------------------
-               /shorts/VIDEO_ID
-            ------------------------------------------ */
 
             if (!videoId) {
 
@@ -387,9 +802,12 @@ function getYouTubeThumbnail(url) {
                         /\/shorts\/([^/?]+)/
                     );
 
+
                 if (shortsMatch) {
-                    videoId = shortsMatch[1];
+                    videoId =
+                        shortsMatch[1];
                 }
+
             }
 
         }
@@ -400,12 +818,8 @@ function getYouTubeThumbnail(url) {
         }
 
 
-        /*
-         * maxresdefault provides the highest-quality
-         * standard YouTube thumbnail when available.
-         */
-
         return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+
 
     } catch (error) {
 
@@ -414,8 +828,11 @@ function getYouTubeThumbnail(url) {
             error
         );
 
+
         return null;
+
     }
+
 }
 
 
@@ -425,63 +842,102 @@ function getYouTubeThumbnail(url) {
 
 function showLoading() {
 
-    interviewsGrid.innerHTML = "";
+    authorsGrid?.classList.add("hidden");
+
+    interviewsGrid?.classList.add("hidden");
+
+    authorHeader?.classList.add("hidden");
+
+    backToAuthors?.classList.add("hidden");
 
     loadingState?.classList.remove("hidden");
+
     errorState?.classList.add("hidden");
+
     emptyState?.classList.add("hidden");
+
 }
 
 
 function showError() {
 
-    interviewsGrid.innerHTML = "";
+    authorsGrid?.classList.add("hidden");
+
+    interviewsGrid?.classList.add("hidden");
+
+    authorHeader?.classList.add("hidden");
+
+    backToAuthors?.classList.add("hidden");
 
     loadingState?.classList.add("hidden");
+
     errorState?.classList.remove("hidden");
+
     emptyState?.classList.add("hidden");
+
 }
 
 
 function showEmpty() {
 
-    interviewsGrid.innerHTML = "";
+    authorsGrid?.classList.add("hidden");
+
+    interviewsGrid?.classList.add("hidden");
+
+    authorHeader?.classList.add("hidden");
 
     loadingState?.classList.add("hidden");
+
     errorState?.classList.add("hidden");
+
     emptyState?.classList.remove("hidden");
+
 }
 
 
 function hideAllStates() {
 
     loadingState?.classList.add("hidden");
+
     errorState?.classList.add("hidden");
+
     emptyState?.classList.add("hidden");
+
 }
 
 
 /* ==========================================================
-   SECURITY / HTML HELPERS
+   HELPERS
 ========================================================== */
 
-/*
- * Interview data comes from Supabase and may contain user-
- * entered text. Escape HTML before injecting it into the DOM.
- */
+function getInitials(name) {
+
+    return String(name || "A")
+        .trim()
+        .split(/\s+/)
+        .slice(0, 2)
+        .map(word => word.charAt(0))
+        .join("")
+        .toUpperCase();
+
+}
+
 
 function escapeHtml(value) {
 
     return String(value ?? "")
+
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+
 }
 
 
 function escapeAttribute(value) {
 
     return escapeHtml(value);
+
 }
