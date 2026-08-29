@@ -1,4 +1,4 @@
-import{s as p}from"./supabase-C4TjTvDq.js";import"./main-4yU1RJkU.js";import{s as f}from"./page-header-Bl-XMcri.js";let s=[];async function L(){console.log("loadSongs started");try{const{data:e,error:n}=await p.from("hymns").select(`
+import{s as v}from"./supabase-C4TjTvDq.js";import"./main-Dtr4gIiF.js";import{s as f}from"./page-header-Bl-XMcri.js";let s=[];async function L(){console.log("loadSongs started");try{const{data:e,error:n}=await v.from("hymns").select(`
                 *,
                 authors(name),
                 books(name),
@@ -71,7 +71,7 @@ import{s as p}from"./supabase-C4TjTvDq.js";import"./main-4yU1RJkU.js";import{s a
 
         </div>
 
-    `,h.querySelectorAll(".filter-btn").forEach(n=>{n.addEventListener("click",()=>{a.letter=n.dataset.letter,g(),o()})})}c.addEventListener("input",e=>{a.search=e.target.value.trim().toLowerCase(),o()});function S(){return s.filter(e=>{const n=a.language==="all"||e.language===a.language,t=l(e),r=e.titleEnglish||"",y=a.search===""||String(e.number).includes(a.search)||t.toLowerCase().includes(a.search)||r.toLowerCase().includes(a.search)||(e.author||"").toLowerCase().includes(a.search),v=a.letter==="All"||t.trim().startsWith(a.letter);return n&&y&&v})}function w(e){const n=l(e),t=e.youtubeLinks?.length?e.youtubeLinks.slice(0,5).map(r=>`
+    `,h.querySelectorAll(".filter-btn").forEach(n=>{n.addEventListener("click",()=>{a.letter=n.dataset.letter,g(),o()})})}c.addEventListener("input",e=>{a.search=e.target.value.trim().toLowerCase(),o()});function S(){return s.filter(e=>{const n=a.language==="all"||e.language===a.language,t=l(e),r=e.titleEnglish||"",y=a.search===""||String(e.number).includes(a.search)||t.toLowerCase().includes(a.search)||r.toLowerCase().includes(a.search)||(e.author||"").toLowerCase().includes(a.search),p=a.letter==="All"||t.trim().startsWith(a.letter);return n&&y&&p})}function w(e){const n=l(e),t=e.youtubeLinks?.length?e.youtubeLinks.slice(0,5).map(r=>`
                 <a
                     href="${r}"
                     class="youtube-link"
@@ -111,7 +111,7 @@ import{s as p}from"./supabase-C4TjTvDq.js";import"./main-4yU1RJkU.js";import{s a
             </a>
 
             <div class="hymn-author">
-                ${e.author||"Unknown Author"}
+                ${e.author||"Unknown Writer"}
             </div>
 
             <div class="hymn-youtube">
@@ -124,7 +124,7 @@ import{s as p}from"./supabase-C4TjTvDq.js";import"./main-4yU1RJkU.js";import{s a
 
             <div class="empty-state">
 
-                <h2>No Hymns Found</h2>
+                <h2>Hymn Not Yet Uploaded</h2>
 
                 <p>Try changing the search or filters.</p>
 
@@ -132,7 +132,7 @@ import{s as p}from"./supabase-C4TjTvDq.js";import"./main-4yU1RJkU.js";import{s a
 
         `;return}u.innerHTML=e.map(w).join("")}function A(e){const n=[...e];switch(i.value){case"number-asc":n.sort((t,r)=>Number(t.number)-Number(r.number));break;case"number-desc":n.sort((t,r)=>Number(r.number)-Number(t.number));break;case"telugu-asc":n.sort((t,r)=>l(t).localeCompare(l(r),"te"));break;case"telugu-desc":n.sort((t,r)=>l(r).localeCompare(l(t),"te"));break;case"author-asc":n.sort((t,r)=>(t.author||"").localeCompare(r.author||"","en",{sensitivity:"base"}));break;case"author-desc":n.sort((t,r)=>(r.author||"").localeCompare(t.author||"","en",{sensitivity:"base"}));break;default:n.sort((t,r)=>Number(t.number)-Number(r.number))}return n}function o(){let e=S();e=A(e),H(e)}function $(){c&&c.addEventListener("input",e=>{a.search=e.target.value.trim().toLowerCase(),o()}),i&&i.addEventListener("change",()=>{o()})}function B(){if(console.log("Songs Loaded:",s.length),!Array.isArray(s)||s.length===0){console.error("songsList is empty."),m.textContent="Showing 0 Hymns",u.innerHTML=`
             <div class="empty-state">
-                <h2>No Hymns Found</h2>
+                <h2>Hymn Not Yet Uploaded </h2>
                 <p>songsList is empty.</p>
             </div>
         `;return}b(),g(),$(),i&&(i.value="number-asc"),o()}

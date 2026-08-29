@@ -1,4 +1,4 @@
-import{s as m}from"./supabase-C4TjTvDq.js";import"./main-4yU1RJkU.js";const l=document.getElementById("interviewsGrid"),c=document.getElementById("interviewsLoading"),u=document.getElementById("interviewsError"),h=document.getElementById("interviewsEmpty");g();async function g(){if(!l){console.error("Interviews grid element not found.");return}y();try{const e=await f();if(!e.length){I();return}v(e)}catch(e){console.error("Failed to load interviews:",e),L()}}async function f(){const{data:e,error:t}=await m.from("interviews").select(`
+import{s as m}from"./supabase-C4TjTvDq.js";import"./main-Dtr4gIiF.js";const l=document.getElementById("interviewsGrid"),c=document.getElementById("interviewsLoading"),u=document.getElementById("interviewsError"),h=document.getElementById("interviewsEmpty");g();async function g(){if(!l){console.error("Interviews grid element not found.");return}y();try{const e=await f();if(!e.length){I();return}v(e)}catch(e){console.error("Failed to load interviews:",e),L()}}async function f(){const{data:e,error:t}=await m.from("interviews").select(`
             id,
             title,
             description,
