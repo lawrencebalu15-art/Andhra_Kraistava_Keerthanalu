@@ -11,7 +11,7 @@ let filteredAuthors = [];
 let authorMediaList = [];
 
 let editingAuthor = null;
-let authorToDelete = null;
+let authorToArchive = null;
 
 const PAGE_SIZE = 50;
 let currentPage = 1;
@@ -85,6 +85,150 @@ const pageInfo =
 
 const searchInput =
     document.getElementById("searchInput");
+
+let authorStatusFilter = "active";
+
+function createAuthorStatusFilter() {
+
+    const toolbar =
+        document.querySelector(".toolbar");
+
+    if (!toolbar) {
+        return;
+    }
+
+    const existing =
+        document.getElementById("authorStatusFilter");
+
+    if (existing) {
+        return;
+    }
+
+    const select =
+        document.createElement("select");
+
+    select.id =
+        "authorStatusFilter";
+
+    select.className =
+        "search-input";
+
+    select.style.maxWidth =
+        "220px";
+
+    select.innerHTML = `
+        <option value="active">
+            Active Writers
+        </option>
+
+        <option value="archived">
+            Archived Writers
+        </option>
+
+        <option value="all">
+            All Writers
+        </option>
+    `;
+
+    toolbar.appendChild(select);
+
+    select.addEventListener(
+        "change",
+        () => {
+
+            authorStatusFilter =
+                select.value;
+
+            applyAuthorFilters();
+
+        }
+    );
+}
+
+
+
+function applyAuthorFilters() {
+
+    const query =
+        searchInput.value
+            .trim()
+            .toLowerCase();
+
+    let result =
+        [...authors];
+
+
+    /*
+     * STATUS FILTER
+     */
+    if (authorStatusFilter === "active") {
+
+        result =
+            result.filter(
+                author =>
+                    author.is_active !== false
+            );
+
+    } else if (
+        authorStatusFilter === "archived"
+    ) {
+
+        result =
+            result.filter(
+                author =>
+                    author.is_active === false
+            );
+    }
+
+
+    /*
+     * SEARCH FILTER
+     */
+    if (query) {
+
+        result =
+            result.filter(
+                author => {
+
+                    const name =
+                        (
+                            author.name ||
+                            ""
+                        ).toLowerCase();
+
+                    return name.includes(
+                        query
+                    );
+                }
+            );
+    }
+
+
+    filteredAuthors =
+        result;
+
+    currentPage = 1;
+
+
+    if (
+        filteredAuthors.length === 0
+    ) {
+
+        const message =
+            authorStatusFilter === "archived"
+                ? "No archived Writers found."
+                : authorStatusFilter === "active"
+                    ? "No active Writers found."
+                    : "No Writers found.";
+
+        showEmpty(message);
+
+        return;
+    }
+
+
+    renderCurrentPage();
+}
 
 
 /* =========================================================
@@ -438,17 +582,14 @@ async function loadAuthors() {
          */
 
         const {
-            data: authorData,
-            error: authorError
-        } = await supabase
-            .from("authors")
-            .select("*")
-            .order(
-                "id",
-                {
-                    ascending: true
-                }
-            );
+    data: authorData,
+    error: authorError
+} = await supabase
+    .from("authors")
+    .select("*")
+    .order("id", {
+        ascending: true
+    });
 
         if (authorError) {
             throw authorError;
@@ -657,6 +798,21 @@ function renderTable(authorList) {
                                     "-"
                                 )}
                             </td>
+                            <td>
+    ${
+        author.is_active === false
+            ? `
+                <span class="status-badge archived">
+                    Archived
+                </span>
+            `
+            : `
+                <span class="status-badge active">
+                    Active
+                </span>
+            `
+    }
+</td>
 
                             <td>
                                 ${
@@ -674,13 +830,27 @@ function renderTable(authorList) {
                                     Edit
                                 </button>
 
-                                <button
-                                    type="button"
-                                    class="table-btn delete-btn"
-                                    data-id="${author.id}"
-                                >
-                                    Delete
-                                </button>
+                                ${
+    author.is_active === false
+        ? `
+            <button
+                type="button"
+                class="table-btn restore-btn"
+                data-id="${author.id}"
+            >
+                Restore
+            </button>
+        `
+        : `
+            <button
+                type="button"
+                class="table-btn delete-btn"
+                data-id="${author.id}"
+            >
+                Archive
+            </button>
+        `
+}
 
                             </td>
 
@@ -695,6 +865,7 @@ function renderTable(authorList) {
     attachEditEvents();
     attachDeleteEvents();
 
+    attachRestoreEvents();
 
     loadingState.classList.add(
         "hidden"
@@ -1037,41 +1208,35 @@ authorForm.addEventListener(
 
 
 /* =========================================================
-   DELETE EVENTS
+   ARCHIVE EVENTS
 ========================================================= */
 
 function attachDeleteEvents() {
 
     document
-        .querySelectorAll(
-            ".delete-btn"
-        )
-        .forEach(
-            button => {
+        .querySelectorAll(".delete-btn")
+        .forEach(button => {
 
-                button.addEventListener(
-                    "click",
-                    () => {
+            button.addEventListener(
+                "click",
+                () => {
 
-                        openDeleteModal(
-                            button.dataset.id
-                        );
+                    openArchiveModal(
+                        button.dataset.id
+                    );
 
-                    }
-                );
+                }
+            );
 
-            }
-        );
+        });
 }
 
 
 /* =========================================================
-   OPEN DELETE MODAL
+   OPEN ARCHIVE MODAL
 ========================================================= */
 
-function openDeleteModal(
-    authorId
-) {
+function openArchiveModal(authorId) {
 
     const author =
         authors.find(
@@ -1084,14 +1249,13 @@ function openDeleteModal(
         return;
     }
 
-
-    authorToDelete =
-        author;
-
+    authorToArchive = author;
 
     confirmMessage.textContent =
-        `Are you sure you want to delete "${author.name}"? This action cannot be undone.`;
+        `Are you sure you want to archive "${author.name}"? You can restore this writer later from Archived Writers.`;
 
+    confirmDelete.textContent =
+        "Archive";
 
     confirmModal.classList.add(
         "active"
@@ -1100,21 +1264,22 @@ function openDeleteModal(
 
 
 /* =========================================================
-   CLOSE DELETE MODAL
+   CLOSE ARCHIVE MODAL
 ========================================================= */
 
 function closeDeleteModal() {
 
-    authorToDelete = null;
+    authorToArchive = null;
 
     confirmModal.classList.remove(
         "active"
     );
+
 }
 
 
 /* =========================================================
-   CANCEL DELETE
+   CANCEL ARCHIVE
 ========================================================= */
 
 cancelDelete.addEventListener(
@@ -1124,80 +1289,66 @@ cancelDelete.addEventListener(
 
 
 /* =========================================================
-   CONFIRM DELETE
+   CONFIRM ARCHIVE
 ========================================================= */
 
 confirmDelete.addEventListener(
     "click",
     async () => {
 
-        if (!authorToDelete) {
+        if (!authorToArchive) {
             return;
         }
-
 
         if (confirmDelete.disabled) {
             return;
         }
 
-
         confirmDelete.disabled = true;
 
         confirmDelete.textContent =
-            "Deleting...";
-
+            "Archiving...";
 
         try {
 
             const authorId =
-                authorToDelete.id;
-
+                authorToArchive.id;
 
             const {
                 error
             } = await supabase
                 .from("authors")
-                .delete()
+                .update({
+                    is_active: false
+                })
                 .eq(
                     "id",
                     authorId
                 );
 
-
             if (error) {
                 throw error;
             }
 
-
             closeDeleteModal();
 
-
             notify(
-                "Writer deleted successfully.",
+                "Writer archived successfully.",
                 "success"
             );
 
-
-            /*
-             * Reload everything so:
-             *
-             * - author list updates
-             * - hymn counts update
-             * - pagination updates
-             */
             await loadAuthors();
 
         } catch (error) {
 
             console.error(
-                "Writer delete error:",
+                "Writer archive error:",
                 error
             );
 
-
             notify(
                 error?.message ||
-                "Unable to delete writer. Make sure the writer is not being used by any hymns.",
+                "Unable to archive Writer.",
                 "error"
             );
 
@@ -1207,13 +1358,11 @@ confirmDelete.addEventListener(
                 false;
 
             confirmDelete.textContent =
-                "Delete";
-
+                "Archive";
         }
 
     }
 );
-
 
 /* =========================================================
    SEARCH
@@ -1227,69 +1376,9 @@ searchInput.addEventListener(
 
 function searchAuthors() {
 
-    const query =
-        searchInput.value
-            .trim()
-            .toLowerCase();
+    applyAuthorFilters();
 
-
-    /*
-     * Empty search
-     */
-    if (!query) {
-
-        filteredAuthors =
-            [...authors];
-
-        currentPage = 1;
-
-        renderCurrentPage();
-
-        return;
-    }
-
-
-    /*
-     * Filter authors.
-     */
-    filteredAuthors =
-        authors.filter(
-            author => {
-
-                const name =
-                    (
-                        author.name ||
-                        ""
-                    ).toLowerCase();
-
-
-                return name.includes(
-                    query
-                );
-
-            }
-        );
-
-
-    currentPage = 1;
-
-
-    if (
-        filteredAuthors.length ===
-        0
-    ) {
-
-        showEmpty(
-            "No Writers match your search."
-        );
-
-        return;
-    }
-
-
-    renderCurrentPage();
 }
-
 
 /* =========================================================
    PAGINATION
@@ -1596,7 +1685,9 @@ document.addEventListener(
              */
             await requireAuth();
 
-            await loadAuthors();
+createAuthorStatusFilter();
+
+await loadAuthors();
 
         } catch (error) {
 
@@ -1614,3 +1705,71 @@ document.addEventListener(
 
     }
 );
+
+
+
+async function restoreAuthor(authorId) {
+
+    try {
+
+        const {
+            error
+        } = await supabase
+            .from("authors")
+            .update({
+                is_active: true
+            })
+            .eq(
+                "id",
+                authorId
+            );
+
+        if (error) {
+            throw error;
+        }
+
+        notify(
+            "Writer restored successfully.",
+            "success"
+        );
+
+        await loadAuthors();
+
+    } catch (error) {
+
+        console.error(
+            "Writer restore error:",
+            error
+        );
+
+        notify(
+            error?.message ||
+            "Unable to restore Writer.",
+            "error"
+        );
+    }
+}
+
+
+function attachRestoreEvents() {
+
+    document
+        .querySelectorAll(".restore-btn")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                async () => {
+
+                    const authorId =
+                        button.dataset.id;
+
+                    await restoreAuthor(
+                        authorId
+                    );
+
+                }
+            );
+
+        });
+}

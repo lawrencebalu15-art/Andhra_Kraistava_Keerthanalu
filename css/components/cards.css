@@ -139,10 +139,187 @@ background:rgba(250, 235, 215, 0.44);
    AUTHORS
 =================================== */
 
-.authors-grid {
+/* ===================================
+   AUTHORS LIST
+=================================== */
+
+.authors-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e4ddd2;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+
+/* ===================================
+   AUTHOR ROW
+=================================== */
+
+.author-list-row {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
+    grid-template-columns: 70px minmax(0, 1fr) 180px 50px;
+
+    align-items: center;
+
+    min-height: 82px;
+
+    padding: 0 24px;
+
+    text-decoration: none;
+
+    color: inherit;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #e4ddd2;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* Remove border from final row */
+
+.author-list-row:last-child {
+    border-bottom: none;
+}
+
+
+/* ===================================
+   NUMBER
+=================================== */
+
+.author-list-number {
+    font-size: 1rem;
+
+    font-weight: 700;
+
+    color: #d4af37;
+
+    text-align: left;
+}
+
+
+/* ===================================
+   AUTHOR NAME
+=================================== */
+
+.author-list-name {
+    font-family: var(--font-heading);
+
+    font-size: 1.35rem;
+
+    font-weight: 500;
+
+    color: #34445b;
+
+    line-height: 1.4;
+}
+
+
+/* ===================================
+   HYMN COUNT
+=================================== */
+
+.author-list-count {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    gap: 8px;
+
+    font-size: 0.95rem;
+
+    color: #555;
+}
+
+
+.author-list-count i {
+
+    color: #d4af37;
+
+}
+
+
+/* ===================================
+   ARROW
+=================================== */
+
+.author-list-arrow {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #7b0000;
+
+    font-size: 1rem;
+
+    transition:
+        transform 0.2s ease;
+
+}
+
+
+/* ===================================
+   HOVER
+=================================== */
+
+.author-list-row:hover {
+
+    background: #fdfaf2;
+
+}
+
+
+.author-list-row:hover
+.author-list-arrow {
+
+    transform: translateX(5px);
+
+}
+
+
+/* ===================================
+   MOBILE
+=================================== */
+
+@media (max-width: 768px) {
+
+    .author-list-row {
+
+        grid-template-columns:
+            45px
+            minmax(0, 1fr)
+            40px;
+
+        padding: 16px;
+
+        min-height: 70px;
+
+    }
+
+    .author-list-name {
+
+        font-size: 1.1rem;
+
+    }
+
+    .author-list-count {
+
+        display: none;
+
+    }
+
 }
 
 .author-card {
@@ -199,25 +376,42 @@ background:rgba(250, 235, 215, 0.44);
 
 
 .author-avatar {
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
-    background: #3b0202; /* Theme Burgundy */
-    color: #f5f5dc;      /* Theme Cream text */
+    overflow: hidden;
+
+    background: var(--primary-50);
+
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin-bottom: 24px;
-    border: 2px solid rgba(212, 175, 55, 0.2); /* Soft gold ring */
+
+    flex-shrink: 0;
+
+    border: 2px solid rgba(212, 175, 55, 0.35);
+}
+
+.author-avatar img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    display: block;
+
+    border-radius: 50%;
 }
 
 .author-card h3 {
     font-family: var(--font-heading);
     font-size: 1.5rem;
+    margin-top: 20px;
     margin-bottom: 10px;
     color: #1a1a1a;
+}
+.author-avatar-empty {
+    background:#e1dede;
+
 }
 
 .author-role {
@@ -240,6 +434,7 @@ background:rgba(250, 235, 215, 0.44);
     font-weight: 600;
     text-decoration: none;
     display: inline-flex;
+    position:static;
     align-items: center;
     transition: color .25s ease;
 }

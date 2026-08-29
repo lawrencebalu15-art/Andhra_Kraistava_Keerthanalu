@@ -148,7 +148,7 @@ async function loadFeaturedAuthors() {
                 bio
             `)
             .order("id", { ascending: true })
-            .limit(3);
+            .limit(4);
 
         if (error) throw error;
 
@@ -156,7 +156,7 @@ async function loadFeaturedAuthors() {
 
             container.innerHTML = `
                 <p class="empty-state">
-                    No authors available yet.
+                    No writers available yet.
                 </p>
             `;
 
@@ -166,7 +166,7 @@ async function loadFeaturedAuthors() {
         container.innerHTML = data.map(author => {
 
             const name =
-                author.name || "Unknown Author";
+                author.name || "Unknown Hymn Writer";
 
             const initials =
                 getInitials(name);
@@ -186,7 +186,7 @@ async function loadFeaturedAuthors() {
                     </div>
                   `
                 : `
-                    <div class="author-avatar">
+                    <div class="author-avatar author-avatar-empty">
                         ${escapeHTML(initials)}
                     </div>
                   `;
@@ -229,7 +229,7 @@ async function loadFeaturedAuthors() {
 
         container.innerHTML = `
             <p class="empty-state">
-                Unable to load authors right now.
+                Unable to load writers right now.
             </p>
         `;
     }
@@ -249,15 +249,14 @@ function getInitials(name) {
 
     if (!words.length) return "?";
 
-    if (words.length === 1) {
+    if (words.length === 3) {
         return words[0]
-            .substring(0, 2)
+            .substring(0, 3)
             .toUpperCase();
     }
 
     return (
-        words[0].charAt(0) +
-        words[words.length - 1].charAt(0)
+        words[0].charAt(0)
     ).toUpperCase();
 }
 

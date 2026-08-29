@@ -277,8 +277,10 @@
     <th>No.</th>
     <th>Photo</th>
     <th>Hymn Writer Name</th>
+    <th>Status</th>
     <th>Hymns</th>
     <th>Actions</th>
+    
 </tr>
 
                         </thead>
@@ -326,9 +328,9 @@
     </div>
 
 
-    <!-- ==========================
-         DELETE CONFIRMATION MODAL
-    =========================== -->
+<!-- ==========================
+     ARCHIVE CONFIRMATION MODAL
+=========================== -->
 
     <div id="confirmModal" class="modal">
 
@@ -338,13 +340,11 @@
                 🗑️
             </div>
 
-            <h2>
-                Delete Writer
-            </h2>
+           <h2 id="confirmTitle">Archive Writer</h2>
 
             <p id="confirmMessage">
-                Are you sure you want to delete this Writer?
-            </p>
+    Are you sure you want to archive this Writer?
+</p>
 
             <div class="confirm-actions">
 
@@ -354,11 +354,7 @@
                     Cancel
                 </button>
 
-                <button
-                    id="confirmDelete"
-                    class="btn-danger">
-                    Delete
-                </button>
+                <button id="confirmDelete">Archive</button>
 
             </div>
 

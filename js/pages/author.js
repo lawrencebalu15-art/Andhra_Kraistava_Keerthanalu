@@ -85,7 +85,7 @@ async function loadAuthor() {
     if (!authorId) {
 
         showError(
-            "No author was specified."
+            "No Writer was specified."
         );
 
         return;
@@ -200,7 +200,7 @@ async function renderAuthor(author) {
 
     const name =
         author.name ||
-        "Unknown Author";
+        "Unknown Writer";
 
 
     /* =====================================================
@@ -816,8 +816,7 @@ function getInitials(
 
 
     return (
-        words[0][0] +
-        words[words.length - 1][0]
+        words[0]
     ).toUpperCase();
 
 }

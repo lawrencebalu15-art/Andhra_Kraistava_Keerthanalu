@@ -1,21 +1,26 @@
 import { supabase } from "../supabase.js";
 
-
-/* ==========================================================
-   STATE
-========================================================== */
-
-let authors = [];
-let filteredAuthors = [];
-let hymns = [];
-
-
-/* ==========================================================
+/* ==========================================
    DOM ELEMENTS
-========================================================== */
+========================================== */
 
-const authorsGrid =
-    document.getElementById("authorsGrid");
+const totalHymnsEl =
+    document.getElementById("totalHymns");
+
+const totalAuthorsEl =
+    document.getElementById("totalAuthors");
+
+const totalBooksEl =
+    document.getElementById("totalBooks");
+
+const authorSearch =
+    document.getElementById("authorSearch");
+
+const authorSort =
+    document.getElementById("authorSort");
+
+const authorsList =
+    document.getElementById("authorsList");
 
 const loading =
     document.getElementById("authorsLoading");
@@ -23,472 +28,200 @@ const loading =
 const empty =
     document.getElementById("authorsEmpty");
 
-const searchInput =
-    document.getElementById("authorSearch");
 
-const sortSelect =
-    document.getElementById("authorSort");
+/* ==========================================
+   DATA
+========================================== */
 
+let authors = [];
+let hymns = [];
+let books = [];
 
-/* ==========================================================
-   INITIALIZE
-========================================================== */
+let filteredAuthors = [];
 
-init();
-
-
-async function init() {
-
-    await loadData();
-
-    updateStatistics();
-
-    renderAuthors();
-
-    setupEvents();
-
-}
+let selectedSort = "az";
 
 
-/* ==========================================================
+/* ==========================================
+   INITIAL LOAD
+========================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async () => {
+
+        await loadPageData();
+
+        setupEvents();
+
+    }
+);
+
+
+/* ==========================================
    LOAD DATA
-========================================================== */
+========================================== */
 
-async function loadData() {
-
-    if (loading) {
-        loading.style.display = "block";
-    }
-
-    if (authorsGrid) {
-        authorsGrid.innerHTML = "";
-    }
-
-    if (empty) {
-        empty.style.display = "none";
-    }
-
+async function loadPageData() {
 
     try {
 
-        /* ======================================================
-           LOAD AUTHORS
-        ====================================================== */
+        showLoading(true);
 
-        const {
-    data: authorsData,
-    error: authorError
-} = await supabase
+        const [
+            authorsRes,
+            hymnsRes,
+            booksRes
+        ] = await Promise.all([
+
+            supabase
     .from("authors")
-    .select(`
-        id,
-        name,
-        photo_url,
-        bio,
-        birth_year,
-        death_year,
-        country,
-        media_id
-    `)
+    .select("*")
+    .eq("is_active", true)
     .order("name", {
         ascending: true
-    });
+    }),
+            supabase
+                .from("hymns")
+                .select("id, author_id"),
+
+            supabase
+                .from("books")
+                .select("id")
+
+        ]);
 
 
-        if (authorError) {
-            throw authorError;
+        /* ----------------------------------
+           ERROR HANDLING
+        ---------------------------------- */
+
+        if (authorsRes.error) {
+            throw authorsRes.error;
+        }
+
+        if (hymnsRes.error) {
+            throw hymnsRes.error;
+        }
+
+        if (booksRes.error) {
+            throw booksRes.error;
         }
 
 
-        /* ======================================================
-           LOAD HYMNS
-        ====================================================== */
-
-        const {
-            data: hymnsData,
-            error: hymnError
-        } = await supabase
-            .from("hymns")
-            .select("id, author_id");
-
-
-        if (hymnError) {
-            throw hymnError;
-        }
-
+        /* ----------------------------------
+           STORE DATA
+        ---------------------------------- */
 
         authors =
-            authorsData || [];
+            authorsRes.data || [];
 
         hymns =
-            hymnsData || [];
+            hymnsRes.data || [];
+
+        books =
+            booksRes.data || [];
+
 
         filteredAuthors =
             [...authors];
 
 
-        console.log(
-            "Loaded authors:",
-            authors
-        );
+        /* ----------------------------------
+           STATISTICS
+        ---------------------------------- */
 
-        console.log(
-            "Loaded hymns:",
-            hymns
-        );
+        if (totalHymnsEl) {
+
+            totalHymnsEl.textContent =
+                hymns.length;
+
+        }
 
 
-    } catch (error) {
+        if (totalAuthorsEl) {
+
+            totalAuthorsEl.textContent =
+                authors.length;
+
+        }
+
+
+        if (totalBooksEl) {
+
+            totalBooksEl.textContent =
+                books.length;
+
+        }
+
+
+        /* ----------------------------------
+           RENDER
+        ---------------------------------- */
+
+        renderAuthors();
+
+    }
+
+    catch (error) {
 
         console.error(
             "Failed to load authors:",
             error
         );
 
+        showError();
 
-        if (authorsGrid) {
+    }
 
-            authorsGrid.innerHTML = `
-                <div class="author-load-error">
+    finally {
 
-                    <i class="fas fa-circle-exclamation"></i>
-
-                    <h3>
-                        Unable to Load Hymn Writers
-                    </h3>
-
-                    <p>
-                        Please refresh the page and try again.
-                    </p>
-
-                </div>
-            `;
-
-        }
-
-        authors = [];
-        hymns = [];
-        filteredAuthors = [];
-
-
-    } finally {
-
-        if (loading) {
-            loading.style.display = "none";
-        }
+        showLoading(false);
 
     }
 
 }
 
 
-/* ==========================================================
-   STATISTICS
-========================================================== */
-
-function updateStatistics() {
-
-    const totalAuthors =
-        document.getElementById("totalAuthors");
-
-    const totalHymns =
-        document.getElementById("totalHymns");
-
-    const totalBooks =
-        document.getElementById("totalBooks");
-
-
-    if (totalAuthors) {
-        totalAuthors.textContent =
-            authors.length;
-    }
-
-
-    if (totalHymns) {
-        totalHymns.textContent =
-            hymns.length;
-    }
-
-
-    /*
-     * Books are not currently loaded
-     * on this page.
-     *
-     * Keep existing behaviour until
-     * the Books integration is implemented.
-     */
-
-    if (totalBooks) {
-        totalBooks.textContent = "0";
-    }
-
-}
-
-
-/* ==========================================================
-   RENDER AUTHORS
-========================================================== */
-
-function renderAuthors() {
-
-    if (!authorsGrid) {
-        return;
-    }
-
-
-    if (filteredAuthors.length === 0) {
-
-        authorsGrid.innerHTML = "";
-
-        if (empty) {
-            empty.style.display = "block";
-        }
-
-        return;
-    }
-
-
-    if (empty) {
-        empty.style.display = "none";
-    }
-
-
-    authorsGrid.innerHTML =
-        filteredAuthors
-            .map(createAuthorCard)
-            .join("");
-
-}
-
-
-/* ==========================================================
-   CREATE AUTHOR CARD
-========================================================== */
-
-function createAuthorCard(author) {
-
-    const hymnCount =
-        hymns.filter(
-            hymn =>
-                String(hymn.author_id) ===
-                String(author.id)
-        ).length;
-
-
-    /*
-     * Use the database photo when available.
-     * Otherwise show a simple local fallback.
-     */
-
-    const image =
-        author.photo_url ||
-        "https://placehold.co/400x400?text=Hymn Writer";
-
-
-    const name =
-        escapeHtml(
-            author.name ||
-            "Unknown Hymn Writer"
-        );
-
-
-    const bio =
-        escapeHtml(
-            author.bio ||
-            "Biography coming soon..."
-        );
-
-
-    const country =
-        author.country
-            ? escapeHtml(author.country)
-            : "";
-
-
-    const birthYear =
-        author.birth_year || "";
-
-
-    const deathYear =
-        author.death_year || "";
-
-
-    let dates = "";
-
-
-    if (birthYear && deathYear) {
-
-        dates =
-            `${birthYear} — ${deathYear}`;
-
-    } else if (birthYear) {
-
-        dates =
-            `Born ${birthYear}`;
-
-    } else if (deathYear) {
-
-        dates =
-            `Died ${deathYear}`;
-
-    }
-
-
-    /*
-     * IMPORTANT:
-     *
-     * The author's database ID is passed
-     * to author.html.
-     *
-     * Example:
-     *
-     * author.html?id=12
-     */
-
-    const authorUrl =
-        `author.html?id=${encodeURIComponent(author.id)}`;
-
-
-    return `
-        <article
-            class="author-card"
-            onclick="window.location.href='${authorUrl}'"
-            role="link"
-            tabindex="0"
-            aria-label="View ${name}"
-        >
-
-            <div class="author-image-wrapper">
-
-                <img
-                    src="${escapeHtml(image)}"
-                    alt="${name}"
-                    loading="lazy"
-                    onerror="this.src='https://placehold.co/400x400?text=Hymn Writer';"
-                >
-
-            </div>
-
-
-            <div class="author-content">
-
-                <h3>
-                    ${name}
-                </h3>
-
-
-                ${
-                    dates
-                        ? `
-                            <p class="author-dates">
-                                ${escapeHtml(dates)}
-                            </p>
-                        `
-                        : ""
-                }
-
-
-                ${
-                    country
-                        ? `
-                            <p class="author-country">
-                                <i class="fas fa-location-dot"></i>
-                                ${country}
-                            </p>
-                        `
-                        : ""
-                }
-
-
-                <p class="bio-coming">
-                    ${bio}
-                </p>
-
-
-                <div class="author-hymn-count">
-
-                    <i class="fas fa-music"></i>
-
-                    ${hymnCount}
-
-                    ${hymnCount === 1 ? "Hymn" : "Hymns"}
-
-                </div>
-
-
-                <span class="view-author-link">
-
-                    View Hymn Writer
-
-                    <i class="fas fa-arrow-right"></i>
-
-                </span>
-
-            </div>
-
-        </article>
-    `;
-}
-
-
-/* ==========================================================
-   SEARCH + SORT EVENTS
-========================================================== */
+/* ==========================================
+   EVENTS
+========================================== */
 
 function setupEvents() {
 
-    if (searchInput) {
 
-        searchInput.addEventListener(
+    /* ----------------------------------
+       SEARCH
+    ---------------------------------- */
+
+    if (authorSearch) {
+
+        authorSearch.addEventListener(
             "input",
-            filterAuthors
+            () => {
+
+                applyFilters();
+
+            }
         );
 
     }
 
 
-    if (sortSelect) {
+    /* ----------------------------------
+       SORT
+    ---------------------------------- */
 
-        sortSelect.addEventListener(
+    if (authorSort) {
+
+        authorSort.addEventListener(
             "change",
-            filterAuthors
-        );
+            () => {
 
-    }
+                selectedSort =
+                    authorSort.value || "az";
 
-
-    /*
-     * Allow keyboard users to open
-     * an author card with Enter/Space.
-     */
-
-    if (authorsGrid) {
-
-        authorsGrid.addEventListener(
-            "keydown",
-            event => {
-
-                const card =
-                    event.target.closest(
-                        ".author-card"
-                    );
-
-
-                if (!card) {
-                    return;
-                }
-
-
-                if (
-                    event.key === "Enter" ||
-                    event.key === " "
-                ) {
-
-                    event.preventDefault();
-
-                    card.click();
-
-                }
+                applyFilters();
 
             }
         );
@@ -498,81 +231,76 @@ function setupEvents() {
 }
 
 
-/* ==========================================================
-   FILTER AUTHORS
-========================================================== */
+/* ==========================================
+   FILTER + SORT
+========================================== */
 
-function filterAuthors() {
+function applyFilters() {
 
-    const keyword =
-        searchInput
-            ? searchInput.value
-                .toLowerCase()
-                .trim()
-            : "";
+    const searchTerm =
+        (
+            authorSearch?.value ||
+            ""
+        )
+            .trim()
+            .toLowerCase();
 
+
+    /* ----------------------------------
+       SEARCH
+    ---------------------------------- */
 
     filteredAuthors =
         authors.filter(author => {
 
             const name =
-                String(author.name || "")
+                (
+                    author.name ||
+                    ""
+                )
                     .toLowerCase();
 
-
-            const bio =
-                String(author.bio || "")
-                    .toLowerCase();
-
-
-            const country =
-                String(author.country || "")
-                    .toLowerCase();
-
-
-            return (
-                name.includes(keyword) ||
-                bio.includes(keyword) ||
-                country.includes(keyword)
+            return name.includes(
+                searchTerm
             );
 
         });
 
 
-    /*
-     * Sort A-Z / Z-A
-     */
-
-    const sortValue =
-        sortSelect
-            ? sortSelect.value
-            : "az";
-
+    /* ----------------------------------
+       SORT
+    ---------------------------------- */
 
     filteredAuthors.sort(
         (a, b) => {
 
             const nameA =
-                String(a.name || "");
-
+                (
+                    a.name ||
+                    ""
+                )
+                    .toLowerCase();
 
             const nameB =
-                String(b.name || "");
+                (
+                    b.name ||
+                    ""
+                )
+                    .toLowerCase();
 
 
-            const comparison =
-                nameA.localeCompare(
-                    nameB,
-                    undefined,
-                    {
-                        sensitivity: "base"
-                    }
+            if (selectedSort === "za") {
+
+                return nameB.localeCompare(
+                    nameA
                 );
 
+            }
 
-            return sortValue === "za"
-                ? -comparison
-                : comparison;
+
+            return nameA.localeCompare(
+                nameB
+            );
 
         }
     );
@@ -583,17 +311,237 @@ function filterAuthors() {
 }
 
 
-/* ==========================================================
-   HTML ESCAPE
-========================================================== */
+/* ==========================================
+   CREATE AUTHOR ROW
+========================================== */
+function createAuthorRow(author, index) {
+
+    const hymnCount =
+        hymns.filter(
+            hymn =>
+                String(hymn.author_id) ===
+                String(author.id)
+        ).length;
+
+
+    const authorName =
+        escapeHtml(
+            author.name ||
+            "Unknown Author"
+        );
+
+
+    const authorEnglishName =
+        escapeHtml(
+            author.english_name ||
+            ""
+        );
+
+
+    const authorUrl =
+        `author.html?id=${encodeURIComponent(
+            author.id
+        )}`;
+
+
+    return `
+        <a
+            href="${authorUrl}"
+            class="author-list-row"
+        >
+
+            <div class="author-list-number">
+                ${index + 1}
+            </div>
+
+
+            <div class="author-list-name">
+
+                <span class="author-telugu-name">
+                    ${authorName}
+                </span>
+
+                ${
+                    authorEnglishName
+                        ? `
+                            <span class="author-english-name">
+                                ${authorEnglishName}
+                            </span>
+                          `
+                        : ""
+                }
+
+            </div>
+
+
+            <div class="author-list-count">
+
+                <i class="fas fa-music"></i>
+
+                <span>
+                    ${hymnCount}
+                    ${
+                        hymnCount === 1
+                            ? "Hymn"
+                            : "Hymns"
+                    }
+                </span>
+
+            </div>
+
+
+            <div class="author-list-arrow">
+
+                <i class="fas fa-arrow-right"></i>
+
+            </div>
+
+        </a>
+    `;
+}
+
+/* ==========================================
+   RENDER AUTHORS
+========================================== */
+
+function renderAuthors() {
+
+    if (!authorsList) {
+        return;
+    }
+
+
+    /* ----------------------------------
+       EMPTY
+    ---------------------------------- */
+
+    if (
+        filteredAuthors.length === 0
+    ) {
+
+        authorsList.innerHTML = "";
+
+
+        if (empty) {
+
+            empty.style.display =
+                "block";
+
+        }
+
+        return;
+
+    }
+
+
+    if (empty) {
+
+        empty.style.display =
+            "none";
+
+    }
+
+
+    /* ----------------------------------
+       RENDER
+    ---------------------------------- */
+
+    authorsList.innerHTML =
+        filteredAuthors
+            .map(
+                (author, index) =>
+                    createAuthorRow(
+                        author,
+                        index
+                    )
+            )
+            .join("");
+
+}
+
+
+/* ==========================================
+   LOADING
+========================================== */
+
+function showLoading(
+    isLoading
+) {
+
+    if (!loading) {
+        return;
+    }
+
+
+    loading.style.display =
+        isLoading
+            ? "block"
+            : "none";
+
+}
+
+
+/* ==========================================
+   ERROR
+========================================== */
+
+function showError() {
+
+    if (!authorsList) {
+        return;
+    }
+
+
+    authorsList.innerHTML = `
+        <div class="author-load-error">
+
+            <i class="fas fa-circle-exclamation"></i>
+
+            <h3>
+                Unable to Load Hymn Writers
+            </h3>
+
+            <p>
+                Please refresh the page and try again.
+            </p>
+
+        </div>
+    `;
+
+}
+
+
+/* ==========================================
+   ESCAPE HTML
+========================================== */
 
 function escapeHtml(value) {
 
-    return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
