@@ -88,7 +88,7 @@ async function loadStatistics() {
 
         books,
 
-        categories
+        interviews
 
     ] = await Promise.all([
 
@@ -105,7 +105,7 @@ async function loadStatistics() {
             .select("*", { count: "exact", head: true }),
 
         supabase
-            .from("categories")
+            .from("interviews")
             .select("*", { count: "exact", head: true })
 
     ]);
@@ -119,8 +119,8 @@ async function loadStatistics() {
     document.getElementById("totalBooks").textContent =
         books.count ?? 0;
 
-    document.getElementById("totalCategories").textContent =
-        categories.count ?? 0;
+    document.getElementById("totalInterviews").textContent =
+        interviews.count ?? 0;
 
 }
 
