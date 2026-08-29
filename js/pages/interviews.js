@@ -915,7 +915,7 @@ function getInitials(name) {
     return String(name || "A")
         .trim()
         .split(/\s+/)
-        .slice(0, 2)
+        .slice(0,1)
         .map(word => word.charAt(0))
         .join("")
         .toUpperCase();
