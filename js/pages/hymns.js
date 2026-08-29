@@ -440,7 +440,7 @@ function createHymnRow(song) {
             </a>
 
             <div class="hymn-author">
-                ${song.author || "Unknown Author"}
+                ${song.author || "Unknown Writer"}
             </div>
 
             <div class="hymn-youtube">
@@ -467,7 +467,7 @@ function renderHymns(hymns) {
 
             <div class="empty-state">
 
-                <h2>No Hymns Found</h2>
+                <h2>Hymn Not Yet Uploaded</h2>
 
                 <p>Try changing the search or filters.</p>
 
@@ -618,7 +618,7 @@ function initialize() {
 
         hymnsBody.innerHTML = `
             <div class="empty-state">
-                <h2>No Hymns Found</h2>
+                <h2>Hymn Not Yet Uploaded </h2>
                 <p>songsList is empty.</p>
             </div>
         `;

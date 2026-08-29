@@ -154,7 +154,7 @@ async function loadData() {
                     <i class="fas fa-circle-exclamation"></i>
 
                     <h3>
-                        Unable to Load Authors
+                        Unable to Load Hymn Writers
                     </h3>
 
                     <p>
@@ -282,13 +282,13 @@ function createAuthorCard(author) {
 
     const image =
         author.photo_url ||
-        "https://placehold.co/400x400?text=Author";
+        "https://placehold.co/400x400?text=Hymn Writer";
 
 
     const name =
         escapeHtml(
             author.name ||
-            "Unknown Author"
+            "Unknown Hymn Writer"
         );
 
 
@@ -364,7 +364,7 @@ function createAuthorCard(author) {
                     src="${escapeHtml(image)}"
                     alt="${name}"
                     loading="lazy"
-                    onerror="this.src='https://placehold.co/400x400?text=Author';"
+                    onerror="this.src='https://placehold.co/400x400?text=Hymn Writer';"
                 >
 
             </div>
@@ -418,7 +418,7 @@ function createAuthorCard(author) {
 
                 <span class="view-author-link">
 
-                    View Author
+                    View Hymn Writer
 
                     <i class="fas fa-arrow-right"></i>
 
