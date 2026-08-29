@@ -358,7 +358,7 @@ async function loadAuthorMedia() {
         authorMediaList = [];
 
         notify(
-            "Unable to load author photos.",
+            "Unable to load Writer photos.",
             "error"
         );
     }
@@ -577,7 +577,7 @@ async function loadAuthors() {
         if (authors.length === 0) {
 
             showEmpty(
-                "No authors found."
+                "No Writers found."
             );
 
             return;
@@ -589,13 +589,13 @@ async function loadAuthors() {
     } catch (error) {
 
         console.error(
-            "Error loading authors:",
+            "Error loading Writers:",
             error
         );
 
         showError(
             error?.message ||
-            "Unable to load authors."
+            "Unable to load Writers."
         );
     }
 }
@@ -774,10 +774,10 @@ async function startEdit(
      * Set modal information.
      */
     modalTitle.textContent =
-        "Edit Author";
+        "Edit Writer";
 
     saveButton.textContent =
-        "Update Author";
+        "Update Writer";
 
 
     /*
@@ -832,7 +832,7 @@ authorForm.addEventListener(
         if (!name) {
 
             notify(
-                "Please enter an author name.",
+                "Please enter the Writer name.",
                 "error"
             );
 
@@ -947,7 +947,7 @@ authorForm.addEventListener(
 
 
                 notify(
-                    "Author updated successfully.",
+                    "Writer updated successfully.",
                     "success"
                 );
 
@@ -974,7 +974,7 @@ authorForm.addEventListener(
 
 
                 notify(
-                    "Author added successfully.",
+                    "Writer added successfully.",
                     "success"
                 );
             }
@@ -1006,7 +1006,7 @@ authorForm.addEventListener(
             ) {
 
                 notify(
-                    "Supabase blocked this operation because of the authors table RLS policy.",
+                    "Supabase blocked this operation because of the Writers table RLS policy.",
                     "error"
                 );
 
@@ -1014,7 +1014,7 @@ authorForm.addEventListener(
 
                 notify(
                     error?.message ||
-                    "Unable to save author.",
+                    "Unable to save Writer.",
                     "error"
                 );
             }
@@ -1173,7 +1173,7 @@ confirmDelete.addEventListener(
 
 
             notify(
-                "Author deleted successfully.",
+                "Writer deleted successfully.",
                 "success"
             );
 
@@ -1190,14 +1190,14 @@ confirmDelete.addEventListener(
         } catch (error) {
 
             console.error(
-                "Author delete error:",
+                "Writer delete error:",
                 error
             );
 
 
             notify(
                 error?.message ||
-                "Unable to delete author. Make sure the author is not being used by any hymns.",
+                "Unable to delete writer. Make sure the writer is not being used by any hymns.",
                 "error"
             );
 
@@ -1280,7 +1280,7 @@ function searchAuthors() {
     ) {
 
         showEmpty(
-            "No authors match your search."
+            "No Writers match your search."
         );
 
         return;
@@ -1481,14 +1481,14 @@ function showError(
 
         errorText.textContent =
             message ||
-            "Something went wrong while loading the authors.";
+            "Something went wrong while loading the Writers.";
 
     }
 }
 
 
 function showEmpty(
-    message = "No authors found."
+    message = "No Writers found."
 ) {
 
     loadingState.classList.add(
@@ -1601,13 +1601,13 @@ document.addEventListener(
         } catch (error) {
 
             console.error(
-                "Authors initialization error:",
+                "Writers initialization error:",
                 error
             );
 
             showError(
                 error?.message ||
-                "Unable to initialize Authors page."
+                "Unable to initialize Writers page."
             );
 
         }
