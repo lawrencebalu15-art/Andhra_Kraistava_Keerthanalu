@@ -171,7 +171,7 @@ function setPageTitle() {
     }
 
     else if (path.includes("/pages/authors.html")) {
-        pageTitle.textContent = "Authors";
+        pageTitle.textContent = "Hymn Writers";
     }
 
     else if (path.includes("/pages/books.html")) {
