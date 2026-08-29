@@ -12,28 +12,485 @@
     <title>Interviews | Andhra Kraistava Keerthanalu</title>
 
 
-  <script type="module" crossorigin src="/assets/interviews-Gd_PBpvw.js"></script>
+    <style>
+
+        .page-title {
+            font-size: medium;
+        }
+
+        /* =========================================================
+           INTERVIEWS PAGE
+        ========================================================= */
+
+        .interviews-authors {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+            margin-top: 10px;
+        }
+
+
+        /* =========================================================
+           AUTHOR CARD
+        ========================================================= */
+
+        .interview-author-card {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+
+            padding: 22px;
+
+            background: #ffffff;
+
+            border: 1px solid rgba(59, 2, 2, 0.10);
+
+            border-radius: 16px;
+
+            text-decoration: none;
+
+            box-shadow:
+                0 4px 18px rgba(59, 2, 2, 0.04);
+
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease,
+                border-color .25s ease;
+        }
+
+
+        .interview-author-card:hover {
+            transform: translateY(-4px);
+
+            border-color:
+                rgba(212, 175, 55, 0.55);
+
+            box-shadow:
+                0 12px 28px rgba(59, 2, 2, 0.08);
+        }
+
+
+        /* =========================================================
+           AUTHOR PHOTO
+        ========================================================= */
+
+        .interview-author-photo {
+            width: 82px;
+            height: 82px;
+
+            flex: 0 0 82px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            background: #f4eee3;
+
+            border: 2px solid
+                rgba(212, 175, 55, 0.25);
+        }
+
+
+        .interview-author-placeholder {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            width: 82px;
+            height: 82px;
+
+            flex: 0 0 82px;
+
+            border-radius: 50%;
+
+            background: #f4eee3;
+
+            color: #3b0202;
+
+            font-family: var(--font-heading);
+
+            font-size: 1.5rem;
+
+            font-weight: 700;
+        }
+
+
+        /* =========================================================
+           AUTHOR INFORMATION
+        ========================================================= */
+
+        .interview-author-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+
+        .interview-author-info h3 {
+            margin: 0 0 8px;
+
+            color: #3b0202;
+
+            font-family: var(--font-heading);
+
+            font-size: 1.25rem;
+
+            line-height: 1.35;
+        }
+
+
+        .interview-author-count {
+            color: #777;
+
+            font-size: .92rem;
+
+            line-height: 1.5;
+        }
+
+
+        .interview-author-arrow {
+            color: #3b0202;
+
+            font-size: 1.35rem;
+
+            font-weight: 700;
+
+            transition: transform .25s ease;
+        }
+
+
+        .interview-author-card:hover
+        .interview-author-arrow {
+            transform: translateX(4px);
+
+            color: #d4af37;
+        }
+
+
+        /* =========================================================
+           AUTHOR DETAIL HEADER
+        ========================================================= */
+
+        .interview-author-header {
+            display: flex;
+
+            align-items: center;
+
+            gap: 22px;
+
+            margin-bottom: 35px;
+
+            padding-bottom: 25px;
+
+            border-bottom:
+                1px solid rgba(59, 2, 2, 0.10);
+        }
+
+
+        .interview-author-header img,
+        .interview-author-header .placeholder {
+            width: 92px;
+            height: 92px;
+
+            flex: 0 0 92px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            background: #f4eee3;
+        }
+
+
+        .interview-author-header .placeholder {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            color: #3b0202;
+
+            font-family: var(--font-heading);
+
+            font-size: 1.6rem;
+
+            font-weight: 700;
+        }
+
+
+        .interview-author-header h2 {
+            margin: 0 0 6px;
+
+            color: #3b0202;
+
+            font-family: var(--font-heading);
+
+            font-size: 2rem;
+        }
+
+
+        .interview-author-header p {
+            margin: 0;
+
+            color: #777;
+        }
+
+
+        .back-to-authors {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-bottom: 25px;
+
+            color: #3b0202;
+
+            font-weight: 700;
+
+            text-decoration: none;
+        }
+
+
+        .back-to-authors:hover {
+            color: #d4af37;
+        }
+
+
+        /* =========================================================
+           INTERVIEW CARDS
+        ========================================================= */
+
+        .interviews-list {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 30px;
+        }
+
+
+        .interview-card {
+            background: #ffffff;
+
+            border:
+                1px solid rgba(59, 2, 2, 0.10);
+
+            border-radius: 16px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 4px 15px rgba(59, 2, 2, 0.04);
+
+            transition: .3s ease;
+        }
+
+
+        .interview-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 14px 30px rgba(59, 2, 2, 0.08);
+        }
+
+
+        .interview-video {
+            position: relative;
+
+            width: 100%;
+
+            aspect-ratio: 16 / 9;
+
+            background: #f4eee3;
+
+            overflow: hidden;
+        }
+
+
+        .interview-video img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+        }
+
+
+        .interview-play {
+            position: absolute;
+
+            left: 50%;
+            top: 50%;
+
+            transform: translate(-50%, -50%);
+
+            width: 62px;
+            height: 62px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #ffffff;
+
+            color: #3b0202;
+
+            box-shadow:
+                0 5px 20px rgba(0,0,0,.20);
+
+            font-size: 1.4rem;
+        }
+
+
+        .interview-content {
+            padding: 24px;
+        }
+
+
+        .interview-category {
+            display: inline-block;
+
+            margin-bottom: 9px;
+
+            color: #d4af37;
+
+            font-size: .78rem;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+        }
+
+
+        .interview-content h3 {
+            margin: 0 0 12px;
+
+            color: #3b0202;
+
+            font-family: var(--font-heading);
+
+            font-size: 1.35rem;
+
+            line-height: 1.35;
+        }
+
+
+        .interview-description {
+            color: #666;
+
+            line-height: 1.7;
+
+            margin-bottom: 18px;
+        }
+
+
+        .interview-youtube {
+            color: #3b0202;
+
+            font-weight: 700;
+
+            text-decoration: none;
+        }
+
+
+        .interview-youtube:hover {
+            color: #d4af37;
+        }
+
+
+        /* =========================================================
+           STATES
+        ========================================================= */
+
+        .interviews-state {
+            text-align: center;
+
+            padding: 70px 20px;
+
+            color: #666;
+        }
+
+
+        .hidden {
+            display: none !important;
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 900px) {
+
+            .interviews-authors,
+            .interviews-list {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .interview-author-card {
+                padding: 18px;
+
+                gap: 15px;
+            }
+
+
+            .interview-author-photo,
+            .interview-author-placeholder {
+                width: 65px;
+                height: 65px;
+
+                flex-basis: 65px;
+            }
+
+
+            .interview-author-info h3 {
+                font-size: 1.05rem;
+            }
+
+
+            .interview-author-header h2 {
+                font-size: 1.5rem;
+            }
+
+        }
+      
+    </style>
+
+  <script type="module" crossorigin src="/assets/interviews-BTNj_i-B.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/supabase-C4TjTvDq.js">
-  <link rel="modulepreload" crossorigin href="/assets/main-Dtr4gIiF.js">
-  <link rel="stylesheet" crossorigin href="/assets/main-CgsYzvLt.css">
+  <link rel="modulepreload" crossorigin href="/assets/main-D5Q2bnPe.js">
+  <link rel="modulepreload" crossorigin href="/assets/page-header-Bl-XMcri.js">
+  <link rel="modulepreload" crossorigin href="/assets/home-4Cs49zuK.js">
+  <link rel="stylesheet" crossorigin href="/assets/main-CPAIQzRx.css">
 </head>
 
 
 <body class="interviews-page">
 
-
-    <!-- Navbar -->
-
-    <div id="navbar"></div>
+<div id="searchModalContainer"></div>
 
 
 
     <main>
+<div id="navbar"></div>
 
-
-        <!-- ===================================
+        <!-- =====================================================
              PAGE HEADER
-        ==================================== -->
+        ====================================================== -->
 
         <section class="page-header">
 
@@ -44,13 +501,12 @@
                 </span>
 
                 <h1 class="page-title">
-                    Interviews
+                    Meet the Heirs of Hymn Writers
                 </h1>
 
                 <p class="page-subtitle">
-                    Hear the stories, experiences, and ministries
-                    behind Telugu Christian hymn writers, pastors,
-                    musicians, and researchers.
+                    Explore interviews with the people behind
+                    Telugu Christian hymn heritage.
                 </p>
 
             </div>
@@ -58,33 +514,51 @@
         </section>
 
 
-
-        <!-- ===================================
-             INTERVIEWS
-        ==================================== -->
+        <!-- =====================================================
+             CONTENT
+        ====================================================== -->
 
         <section class="section">
 
             <div class="container">
 
 
+                <!-- Back button -->
+
+                <a
+                    id="backToAuthors"
+                    href="interviews.html"
+                    class="back-to-authors hidden">
+
+                    ← All Writers
+
+                </a>
+
+
+                <!-- Author detail -->
+
+                <div
+                    id="authorHeader"
+                    class="interview-author-header hidden">
+                </div>
+
+
                 <!-- Loading -->
 
                 <div
                     id="interviewsLoading"
-                    class="state-message">
+                    class="interviews-state">
 
                     Loading interviews...
 
                 </div>
 
 
-
                 <!-- Error -->
 
                 <div
                     id="interviewsError"
-                    class="state-message hidden">
+                    class="interviews-state hidden">
 
                     Unable to load interviews.
                     Please try again later.
@@ -92,25 +566,30 @@
                 </div>
 
 
-
                 <!-- Empty -->
 
                 <div
                     id="interviewsEmpty"
-                    class="state-message hidden">
+                    class="interviews-state hidden">
 
                     No interviews are available yet.
 
                 </div>
 
 
+                <!-- Authors -->
 
-                <!-- Grid -->
+                <div
+                    id="interviewAuthors"
+                    class="interviews-authors hidden">
+                </div>
+
+
+                <!-- Interviews -->
 
                 <div
                     id="interviewsGrid"
-                    class="interview-grid">
-
+                    class="interviews-list hidden">
                 </div>
 
 
@@ -118,74 +597,17 @@
 
         </section>
 
-
     </main>
 
 
-
-    <!-- Search Modal -->
-
     <div id="searchModal"></div>
-
-
-
-    <!-- Footer -->
 
     <div id="footer"></div>
 
 
+    <script defer src="/_vercel/speed-insights/script.js"></script>
+    <script defer src="/_vercel/insights/script.js"></script>
 
-    <!-- Vercel -->
-
-    <script>
-
-        window.va =
-            window.va ||
-            function () {
-
-                (window.vaq =
-                    window.vaq || []
-                ).push(arguments);
-
-            };
-
-    </script>
-
-
-    <script>
-
-        window.si =
-            window.si ||
-            function () {
-
-                (window.siq =
-                    window.siq || []
-                ).push(arguments);
-
-            };
-
-    </script>
-
-
-    <script
-        defer
-        src="/_vercel/speed-insights/script.js">
-    </script>
-
-
-    <script
-        defer
-        src="/_vercel/insights/script.js">
-    </script>
-
-
-
-    <!-- Main Website -->
-
-
-
-
-    <!-- Interviews Page -->
 
 
 
