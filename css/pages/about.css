@@ -1,587 +1,1806 @@
 /* ==========================================================
    ABOUT PAGE
    Andhra Kraistava Keerthanalu
-========================================================== */
-
-.about-page {
-    background: #f7f3eb;
-    color: #2b2f35;
-}
-
-.about-page main {
-    overflow: hidden;
-}
+   Premium Editorial Archive
+   ========================================================== */
 
 
 /* ==========================================================
-   SECTIONS
-========================================================== */
+   FOUNDATION
+   ========================================================== */
 
-.about-page .section {
-    padding-top: 72px;
-    padding-bottom: 72px;
+.about-page {
+
+    background:
+        #f7f3eb;
+
+    color:
+        #2b2f35;
+
 }
 
-.about-page .section:first-child {
-    padding-top: 70px;
-    padding-bottom: 45px;
+
+.about-page main {
+
+    overflow:
+        hidden;
+
+}
+
+
+.about-page .about-container {
+
+    width:
+        min(
+            1180px,
+            calc(100% - 48px)
+        );
+
+    margin:
+        0 auto;
+
 }
 
 
 /* ==========================================================
    HERO
-========================================================== */
+   ========================================================== */
 
-.about-page .section:first-child .container {
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
+.about-page .about-hero {
 
-    text-align: center;
+    position:
+        relative;
+
+    padding:
+        75px 0
+        65px;
+
+    text-align:
+        center;
+
 }
 
-.about-page .section:first-child .container > div {
-    max-width: 900px;
-    margin: 0 auto;
+
+.about-page .about-hero::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    bottom:
+        0;
+
+    left:
+        50%;
+
+    width:
+        min(
+            900px,
+            calc(100% - 80px)
+        );
+
+    height:
+        1px;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #d8c8ad,
+            transparent
+        );
+
 }
 
-.about-page .section:first-child .section-label {
-    display: inline-block;
-    margin-bottom: 14px;
+
+.about-page .about-hero-content {
+
+    max-width:
+        850px;
+
+    margin:
+        0 auto;
+
 }
 
-.about-page .section:first-child .section-title {
-    max-width: 850px;
 
-    margin: 0 auto 18px;
+/* ==========================================================
+   HERO EYEBROW
+   ========================================================== */
 
-    color: #54261e;
+.about-page .about-eyebrow {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        12px;
+
+    margin-bottom:
+        18px;
+
+    color:
+        #a87518;
+
+    font-size:
+        10px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        2.5px;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+.about-page .eyebrow-line {
+
+    width:
+        35px;
+
+    height:
+        1px;
+
+    background:
+        #c79b3b;
+
+}
+
+
+.about-page .eyebrow-line.short {
+
+    width:
+        15px;
+
+}
+
+
+/* ==========================================================
+   TELUGU TITLE
+   ========================================================== */
+
+.about-page .telugu-title {
+
+    margin:
+        0 auto 7px;
+
+    color:
+        #54261e;
 
     font-family:
         Georgia,
         "Times New Roman",
         serif;
 
-    line-height: 1.15;
-}
+    font-size:
+        clamp(
+            27px,
+            3vw,
+            37px
+        );
 
-.about-page .section:first-child .section-subtitle {
-    max-width: 720px;
+    font-weight:
+        700;
 
-    margin-left: auto;
-    margin-right: auto;
+    line-height:
+        1.3;
 
-    line-height: 1.8;
 }
 
 
 /* ==========================================================
-   COMMON LABELS
-========================================================== */
+   ENGLISH HERO TITLE
+   ========================================================== */
+
+.about-page .about-hero h2 {
+
+    max-width:
+        760px;
+
+    margin:
+        0 auto 18px;
+
+    color:
+        #54261e;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(
+            34px,
+            4vw,
+            52px
+        );
+
+    line-height:
+        1.08;
+
+}
+
+
+.about-page .about-hero h2 em {
+
+    color:
+        #26374d;
+
+    font-style:
+        normal;
+
+}
+
+
+.about-page .about-hero-content > p {
+
+    max-width:
+        690px;
+
+    margin:
+        0 auto;
+
+    color:
+        #625e58;
+
+    font-size:
+        14px;
+
+    line-height:
+        1.8;
+
+}
+
+
+/* ==========================================================
+   HERO RULE
+   ========================================================== */
+
+.about-page .hero-rule {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        13px;
+
+    width:
+        min(
+            350px,
+            70%
+        );
+
+    margin:
+        24px auto 18px;
+
+}
+
+
+.about-page .hero-rule::before,
+.about-page .hero-rule::after {
+
+    content:
+        "";
+
+    flex:
+        1;
+
+    height:
+        1px;
+
+    background:
+        #decda9;
+
+}
+
+
+.about-page .hero-rule span {
+
+    color:
+        #a87518;
+
+    font-size:
+        12px;
+
+}
+
+
+/* ==========================================================
+   HERO NOTE
+   ========================================================== */
+
+.about-page .hero-note {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
+
+    padding:
+        9px 17px;
+
+    background:
+        rgba(255,253,249,.75);
+
+    border:
+        1px solid
+        #e4d9ca;
+
+    border-radius:
+        50px;
+
+    color:
+        #70685f;
+
+    font-size:
+        10px;
+
+    letter-spacing:
+        .7px;
+
+}
+
+
+.about-page .hero-note i {
+
+    color:
+        #a87518;
+
+}
+
+
+/* ==========================================================
+   SECTION LABEL
+   ========================================================== */
 
 .about-page .section-label {
-    color: #a87518;
 
-    font-size: 12px;
-    font-weight: 700;
+    display:
+        inline-block;
 
-    letter-spacing: 2px;
-    text-transform: uppercase;
+    margin-bottom:
+        12px;
+
+    color:
+        #a87518;
+
+    font-size:
+        10px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        2.2px;
+
+    text-transform:
+        uppercase;
+
 }
 
 
 /* ==========================================================
-   COMMON TITLES
-========================================================== */
+   SECTION TITLE
+   ========================================================== */
 
 .about-page .section-title {
-    color: #54261e;
-}
 
+    margin:
+        0;
 
-/* ==========================================================
-   MISSION / PURPOSE
-========================================================== */
-
-.about-page .mission-grid {
-    display: grid;
-
-    grid-template-columns:
-        minmax(0, 1fr)
-        minmax(360px, 0.8fr);
-
-    gap: 70px;
-
-    align-items: center;
-
-    max-width: 1100px;
-
-    margin: 0 auto;
-}
-
-.about-page .mission-content {
-    max-width: 650px;
-}
-
-.about-page .mission-content .section-label {
-    display: inline-block;
-    margin-bottom: 12px;
-}
-
-.about-page .mission-content .section-title {
-    margin-top: 0;
-    margin-bottom: 24px;
+    color:
+        #54261e;
 
     font-family:
         Georgia,
         "Times New Roman",
         serif;
 
-    font-size: clamp(30px, 3vw, 42px);
+    font-size:
+        clamp(
+            32px,
+            3.5vw,
+            45px
+        );
 
-    line-height: 1.15;
+    line-height:
+        1.1;
+
 }
 
-.about-page .mission-content p {
-    margin: 0 0 18px;
 
-    color: #625e58;
+.about-page .section-title em {
 
-    font-size: 15px;
-    line-height: 1.85;
-}
+    color:
+        #26374d;
 
-.about-page .mission-content p:last-child {
-    margin-bottom: 0;
-}
+    font-style:
+        normal;
 
-.about-page .mission-content strong {
-    color: #54261e;
 }
 
 
 /* ==========================================================
-   MISSION ITEMS
-========================================================== */
+   PURPOSE
+   ========================================================== */
 
-.about-page .mission-box {
-    display: flex;
+.about-page .purpose-section {
 
-    flex-direction: column;
+    padding:
+        72px 0
+        78px;
 
-    gap: 14px;
 }
 
-.about-page .mission-item {
-    display: grid;
+
+.about-page .purpose-grid {
+
+    display:
+        grid;
 
     grid-template-columns:
-        55px
-        90px
-        1fr;
+        minmax(0,1.05fr)
+        minmax(370px,.8fr);
 
-    align-items: center;
+    gap:
+        72px;
 
-    gap: 14px;
+    align-items:
+        center;
 
-    padding: 20px;
+    max-width:
+        1060px;
 
-    background: #fffdf9;
+    margin:
+        0 auto;
 
-    border: 1px solid #e5ddd2;
+}
 
-    border-radius: 13px;
+
+.about-page .purpose-content {
+
+    max-width:
+        650px;
+
+}
+
+
+.about-page .purpose-content .section-title {
+
+    margin-bottom:
+        23px;
+
+}
+
+
+.about-page .purpose-content p {
+
+    margin:
+        0 0 17px;
+
+    color:
+        #625e58;
+
+    font-size:
+        14px;
+
+    line-height:
+        1.85;
+
+}
+
+
+/* ==========================================================
+   PURPOSE QUOTE
+   ========================================================== */
+
+.about-page .purpose-quote {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        13px;
+
+    margin:
+        26px 0;
+
+    padding:
+        16px 18px;
+
+    background:
+        #fffdf9;
+
+    border:
+        1px solid
+        #e4dace;
+
+    border-left:
+        3px solid
+        #b17b1f;
+
+    border-radius:
+        0 11px 11px 0;
+
+}
+
+
+.about-page .purpose-quote i {
+
+    color:
+        #a87518;
+
+    font-size:
+        16px;
+
+}
+
+
+.about-page .purpose-quote span {
+
+    color:
+        #625b52;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        12px;
+
+    font-style:
+        italic;
+
+    line-height:
+        1.6;
+
+}
+
+
+/* ==========================================================
+   PURPOSE ITEMS
+   ========================================================== */
+
+.about-page .purpose-items {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        12px;
+
+}
+
+
+.about-page .purpose-item {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        47px
+        35px
+        minmax(0,1fr);
+
+    gap:
+        12px;
+
+    align-items:
+        center;
+
+    min-height:
+        92px;
+
+    padding:
+        17px;
+
+    background:
+        #fffdf9;
+
+    border:
+        1px solid
+        #e4dace;
+
+    border-radius:
+        13px;
 
     box-shadow:
-        0 7px 25px rgba(50, 35, 20, 0.045);
+        0 6px 22px
+        rgba(50,35,20,.045);
 
     transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+
 }
 
-.about-page .mission-item:hover {
-    transform: translateY(-3px);
 
-    border-color: #d8c7ae;
+.about-page .purpose-item:hover {
+
+    transform:
+        translateY(-3px);
+
+    border-color:
+        #d3c09e;
 
     box-shadow:
-        0 14px 32px rgba(50, 35, 20, 0.08);
+        0 14px 30px
+        rgba(50,35,20,.08);
+
 }
 
 
-/* ICON */
+.about-page .purpose-icon {
 
-.about-page .mission-item h3 {
-    display: flex;
+    width:
+        44px;
 
-    align-items: center;
-    justify-content: center;
+    height:
+        44px;
 
-    width: 42px;
-    height: 42px;
+    display:
+        flex;
 
-    margin: 0;
+    align-items:
+        center;
 
-    color: #a87518;
+    justify-content:
+        center;
 
-    background: #f6ead4;
+    color:
+        #986a20;
 
-    border-radius: 50%;
+    background:
+        #f7ecd9;
 
-    font-size: 17px;
+    border-radius:
+        50%;
+
+    font-size:
+        15px;
+
 }
 
 
-/* ITEM TITLE */
+.about-page .purpose-number {
 
-.about-page .mission-item h4 {
-    margin: 0;
+    color:
+        #b28a40;
 
-    color: #54261e;
+    font-size:
+        9px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        1px;
+
+}
+
+
+.about-page .purpose-item h3 {
+
+    margin:
+        0 0 4px;
+
+    color:
+        #54261e;
 
     font-family:
         Georgia,
         "Times New Roman",
         serif;
 
-    font-size: 17px;
+    font-size:
+        16px;
 
-    line-height: 1.3;
 }
 
 
-/* ITEM TEXT */
+.about-page .purpose-item p {
 
-.about-page .mission-item p {
-    margin: 0;
+    margin:
+        0;
 
-    color: #67635d;
+    color:
+        #67635d;
 
-    font-size: 13px;
+    font-size:
+        11px;
 
-    line-height: 1.65;
-}
+    line-height:
+        1.6;
 
-
-/* ==========================================================
-   RESEARCH CARD
-========================================================== */
-
-.about-page .section .card {
-    max-width: 950px;
-
-    margin-left: auto;
-    margin-right: auto;
-
-    background: #fffdf9;
-
-    border: 1px solid #e5ddd2;
-
-    border-radius: 16px;
-
-    box-shadow:
-        0 10px 35px rgba(50, 35, 20, 0.055);
-}
-
-.about-page .section .card h2 {
-    color: #54261e;
-
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    line-height: 1.2;
-}
-
-.about-page .section .card p {
-    color: #625e58;
-
-    line-height: 1.8;
 }
 
 
 /* ==========================================================
-   BOOK PROJECT
-========================================================== */
+   RESEARCH
+   ========================================================== */
 
-.about-page .mission-grid .mission-box {
-    justify-content: center;
+.about-page .research-section {
+
+    padding:
+        0 0
+        78px;
+
 }
 
-.about-page .mission-grid .mission-box .mission-item {
+
+.about-page .research-card {
+
+    display:
+        grid;
+
     grid-template-columns:
-        50px
-        1fr;
+        75px
+        minmax(0,1fr);
+
+    gap:
+        25px;
+
+    max-width:
+        950px;
+
+    margin:
+        0 auto;
+
+    padding:
+        43px 48px;
+
+    background:
+        #fffdf9;
+
+    border:
+        1px solid
+        #e3d9ca;
+
+    border-radius:
+        16px;
+
+    box-shadow:
+        0 11px 35px
+        rgba(50,35,20,.055);
+
 }
 
-.about-page .mission-grid .mission-box .mission-item h3 {
-    grid-row: span 2;
+
+.about-page .research-icon {
+
+    width:
+        55px;
+
+    height:
+        55px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    color:
+        #a87518;
+
+    background:
+        #f7ecd9;
+
+    border-radius:
+        50%;
+
+    font-size:
+        19px;
+
 }
 
-.about-page .mission-grid .mission-box .mission-item h4,
-.about-page .mission-grid .mission-box .mission-item p {
-    grid-column: 2;
+
+.about-page .research-content h2 {
+
+    margin:
+        0 0 18px;
+
+    color:
+        #54261e;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(
+            29px,
+            3.5vw,
+            42px
+        );
+
+    line-height:
+        1.1;
+
+}
+
+
+.about-page .research-content h2 em {
+
+    color:
+        #26374d;
+
+    font-style:
+        normal;
+
+}
+
+
+.about-page .research-content p {
+
+    margin:
+        0 0 14px;
+
+    color:
+        #625e58;
+
+    font-size:
+        13px;
+
+    line-height:
+        1.8;
+
+}
+
+
+.about-page .research-source-row {
+
+    display:
+        flex;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        9px;
+
+    margin-top:
+        23px;
+
+}
+
+
+.about-page .research-source-row span {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        7px;
+
+    padding:
+        7px 11px;
+
+    background:
+        #f8f1e5;
+
+    border:
+        1px solid
+        #eadfce;
+
+    border-radius:
+        50px;
+
+    color:
+        #756b61;
+
+    font-size:
+        9px;
+
+    font-weight:
+        700;
+
+}
+
+
+.about-page .research-source-row i {
+
+    color:
+        #a87518;
+
 }
 
 
 /* ==========================================================
-   PUBLICATION BUTTON
-========================================================== */
+   PUBLICATIONS
+   ========================================================== */
 
-.about-page .mission-content .btn {
-    display: inline-flex;
+.about-page .publication-section {
 
-    margin-top: 15px !important;
+    padding:
+        0 0
+        82px;
+
+}
+
+
+.about-page .publication-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        minmax(300px,.75fr)
+        minmax(0,1fr);
+
+    gap:
+        80px;
+
+    align-items:
+        center;
+
+    max-width:
+        1050px;
+
+    margin:
+        0 auto;
+
+}
+
+
+.about-page .publication-reference {
+
+    position:
+        relative;
+
+    padding:
+        27px;
+
+    background:
+        #fffdf9;
+
+    border:
+        1px solid
+        #e3d9ca;
+
+    border-radius:
+        14px;
+
+    box-shadow:
+        0 8px 26px
+        rgba(50,35,20,.05);
+
+}
+
+
+.about-page .publication-reference::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    top:
+        0;
+
+    left:
+        0;
+
+    width:
+        100%;
+
+    height:
+        3px;
+
+    background:
+        #a87518;
+
+    border-radius:
+        14px 14px 0 0;
+
+}
+
+
+.about-page .reference-mark {
+
+    width:
+        43px;
+
+    height:
+        43px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    margin-bottom:
+        18px;
+
+    color:
+        #a87518;
+
+    background:
+        #f7ecd9;
+
+    border-radius:
+        50%;
+
+}
+
+
+.about-page .publication-reference > span {
+
+    display:
+        block;
+
+    margin-bottom:
+        8px;
+
+    color:
+        #54261e;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        16px;
+
+    font-weight:
+        700;
+
+}
+
+
+.about-page .publication-reference p {
+
+    margin:
+        0;
+
+    color:
+        #67615b;
+
+    font-size:
+        11px;
+
+    line-height:
+        1.7;
+
+}
+
+
+.about-page .publication-content {
+
+    max-width:
+        560px;
+
+}
+
+
+.about-page .publication-content .section-title {
+
+    margin-bottom:
+        22px;
+
+}
+
+
+.about-page .publication-content p {
+
+    margin:
+        0 0 15px;
+
+    color:
+        #625e58;
+
+    font-size:
+        13px;
+
+    line-height:
+        1.8;
+
+}
+
+
+.about-page .publication-content strong {
+
+    color:
+        #54261e;
+
 }
 
 
 /* ==========================================================
-   DIGITAL WEBSITE SECTION
-========================================================== */
+   BUTTONS
+   ========================================================== */
+
+.about-page .about-button {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        10px;
+
+    min-height:
+        45px;
+
+    margin-top:
+        10px;
+
+    padding:
+        11px 19px;
+
+    border-radius:
+        8px;
+
+    text-decoration:
+        none;
+
+    font-size:
+        11px;
+
+    font-weight:
+        700;
+
+    transition:
+        transform .2s ease,
+        background .25s ease,
+        box-shadow .25s ease;
+
+}
+
+
+.about-page .about-button-dark {
+
+    color:
+        #ffffff;
+
+    background:
+        #3f4b5b;
+
+    border:
+        1px solid
+        #3f4b5b;
+
+}
+
+
+.about-page .about-button-dark:hover {
+
+    background:
+        #303b49;
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(47,57,71,.18);
+
+}
+
+
+/* ==========================================================
+   WEBSITE
+   ========================================================== */
+
+.about-page .website-section {
+
+    padding:
+        72px 0
+        78px;
+
+    background:
+        #f2eadc;
+
+    border-top:
+        1px solid
+        rgba(168,117,24,.10);
+
+    border-bottom:
+        1px solid
+        rgba(168,117,24,.10);
+
+}
+
 
 .about-page .section-header {
-    max-width: 800px;
 
-    margin: 0 auto 45px;
+    max-width:
+        720px;
 
-    text-align: center;
+    margin:
+        0 auto 37px;
+
+    text-align:
+        center;
+
 }
 
-.about-page .section-header .section-label {
-    display: inline-block;
-    margin-bottom: 12px;
-}
 
 .about-page .section-header .section-title {
-    margin-top: 0;
-    margin-bottom: 14px;
-}
 
-.about-page .section-header .section-subtitle {
-    max-width: 700px;
+    margin-bottom:
+        13px;
 
-    margin-left: auto;
-    margin-right: auto;
-
-    line-height: 1.8;
 }
 
 
-/* ==========================================================
-   WEBSITE CARDS
-========================================================== */
+.about-page .section-header > p {
 
-.about-page .cards-grid {
-    display: grid;
+    max-width:
+        650px;
+
+    margin:
+        0 auto;
+
+    color:
+        #65605a;
+
+    font-size:
+        13px;
+
+    line-height:
+        1.8;
+
+}
+
+
+.about-page .website-cards {
+
+    display:
+        grid;
 
     grid-template-columns:
-        repeat(3, minmax(0, 1fr));
+        repeat(
+            3,
+            minmax(0,1fr)
+        );
 
-    gap: 22px;
+    gap:
+        20px;
 
-    max-width: 1100px;
+    max-width:
+        1050px;
 
-    margin: 0 auto;
+    margin:
+        0 auto;
+
 }
 
-.about-page .cards-grid .card {
-    min-height: 220px;
 
-    padding: 30px;
+.about-page .website-card {
 
-    background: #fffdf9;
+    min-height:
+        210px;
 
-    border: 1px solid #e5ddd2;
+    padding:
+        26px;
 
-    border-radius: 14px;
+    background:
+        #fffdf9;
+
+    border:
+        1px solid
+        #e2d8ca;
+
+    border-radius:
+        14px;
 
     box-shadow:
-        0 7px 25px rgba(50, 35, 20, 0.045);
+        0 7px 24px
+        rgba(50,35,20,.045);
 
     transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+
 }
 
-.about-page .cards-grid .card:hover {
-    transform: translateY(-5px);
 
-    border-color: #d8c7ae;
+.about-page .website-card:hover {
+
+    transform:
+        translateY(-5px);
+
+    border-color:
+        #d3c09d;
 
     box-shadow:
-        0 15px 38px rgba(50, 35, 20, 0.09);
+        0 15px 35px
+        rgba(50,35,20,.09);
+
 }
 
 
-/* CARD TITLE */
+.about-page .website-card-icon {
 
-.about-page .cards-grid .card h3 {
-    display: flex;
+    width:
+        39px;
 
-    align-items: center;
+    height:
+        39px;
 
-    gap: 10px;
+    display:
+        flex;
 
-    margin: 0 0 15px;
+    align-items:
+        center;
 
-    color: #54261e;
+    justify-content:
+        center;
+
+    margin-bottom:
+        17px;
+
+    color:
+        #a87518;
+
+    background:
+        #f7ecd9;
+
+    border-radius:
+        50%;
+
+    font-size:
+        14px;
+
+}
+
+
+.about-page .website-card h3 {
+
+    margin:
+        0 0 11px;
+
+    color:
+        #54261e;
 
     font-family:
         Georgia,
         "Times New Roman",
         serif;
 
-    font-size: 21px;
-}
+    font-size:
+        19px;
 
-.about-page .cards-grid .card h3 i {
-    color: #a87518;
-
-    font-size: 17px;
 }
 
 
-/* CARD TEXT */
+.about-page .website-card p {
 
-.about-page .cards-grid .card p {
-    margin: 0 0 18px;
+    margin:
+        0 0 17px;
 
-    color: #65615b;
+    color:
+        #65615b;
 
-    font-size: 14px;
+    font-size:
+        12px;
 
-    line-height: 1.8;
+    line-height:
+        1.75;
+
 }
 
 
-/* CARD LINK */
+.about-page .card-link {
 
-.about-page .author-link {
-    display: inline-block;
+    display:
+        inline-flex;
 
-    color: #8b621f;
+    align-items:
+        center;
 
-    font-size: 13px;
-    font-weight: 600;
+    gap:
+        7px;
 
-    text-decoration: none;
+    color:
+        #8b621f;
+
+    font-size:
+        10px;
+
+    font-weight:
+        700;
+
+    text-decoration:
+        none;
+
+}
+
+
+.about-page .card-link i {
 
     transition:
-        color 0.2s ease,
-        transform 0.2s ease;
+        transform .2s ease;
+
 }
 
-.about-page .author-link:hover {
-    color: #54261e;
 
-    transform: translateX(3px);
+.about-page .card-link:hover {
+
+    color:
+        #54261e;
+
+}
+
+
+.about-page .card-link:hover i {
+
+    transform:
+        translateX(3px);
+
 }
 
 
 /* ==========================================================
    INFORMATION CTA
-========================================================== */
+   ========================================================== */
 
-.about-page .section .card[style*="text-align:center"] {
-    max-width: 900px;
+.about-page .information-section {
 
-    margin-left: auto;
-    margin-right: auto;
+    padding:
+        82px 0
+        70px;
 
-    padding: 52px 45px;
 }
 
-.about-page .section .card[style*="text-align:center"] h2 {
-    margin-top: 12px;
-    margin-bottom: 18px;
 
-    font-size: clamp(30px, 4vw, 42px);
+.about-page .information-card {
+
+    position:
+        relative;
+
+    max-width:
+        880px;
+
+    margin:
+        0 auto;
+
+    padding:
+        48px 55px;
+
+    background:
+        #fffdf9;
+
+    border:
+        1px solid
+        #e2d8ca;
+
+    border-radius:
+        17px;
+
+    box-shadow:
+        0 12px 35px
+        rgba(50,35,20,.055);
+
+    text-align:
+        center;
+
 }
 
-.about-page .section .card[style*="text-align:center"] p {
-    max-width: 700px;
 
-    margin-left: auto;
-    margin-right: auto;
+.about-page .information-icon {
 
-    font-size: 15px;
+    width:
+        52px;
+
+    height:
+        52px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    margin:
+        0 auto 17px;
+
+    color:
+        #a87518;
+
+    background:
+        #f7ecd9;
+
+    border-radius:
+        50%;
+
+}
+
+
+.about-page .information-card h2 {
+
+    max-width:
+        720px;
+
+    margin:
+        0 auto 18px;
+
+    color:
+        #54261e;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(
+            30px,
+            4vw,
+            43px
+        );
+
+    line-height:
+        1.08;
+
+}
+
+
+.about-page .information-card h2 em {
+
+    color:
+        #26374d;
+
+    font-style:
+        normal;
+
+}
+
+
+.about-page .information-card p {
+
+    max-width:
+        700px;
+
+    margin:
+        0 auto 11px;
+
+    color:
+        #65605a;
+
+    font-size:
+        13px;
+
+    line-height:
+        1.8;
+
+}
+
+
+.about-page .information-card .about-button {
+
+    margin-top:
+        14px;
+
 }
 
 
 /* ==========================================================
-   FINAL SUPPORT SECTION
-========================================================== */
+   SUPPORT CTA
+   ========================================================== */
 
-.about-page .section:last-child .container > div {
-    max-width: 850px;
+.about-page .support-cta-section {
 
-    margin-left: auto;
-    margin-right: auto;
+    padding:
+        0 0
+        82px;
 
-    text-align: center;
-}
-
-.about-page .section:last-child .section-title {
-    margin-top: 12px;
-    margin-bottom: 15px;
-}
-
-.about-page .section:last-child .section-subtitle {
-    max-width: 700px;
-
-    margin-left: auto;
-    margin-right: auto;
-
-    line-height: 1.8;
-}
-
-.about-page .section:last-child .btn {
-    margin-top: 15px !important;
 }
 
 
-/* ==========================================================
-   REMOVE UNWANTED DECORATIVE CARD BACKGROUNDS
-========================================================== */
+.about-page .support-cta {
 
-.about-page .card::before,
-.about-page .card::after {
-    background-image: none !important;
+    max-width:
+        850px;
+
+    margin:
+        0 auto;
+
+    text-align:
+        center;
+
+}
+
+
+.about-page .support-cta h2 {
+
+    margin:
+        0 0 13px;
+
+    color:
+        #54261e;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(
+            31px,
+            3.5vw,
+            42px
+        );
+
+    line-height:
+        1.1;
+
+}
+
+
+.about-page .support-cta h2 em {
+
+    color:
+        #26374d;
+
+    font-style:
+        normal;
+
+}
+
+
+.about-page .support-cta > p {
+
+    max-width:
+        680px;
+
+    margin:
+        0 auto;
+
+    color:
+        #65605a;
+
+    font-size:
+        13px;
+
+    line-height:
+        1.8;
+
+}
+
+
+.about-page .support-cta .about-button {
+
+    margin-top:
+        22px;
+
 }
 
 
 /* ==========================================================
    TABLET
-========================================================== */
+   ========================================================== */
 
 @media (max-width: 950px) {
 
-    .about-page .section {
-        padding-top: 60px;
-        padding-bottom: 60px;
-    }
 
-    .about-page .mission-grid {
-        grid-template-columns: 1fr;
+    .about-page .purpose-grid {
 
-        gap: 45px;
-
-        max-width: 750px;
-    }
-
-    .about-page .mission-content {
-        max-width: none;
-    }
-
-    .about-page .cards-grid {
         grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+            1fr;
 
-        max-width: 750px;
+        gap:
+            42px;
+
+        max-width:
+            730px;
+
+    }
+
+
+    .about-page .purpose-content {
+
+        max-width:
+            none;
+
+    }
+
+
+    .about-page .publication-grid {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            35px;
+
+        max-width:
+            730px;
+
+    }
+
+
+    .about-page .publication-content {
+
+        max-width:
+            none;
+
+    }
+
+
+    .about-page .website-cards {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            );
+
+        max-width:
+            730px;
+
+    }
+
+
+    .about-page .website-card:last-child {
+
+        grid-column:
+            1 / -1;
+
+        max-width:
+            calc(
+                50% - 10px
+            );
+
+        width:
+            100%;
+
+        margin:
+            0 auto;
+
     }
 
 }
@@ -589,66 +1808,325 @@
 
 /* ==========================================================
    MOBILE
-========================================================== */
+   ========================================================== */
 
 @media (max-width: 650px) {
 
-    .about-page .section {
-        padding-top: 48px;
-        padding-bottom: 48px;
-    }
 
-    .about-page .section:first-child {
-        padding-top: 45px;
-    }
+    .about-page .about-container {
 
+        width:
+            calc(100% - 32px);
 
-    /* Mission */
-
-    .about-page .mission-grid {
-        gap: 30px;
     }
 
 
-    .about-page .mission-item {
+    .about-page .about-hero {
+
+        padding:
+            52px 0
+            48px;
+
+    }
+
+
+    .about-page .telugu-title {
+
+        font-size:
+            25px;
+
+    }
+
+
+    .about-page .about-hero h2 {
+
+        font-size:
+            35px;
+
+    }
+
+
+    .about-page .about-hero-content > p {
+
+        font-size:
+            13px;
+
+    }
+
+
+    .about-page .hero-note {
+
+        max-width:
+            100%;
+
+        border-radius:
+            12px;
+
+        font-size:
+            9px;
+
+    }
+
+
+    .about-page .purpose-section {
+
+        padding:
+            58px 0
+            60px;
+
+    }
+
+
+    .about-page .purpose-grid {
+
+        gap:
+            32px;
+
+    }
+
+
+    .about-page .section-title {
+
+        font-size:
+            31px;
+
+    }
+
+
+    .about-page .purpose-content p {
+
+        font-size:
+            13px;
+
+    }
+
+
+    .about-page .purpose-item {
+
         grid-template-columns:
-            48px
+            43px
+            27px
+            minmax(0,1fr);
+
+        gap:
+            9px;
+
+        padding:
+            15px;
+
+    }
+
+
+    .about-page .purpose-icon {
+
+        width:
+            41px;
+
+        height:
+            41px;
+
+    }
+
+
+    .about-page .purpose-number {
+
+        font-size:
+            8px;
+
+    }
+
+
+    .about-page .purpose-item h3 {
+
+        font-size:
+            15px;
+
+    }
+
+
+    .about-page .purpose-item p {
+
+        font-size:
+            10px;
+
+    }
+
+
+    .about-page .research-section {
+
+        padding:
+            0 0
+            60px;
+
+    }
+
+
+    .about-page .research-card {
+
+        grid-template-columns:
             1fr;
 
-        gap: 10px;
+        gap:
+            17px;
 
-        padding: 18px;
-    }
+        padding:
+            35px 23px;
 
-    .about-page .mission-item h3 {
-        grid-row: span 2;
-    }
-
-    .about-page .mission-item h4,
-    .about-page .mission-item p {
-        grid-column: 2;
     }
 
 
-    /* Website cards */
+    .about-page .research-icon {
 
-    .about-page .cards-grid {
-        grid-template-columns: 1fr;
+        width:
+            46px;
 
-        gap: 16px;
+        height:
+            46px;
+
+        font-size:
+            16px;
+
     }
 
-    .about-page .cards-grid .card {
-        min-height: auto;
 
-        padding: 25px;
+    .about-page .research-content h2 {
+
+        font-size:
+            30px;
+
     }
 
 
-    /* CTA */
+    .about-page .research-source-row {
 
-    .about-page .section .card[style*="text-align:center"] {
-        padding: 38px 24px;
+        gap:
+            6px;
+
+    }
+
+
+    .about-page .research-source-row span {
+
+        font-size:
+            8px;
+
+    }
+
+
+    .about-page .publication-section {
+
+        padding:
+            0 0
+            65px;
+
+    }
+
+
+    .about-page .publication-grid {
+
+        gap:
+            27px;
+
+    }
+
+
+    .about-page .publication-content p {
+
+        font-size:
+            12px;
+
+    }
+
+
+    .about-page .website-section {
+
+        padding:
+            60px 0
+            65px;
+
+    }
+
+
+    .about-page .website-cards {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            14px;
+
+    }
+
+
+    .about-page .website-card:last-child {
+
+        grid-column:
+            auto;
+
+        max-width:
+            none;
+
+    }
+
+
+    .about-page .website-card {
+
+        min-height:
+            auto;
+
+        padding:
+            24px;
+
+    }
+
+
+    .about-page .information-section {
+
+        padding:
+            60px 0
+            55px;
+
+    }
+
+
+    .about-page .information-card {
+
+        padding:
+            40px 22px;
+
+    }
+
+
+    .about-page .information-card h2 {
+
+        font-size:
+            30px;
+
+    }
+
+
+    .about-page .information-card p {
+
+        font-size:
+            12px;
+
+    }
+
+
+    .about-page .support-cta-section {
+
+        padding:
+            0 0
+            60px;
+
+    }
+
+
+    .about-page .support-cta h2 {
+
+        font-size:
+            30px;
+
     }
 
 }
@@ -656,20 +2134,73 @@
 
 /* ==========================================================
    SMALL MOBILE
-========================================================== */
+   ========================================================== */
 
 @media (max-width: 420px) {
 
+
+    .about-page .about-container {
+
+        width:
+            calc(100% - 26px);
+
+    }
+
+
+    .about-page .about-hero h2 {
+
+        font-size:
+            32px;
+
+    }
+
+
+    .about-page .telugu-title {
+
+        font-size:
+            22px;
+
+    }
+
+
     .about-page .section-title {
-        font-size: 29px;
+
+        font-size:
+            28px;
+
     }
 
-    .about-page .mission-content .section-title {
-        font-size: 29px;
+
+    .about-page .purpose-item {
+
+        grid-template-columns:
+            40px
+            1fr;
+
     }
 
-    .about-page .cards-grid .card h3 {
-        font-size: 19px;
+
+    .about-page .purpose-number {
+
+        display:
+            none;
+
+    }
+
+
+    .about-page .research-content h2 {
+
+        font-size:
+            28px;
+
+    }
+
+
+    .about-page .information-card h2 {
+
+        font-size:
+            28px;
+
     }
 
 }

@@ -755,3 +755,410 @@
     color:var(--accent);
 
 }
+
+/* ==========================================================
+   PREMIUM ARCHIVE OVERRIDES
+   ========================================================== */
+
+.hymns-page {
+    background: #f7f3eb;
+    color: #2b2f35;
+}
+
+.hymns-page .toolbar {
+    padding: 26px 0 24px;
+    background: #f2eadc;
+    border-bottom: 1px solid #e1d6c5;
+}
+
+.hymns-page .toolbar .container {
+    width: min(1100px, calc(100% - 48px));
+    max-width: none;
+    margin: 0 auto;
+    gap: 14px;
+    padding: 0;
+}
+
+.hymns-page .search-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.hymns-page .search-wrapper::before {
+    content: "\\f002";
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    color: #9a8e80;
+    font-size: 12px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hymns-page #searchInput {
+    box-sizing: border-box;
+    width: 100%;
+    height: 44px;
+    padding: 0 16px 0 42px;
+    border: 1px solid #dcd2c4;
+    border-radius: 9px;
+    background: #fffdf9;
+    color: #38332d;
+    font-size: 12px;
+    outline: none;
+}
+
+.hymns-page #searchInput::placeholder {
+    color: #a49b91;
+}
+
+.hymns-page #searchInput:focus {
+    border-color: #b88a44;
+    box-shadow: 0 0 0 3px rgba(184,138,68,.10);
+}
+
+.hymns-page .sort-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.hymns-page .sort-wrapper label {
+    color: #756c62;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.hymns-page #sortSelect {
+    height: 36px;
+    padding: 0 11px;
+    border: 1px solid #dcd2c4;
+    border-radius: 8px;
+    background: #fffdf9;
+    color: #514a43;
+    font-size: 11px;
+}
+
+.hymns-page .filter-group,
+.hymns-page #languageContainer,
+.hymns-page #alphabetContainer,
+.hymns-page #numberContainer,
+.hymns-page #categoryContainer {
+    box-sizing: border-box;
+}
+
+.hymns-page .filter-group {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+}
+
+.hymns-page .filter-title {
+    margin-bottom: 8px;
+    color: #5b5147;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.hymns-page .filter-buttons,
+.hymns-page .language-buttons {
+    gap: 5px;
+}
+
+.hymns-page .filter-btn,
+.hymns-page .language-btn {
+    min-height: 27px;
+    padding: 4px 10px;
+    border: 1px solid #d6cec2;
+    border-radius: 50px;
+    background: #fffdf9;
+    color: #655d55;
+    font-size: 10px;
+}
+
+.hymns-page .filter-btn:hover,
+.hymns-page .language-btn:hover {
+    border-color: #a87518;
+    color: #54261e;
+    background: #faf4e9;
+}
+
+.hymns-page .filter-btn.active,
+.hymns-page .language-btn.active {
+    border-color: #3f4b5b;
+    background: #3f4b5b;
+    color: #fff;
+}
+
+/* Dynamic filter containers become one clean panel */
+.hymns-page #languageContainer,
+.hymns-page #alphabetContainer,
+.hymns-page #numberContainer,
+.hymns-page #categoryContainer {
+    margin-top: 3px;
+}
+
+.hymns-page #languageContainer + #alphabetContainer,
+.hymns-page #alphabetContainer + #numberContainer,
+.hymns-page #numberContainer + #categoryContainer {
+    margin-top: 12px;
+}
+
+/* Results area */
+.hymns-page .section {
+    padding-top: 42px;
+    padding-bottom: 72px;
+}
+
+.hymns-page .section > .container {
+    width: min(1100px, calc(100% - 48px));
+    max-width: none;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.hymns-page .results-bar {
+    width: 100%;
+    margin: 0 0 16px;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+}
+
+.hymns-page #resultsText {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 0 11px;
+    border: 1px solid #dfd4c5;
+    border-radius: 50px;
+    background: #fffdf9;
+    color: #8b621f;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .2px;
+}
+
+/* Archive table */
+.hymns-page .hymns-table {
+    overflow: hidden;
+    background: #fffdf9;
+    border: 1px solid #ded4c6;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(50,35,20,.055);
+}
+
+.hymns-page .table-header {
+    display: grid;
+    grid-template-columns: 68px minmax(260px, 1.25fr) minmax(260px, 1fr) 80px;
+    align-items: center;
+    min-height: 42px;
+    padding: 0 18px;
+    background: #3f4b5b;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.hymns-page .table-header .col-youtube {
+    text-align: center;
+}
+
+.hymns-page .table-body {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.hymns-page .hymn-row {
+    display: grid;
+    grid-template-columns: 68px minmax(260px, 1.25fr) minmax(260px, 1fr) 80px;
+    grid-template-areas: "number title author youtube";
+    align-items: center;
+    min-height: 62px;
+    padding: 0 18px;
+    border-bottom: 1px solid #e5ddd3;
+    transition: background .18s ease;
+}
+
+.hymns-page .hymn-row:last-child {
+    border-bottom: 0;
+}
+
+.hymns-page .hymn-row:nth-child(even) {
+    background: #fcfaf6;
+}
+
+.hymns-page .hymn-row:hover,
+.hymns-page .hymn-row:nth-child(even):hover {
+    background: #f8f0e3;
+}
+
+.hymns-page .hymn-number {
+    grid-area: number;
+    color: #a87518;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.hymns-page .hymn-title {
+    grid-area: title;
+    min-width: 0;
+    color: #394b63;
+    font-family: sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.25;
+}
+
+.hymns-page .hymn-title:hover {
+    color: #8b621f;
+}
+
+.hymns-page .hymn-author {
+    grid-area: author;
+    margin: 0;
+    padding-right: 15px;
+    color: #625d56;
+    font-size: 11px;
+    line-height: 1.45;
+}
+
+.hymns-page .hymn-youtube {
+    grid-area: youtube;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+.hymns-page .youtube-link {
+    width: 32px;
+    height: 32px;
+}
+
+.hymns-page .youtube-icon {
+    width: 17px;
+    height: 17px;
+}
+
+/* Prevent the old horizontal-scroll behavior */
+.hymns-page .hymns-table {
+    overflow-x: hidden;
+}
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+@media (max-width: 950px) {
+    .hymns-page .toolbar .container,
+    .hymns-page .section > .container {
+        width: min(760px, calc(100% - 36px));
+    }
+
+    .hymns-page .table-header,
+    .hymns-page .hymn-row {
+        grid-template-columns: 55px minmax(210px, 1.25fr) minmax(190px, 1fr) 60px;
+    }
+}
+
+@media (max-width: 700px) {
+    .hymns-page .toolbar {
+        padding: 18px 0;
+    }
+
+    .hymns-page .toolbar .container,
+    .hymns-page .section > .container {
+        width: calc(100% - 28px);
+    }
+
+    .hymns-page .section {
+        padding-top: 32px;
+        padding-bottom: 52px;
+    }
+
+    .hymns-page .sort-wrapper {
+        width: 100%;
+    }
+
+    .hymns-page #sortSelect {
+        flex: 1;
+    }
+
+    .hymns-page .results-bar {
+        margin-bottom: 13px;
+    }
+
+    .hymns-page .table-header {
+        display: none;
+    }
+
+    .hymns-page .hymn-row {
+        display: grid;
+        grid-template-columns: 38px 1fr;
+        grid-template-areas:
+            "number title"
+            "number author"
+            "number youtube";
+        gap: 5px 9px;
+        align-items: start;
+        min-height: 0;
+        padding: 16px 13px;
+    }
+
+    .hymns-page .hymn-number {
+        padding-top: 3px;
+    }
+
+    .hymns-page .hymn-title {
+        font-size: 16px;
+    }
+
+    .hymns-page .hymn-author {
+        padding-right: 0;
+        font-size: 10px;
+    }
+
+    .hymns-page .hymn-youtube {
+        justify-content: flex-start;
+        margin-top: 2px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hymns-page .toolbar .container,
+    .hymns-page .section > .container {
+        width: calc(100% - 22px);
+    }
+
+    .hymns-page #searchInput {
+        font-size: 11px;
+    }
+
+    .hymns-page .filter-btn,
+    .hymns-page .language-btn {
+        min-height: 25px;
+        padding: 4px 8px;
+        font-size: 9px;
+    }
+
+    .hymns-page .hymn-row {
+        grid-template-columns: 32px 1fr;
+        padding: 14px 11px;
+    }
+
+    .hymns-page .hymn-title {
+        font-size: 15px;
+    }
+}

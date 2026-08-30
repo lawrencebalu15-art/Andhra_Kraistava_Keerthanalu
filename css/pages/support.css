@@ -1,642 +1,1728 @@
 /* ==========================================================
    SUPPORT PAGE
    Andhra Kraistava Keerthanalu
-========================================================== */
+   Premium Archive Design
+   ========================================================== */
 
 
 /* ==========================================================
-   PAGE FOUNDATION
-========================================================== */
+   FOUNDATION
+   ========================================================== */
 
 .support-page {
-    background: #f7f3eb;
-    color: #2b2f35;
+
+    background:
+        #f7f3eb;
+
+    color:
+        #2b2f35;
+
 }
+
 
 .support-page main {
-    overflow: hidden;
+
+    overflow:
+        hidden;
+
 }
 
 
-/* ==========================================================
-   SECTION SPACING
-========================================================== */
+.support-page .support-container {
 
-.support-page .section {
-    padding-top: 72px;
-    padding-bottom: 72px;
-}
+    width:
+        min(
+            1180px,
+            calc(100% - 48px)
+        );
 
-.support-page .section:first-child {
-    padding-top: 70px;
-    padding-bottom: 45px;
+    margin:
+        0 auto;
+
 }
 
 
 /* ==========================================================
    HERO
-========================================================== */
+   ========================================================== */
 
-.support-page .archive-hero {
-    position: relative;
+.support-page .support-hero {
+
+    position:
+        relative;
+
+    padding:
+        82px 0
+        72px;
+
+    text-align:
+        center;
+
 }
 
-.support-page .archive-hero .section-label {
-    display: inline-block;
-    margin-bottom: 14px;
+
+.support-page .support-hero::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    bottom:
+        0;
+
+    left:
+        50%;
+
+    width:
+        min(
+            900px,
+            calc(100% - 80px)
+        );
+
+    height:
+        1px;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #d8c8ad,
+            transparent
+        );
+
 }
 
-.support-page .archive-hero .section-title {
-    max-width: 780px;
-    margin-left: auto;
-    margin-right: auto;
-}
 
-.support-page .archive-hero .section-subtitle {
-    max-width: 720px;
-    margin-left: auto;
-    margin-right: auto;
+.support-page .support-hero-content {
+
+    max-width:
+        820px;
+
+    margin:
+        0 auto;
+
 }
 
 
 /* ==========================================================
-   TYPOGRAPHY
-========================================================== */
+   HERO EYEBROW
+   ========================================================== */
 
-.support-page .section-label {
-    color: #a87518;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+.support-page .support-eyebrow {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        12px;
+
+    margin-bottom:
+        20px;
+
+    color:
+        #a87518;
+
+    font-size:
+        10px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        2.5px;
+
+    text-transform:
+        uppercase;
+
 }
 
-.support-page .section-title {
-    color: #54261e;
+
+.support-page .eyebrow-line {
+
+    width:
+        35px;
+
+    height:
+        1px;
+
+    background:
+        #c79b3b;
+
 }
 
-.support-page .section-subtitle {
-    color: #5f5c57;
-    line-height: 1.8;
+
+.support-page .eyebrow-line.short {
+
+    width:
+        15px;
+
 }
 
 
 /* ==========================================================
-   THE WORK — TWO COLUMN LAYOUT
-========================================================== */
+   HERO TITLE
+   ========================================================== */
+
+.support-page .support-hero h1 {
+
+    max-width:
+        800px;
+
+    margin:
+        0 auto 20px;
+
+    color:
+        #54261e;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(
+            42px,
+            5vw,
+            62px
+        );
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        -1.3px;
+
+    line-height:
+        1.03;
+
+}
+
+
+.support-page .support-hero h1 em {
+
+    color:
+        #26374d;
+
+    font-style:
+        normal;
+
+}
+
+
+.support-page .support-hero > div > p {
+
+    max-width:
+        680px;
+
+    margin:
+        0 auto;
+
+    color:
+        #625e58;
+
+    font-size:
+        15px;
+
+    line-height:
+        1.85;
+
+}
+
+
+/* ==========================================================
+   HERO DIVIDER
+   ========================================================== */
+
+.support-page .hero-divider {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        14px;
+
+    width:
+        min(
+            380px,
+            70%
+        );
+
+    margin:
+        27px auto 22px;
+
+}
+
+
+.support-page .hero-divider::before,
+.support-page .hero-divider::after {
+
+    content:
+        "";
+
+    flex:
+        1;
+
+    height:
+        1px;
+
+    background:
+        #decda9;
+
+}
+
+
+.support-page .hero-divider span {
+
+    color:
+        #a87518;
+
+    font-size:
+        13px;
+
+}
+
+
+/* ==========================================================
+   HERO PURPOSE
+   ========================================================== */
+
+.support-page .hero-purpose {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        12px;
+
+    max-width:
+        520px;
+
+    padding:
+        11px 17px;
+
+    background:
+        rgba(255,253,249,.7);
+
+    border:
+        1px solid
+        #e5dbcc;
+
+    border-radius:
+        50px;
+
+}
+
+
+.support-page .hero-purpose > span {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    width:
+        30px;
+
+    height:
+        30px;
+
+    color:
+        #a87518;
+
+    background:
+        #f7ecd9;
+
+    border-radius:
+        50%;
+
+    font-size:
+        12px;
+
+}
+
+
+.support-page .hero-purpose p {
+
+    margin:
+        0;
+
+    color:
+        #665f57;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        12px;
+
+    font-style:
+        italic;
+
+    line-height:
+        1.5;
+
+}
+
+
+/* ==========================================================
+   WORK SECTION
+   ========================================================== */
+
+.support-page .work-section {
+
+    padding:
+        78px 0
+        82px;
+
+}
+
 
 .support-page .mission-grid {
-    display: grid;
+
+    display:
+        grid;
+
     grid-template-columns:
-        minmax(0, 1.1fr)
-        minmax(340px, 0.9fr);
+        minmax(0,1.05fr)
+        minmax(370px,.8fr);
 
-    gap: 70px;
+    gap:
+        75px;
 
-    align-items: center;
+    align-items:
+        center;
 
-    max-width: 1050px;
-    margin: 0 auto;
+    max-width:
+        1060px;
+
+    margin:
+        0 auto;
+
 }
 
 
 /* ==========================================================
    MISSION CONTENT
-========================================================== */
+   ========================================================== */
 
 .support-page .mission-content {
-    max-width: 650px;
+
+    max-width:
+        640px;
+
 }
 
-.support-page .mission-content .section-label {
-    display: inline-block;
-    margin-bottom: 12px;
+
+.support-page .section-label {
+
+    display:
+        inline-block;
+
+    margin-bottom:
+        12px;
+
+    color:
+        #a87518;
+
+    font-size:
+        10px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        2.2px;
+
+    text-transform:
+        uppercase;
+
 }
 
-.support-page .mission-content .section-title {
-    margin-top: 0;
-    margin-bottom: 25px;
+
+.support-page .section-title {
+
+    margin:
+        0;
+
+    color:
+        #54261e;
 
     font-family:
         Georgia,
         "Times New Roman",
         serif;
 
-    font-size: clamp(30px, 3vw, 42px);
-    line-height: 1.15;
+    font-size:
+        clamp(
+            32px,
+            3.5vw,
+            45px
+        );
+
+    line-height:
+        1.1;
+
 }
+
+
+.support-page .section-title em {
+
+    color:
+        #26374d;
+
+    font-style:
+        normal;
+
+}
+
+
+.support-page .mission-content .section-title {
+
+    margin-bottom:
+        24px;
+
+}
+
 
 .support-page .mission-content p {
-    margin: 0 0 18px;
 
-    color: #5d5a56;
+    margin:
+        0 0 17px;
 
-    font-size: 15px;
-    line-height: 1.85;
+    color:
+        #625e58;
+
+    font-size:
+        14px;
+
+    line-height:
+        1.85;
+
 }
 
-.support-page .mission-content p:last-child {
-    margin-bottom: 0;
-}
 
 .support-page .mission-content strong {
-    color: #54261e;
+
+    color:
+        #54261e;
+
+}
+
+
+/* ==========================================================
+   MISSION HIGHLIGHT
+   ========================================================== */
+
+.support-page .mission-highlight {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        13px;
+
+    margin:
+        27px 0;
+
+    padding:
+        17px 19px;
+
+    background:
+        #fffdf9;
+
+    border:
+        1px solid
+        #e4dace;
+
+    border-left:
+        3px solid
+        #b17b1f;
+
+    border-radius:
+        0 11px 11px 0;
+
+}
+
+
+.support-page .mission-highlight i {
+
+    color:
+        #a87518;
+
+    font-size:
+        17px;
+
+}
+
+
+.support-page .mission-highlight span {
+
+    color:
+        #625b52;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        13px;
+
+    font-style:
+        italic;
+
+    line-height:
+        1.6;
+
 }
 
 
 /* ==========================================================
    MISSION BOX
-========================================================== */
+   ========================================================== */
 
 .support-page .mission-box {
-    display: flex;
-    flex-direction: column;
 
-    gap: 12px;
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        12px;
+
 }
 
 
 /* ==========================================================
    MISSION ITEMS
-========================================================== */
+   ========================================================== */
 
 .support-page .mission-item {
-    position: relative;
 
-    display: grid;
+    display:
+        grid;
 
-    grid-template-columns: 58px 100px 1fr;
+    grid-template-columns:
+        48px
+        35px
+        minmax(0,1fr);
 
-    align-items: center;
+    gap:
+        13px;
 
-    min-height: 100px;
+    align-items:
+        center;
 
-    padding: 20px 22px;
+    min-height:
+        96px;
 
-    background: #fffdf9;
+    padding:
+        18px;
 
-    border: 1px solid #e6ddd0;
+    background:
+        #fffdf9;
 
-    border-radius: 12px;
+    border:
+        1px solid
+        #e4dace;
+
+    border-radius:
+        13px;
 
     box-shadow:
-        0 5px 18px rgba(63, 43, 27, 0.045);
+        0 6px 22px
+        rgba(63,43,27,.045);
 
     transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+
 }
+
 
 .support-page .mission-item:hover {
-    transform: translateY(-3px);
 
-    border-color: #d8c7ae;
+    transform:
+        translateY(-3px);
+
+    border-color:
+        #d4c09d;
 
     box-shadow:
-        0 12px 28px rgba(63, 43, 27, 0.08);
+        0 14px 32px
+        rgba(63,43,27,.08);
+
 }
 
 
-/* ICON */
+/* ==========================================================
+   MISSION ICON
+   ========================================================== */
+
+.support-page .mission-icon {
+
+    width:
+        46px;
+
+    height:
+        46px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    color:
+        #986a20;
+
+    background:
+        #f7ecd9;
+
+    border-radius:
+        50%;
+
+    font-size:
+        16px;
+
+}
+
+
+.support-page .mission-number {
+
+    color:
+        #b28a40;
+
+    font-size:
+        9px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        1px;
+
+}
+
 
 .support-page .mission-item h3 {
-    display: flex;
 
-    align-items: center;
-    justify-content: center;
+    margin:
+        0 0 4px;
 
-    width: 42px;
-    height: 42px;
-
-    margin: 0;
-
-    color: #a87518;
-
-    background: #f6ead4;
-
-    border-radius: 50%;
-
-    font-size: 18px;
-}
-
-
-/* TITLE */
-
-.support-page .mission-item h4 {
-    margin: 0;
-
-    color: #28364a;
+    color:
+        #28364a;
 
     font-family:
         Georgia,
         "Times New Roman",
         serif;
 
-    font-size: 17px;
+    font-size:
+        17px;
+
 }
 
 
-/* DESCRIPTION */
-
 .support-page .mission-item p {
-    margin: 0;
 
-    color: #64615c;
+    margin:
+        0;
 
-    font-size: 13px;
-    line-height: 1.65;
+    color:
+        #68635d;
+
+    font-size:
+        12px;
+
+    line-height:
+        1.6;
+
+}
+
+
+/* ==========================================================
+   FINANCIAL SECTION
+   ========================================================== */
+
+.support-page .financial-section {
+
+    padding:
+        82px 0
+        88px;
+
+    background:
+        #f2eadc;
+
+    border-top:
+        1px solid
+        rgba(168,117,24,.10);
+
+    border-bottom:
+        1px solid
+        rgba(168,117,24,.10);
+
 }
 
 
 /* ==========================================================
    SECTION HEADER
-========================================================== */
+   ========================================================== */
 
 .support-page .section-header {
-    max-width: 900px;
 
-    margin: 0 auto 35px;
+    max-width:
+        720px;
 
-    text-align: center;
+    margin:
+        0 auto 40px;
+
+    text-align:
+        center;
+
 }
+
 
 .support-page .section-header .section-title {
-    margin-top: 10px;
-    margin-bottom: 12px;
+
+    margin-bottom:
+        14px;
+
 }
 
-.support-page .section-header .section-subtitle {
-    max-width: 680px;
-    margin-left: auto;
-    margin-right: auto;
+
+.support-page .section-subtitle {
+
+    max-width:
+        650px;
+
+    margin:
+        0 auto;
+
+    color:
+        #65605a;
+
+    font-size:
+        14px;
+
+    line-height:
+        1.8;
+
 }
 
 
 /* ==========================================================
-   FINANCIAL SUPPORT CARDS
-========================================================== */
+   SUPPORT CARDS
+   ========================================================== */
 
-.support-page .cards-grid {
-    display: grid;
+.support-page .support-cards {
+
+    display:
+        grid;
 
     grid-template-columns:
-        repeat(3, minmax(0, 1fr));
+        repeat(
+            3,
+            minmax(0,1fr)
+        );
 
-    gap: 22px;
+    gap:
+        20px;
 
-    max-width: 1050px;
+    max-width:
+        1060px;
 
-    margin: 0 auto;
+    margin:
+        0 auto;
+
 }
 
 
-/* ==========================================================
-   SUPPORT CARD
-========================================================== */
+.support-page .support-card {
 
-.support-page .cards-grid .card {
-    position: relative;
+    position:
+        relative;
 
-    min-height: 255px;
+    min-height:
+        270px;
 
-    padding: 30px;
+    padding:
+        29px;
 
-    background: #fffdf9;
+    overflow:
+        hidden;
 
-    border: 1px solid #e6ddd0;
+    background:
+        #fffdf9;
 
-    border-radius: 14px;
+    border:
+        1px solid
+        #e2d8c9;
+
+    border-radius:
+        15px;
 
     box-shadow:
-        0 7px 24px rgba(63, 43, 27, 0.05);
-
-    overflow: hidden;
+        0 8px 28px
+        rgba(63,43,27,.055);
 
     transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+
 }
 
-.support-page .cards-grid .card:hover {
-    transform: translateY(-5px);
 
-    border-color: #d8c7ae;
+.support-page .support-card::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    top:
+        0;
+
+    left:
+        0;
+
+    width:
+        100%;
+
+    height:
+        3px;
+
+    background:
+        #a87518;
+
+}
+
+
+.support-page .support-card:hover {
+
+    transform:
+        translateY(-5px);
+
+    border-color:
+        #d3c09f;
 
     box-shadow:
-        0 16px 35px rgba(63, 43, 27, 0.09);
-}
+        0 17px 38px
+        rgba(63,43,27,.10);
 
-
-/* subtle top accent */
-
-.support-page .cards-grid .card::after {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 3px;
-
-    background: #a87518;
-
-    opacity: 0.8;
 }
 
 
 /* ==========================================================
-   CARD NUMBER
-========================================================== */
+   CARD TOP
+   ========================================================== */
+
+.support-page .support-card-top {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    margin-bottom:
+        25px;
+
+}
+
 
 .support-page .card-number {
-    display: block;
 
-    margin-bottom: 20px;
+    color:
+        #a87518;
 
-    color: #a87518;
+    font-size:
+        10px;
 
-    font-size: 11px;
-    font-weight: 700;
+    font-weight:
+        800;
 
-    letter-spacing: 2px;
+    letter-spacing:
+        2px;
+
 }
 
 
-/* ==========================================================
-   CARD TITLE
-========================================================== */
+.support-page .support-card-icon {
 
-.support-page .cards-grid .card h3 {
-    display: flex;
+    width:
+        43px;
 
-    align-items: center;
+    height:
+        43px;
 
-    gap: 10px;
+    display:
+        flex;
 
-    margin: 0 0 15px;
+    align-items:
+        center;
 
-    color: #54261e;
+    justify-content:
+        center;
+
+    color:
+        #986a20;
+
+    background:
+        #f7ecd9;
+
+    border-radius:
+        50%;
+
+    font-size:
+        16px;
+
+}
+
+
+.support-page .support-card h3 {
+
+    margin:
+        0 0 13px;
+
+    color:
+        #54261e;
 
     font-family:
         Georgia,
         "Times New Roman",
         serif;
 
-    font-size: 21px;
-    line-height: 1.3;
+    font-size:
+        21px;
+
+    line-height:
+        1.25;
+
 }
 
-.support-page .cards-grid .card h3 i {
-    color: #a87518;
 
-    font-size: 17px;
+.support-page .support-card p {
+
+    margin:
+        0;
+
+    color:
+        #65615b;
+
+    font-size:
+        13px;
+
+    line-height:
+        1.8;
+
+}
+
+
+.support-page .card-bottom {
+
+    position:
+        absolute;
+
+    bottom:
+        24px;
+
+    left:
+        29px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        8px;
+
+    color:
+        #9b6d22;
+
+    font-size:
+        10px;
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        .3px;
+
+}
+
+
+.support-page .card-bottom i {
+
+    transition:
+        transform .25s ease;
+
+}
+
+
+.support-page .support-card:hover
+.card-bottom i {
+
+    transform:
+        translateX(3px);
+
 }
 
 
 /* ==========================================================
-   CARD DESCRIPTION
-========================================================== */
+   INFORMATION SECTION
+   ========================================================== */
 
-.support-page .cards-grid .card p {
-    margin: 0;
+.support-page .information-section {
 
-    color: #65615b;
+    padding:
+        90px 0;
 
-    font-size: 14px;
-    line-height: 1.8;
 }
 
 
-/* ==========================================================
-   INFORMATION CONTRIBUTION SECTION
-========================================================== */
+.support-page .information-card {
 
-.support-page .section .archive-hero {
-    max-width: 850px;
+    position:
+        relative;
+
+    max-width:
+        820px;
+
+    margin:
+        0 auto;
+
+    padding:
+        52px 55px;
+
+    background:
+        #fffdf9;
+
+    border:
+        1px solid
+        #e3d9cb;
+
+    border-radius:
+        17px;
+
+    box-shadow:
+        0 12px 35px
+        rgba(63,43,27,.055);
+
+    text-align:
+        center;
+
 }
 
-.support-page .archive-hero .mission-buttons {
-    display: flex;
 
-    flex-wrap: wrap;
+.support-page .information-icon {
 
-    gap: 12px;
+    width:
+        55px;
 
-    align-items: center;
-    justify-content: center;
+    height:
+        55px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    margin:
+        0 auto 18px;
+
+    color:
+        #a87518;
+
+    background:
+        #f7ecd9;
+
+    border-radius:
+        50%;
+
+    font-size:
+        20px;
+
+}
+
+
+.support-page .information-card .section-label {
+
+    margin-bottom:
+        11px;
+
+}
+
+
+.support-page .information-card h2 {
+
+    margin:
+        0 0 17px;
+
+    color:
+        #54261e;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(
+            30px,
+            4vw,
+            42px
+        );
+
+    line-height:
+        1.1;
+
+}
+
+
+.support-page .information-card h2 em {
+
+    color:
+        #26374d;
+
+    font-style:
+        normal;
+
+}
+
+
+.support-page .information-card p {
+
+    max-width:
+        680px;
+
+    margin:
+        0 auto;
+
+    color:
+        #66615a;
+
+    font-size:
+        14px;
+
+    line-height:
+        1.8;
+
 }
 
 
 /* ==========================================================
    BUTTONS
-========================================================== */
+   ========================================================== */
 
-.support-page .mission-buttons .btn {
-    min-height: 46px;
+.support-page .support-button {
 
-    padding: 12px 22px;
+    display:
+        inline-flex;
 
-    border-radius: 7px;
+    align-items:
+        center;
 
-    font-size: 14px;
+    justify-content:
+        center;
+
+    gap:
+        11px;
+
+    min-height:
+        46px;
+
+    box-sizing:
+        border-box;
+
+    padding:
+        11px 20px;
+
+    border-radius:
+        8px;
+
+    text-decoration:
+        none;
+
+    font-size:
+        12px;
+
+    font-weight:
+        700;
+
+    transition:
+        transform .2s ease,
+        background .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+
+}
+
+
+.support-page .information-card
+.support-button {
+
+    margin-top:
+        25px;
+
+}
+
+
+.support-page .support-button-dark {
+
+    color:
+        #ffffff;
+
+    background:
+        #3f4b5b;
+
+    border:
+        1px solid
+        #3f4b5b;
+
+}
+
+
+.support-page .support-button-dark:hover {
+
+    background:
+        #303b49;
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(47,57,71,.18);
+
+}
+
+
+.support-page .support-button-outline {
+
+    color:
+        #54261e;
+
+    background:
+        transparent;
+
+    border:
+        1px solid
+        #54261e;
+
+}
+
+
+.support-page .support-button-outline:hover {
+
+    background:
+        #54261e;
+
+    color:
+        #ffffff;
+
+    transform:
+        translateY(-2px);
+
 }
 
 
 /* ==========================================================
-   CONTRIBUTION CTA
-========================================================== */
+   CONTRIBUTION SECTION
+   ========================================================== */
 
-.support-page .section > .container > .card {
-    max-width: 850px;
+.support-page .contribution-section {
 
-    margin-left: auto;
-    margin-right: auto;
+    padding:
+        0 0
+        85px;
 
-    padding: 58px 55px;
+}
+
+
+.support-page .contribution-card {
+
+    position:
+        relative;
+
+    max-width:
+        850px;
+
+    margin:
+        0 auto;
+
+    padding:
+        55px 60px;
+
+    overflow:
+        hidden;
 
     background:
         linear-gradient(
             135deg,
             #fffdf9 0%,
-            #faf5ec 100%
+            #faf4e9 100%
         );
 
-    border: 1px solid #e4d8c8;
+    border:
+        1px solid
+        #e2d7c7;
 
-    border-radius: 16px;
+    border-radius:
+        18px;
 
     box-shadow:
-        0 12px 35px rgba(63, 43, 27, 0.07);
+        0 15px 40px
+        rgba(63,43,27,.07);
+
+    text-align:
+        center;
+
 }
 
 
-/* CTA LABEL */
+.support-page .contribution-card::before {
 
-.support-page .section > .container > .card .section-label {
-    display: block;
+    content:
+        "";
 
-    margin-bottom: 12px;
+    position:
+        absolute;
+
+    top:
+        0;
+
+    left:
+        0;
+
+    width:
+        100%;
+
+    height:
+        4px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #54261e,
+            #d4af37,
+            #54261e
+        );
+
 }
 
 
-/* CTA HEADING */
+.support-page .contribution-card h2 {
 
-.support-page .section > .container > .card h2 {
-    margin: 0 0 18px;
+    margin:
+        0 0 17px;
 
-    color: #54261e;
+    color:
+        #54261e;
 
     font-family:
         Georgia,
         "Times New Roman",
         serif;
 
-    font-size: clamp(30px, 4vw, 44px);
+    font-size:
+        clamp(
+            32px,
+            4vw,
+            45px
+        );
 
-    line-height: 1.15;
+    line-height:
+        1.1;
+
 }
 
 
-/* CTA DESCRIPTION */
+.support-page .contribution-card p {
 
-.support-page .section > .container > .card > p {
-    max-width: 680px;
+    max-width:
+        690px;
 
-    margin: 0 auto;
+    margin:
+        0 auto;
 
-    color: #68635d;
+    color:
+        #65605a;
 
-    font-size: 15px;
+    font-size:
+        14px;
 
-    line-height: 1.8;
+    line-height:
+        1.8;
+
+}
+
+
+.support-page .contribution-buttons {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        11px;
+
+    margin-top:
+        27px;
+
+}
+
+
+.support-page .contribution-decoration {
+
+    position:
+        absolute;
+
+    color:
+        #d4af37;
+
+    font-size:
+        20px;
+
+    opacity:
+        .45;
+
+}
+
+
+.support-page .contribution-decoration.left {
+
+    top:
+        25px;
+
+    left:
+        30px;
+
+}
+
+
+.support-page .contribution-decoration.right {
+
+    bottom:
+        25px;
+
+    right:
+        30px;
+
 }
 
 
 /* ==========================================================
-   CTA BUTTONS
-========================================================== */
+   THANK YOU
+   ========================================================== */
 
-.support-page .section > .container > .card .mission-buttons {
-    display: flex;
+.support-page .thank-you-section {
 
-    flex-wrap: wrap;
+    padding:
+        0 0
+        70px;
 
-    gap: 12px;
-
-    justify-content: center;
-
-    margin-top: 30px !important;
 }
 
 
-/* ==========================================================
-   THANK YOU CARD
-========================================================== */
+.support-page .thank-you-content {
 
-.support-page .section:last-child .card {
-    max-width: 850px;
+    max-width:
+        850px;
 
-    margin-left: auto;
-    margin-right: auto;
+    margin:
+        0 auto;
 
-    padding: 42px 50px;
+    padding:
+        34px 45px;
 
-    background: transparent;
+    border:
+        1px solid
+        #e1d8cb;
 
-    border: 1px solid #e5ddd1;
+    border-radius:
+        13px;
 
-    border-radius: 14px;
+    text-align:
+        center;
 
-    box-shadow: none;
 }
 
 
-/* THANK YOU HEADING */
+.support-page .thank-you-title {
 
-.support-page .section:last-child .card h3 {
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
-    justify-content: center;
+    align-items:
+        center;
 
-    gap: 9px;
+    justify-content:
+        center;
 
-    margin: 0 0 18px;
+    gap:
+        9px;
 
-    color: #a87518;
+    margin-bottom:
+        14px;
+
+    color:
+        #a87518;
 
     font-family:
         Georgia,
         "Times New Roman",
         serif;
 
-    font-size: 25px;
-}
+    font-size:
+        22px;
 
-.support-page .section:last-child .card h3 i {
-    color: #c78a12;
-}
+    font-weight:
+        700;
 
-
-/* THANK YOU TEXT */
-
-.support-page .section:last-child .card p {
-    max-width: 700px;
-
-    margin: 0 auto;
-
-    color: #77716a;
-
-    font-size: 14px;
-
-    line-height: 1.85;
 }
 
 
-/* ==========================================================
-   REMOVE UNWANTED GLOBAL CARD IMAGE EFFECTS
-========================================================== */
+.support-page .thank-you-title i {
 
-.support-page .card::before {
-    background-image: none !important;
+    color:
+        #c78a12;
+
+    font-size:
+        15px;
+
+}
+
+
+.support-page .thank-you-content p {
+
+    max-width:
+        700px;
+
+    margin:
+        0 auto;
+
+    color:
+        #77716a;
+
+    font-size:
+        13px;
+
+    line-height:
+        1.8;
+
 }
 
 
 /* ==========================================================
    TABLET
-========================================================== */
+   ========================================================== */
 
 @media (max-width: 950px) {
 
-    .support-page .section {
-        padding-top: 60px;
-        padding-bottom: 60px;
-    }
-
-
     .support-page .mission-grid {
-        grid-template-columns: 1fr;
 
-        gap: 40px;
+        grid-template-columns:
+            1fr;
 
-        max-width: 720px;
+        gap:
+            45px;
+
+        max-width:
+            720px;
+
     }
 
 
     .support-page .mission-content {
-        max-width: none;
+
+        max-width:
+            none;
+
     }
 
 
-    .support-page .cards-grid {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+    .support-page .support-cards {
 
-        max-width: 720px;
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            );
+
+        max-width:
+            720px;
+
+    }
+
+
+    .support-page .support-card:last-child {
+
+        grid-column:
+            1 / -1;
+
+        max-width:
+            calc(
+                50% - 10px
+            );
+
+        width:
+            100%;
+
+        margin:
+            0 auto;
+
     }
 
 }
@@ -644,87 +1730,310 @@
 
 /* ==========================================================
    MOBILE
-========================================================== */
+   ========================================================== */
 
 @media (max-width: 650px) {
 
-    .support-page .section {
-        padding-top: 48px;
-        padding-bottom: 48px;
+    .support-page .support-container {
+
+        width:
+            calc(100% - 32px);
+
     }
 
 
-    .support-page .section:first-child {
-        padding-top: 45px;
+    .support-page .support-hero {
+
+        padding:
+            55px 0
+            52px;
+
+    }
+
+
+    .support-page .support-hero h1 {
+
+        font-size:
+            40px;
+
+        letter-spacing:
+            -.8px;
+
+    }
+
+
+    .support-page .support-hero > div > p {
+
+        font-size:
+            14px;
+
+        line-height:
+            1.75;
+
+    }
+
+
+    .support-page .hero-purpose {
+
+        max-width:
+            100%;
+
+        border-radius:
+            12px;
+
+        padding:
+            10px 13px;
+
+        text-align:
+            left;
+
+    }
+
+
+    .support-page .hero-purpose p {
+
+        font-size:
+            11px;
+
+    }
+
+
+    .support-page .work-section {
+
+        padding:
+            58px 0
+            60px;
+
     }
 
 
     .support-page .mission-grid {
-        gap: 30px;
+
+        gap:
+            35px;
+
+    }
+
+
+    .support-page .section-title {
+
+        font-size:
+            32px;
+
+    }
+
+
+    .support-page .mission-content p {
+
+        font-size:
+            13px;
+
+        line-height:
+            1.75;
+
     }
 
 
     .support-page .mission-item {
+
         grid-template-columns:
-            50px 1fr;
+            44px
+            28px
+            minmax(0,1fr);
 
-        gap: 12px;
+        gap:
+            10px;
 
-        padding: 18px;
+        padding:
+            15px;
+
+    }
+
+
+    .support-page .mission-icon {
+
+        width:
+            42px;
+
+        height:
+            42px;
+
+        font-size:
+            14px;
+
+    }
+
+
+    .support-page .mission-number {
+
+        font-size:
+            8px;
+
     }
 
 
     .support-page .mission-item h3 {
-        grid-row: span 2;
-    }
 
+        font-size:
+            16px;
 
-    .support-page .mission-item h4 {
-        align-self: end;
     }
 
 
     .support-page .mission-item p {
-        grid-column: 2;
+
+        font-size:
+            11px;
+
     }
 
 
-    .support-page .cards-grid {
-        grid-template-columns: 1fr;
+    .support-page .financial-section {
 
-        gap: 16px;
+        padding:
+            60px 0
+            65px;
+
     }
 
 
-    .support-page .cards-grid .card {
-        min-height: auto;
+    .support-page .section-header {
 
-        padding: 26px;
+        margin-bottom:
+            30px;
+
     }
 
 
-    .support-page .section > .container > .card {
-        padding: 40px 24px;
+    .support-page .support-cards {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            15px;
+
     }
 
 
-    .support-page .section:last-child .card {
-        padding: 32px 24px;
+    .support-page .support-card {
+
+        min-height:
+            245px;
+
+        padding:
+            25px;
+
     }
 
 
-    .support-page .archive-hero .mission-buttons,
-    .support-page .section > .container > .card .mission-buttons {
-        flex-direction: column;
+    .support-page .support-card:last-child {
 
-        width: 100%;
+        grid-column:
+            auto;
+
+        max-width:
+            none;
+
     }
 
 
-    .support-page .mission-buttons .btn {
-        width: 100%;
+    .support-page .information-section {
 
-        text-align: center;
+        padding:
+            65px 0;
+
+    }
+
+
+    .support-page .information-card {
+
+        padding:
+            42px 22px;
+
+    }
+
+
+    .support-page .information-card h2 {
+
+        font-size:
+            31px;
+
+    }
+
+
+    .support-page .information-card p {
+
+        font-size:
+            13px;
+
+    }
+
+
+    .support-page .contribution-section {
+
+        padding:
+            0 0
+            55px;
+
+    }
+
+
+    .support-page .contribution-card {
+
+        padding:
+            42px 22px;
+
+    }
+
+
+    .support-page .contribution-card h2 {
+
+        font-size:
+            31px;
+
+    }
+
+
+    .support-page .contribution-card p {
+
+        font-size:
+            13px;
+
+    }
+
+
+    .support-page .contribution-buttons {
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .support-page .contribution-buttons
+    .support-button {
+
+        width:
+            100%;
+
+    }
+
+
+    .support-page .thank-you-section {
+
+        padding:
+            0 0
+            50px;
+
+    }
+
+
+    .support-page .thank-you-content {
+
+        padding:
+            30px 20px;
+
     }
 
 }
@@ -732,27 +2041,100 @@
 
 /* ==========================================================
    SMALL MOBILE
-========================================================== */
+   ========================================================== */
 
 @media (max-width: 420px) {
 
+    .support-page .support-container {
+
+        width:
+            calc(100% - 26px);
+
+    }
+
+
+    .support-page .support-hero h1 {
+
+        font-size:
+            35px;
+
+    }
+
+
+    .support-page .support-eyebrow {
+
+        font-size:
+            9px;
+
+        letter-spacing:
+            1.8px;
+
+    }
+
+
     .support-page .section-title {
-        font-size: 29px;
+
+        font-size:
+            29px;
+
     }
 
 
-    .support-page .mission-content .section-title {
-        font-size: 29px;
+    .support-page .mission-item {
+
+        grid-template-columns:
+            40px
+            1fr;
+
     }
 
 
-    .support-page .cards-grid .card h3 {
-        font-size: 19px;
+    .support-page .mission-number {
+
+        display:
+            none;
+
     }
 
 
-    .support-page .section > .container > .card h2 {
-        font-size: 30px;
+    .support-page .mission-item h3 {
+
+        font-size:
+            15px;
+
+    }
+
+
+    .support-page .mission-item p {
+
+        font-size:
+            11px;
+
+    }
+
+
+    .support-page .support-card h3 {
+
+        font-size:
+            19px;
+
+    }
+
+
+    .support-page .support-card p {
+
+        font-size:
+            12px;
+
+    }
+
+
+    .support-page .information-card h2,
+    .support-page .contribution-card h2 {
+
+        font-size:
+            29px;
+
     }
 
 }
