@@ -1,69 +1,156 @@
-<header class="header">
-    <nav class="navbar">
+<header class="header" id="siteHeader">
 
-        <button class="menu-toggle" id="menuToggle" aria-label="Open Menu">
+    <nav class="navbar" aria-label="Main navigation">
+
+        <!-- Mobile Menu Button -->
+        <button
+            class="menu-toggle"
+            id="menuToggle"
+            type="button"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+            aria-controls="navMenu"
+        >
             <i class="fas fa-bars"></i>
         </button>
 
+
+        <!-- Navigation -->
         <ul class="nav-menu" id="navMenu">
 
             <li class="nav-item">
-                <a href="index.html" class="nav-link">  Home</a>
+                <a
+                    href="index.html"
+                    class="nav-link"
+                >
+                    Home
+                </a>
             </li>
+
 
             <li class="nav-item">
-                <a href="hymns.html" class="nav-link"> 🎶 కీర్తనలు(Hymns)</a>
+                <a
+                    href="hymns.html"
+                    class="nav-link"
+                >
+                    <span class="nav-icon">🎶</span>
+                    <span>కీర్తనలు</span>
+                    <span class="nav-secondary">(Hymns)</span>
+                </a>
             </li>
+
+
             <li class="nav-item">
-                <a href="authors.html" class="nav-link"> 🖊️ కవులు (Hymn writers)</a>
+                <a
+                    href="authors.html"
+                    class="nav-link"
+                >
+                    <span class="nav-icon">🖊️</span>
+                    <span>కవులు</span>
+                    <span class="nav-secondary">(Hymn Writers)</span>
+                </a>
             </li>
+
+
             <li class="nav-item">
-                <a href="interviews.html" class="nav-link">Interviews</a>
+                <a
+                    href="interviews.html"
+                    class="nav-link"
+                >
+                    Interviews
+                </a>
             </li>
+
+
             <li class="nav-item">
-                <a href="greetings.html" class="nav-link">Greetings</a>
+                <a
+                    href="greetings.html"
+                    class="nav-link"
+                >
+                    Greetings
+                </a>
             </li>
 
 
-
-
+            <!-- Announcements -->
             <li class="nav-item dropdown">
 
-                <a href="#" class="nav-link">
-                    Announcements
+                <button
+                    class="nav-link dropdown-trigger"
+                    type="button"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                >
+                    <span>Announcements</span>
+
                     <i class="fas fa-chevron-down"></i>
-                </a>
+                </button>
+
 
                 <div class="dropdown-menu">
-                    <a href="books.html">Books</a>
-                    <a href="gallery.html">Gallery</a>
+
+                    <a href="books.html">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>Books</span>
+                    </a>
+
+                    <a href="gallery.html">
+                        <i class="fa-solid fa-images"></i>
+                        <span>Gallery</span>
+                    </a>
+
                 </div>
 
             </li>
 
-            <li class="nav-item">
-                <a href="about.html" class="nav-link">About</a>
-            </li>
 
             <li class="nav-item">
-                <a href="support.html" class="nav-link">Support</a>
+                <a
+                    href="about.html"
+                    class="nav-link"
+                >
+                    About
+                </a>
             </li>
+
+
             <li class="nav-item">
-                <a href="contact.html" class="nav-link">✉️ Contact</a>
+                <a
+                    href="support.html"
+                    class="nav-link"
+                >
+                    Support
+                </a>
+            </li>
+
+
+            <li class="nav-item">
+                <a
+                    href="contact.html"
+                    class="nav-link"
+                >
+                    <span class="contact-icon">✉</span>
+                    Contact
+                </a>
             </li>
 
         </ul>
+
+
+        <!-- Search -->
         <div class="nav-actions">
-    <button
-        id="openSearch"
-        class="search-btn"
-        type="button"
-        aria-label="Open Search">
 
-        <i class="fas fa-search"></i>
+            <button
+                id="openSearch"
+                class="search-btn"
+                type="button"
+                aria-label="Search the archive"
+            >
+                <i class="fas fa-search"></i>
+            </button>
 
-    </button>
-</div>
+        </div>
 
     </nav>
+
 </header>

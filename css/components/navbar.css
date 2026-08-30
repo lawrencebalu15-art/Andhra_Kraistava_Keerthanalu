@@ -1,243 +1,839 @@
-/* ==========================================
-   VARIABLES & RESETS
-========================================== */
-:root {
-    --accent: #ffcc00;       /* Golden yellow matching the Telugu font */
-    --accent-hover: #d4af37; /* Champagne gold transition */
-    --bg-dark: #3b0202;      /* Deep burgundy matching the banner's shadow */
-    --text-light: #f5f5dc;   /* High-readability cream text */
-}
-
-/* ==========================================
-   HEADER
-========================================== */
-.header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background-color: var(--bg-dark);
-    border-bottom: 1px solid var(--accent-hover);
-    box-shadow: 0 4px 20px rgba(0,0,0,.3);
-}
-
-/* ==========================================
+/* ==========================================================
+   ANDHRA KRAISTAVA KEERTHANALU
    NAVBAR
-========================================== */
-.navbar {
-    max-width: 100%;
-    margin: 0 auto;
-    height: 75px;
-    padding: 0 40px;
-    border-radius: 0 0 50px 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    background-color: var(--bg-dark); /* Keeps the curved navbar cohesive */
+   ========================================================== */
+
+
+/* ==========================================================
+   VARIABLES
+   ========================================================== */
+
+:root {
+
+    --nav-burgundy: #3b0202;
+    --nav-burgundy-dark: #260000;
+
+    --nav-gold: #ffcc00;
+    --nav-gold-soft: #d4af37;
+
+    --nav-cream: #f5f5dc;
+
+    --nav-border:
+        rgba(212, 175, 55, 0.35);
+
 }
 
-/* ==========================================
-   MENU
-========================================== */
-.nav-menu {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    list-style: none;
-    gap: 25px;
-    margin: 0;
-    padding: 0;
+
+/* ==========================================================
+   HEADER
+   ========================================================== */
+
+.header {
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
+
+    width: 100%;
+
+    background:
+        var(--nav-burgundy);
+
+    border-bottom:
+        1px solid
+        var(--nav-gold-soft);
+
+    box-shadow:
+        0 5px 20px
+        rgba(0, 0, 0, .28);
+
 }
+
+
+/* ==========================================================
+   NAVBAR
+   ========================================================== */
+
+.navbar {
+
+    width: 100%;
+
+    min-height: 76px;
+
+    padding:
+        0 38px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    position: relative;
+
+    background:
+        var(--nav-burgundy);
+
+}
+
+
+/*
+   Subtle gold line across the bottom
+*/
+
+.navbar::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: -1px;
+
+    width: min(760px, 70%);
+
+    height: 1px;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,204,0,.45),
+            transparent
+        );
+
+}
+
+
+/* ==========================================================
+   NAV MENU
+   ========================================================== */
+
+.nav-menu {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 24px;
+
+    margin: 0;
+
+    padding: 0;
+
+    list-style: none;
+
+}
+
+
+/* ==========================================================
+   NAV ITEM
+   ========================================================== */
 
 .nav-item {
+
     position: relative;
+
 }
+
+
+/* ==========================================================
+   NAV LINK
+   ========================================================== */
 
 .nav-link {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    text-decoration:dotted;
-    color: var(--text-light); /* Changed from black to cream */
-    font-size: 20px;
-    font-weight: 500;
-    height: 75px;
-    transition: .3s ease;
+
     position: relative;
+
+    height: 76px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    padding:
+        0 2px;
+
+    color:
+        var(--nav-cream);
+
+    background: none;
+
+    border: none;
+
+    font-family:
+        "Source Sans 3",
+        "Noto Sans Telugu",
+        sans-serif;
+
+    font-size: 17px;
+
+    font-weight: 500;
+
+    line-height: 1;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    transition:
+        color .25s ease;
+
 }
+
+
+/* ==========================================================
+   NAV ICON
+   ========================================================== */
+
+.nav-icon {
+
+    font-size: 16px;
+
+}
+
+
+.nav-secondary {
+
+    font-size: .88em;
+
+    opacity: .95;
+
+}
+
+
+/* ==========================================================
+   HOVER
+   ========================================================== */
 
 .nav-link:hover {
-    color: var(--accent-hover);
+
+    color:
+        var(--nav-gold-soft);
+
 }
 
-/* Underline Animation */
+
+/* ==========================================================
+   ACTIVE / UNDERLINE
+   ========================================================== */
+
 .nav-link::after {
+
     content: "";
+
     position: absolute;
+
     left: 50%;
-    bottom: 18px;
+
+    bottom: 17px;
+
     width: 0;
+
     height: 2px;
-    background: var(--accent);
-    transform: translateX(-50%);
-    transition: .3s;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        var(--nav-gold);
+
+    transition:
+        width .25s ease;
+
 }
+
 
 .nav-link:hover::after,
 .nav-link.active::after {
+
     width: 100%;
+
 }
+
 
 .nav-link.active {
-    color: var(--accent);
+
+    color:
+        var(--nav-gold);
+
 }
 
-/* ==========================================
-   SEARCH
-========================================== */
-.nav-actions {
-    position: absolute;
-    right: 40px;
-    display: flex;
-    align-items: center;
+
+/* ==========================================================
+   DROPDOWN TRIGGER
+   ========================================================== */
+
+.dropdown-trigger {
+
+    appearance: none;
+
 }
 
-.search-btn {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    border: 1px solid rgba(212, 175, 55, 0.4); /* Gold tint border */
-    background: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: .3s;
-    color: var(--bg-dark);
+
+.dropdown-trigger i {
+
+    margin-left: 4px;
+
+    font-size: 11px;
+
+    transition:
+        transform .25s ease;
+
 }
 
-.search-btn:hover {
-    background: var(--accent);
-    color: var(--bg-dark);
-    border-color: var(--accent);
+
+.dropdown:hover
+.dropdown-trigger i,
+
+.dropdown.active
+.dropdown-trigger i {
+
+    transform:
+        rotate(180deg);
+
 }
 
-/* ==========================================
+
+/* ==========================================================
    DROPDOWN
-========================================== */
+   ========================================================== */
+
 .dropdown-menu {
+
     position: absolute;
-    top: 100%;
+
+    top: calc(100% - 1px);
+
     left: 50%;
-    transform: translateX(-50%);
-    min-width: 220px;
-    background: var(--bg-dark); /* Changed to burgundy to match theme */
-    border: 1px solid rgba(212, 175, 55, 0.3); /* Subtle gold border */
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,.4);
+
+    min-width: 215px;
+
+    padding: 8px;
+
+    transform:
+        translate(-50%, 8px);
+
     opacity: 0;
+
     visibility: hidden;
-    transition: .25s ease;
-    overflow: hidden;
+
+    pointer-events: none;
+
+    background:
+        var(--nav-burgundy);
+
+    border:
+        1px solid
+        var(--nav-border);
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 18px 40px
+        rgba(0,0,0,.38);
+
+    transition:
+        opacity .2s ease,
+        transform .2s ease,
+        visibility .2s ease;
+
 }
 
-.dropdown:hover .dropdown-menu {
+
+/* Desktop hover */
+
+.dropdown:hover
+.dropdown-menu,
+
+.dropdown:focus-within
+.dropdown-menu {
+
     opacity: 1;
+
     visibility: visible;
+
+    pointer-events: auto;
+
+    transform:
+        translate(-50%, 0);
+
 }
+
+
+/* ==========================================================
+   DROPDOWN LINKS
+   ========================================================== */
 
 .dropdown-menu a {
-    display: block;
-    padding: 14px 20px;
-    color: var(--text-light); /* Cream text inside dropdown */
+
+    min-height: 44px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding:
+        0 14px;
+
+    color:
+        var(--nav-cream);
+
+    border-radius: 8px;
+
+    font-family:
+        "Source Sans 3",
+        sans-serif;
+
+    font-size: 14px;
+
     text-decoration: none;
-    transition: .25s;
+
+    transition:
+        background .2s ease,
+        color .2s ease;
+
 }
+
+
+.dropdown-menu a i {
+
+    width: 18px;
+
+    color:
+        var(--nav-gold-soft);
+
+    text-align: center;
+
+}
+
 
 .dropdown-menu a:hover {
-    background: rgba(255, 204, 0, 0.1); /* Subtle gold highlight fill on hover */
-    color: var(--accent);
+
+    color:
+        var(--nav-gold);
+
+    background:
+        rgba(255,204,0,.09);
+
 }
 
-/* ==========================================
-   MOBILE BUTTON
-========================================== */
-.menu-toggle {
-    display: none;
+
+/* ==========================================================
+   SEARCH
+   ========================================================== */
+
+.nav-actions {
+
     position: absolute;
-    left: 20px;
-    width: 42px;
-    height: 42px;
-    border: none;
-    background: none;
-    cursor: pointer;
-    font-size: 22px;
-    color: var(--text-light); /* Ensures toggle visibility against dark background */
+
+    right: 34px;
+
+    display: flex;
+
+    align-items: center;
+
 }
 
-/* ==========================================
-   RESPONSIVE (MOBILE)
-========================================== */
-@media (max-width: 992px) {
-    .navbar {
-        justify-content: flex-end;
-        padding: 0 20px;
-    }
 
-    .menu-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+.search-btn {
+
+    width: 44px;
+
+    height: 44px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border:
+        1px solid
+        rgba(212,175,55,.45);
+
+    border-radius: 50%;
+
+    color:
+        var(--nav-burgundy);
+
+    background:
+        #fff;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    transition:
+        background .25s ease,
+        color .25s ease,
+        border-color .25s ease,
+        transform .25s ease;
+
+}
+
+
+.search-btn:hover {
+
+    color:
+        var(--nav-burgundy);
+
+    background:
+        var(--nav-gold);
+
+    border-color:
+        var(--nav-gold);
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+/* ==========================================================
+   MOBILE MENU BUTTON
+   ========================================================== */
+
+.menu-toggle {
+
+    display: none;
+
+    position: absolute;
+
+    left: 18px;
+
+    width: 44px;
+
+    height: 44px;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 0;
+
+    color:
+        var(--nav-cream);
+
+    background:
+        transparent;
+
+    border: none;
+
+    cursor: pointer;
+
+    font-size: 21px;
+
+}
+
+
+.menu-toggle:hover {
+
+    color:
+        var(--nav-gold);
+
+}
+
+
+/* ==========================================================
+   TABLET
+   ========================================================== */
+
+@media (max-width: 1250px) {
+
+    .navbar {
+
+        padding:
+            0 25px;
+
     }
 
     .nav-menu {
-        position: absolute;
-        top: 75px;
-        left: 0;
-        right: 0;
-        background: var(--bg-dark); /* Keeps dropdown menu seamless on mobile */
-        display: none;
-        flex-direction: column;
-        gap: 0;
-        box-shadow: 0 10px 20px rgba(0,0,0,.3);
-        border-top: 1px solid rgba(212, 175, 55, 0.3);
-    }
 
-    .nav-menu.active {
-        display: flex;
-    }
+        gap: 17px;
 
-    .nav-item {
-        width: 100%;
     }
 
     .nav-link {
-        height: auto;
-        padding: 18px 24px;
-        justify-content: space-between;
-    }
 
-    .nav-link::after {
-        display: none;
-    }
+        font-size: 15px;
 
-    .dropdown-menu {
-        position: static;
-        transform: none;
-        border: none;
-        border-radius: 0;
-        box-shadow: none;
-        opacity: 1;
-        visibility: visible;
-        display: none;
-        background: rgba(0, 0, 0, 0.2); /* Slightly darker indentation for mobile nested lists */
-    }
-
-    .dropdown.active .dropdown-menu {
-        display: block;
     }
 
     .nav-actions {
-        right: 70px;
+
+        right: 22px;
+
     }
+
+}
+
+
+/* ==========================================================
+   MOBILE / TABLET MENU
+   ========================================================== */
+
+@media (max-width: 992px) {
+
+    .navbar {
+
+        min-height: 66px;
+
+        justify-content: flex-end;
+
+        padding:
+            0 20px;
+
+    }
+
+
+    .menu-toggle {
+
+        display: flex;
+
+    }
+
+
+    .nav-actions {
+
+        right: 18px;
+
+    }
+
+
+    .search-btn {
+
+        width: 40px;
+
+        height: 40px;
+
+    }
+
+
+    .nav-menu {
+
+        position: absolute;
+
+        top: 66px;
+
+        left: 0;
+
+        right: 0;
+
+        display: none;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 0;
+
+        padding:
+            8px 0 14px;
+
+        background:
+            var(--nav-burgundy);
+
+        border-top:
+            1px solid
+            var(--nav-border);
+
+        box-shadow:
+            0 15px 30px
+            rgba(0,0,0,.35);
+
+    }
+
+
+    .nav-menu.active {
+
+        display: flex;
+
+    }
+
+
+    .nav-item {
+
+        width: 100%;
+
+    }
+
+
+    .nav-link {
+
+        width: 100%;
+
+        height: auto;
+
+        min-height: 52px;
+
+        justify-content: flex-start;
+
+        padding:
+            0 24px;
+
+        font-size: 16px;
+
+    }
+
+
+    .nav-link::after {
+
+        display: none;
+
+    }
+
+
+    /* Mobile dropdown */
+
+    .dropdown-menu {
+
+        position: static;
+
+        width: 100%;
+
+        min-width: 0;
+
+        display: none;
+
+        padding:
+            4px 14px 8px;
+
+        transform: none;
+
+        opacity: 1;
+
+        visibility: visible;
+
+        pointer-events: auto;
+
+        border: none;
+
+        border-radius: 0;
+
+        box-shadow: none;
+
+        background:
+            rgba(0,0,0,.18);
+
+    }
+
+
+    .dropdown.active
+    .dropdown-menu {
+
+        display: block;
+
+    }
+
+
+    .dropdown-menu a {
+
+        min-height: 45px;
+
+        padding-left: 30px;
+
+    }
+
+}
+
+
+/* ==========================================================
+   SMALL MOBILE
+   ========================================================== */
+
+@media (max-width: 520px) {
+
+    .navbar {
+
+        min-height: 62px;
+
+    }
+
+
+    .nav-menu {
+
+        top: 62px;
+
+    }
+
+
+    .menu-toggle {
+
+        width: 40px;
+
+        height: 40px;
+
+        left: 12px;
+
+    }
+
+
+    .nav-actions {
+
+        right: 12px;
+
+    }
+
+
+    .search-btn {
+
+        width: 38px;
+
+        height: 38px;
+
+        font-size: 14px;
+
+    }
+
+}
+
+
+/* ==========================================================
+   ACCESSIBILITY
+   ========================================================== */
+
+.nav-link:focus-visible,
+.search-btn:focus-visible,
+.menu-toggle:focus-visible,
+.dropdown-menu a:focus-visible {
+
+    outline:
+        2px solid
+        var(--nav-gold);
+
+    outline-offset:
+        3px;
+
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+    .nav-link,
+    .nav-link::after,
+    .dropdown-menu,
+    .search-btn,
+    .dropdown-trigger i {
+
+        transition: none;
+
+    }
+
 }
