@@ -211,6 +211,9 @@ async function loadAuthor() {
 /* =========================================================
    RENDER AUTHOR
 ========================================================= */
+/* =========================================================
+   RENDER AUTHOR
+========================================================= */
 
 async function renderAuthor(author) {
 
@@ -388,7 +391,6 @@ async function renderAuthor(author) {
     }
 
 
-
     /* =====================================================
        PHOTO
     ===================================================== */
@@ -414,7 +416,10 @@ async function renderAuthor(author) {
         } = await supabase
             .from("media")
             .select("storage_path")
-            .eq("id", author.media_id)
+            .eq(
+                "id",
+                author.media_id
+            )
             .maybeSingle();
 
 
@@ -533,88 +538,37 @@ async function renderAuthor(author) {
             `Explore the biography and hymns of ${name}.`
         ).substring(0, 160);
 
-}
+
+    /* =====================================================
+       HISTORICAL RECORD
+    ===================================================== */
+
+    /*
+     * The historical image is optional.
+     *
+     * If the author has a historical_media_id,
+     * find the corresponding media record,
+     * generate its public Supabase Storage URL,
+     * and display the Historical Record section.
+     *
+     * If there is no image, the entire section
+     * remains hidden.
+     */
+
+    if (
+        authorHistoricalArchive &&
+        authorHistoricalImage
+    ) {
+
+        const historicalMediaId =
+            author.historical_media_id;
 
 
-/* =====================================================
-   HISTORICAL RECORD
-===================================================== */
+        /* -----------------------------------------------------
+           No historical image assigned
+        ----------------------------------------------------- */
 
-if (
-    authorHistoricalArchive &&
-    authorHistoricalImage
-) {
-
-    const historicalMediaId =
-        author.historical_media_id;
-
-
-    if (historicalMediaId) {
-
-        const {
-            data: historicalMedia,
-            error: historicalMediaError
-        } = await supabase
-            .from("media")
-            .select("storage_path")
-            .eq(
-                "id",
-                historicalMediaId
-            )
-            .maybeSingle();
-
-
-        if (
-            !historicalMediaError &&
-            historicalMedia?.storage_path
-        ) {
-
-            const historicalUrl =
-                getPublicMediaUrl(
-                    historicalMedia.storage_path
-                );
-
-
-            if (historicalUrl) {
-
-                authorHistoricalImage.src =
-                    historicalUrl;
-
-                authorHistoricalImage.alt =
-                    `${name} - historical record`;
-
-
-                authorHistoricalArchive.classList.remove(
-                    "hidden"
-                );
-
-
-                if (authorHistoricalView) {
-
-                    authorHistoricalView.href =
-                        historicalUrl;
-
-                }
-
-
-                authorHistoricalImage.onerror =
-                    () => {
-
-                        authorHistoricalArchive.classList.add(
-                            "hidden"
-                        );
-
-                    };
-
-            } else {
-
-                authorHistoricalArchive.classList.add(
-                    "hidden"
-                );
-
-            }
-
-        } else {
+        if (!historicalMediaId) {
 
             authorHistoricalArchive.classList.add(
                 "hidden"
@@ -622,15 +576,134 @@ if (
 
         }
 
-    } else {
 
-        authorHistoricalArchive.classList.add(
-            "hidden"
-        );
+        /* -----------------------------------------------------
+           Historical image assigned
+        ----------------------------------------------------- */
+
+        else {
+
+            const {
+                data: historicalMedia,
+                error: historicalMediaError
+            } = await supabase
+                .from("media")
+                .select("storage_path")
+                .eq(
+                    "id",
+                    historicalMediaId
+                )
+                .maybeSingle();
+
+
+            /* -------------------------------------------------
+               Media record found
+            ------------------------------------------------- */
+
+            if (
+                !historicalMediaError &&
+                historicalMedia?.storage_path
+            ) {
+
+                const historicalUrl =
+                    getPublicMediaUrl(
+                        historicalMedia.storage_path
+                    );
+
+
+                /* ---------------------------------------------
+                   Public URL generated
+                --------------------------------------------- */
+
+                if (historicalUrl) {
+
+                    authorHistoricalImage.src =
+                        historicalUrl;
+
+                    authorHistoricalImage.alt =
+                        `${name} - historical record`;
+
+
+                    authorHistoricalArchive.classList.remove(
+                        "hidden"
+                    );
+
+
+                    /* -----------------------------------------
+                       Full image link
+                    ----------------------------------------- */
+
+                    if (authorHistoricalView) {
+
+                        authorHistoricalView.href =
+                            historicalUrl;
+
+                    }
+
+
+                    /* -----------------------------------------
+                       If image itself fails
+                    ----------------------------------------- */
+
+                    authorHistoricalImage.onerror =
+                        () => {
+
+                            console.error(
+                                "Historical image failed to load:",
+                                historicalUrl
+                            );
+
+                            authorHistoricalArchive.classList.add(
+                                "hidden"
+                            );
+
+                        };
+
+                }
+
+
+                /* ---------------------------------------------
+                   Could not generate public URL
+                --------------------------------------------- */
+
+                else {
+
+                    console.error(
+                        "Could not create historical image URL."
+                    );
+
+                    authorHistoricalArchive.classList.add(
+                        "hidden"
+                    );
+
+                }
+
+            }
+
+
+            /* -------------------------------------------------
+               Media lookup failed
+            ------------------------------------------------- */
+
+            else {
+
+                console.error(
+                    "Historical media lookup failed:",
+                    historicalMediaError
+                );
+
+                authorHistoricalArchive.classList.add(
+                    "hidden"
+                );
+
+            }
+
+        }
 
     }
 
 }
+
 
 /* =========================================================
    LOAD AUTHOR HYMNS
