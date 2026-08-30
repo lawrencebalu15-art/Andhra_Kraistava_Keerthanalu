@@ -75,14 +75,17 @@
 
 }
 
-#searchInput{
-    width:100%;
-    padding:5px 200px;
-    border:1px solid rgb(217, 217, 217);
-    border-radius:14px;
-    font-size:1rem;
-    transition:.25s;
-    background:#fff;
+#searchInput {
+    width: 100%;
+    box-sizing: border-box;
+    height: 43px;
+    padding: 0 16px 0 42px;
+    border: 1px solid #dcd2c4;
+    border-radius: 9px;
+    outline: none;
+    background: #fff;
+    color: #38332d;
+    font-size: 12px;
 }
 
 #searchInput:focus{
@@ -785,7 +788,6 @@
 }
 
 .hymns-page .search-wrapper::before {
-    content: "\\f002";
     position: absolute;
     left: 16px;
     top: 50%;
