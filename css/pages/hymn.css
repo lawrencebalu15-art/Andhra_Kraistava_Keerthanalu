@@ -1,312 +1,1298 @@
-/* ==========================================
-   HYMN HERO
-========================================== */
+/* =========================================================
+   HYMN PAGE
+   Premium Digital Archive Design
+========================================================= */
 
-.hymn-hero{
-    padding:45px 0;
-    background:linear-gradient(
-        180deg,
-        #ffffff 0%,
-        var(--background) 100%
-    );
-    border-bottom:1px solid var(--border);
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hymn-hero {
+
+    position: relative;
+
+    padding:
+        55px 0
+        90px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff 0%,
+            var(--background) 100%
+        );
+
+    border-bottom:
+        1px solid var(--border);
+
+    overflow: hidden;
 }
 
-.back-link{
-    display:inline-flex;
-    align-items:start;
-    gap:8px;
-    margin-bottom:40px;
-    text-decoration:none;
-    color:var(--accent);
-    font-weight:600;
-    transition:.25s;
+
+/* subtle archival decoration */
+
+.hymn-hero::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 420px;
+    height: 420px;
+
+    right: -180px;
+    top: -190px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(184, 134, 11, 0.10);
+
+    pointer-events: none;
 }
 
-.back-link:hover{
-    color:var(--primary);
-    transform:translateX(-3px);
+
+.hymn-hero::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 260px;
+    height: 260px;
+
+    left: -150px;
+    bottom: -150px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(184, 134, 11, 0.035);
+
+    pointer-events: none;
 }
 
-/* ==========================================
-   HERO LAYOUT
-========================================== */
 
-.hero-grid{
-    display:grid;
-    grid-template-columns:1.7fr 340px;
-    gap:100px;
-    align-items:center;
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.hymn-hero .container {
+
+    position: relative;
+
+    z-index: 1;
 }
 
-.hero-content{
-    max-width:720px;
+
+/* =========================================================
+   BACK LINK
+========================================================= */
+
+.back-link {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin-bottom: 65px;
+
+    color: var(--accent);
+
+    font-size: 0.88rem;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
 }
 
-.hero-number{
-    display:inline-block;
-    color:var(--accent);
-    font-weight:700;
-    font-size:.95rem;
-    letter-spacing:1px;
-    text-transform:uppercase;
-    margin-bottom:18px;
+
+.back-link:hover {
+
+    color: var(--primary);
+
+    transform:
+        translateX(-4px);
 }
 
-/* ==========================================
-   TITLES
-========================================== */
 
-#hymnTitle{
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size:3.8rem;
-    line-height:1.2;
-    color:var(--text);
-    margin-bottom:18px;
+.back-arrow {
+
+    font-size: 1rem;
+
+    transition:
+        transform 0.25s ease;
 }
 
-.hero-english{
-    font-size:1.5rem;
-    color:black;
-    margin:0;
-    line-height:1.6;
+
+.back-link:hover
+.back-arrow {
+
+    transform:
+        translateX(-3px);
 }
 
-/* ==========================================
+
+/* =========================================================
+   HERO GRID
+========================================================= */
+
+.hero-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        350px;
+
+    gap: 100px;
+
+    align-items: center;
+}
+
+
+/* =========================================================
+   HERO CONTENT
+========================================================= */
+
+.hero-content {
+
+    max-width: 780px;
+}
+
+
+.hero-number {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    margin-bottom: 10px;
+
+    color: var(--accent);
+
+    font-size: 0.78rem;
+
+    font-weight: 800;
+
+    letter-spacing: 2.5px;
+
+    text-transform: uppercase;
+}
+
+
+.hero-kicker {
+
+    margin-bottom: 20px;
+
+    color: #8b8176;
+
+    font-size: 0.76rem;
+
+    font-weight: 700;
+
+    letter-spacing: 2.2px;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   HYMN TITLE
+========================================================= */
+
+#hymnTitle {
+
+    margin: 0;
+
+    max-width: 850px;
+
+    color: var(--text);
+
+    font-family:
+        'Lucida Sans',
+        'Lucida Sans Regular',
+        'Lucida Grande',
+        'Lucida Sans Unicode',
+        Geneva,
+        Verdana,
+        sans-serif;
+
+    font-size:
+        clamp(
+            3rem,
+            5.2vw,
+            5.2rem
+        );
+
+    line-height: 1.12;
+
+    letter-spacing: -0.035em;
+}
+
+
+.hero-english {
+
+    margin:
+        18px 0 0;
+
+    color: #5d5d5d;
+
+    font-size:
+        clamp(
+            1.05rem,
+            1.5vw,
+            1.35rem
+        );
+
+    line-height: 1.7;
+
+    font-style: italic;
+}
+
+
+/* =========================================================
+   HERO RULE
+========================================================= */
+
+.hero-rule {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin:
+        30px 0 24px;
+
+    width: 130px;
+}
+
+
+.hero-rule::before {
+
+    content: "";
+
+    width: 40px;
+
+    height: 1px;
+
+    background:
+        var(--accent);
+}
+
+
+.hero-rule span {
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background:
+        var(--accent);
+}
+
+
+.hero-description {
+
+    max-width: 520px;
+
+    margin: 0;
+
+    color: #777;
+
+    font-size: 0.95rem;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
    AUTHOR CARD
-========================================== */
+========================================================= */
 
-.author-card{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
+.author-card {
 
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:24px;
+    position: relative;
 
-    padding:40px 32px;
+    display: flex;
 
-    text-align:center;
-    text-decoration:none;
-    color:inherit;
+    flex-direction: column;
 
-    transition:.3s ease;
+    align-items: center;
 
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.05);
-}
+    justify-content: center;
 
-.author-card:hover{
-    transform:translateY(-6px);
+    min-height: 410px;
 
-    box-shadow:
-        0 18px 45px rgba(0,0,0,.10);
-}
+    padding:
+        34px 30px
+        38px;
 
-.author-photo-wrapper{
-    width:110px;
-    height:110px;
+    background:
+        linear-gradient(
+            180deg,
+            #fffefa 0%,
+            #f8f3ea 100%
+        );
 
-    border-radius:50%;
-    overflow:hidden;
+    border:
+        1px solid
+        rgba(108, 75, 51, 0.15);
 
-    border:5px solid #fff;
+    border-radius: 22px;
 
-    box-shadow:
-        0 8px 24px rgba(0,0,0,.12);
+    text-align: center;
 
-    margin-bottom:22px;
-}
+    text-decoration: none;
 
-.author-photo-wrapper img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-
-.author-label{
-    font-size:.75rem;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    color:var(--accent);
-    margin-bottom:10px;
-    font-weight:600;
-}
-
-.author-card h3{
-    font-size:1.35rem;
-    margin:0 0 8px;
-    color:var(--text);
-}
-
-.author-card p{
-    margin:0 0 22px;
-    color:black;
-    font-size:.95rem;
-}
-
-.author-link{
-    color:var(--accent);
-    font-weight:600;
-    transition:.25s;
-}
-
-.author-card:hover .author-link{
-    color:var(--primary);
-}
-
-/* ==========================================
-   METADATA
-========================================== */
-
-.metadata-section{
-    padding:50px 0;
-}
-
-.metadata-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:22px;
-}
-
-.metadata-card{
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:18px;
-    padding:24px;
-    transition:.25s;
-}
-
-.metadata-card:hover{
-    transform:translateY(-3px);
+    color: inherit;
 
     box-shadow:
-        0 8px 20px rgba(0,0,0,.05);
+        0 18px 45px
+        rgba(53, 36, 25, 0.07);
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        border-color 0.35s ease;
+
+    overflow: hidden;
 }
 
-.metadata-label{
-    display:block;
-    font-size:.82rem;
-    text-transform:uppercase;
-    letter-spacing:1px;
-    color:black;
-    margin-bottom:10px;
+
+.author-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    top: -95px;
+    right: -80px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(184, 134, 11, 0.15);
 }
 
-.metadata-value{
-    font-size:1.2rem;
-    font-weight:600;
-    color:var(--text);
-}
 
-/* ==========================================
-   RECORDINGS
-========================================== */
+.author-card:hover {
 
-.youtube-section{
-    margin:70px 0;
-}
+    transform:
+        translateY(-8px);
 
-.youtube-section h3{
-    font-size:2rem;
-    margin-bottom:25px;
-    color:var(--primary);
-}
-
-#youtubeLinks{
-    display:grid;
-    gap:18px;
-}
-
-/* ==========================================
-   FUTURE CARD STYLE
-========================================== */
-
-.youtube-card{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    background:var(--surface);
-    border:1px solid var(--border);
-
-    border-radius:18px;
-
-    padding:20px 24px;
-
-    transition:.25s;
-}
-
-.youtube-card:hover{
-
-    transform:translateY(-3px);
+    border-color:
+        rgba(184, 134, 11, 0.35);
 
     box-shadow:
-        0 8px 18px rgba(0,0,0,.05);
+        0 25px 60px
+        rgba(53, 36, 25, 0.12);
+}
+
+
+/* =========================================================
+   AUTHOR TOP
+========================================================= */
+
+.author-card-top {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 24px;
+}
+
+
+.author-mini-label {
+
+    color: #998e81;
+
+    font-size: 0.68rem;
+
+    font-weight: 800;
+
+    letter-spacing: 1.7px;
+
+    text-transform: uppercase;
+}
+
+
+.author-arrow {
+
+    color: var(--accent);
+
+    font-size: 1rem;
+
+    transition:
+        transform 0.25s ease;
+}
+
+
+.author-card:hover
+.author-arrow {
+
+    transform:
+        translate(3px, -3px);
+}
+
+
+/* =========================================================
+   AUTHOR PHOTO
+========================================================= */
+
+.author-photo-wrapper {
+
+    position: relative;
+
+    width: 125px;
+    height: 125px;
+
+    margin-bottom: 23px;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    background:
+        #eee9df;
+
+    border:
+        6px solid
+        #ffffff;
+
+    box-shadow:
+        0 10px 30px
+        rgba(0, 0, 0, 0.12);
+}
+
+
+.author-photo-wrapper::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 5px;
+
+    border:
+        1px solid
+        rgba(184, 134, 11, 0.35);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+
+.author-photo-wrapper img {
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+/* =========================================================
+   AUTHOR TEXT
+========================================================= */
+
+.author-label {
+
+    margin-bottom: 9px;
+
+    color: var(--accent);
+
+    font-size: 0.68rem;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+
+.author-card h3 {
+
+    margin:
+        0 0 8px;
+
+    color: var(--text);
+
+    font-family:
+        Georgia,
+        'Times New Roman',
+        serif;
+
+    font-size: 1.25rem;
+
+    line-height: 1.4;
+}
+
+
+.author-card p {
+
+    margin:
+        0 0 25px;
+
+    color: #777;
+
+    font-size: 0.88rem;
+
+    line-height: 1.5;
+}
+
+
+.author-link {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: var(--accent);
+
+    font-size: 0.83rem;
+
+    font-weight: 800;
+
+    transition:
+        color 0.25s ease;
+}
+
+
+.author-link span {
+
+    transition:
+        transform 0.25s ease;
+}
+
+
+.author-card:hover
+.author-link {
+
+    color: var(--primary);
+}
+
+
+.author-card:hover
+.author-link span {
+
+    transform:
+        translateX(4px);
+}
+
+
+/* =========================================================
+   METADATA SECTION
+========================================================= */
+
+.metadata-section {
+
+    padding:
+        80px 0
+        85px;
+
+    background:
+        #faf8f4;
+}
+
+
+/* =========================================================
+   SECTION HEADING
+========================================================= */
+
+.metadata-heading {
+
+    margin-bottom: 30px;
+}
+
+
+.section-eyebrow {
+
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: var(--accent);
+
+    font-size: 0.72rem;
+
+    font-weight: 800;
+
+    letter-spacing: 2.2px;
+
+    text-transform: uppercase;
+}
+
+
+.metadata-heading h2 {
+
+    margin: 0;
+
+    color: var(--text);
+
+    font-family:
+        Georgia,
+        'Times New Roman',
+        serif;
+
+    font-size: 2rem;
+
+    line-height: 1.25;
+}
+
+
+/* =========================================================
+   METADATA GRID
+========================================================= */
+
+.metadata-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 16px;
+}
+
+
+/* =========================================================
+   METADATA CARD
+========================================================= */
+
+.metadata-card {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 17px;
+
+    min-height: 125px;
+
+    padding:
+        23px 21px;
+
+    background:
+        #ffffff;
+
+    border:
+        1px solid
+        rgba(108, 75, 51, 0.12);
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 7px 25px
+        rgba(53, 36, 25, 0.035);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+
+.metadata-card:hover {
+
+    transform:
+        translateY(-5px);
+
+    border-color:
+        rgba(184, 134, 11, 0.3);
+
+    box-shadow:
+        0 15px 35px
+        rgba(53, 36, 25, 0.08);
+}
+
+
+/* =========================================================
+   METADATA ICON
+========================================================= */
+
+.metadata-icon {
+
+    flex:
+        0 0 40px;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        #f4eee3;
+
+    color:
+        var(--accent);
+
+    font-size: 0.76rem;
+
+    font-weight: 800;
+
+    text-align: center;
+}
+
+
+.metadata-card > div {
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   METADATA TEXT
+========================================================= */
+
+.metadata-label {
+
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #8a8177;
+
+    font-size: 0.68rem;
+
+    font-weight: 800;
+
+    letter-spacing: 1.4px;
+
+    text-transform: uppercase;
+}
+
+
+.metadata-value {
+
+    display: block;
+
+    color: var(--text);
+
+    font-size: 0.98rem;
+
+    font-weight: 700;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   RECORDINGS SECTION
+========================================================= */
+
+.recordings-section {
+
+    padding:
+        90px 0
+        100px;
+
+    background:
+        var(--background);
+}
+
+
+/* =========================================================
+   RECORDINGS HEADER
+========================================================= */
+
+.recordings-header {
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+
+    gap: 40px;
+
+    margin-bottom: 32px;
+}
+
+
+.recordings-header h2 {
+
+    margin: 0;
+
+    color: var(--text);
+
+    font-family:
+        Georgia,
+        'Times New Roman',
+        serif;
+
+    font-size:
+        clamp(
+            2rem,
+            3vw,
+            2.7rem
+        );
+
+    line-height: 1.2;
+}
+
+
+.recordings-header p {
+
+    max-width: 360px;
+
+    margin: 0;
+
+    color: #777;
+
+    font-size: 0.9rem;
+
+    line-height: 1.7;
+
+    text-align: right;
+}
+
+
+/* =========================================================
+   YOUTUBE LINKS
+========================================================= */
+
+#youtubeLinks {
+
+    display: grid;
+
+    gap: 14px;
+
+    max-width: 900px;
+}
+
+
+/* =========================================================
+   RECORDING CARD
+========================================================= */
+
+.youtube-card {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 25px;
+
+    min-height: 78px;
+
+    padding:
+        16px 22px;
+
+    background:
+        #ffffff;
+
+    border:
+        1px solid
+        rgba(108, 75, 51, 0.12);
+
+    border-radius: 14px;
+
+    text-decoration: none;
+
+    color: inherit;
+
+    box-shadow:
+        0 6px 22px
+        rgba(53, 36, 25, 0.035);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+
+.youtube-card:hover {
+
+    transform:
+        translateX(5px);
+
+    border-color:
+        rgba(184, 134, 11, 0.3);
+
+    box-shadow:
+        0 13px 32px
+        rgba(53, 36, 25, 0.08);
+}
+
+
+/* =========================================================
+   RECORDING CARD INNER ELEMENTS
+========================================================= */
+
+.youtube-card::before {
+
+    content: "▶";
+
+    flex:
+        0 0 42px;
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        #f4eee3;
+
+    color:
+        var(--accent);
+
+    font-size: 0.75rem;
+}
+
+
+.youtube-card > *:first-child {
+
+    flex: 1;
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .hero-grid {
+
+        grid-template-columns:
+            minmax(0, 1fr)
+            310px;
+
+        gap: 55px;
+    }
+
+
+    .metadata-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
 
 }
 
-/* ==========================================
-   RESPONSIVE
-========================================== */
 
-@media (max-width:1024px){
+/* =========================================================
+   RESPONSIVE — 1024
+========================================================= */
 
-    .hero-grid{
-        grid-template-columns:1fr;
-        gap:50px;
+@media (max-width: 1024px) {
+
+    .hymn-hero {
+
+        padding:
+            45px 0
+            70px;
     }
 
-    .author-card{
-        max-width:360px;
-        margin:auto;
+
+    .back-link {
+
+        margin-bottom: 50px;
     }
 
-    #hymnTitle{
-        font-size:3rem;
+
+    .hero-grid {
+
+        grid-template-columns:
+            1fr;
+
+        gap: 55px;
+    }
+
+
+    .hero-content {
+
+        max-width: 850px;
+    }
+
+
+    .author-card {
+
+        width: 100%;
+
+        max-width: 390px;
+
+        margin: 0 auto;
+    }
+
+
+    .recordings-header {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+
+    .recordings-header p {
+
+        max-width: 500px;
+
+        text-align: left;
     }
 
 }
 
-@media (max-width:768px){
 
-    .hymn-hero{
-        padding:50px 0 40px;
+/* =========================================================
+   RESPONSIVE — 768
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .hymn-hero {
+
+        padding:
+            38px 0
+            55px;
     }
 
-    #hymnTitle{
-        font-size:2.4rem;
+
+    .back-link {
+
+        margin-bottom: 40px;
     }
 
-    .hero-english{
-        font-size:1.2rem;
+
+    .hero-kicker {
+
+        margin-bottom: 15px;
     }
 
-    .author-photo-wrapper{
-        width:90px;
-        height:90px;
+
+    #hymnTitle {
+
+        font-size:
+            clamp(
+                2.35rem,
+                9vw,
+                3.4rem
+            );
+
+        letter-spacing:
+            -0.025em;
     }
 
-    .metadata-grid{
-        grid-template-columns:1fr;
+
+    .hero-english {
+
+        font-size: 1.05rem;
+    }
+
+
+    .hero-description {
+
+        font-size: 0.9rem;
+    }
+
+
+    .author-card {
+
+        min-height: 380px;
+
+        padding:
+            30px 25px;
+    }
+
+
+    .metadata-section {
+
+        padding:
+            65px 0
+            70px;
+    }
+
+
+    .metadata-grid {
+
+        grid-template-columns:
+            1fr;
+
+        gap: 12px;
+    }
+
+
+    .metadata-card {
+
+        min-height: 100px;
+    }
+
+
+    .recordings-section {
+
+        padding:
+            70px 0
+            80px;
+    }
+
+
+    .youtube-card {
+
+        min-height: 70px;
+
+        padding:
+            14px 17px;
     }
 
 }
 
-@media (max-width:480px){
 
-    #hymnTitle{
-        font-size:2rem;
+/* =========================================================
+   RESPONSIVE — 480
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .hymn-hero {
+
+        padding:
+            30px 0
+            45px;
     }
 
-    .hero-english{
-        font-size:1.05rem;
+
+    .back-link {
+
+        margin-bottom: 34px;
+
+        font-size: 0.82rem;
     }
 
-    .author-card{
-        padding:30px 20px;
+
+    .hero-number {
+
+        font-size: 0.7rem;
+
+        letter-spacing: 2px;
     }
 
+
+    .hero-kicker {
+
+        font-size: 0.68rem;
+
+        letter-spacing: 1.7px;
+    }
+
+
+    #hymnTitle {
+
+        font-size:
+            2.15rem;
+
+        line-height: 1.2;
+    }
+
+
+    .hero-rule {
+
+        margin:
+            24px 0
+            20px;
+    }
+
+
+    .author-card {
+
+        min-height: 360px;
+
+        border-radius: 18px;
+    }
+
+
+    .author-photo-wrapper {
+
+        width: 105px;
+        height: 105px;
+    }
+
+
+    .metadata-heading h2 {
+
+        font-size: 1.7rem;
+    }
+
+
+    .metadata-card {
+
+        padding:
+            19px 17px;
+    }
+
+
+    .recordings-header h2 {
+
+        font-size: 1.9rem;
+    }
+
+
+    .youtube-card {
+
+        gap: 12px;
+    }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+.back-link:focus-visible,
+.author-card:focus-visible,
+.youtube-card:focus-visible {
+
+    outline:
+        3px solid
+        rgba(184, 134, 11, 0.45);
+
+    outline-offset:
+        4px;
 }

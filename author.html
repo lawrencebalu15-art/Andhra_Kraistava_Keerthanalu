@@ -16,7 +16,12 @@
 
     <meta
         name="description"
-        content="Explore the life, biography, and hymns of Telugu Christian hymn writers."
+        content="Explore the life, biography, hymns, and historical records of Telugu Christian hymn writers."
+    >
+
+    <meta
+        name="robots"
+        content="index, follow"
     >
 
     <link
@@ -46,9 +51,11 @@
 
 
     <!-- =====================================================
-         NAVBAR
+         NAVIGATION
     ====================================================== -->
-<div id="searchModalContainer"></div>
+
+    <div id="searchModalContainer"></div>
+
     <div id="navbar"></div>
 
 
@@ -58,9 +65,7 @@
 
     <main>
 
-
         <section class="author-profile">
-
 
             <div class="container">
 
@@ -94,9 +99,7 @@
 
                     <div class="author-state-icon">
 
-                        <i
-                            class="fa-solid fa-circle-exclamation"
-                        ></i>
+                        <i class="fa-solid fa-circle-exclamation"></i>
 
                     </div>
 
@@ -131,103 +134,159 @@
                 >
 
 
-                    <!-- =============================================
-                         PROFILE HEADER
-                    ============================================== -->
+                    <!-- =================================================
+                         PROFILE HERO
+                    ================================================== -->
 
-                    <div class="author-profile-card">
-
-
-                        <!-- PHOTO -->
-
-                        <div class="author-photo-wrapper">
+                    <section class="author-profile-hero">
 
 
-                            <div
-                                id="authorAvatar"
-                                class="author-avatar-large"
-                            >
-                                ?
-                            </div>
+                        <!-- Back -->
 
+                        <a
+                            href="authors.html"
+                            class="author-back-link"
+                        >
 
-                            <img
-                                id="authorPhoto"
-                                class="author-photo hidden"
-                                src=""
-                                alt=""
-                            >
-
-                        </div>
-
-
-                        <!-- INFORMATION -->
-
-                        <div class="author-profile-info">
-
-
-                            <span class="section-label">
-                                HYMN WRITER
+                            <span>
+                                ←
                             </span>
 
+                            Back to Hymn Writers
 
-                            <h1 id="authorName">
-                                Hymn Writer Name
-                            </h1>
+                        </a>
 
 
-                            <div
-                                id="authorDates"
-                                class="author-dates hidden"
-                            >
+                        <!-- Profile Card -->
+
+                        <div class="author-profile-card">
+
+
+                            <!-- =====================================
+                                 PHOTO SIDE
+                            ====================================== -->
+
+                            <div class="author-profile-photo-column">
+
+
+                                <div class="author-photo-frame">
+
+                                    <div class="author-photo-ring">
+
+
+                                        <div
+                                            id="authorAvatar"
+                                            class="author-avatar-large"
+                                        >
+                                            ?
+                                        </div>
+
+
+                                        <img
+                                            id="authorPhoto"
+                                            class="author-photo hidden"
+                                            src=""
+                                            alt=""
+                                        >
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="author-photo-caption">
+
+                                    <span>
+                                        Telugu Christian Hymn Archive
+                                    </span>
+
+                                </div>
+
                             </div>
 
 
-                            <div
-                                id="authorCountry"
-                                class="author-country hidden"
-                            >
+                            <!-- =====================================
+                                 INFORMATION
+                            ====================================== -->
 
-                                <i
-                                    class="fa-solid fa-location-dot"
-                                ></i>
+                            <div class="author-profile-info">
 
 
-                                <span></span>
-
-                            </div>
-
-
-                            <div class="author-stat">
-
-                                <strong
-                                    id="authorHymnCount"
-                                >
-                                    0
-                                </strong>
-
-
-                                <span>
-                                    Hymns in Archive
+                                <span class="section-label">
+                                    HYMN WRITER
                                 </span>
+
+
+                                <div class="author-profile-kicker">
+
+                                    <span class="kicker-line"></span>
+
+                                    <span>
+                                        A Life Preserved in Hymns
+                                    </span>
+
+                                </div>
+
+
+                                <h1 id="authorName">
+                                    Hymn Writer Name
+                                </h1>
+
+
+                                <div
+                                    id="authorDates"
+                                    class="author-dates hidden"
+                                >
+                                </div>
+
+
+                                <div
+                                    id="authorCountry"
+                                    class="author-country hidden"
+                                >
+
+                                    <i class="fa-solid fa-location-dot"></i>
+
+                                    <span></span>
+
+                                </div>
+
+
+                                <div class="author-profile-divider"></div>
+
+
+                                <div class="author-stat">
+
+                                    <strong
+                                        id="authorHymnCount"
+                                    >
+                                        0
+                                    </strong>
+
+                                    <span>
+                                        Hymns in Archive
+                                    </span>
+
+                                </div>
+
 
                             </div>
 
 
                         </div>
 
-                    </div>
+
+                    </section>
 
 
-                    <!-- =============================================
+                    <!-- =================================================
                          BIOGRAPHY
-                    ============================================== -->
+                    ================================================== -->
 
                     <section class="author-biography">
 
 
-                        <div class="section-header">
-
+                        <div class="author-section-heading">
 
                             <div>
 
@@ -235,13 +294,11 @@
                                     BIOGRAPHY
                                 </span>
 
-
                                 <h2 class="section-title">
                                     About the Hymn Writer
                                 </h2>
 
                             </div>
-
 
                         </div>
 
@@ -252,9 +309,8 @@
                         >
 
                             <p>
-                                Biography information is
-                                currently being prepared
-                                for this archive.
+                                Biography information is currently
+                                being prepared for this archive.
                             </p>
 
                         </div>
@@ -262,144 +318,204 @@
 
                     </section>
 
-                    <!-- =====================================================
-     HISTORICAL RECORD
-====================================================== -->
 
-<section
-    id="authorHistoricalArchive"
-    class="author-historical-archive hidden"
->
+                    <!-- =================================================
+                         HISTORICAL RECORD
+                    ================================================== -->
 
-    <div class="section-header">
-
-        <div>
-
-            <span class="section-label">
-                HISTORICAL RECORD
-            </span>
-
-            <h2 class="section-title">
-                From the Original Archive
-            </h2>
-
-            <p class="section-subtitle">
-                Original historical material preserved
-                for this hymn writer.
-            </p>
-
-        </div>
-
-    </div>
+                    <section
+                        id="authorHistoricalArchive"
+                        class="author-historical-archive hidden"
+                    >
 
 
-    <div class="historical-document">
+                        <div class="author-section-heading historical-heading">
 
-        <!-- CLICKABLE IMAGE -->
+                            <div>
 
-        <button
-            type="button"
-            id="authorHistoricalImageButton"
-            class="historical-document-image"
-            aria-label="View historical record"
-        >
+                                <span class="section-label">
+                                    HISTORICAL RECORD
+                                </span>
 
-            <img
-                id="authorHistoricalImage"
-                src=""
-                alt=""
-            >
+                                <h2 class="section-title">
+                                    From the Original Archive
+                                </h2>
 
-            <span
-                class="historical-image-overlay"
-                aria-hidden="true"
-            >
-                <i class="fa-solid fa-expand"></i>
-                <span>View Record</span>
-            </span>
+                                <p class="section-subtitle">
+                                    Original historical material preserved
+                                    for this hymn writer.
+                                </p>
 
-        </button>
+                            </div>
 
 
-        <!-- FOOTER -->
+                            <div class="archive-seal">
+                                <span>
+                                    ARCHIVE
+                                </span>
+                            </div>
 
-        <div class="historical-document-footer">
-
-            <span>
-                Original archival record
-            </span>
-
-            <button
-                type="button"
-                id="authorHistoricalView"
-                class="historical-view-button"
-            >
-                View Full Record
-                <span>↗</span>
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
+                        </div>
 
 
-<!-- =====================================================
-     HISTORICAL RECORD LIGHTBOX
-====================================================== -->
+                        <!-- DOCUMENT -->
 
-<div
-    id="historicalLightbox"
-    class="historical-lightbox"
-    aria-hidden="true"
->
-
-    <div
-        class="historical-lightbox-backdrop"
-        data-historical-close
-    ></div>
+                        <div class="historical-document">
 
 
-    <div
-        class="historical-lightbox-content"
-        role="dialog"
-        aria-modal="true"
-        aria-label="Historical record"
-    >
+                            <!-- IMAGE -->
 
-        <button
-            type="button"
-            id="historicalLightboxClose"
-            class="historical-lightbox-close"
-            aria-label="Close historical record"
-        >
-            <i class="fa-solid fa-xmark"></i>
-        </button>
+                            <button
+                                type="button"
+                                id="authorHistoricalImageButton"
+                                class="historical-document-image"
+                                aria-label="View historical record"
+                            >
+
+                                <div class="historical-paper">
+
+                                    <img
+                                        id="authorHistoricalImage"
+                                        src=""
+                                        alt=""
+                                    >
+
+                                </div>
 
 
-        <div class="historical-lightbox-image-wrapper">
+                                <span
+                                    class="historical-image-overlay"
+                                    aria-hidden="true"
+                                >
 
-            <img
-                id="historicalLightboxImage"
-                src=""
-                alt=""
-            >
+                                    <span class="overlay-icon">
+                                        <i class="fa-solid fa-expand"></i>
+                                    </span>
 
-        </div>
+                                    <span>
+                                        View Historical Record
+                                    </span>
 
-    </div>
+                                </span>
 
-</div>
+                            </button>
 
-                    <!-- =============================================
+
+                            <!-- DOCUMENT FOOTER -->
+
+                            <div class="historical-document-footer">
+
+
+                                <div class="historical-document-meta">
+
+                                    <span class="document-dot"></span>
+
+                                    <span>
+                                        Original archival record
+                                    </span>
+
+                                </div>
+
+
+                                <button
+                                    type="button"
+                                    id="authorHistoricalView"
+                                    class="historical-view-button"
+                                >
+
+                                    View Full Record
+
+                                    <span>
+                                        ↗
+                                    </span>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <p class="historical-note">
+                            This historical material is presented as
+                            part of the digital preservation of Telugu
+                            Christian hymn heritage.
+                        </p>
+
+
+                    </section>
+
+
+                    <!-- =================================================
+                         LIGHTBOX
+                    ================================================== -->
+
+                    <div
+                        id="historicalLightbox"
+                        class="historical-lightbox"
+                        aria-hidden="true"
+                    >
+
+
+                        <div
+                            class="historical-lightbox-backdrop"
+                            data-historical-close
+                        ></div>
+
+
+                        <div
+                            class="historical-lightbox-content"
+                            role="dialog"
+                            aria-modal="true"
+                            aria-label="Historical record"
+                        >
+
+
+                            <button
+                                type="button"
+                                id="historicalLightboxClose"
+                                class="historical-lightbox-close"
+                                aria-label="Close historical record"
+                            >
+
+                                <i class="fa-solid fa-xmark"></i>
+
+                            </button>
+
+
+                            <div class="historical-lightbox-top">
+
+                                <span>
+                                    HISTORICAL RECORD
+                                </span>
+
+                            </div>
+
+
+                            <div class="historical-lightbox-image-wrapper">
+
+                                <img
+                                    id="historicalLightboxImage"
+                                    src=""
+                                    alt=""
+                                >
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
                          HYMNS
-                    ============================================== -->
+                    ================================================== -->
 
                     <section class="author-hymns">
 
 
-                        <div class="section-header">
+                        <div class="author-section-heading">
 
 
                             <div>
@@ -418,8 +534,7 @@
                                     id="authorHymnsSubtitle"
                                     class="section-subtitle"
                                 >
-                                    Hymns associated with
-                                    this writer.
+                                    Hymns associated with this writer.
                                 </p>
 
                             </div>
@@ -440,18 +555,15 @@
 
                 </div>
 
-
             </div>
 
-
         </section>
-
 
     </main>
 
 
     <!-- =====================================================
-         GLOBAL SEARCH
+         SEARCH
     ====================================================== -->
 
     <div id="searchModal"></div>
@@ -468,7 +580,10 @@
          SCRIPTS
     ====================================================== -->
 
-    <script type="module" src="js/main.js"></script>
+    <script
+        type="module"
+        src="js/main.js"
+    ></script>
 
     <script
         type="module"

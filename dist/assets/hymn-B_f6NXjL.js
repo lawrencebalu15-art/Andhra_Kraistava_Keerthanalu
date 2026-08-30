@@ -1,4 +1,4 @@
-import{s as C}from"./supabase-C4TjTvDq.js";import"./main-aEe_BYTM.js";const A=new URLSearchParams(window.location.search),o=Number(A.get("id"));async function _(){if(!o||Number.isNaN(o)){console.error("Invalid hymn ID:",o),E();return}const{data:e,error:t}=await C.from("hymns").select(`
+import{s as C}from"./supabase-C4TjTvDq.js";import"./main-Dw1_MU5N.js";const A=new URLSearchParams(window.location.search),o=Number(A.get("id"));async function _(){if(!o||Number.isNaN(o)){console.error("Invalid hymn ID:",o),E();return}const{data:e,error:t}=await C.from("hymns").select(`
             *,
             authors(
                 id,
