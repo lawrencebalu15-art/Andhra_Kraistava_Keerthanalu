@@ -32,9 +32,9 @@
     >
 
   <script type="module" crossorigin src="/assets/supabase-C4TjTvDq.js"></script>
-  <script type="module" crossorigin src="/assets/main-D5Q2bnPe.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/main-CPAIQzRx.css">
-  <link rel="stylesheet" crossorigin href="/assets/author-Cxfp4tyk.css">
+  <script type="module" crossorigin src="/assets/main-aEe_BYTM.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-C7NNYPqO.css">
+  <link rel="stylesheet" crossorigin href="/assets/author-B6P7-_DN.css">
 </head>
 
 
@@ -258,6 +258,135 @@
 
                     </section>
 
+                    <!-- =====================================================
+     HISTORICAL RECORD
+====================================================== -->
+
+<section
+    id="authorHistoricalArchive"
+    class="author-historical-archive hidden"
+>
+
+    <div class="section-header">
+
+        <div>
+
+            <span class="section-label">
+                HISTORICAL RECORD
+            </span>
+
+            <h2 class="section-title">
+                From the Original Archive
+            </h2>
+
+            <p class="section-subtitle">
+                Original historical material preserved
+                for this hymn writer.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="historical-document">
+
+        <!-- CLICKABLE IMAGE -->
+
+        <button
+            type="button"
+            id="authorHistoricalImageButton"
+            class="historical-document-image"
+            aria-label="View historical record"
+        >
+
+            <img
+                id="authorHistoricalImage"
+                src=""
+                alt=""
+            >
+
+            <span
+                class="historical-image-overlay"
+                aria-hidden="true"
+            >
+                <i class="fa-solid fa-expand"></i>
+                <span>View Record</span>
+            </span>
+
+        </button>
+
+
+        <!-- FOOTER -->
+
+        <div class="historical-document-footer">
+
+            <span>
+                Original archival record
+            </span>
+
+            <button
+                type="button"
+                id="authorHistoricalView"
+                class="historical-view-button"
+            >
+                View Full Record
+                <span>↗</span>
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     HISTORICAL RECORD LIGHTBOX
+====================================================== -->
+
+<div
+    id="historicalLightbox"
+    class="historical-lightbox"
+    aria-hidden="true"
+>
+
+    <div
+        class="historical-lightbox-backdrop"
+        data-historical-close
+    ></div>
+
+
+    <div
+        class="historical-lightbox-content"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Historical record"
+    >
+
+        <button
+            type="button"
+            id="historicalLightboxClose"
+            class="historical-lightbox-close"
+            aria-label="Close historical record"
+        >
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+
+        <div class="historical-lightbox-image-wrapper">
+
+            <img
+                id="historicalLightboxImage"
+                src=""
+                alt=""
+            >
+
+        </div>
+
+    </div>
+
+</div>
 
                     <!-- =============================================
                          HYMNS
