@@ -2334,3 +2334,41 @@ button:disabled{
 .hidden {
     display: none !important;
 }
+
+
+/* =========================================================
+   AUTHOR HISTORICAL RECORD
+========================================================= */
+
+.author-historical-preview {
+    margin-top: 14px;
+
+    padding: 12px;
+
+    background: #f8fafc;
+
+    border:
+        1px solid
+        #e2e8f0;
+
+    border-radius: 12px;
+}
+
+
+.author-historical-preview img {
+    display: block;
+
+    width: 100%;
+
+    max-width: 700px;
+
+    max-height: 350px;
+
+    margin: 0 auto;
+
+    object-fit: contain;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+}

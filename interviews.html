@@ -17,9 +17,113 @@
 
     <style>
 
-        .page-title {
-            font-size: medium;
+        /* =========================================================
+           INTERVIEWS PAGE HEADER
+        ========================================================= */
+
+        .interviews-page .page-header {
+            width: 100%;
+            background: #f7f3eb;
+
+            text-align: center;
+
+            border-bottom: 1px solid #e5ded2;
         }
+
+
+        .interviews-page .page-header .container {
+            width: 100%;
+            max-width: 1200px;
+
+            margin: 0 auto;
+
+            padding: 3px 10px 6px;
+        }
+
+
+        /* =========================================================
+           SECTION LABEL
+        ========================================================= */
+
+        .interviews-page .page-header .section-label {
+            display: block;
+
+            margin-bottom: 18px;
+
+            color: #a27624;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            line-height: 1.2;
+
+            letter-spacing: 3px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =========================================================
+           PAGE TITLE
+        ========================================================= */
+
+        .interviews-page .page-header .page-title {
+            width: 100%;
+
+            max-width: 950px;
+
+            margin: 0 auto;
+
+            color: #5a2b20;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 40px;
+
+            font-weight: 700;
+
+            line-height: 1.08;
+
+            letter-spacing: -1px;
+
+            text-align: center;
+        }
+
+
+        /* =========================================================
+           PAGE SUBTITLE
+        ========================================================= */
+
+        .interviews-page .page-header .page-subtitle {
+            max-width: 750px;
+
+            margin: 2px auto 0;
+
+            color: #66615c;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            line-height: 1.5;
+
+            text-align: center;
+        }
+
 
         /* =========================================================
            INTERVIEWS PAGE
@@ -27,8 +131,12 @@
 
         .interviews-authors {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
             gap: 22px;
+
             margin-top: 10px;
         }
 
@@ -39,21 +147,25 @@
 
         .interview-author-card {
             display: flex;
+
             align-items: center;
+
             gap: 22px;
 
             padding: 22px;
 
             background: #ffffff;
 
-            border: 1px solid rgba(59, 2, 2, 0.10);
+            border: 1px solid
+                rgba(59, 2, 2, 0.10);
 
             border-radius: 16px;
 
             text-decoration: none;
 
             box-shadow:
-                0 4px 18px rgba(59, 2, 2, 0.04);
+                0 4px 18px
+                rgba(59, 2, 2, 0.04);
 
             transition:
                 transform .25s ease,
@@ -69,7 +181,8 @@
                 rgba(212, 175, 55, 0.55);
 
             box-shadow:
-                0 12px 28px rgba(59, 2, 2, 0.08);
+                0 12px 28px
+                rgba(59, 2, 2, 0.08);
         }
 
 
@@ -125,6 +238,7 @@
 
         .interview-author-info {
             flex: 1;
+
             min-width: 0;
         }
 
@@ -158,7 +272,8 @@
 
             font-weight: 700;
 
-            transition: transform .25s ease;
+            transition:
+                transform .25s ease;
         }
 
 
@@ -186,7 +301,8 @@
             padding-bottom: 25px;
 
             border-bottom:
-                1px solid rgba(59, 2, 2, 0.10);
+                1px solid
+                rgba(59, 2, 2, 0.10);
         }
 
 
@@ -279,14 +395,16 @@
             background: #ffffff;
 
             border:
-                1px solid rgba(59, 2, 2, 0.10);
+                1px solid
+                rgba(59, 2, 2, 0.10);
 
             border-radius: 16px;
 
             overflow: hidden;
 
             box-shadow:
-                0 4px 15px rgba(59, 2, 2, 0.04);
+                0 4px 15px
+                rgba(59, 2, 2, 0.04);
 
             transition: .3s ease;
         }
@@ -296,7 +414,8 @@
             transform: translateY(-5px);
 
             box-shadow:
-                0 14px 30px rgba(59, 2, 2, 0.08);
+                0 14px 30px
+                rgba(59, 2, 2, 0.08);
         }
 
 
@@ -329,7 +448,8 @@
             left: 50%;
             top: 50%;
 
-            transform: translate(-50%, -50%);
+            transform:
+                translate(-50%, -50%);
 
             width: 62px;
             height: 62px;
@@ -346,7 +466,8 @@
             color: #3b0202;
 
             box-shadow:
-                0 5px 20px rgba(0,0,0,.20);
+                0 5px 20px
+                rgba(0, 0, 0, .20);
 
             font-size: 1.4rem;
         }
@@ -432,13 +553,71 @@
            RESPONSIVE
         ========================================================= */
 
+        @media (max-width: 992px) {
+
+            .interviews-page .page-header .container {
+                padding: 35px 25px 40px;
+            }
+
+
+            .interviews-page .page-header .page-title {
+                max-width: 850px;
+
+                font-size: 56px;
+
+                line-height: 1.1;
+            }
+
+
+            .interviews-page .page-header .page-subtitle {
+                font-size: 18px;
+            }
+        }
+
+
         @media (max-width: 900px) {
 
             .interviews-authors,
             .interviews-list {
                 grid-template-columns: 1fr;
             }
+        }
 
+
+        @media (max-width: 768px) {
+
+            .interviews-page .page-header .container {
+                padding: 30px 20px 35px;
+            }
+
+
+            .interviews-page .page-header .section-label {
+                margin-bottom: 14px;
+
+                font-size: 12px;
+
+                letter-spacing: 2.5px;
+            }
+
+
+            .interviews-page .page-header .page-title {
+                max-width: 700px;
+
+                font-size: 46px;
+
+                line-height: 1.1;
+
+                letter-spacing: -0.5px;
+            }
+
+
+            .interviews-page .page-header .page-subtitle {
+                margin-top: 22px;
+
+                font-size: 17px;
+
+                line-height: 1.5;
+            }
         }
 
 
@@ -468,9 +647,47 @@
             .interview-author-header h2 {
                 font-size: 1.5rem;
             }
-
         }
-      
+
+
+        /* =========================================================
+           SMALL MOBILE
+        ========================================================= */
+
+        @media (max-width: 480px) {
+
+            .interviews-page .page-header .container {
+                padding: 25px 16px 30px;
+            }
+
+
+            .interviews-page .page-header .section-label {
+                margin-bottom: 12px;
+
+                font-size: 11px;
+
+                letter-spacing: 2px;
+            }
+
+
+            .interviews-page .page-header .page-title {
+                font-size: 36px;
+
+                line-height: 1.12;
+
+                letter-spacing: 0;
+            }
+
+
+            .interviews-page .page-header .page-subtitle {
+                margin-top: 18px;
+
+                font-size: 16px;
+
+                line-height: 1.45;
+            }
+        }
+
     </style>
 
 </head>
@@ -478,25 +695,31 @@
 
 <body class="interviews-page">
 
-<div id="searchModalContainer"></div>
 
+    <div id="searchModalContainer"></div>
 
 
     <main>
-<div id="navbar"></div>
+
+        <div id="navbar"></div>
+
 
         <!-- =====================================================
-             PAGE HEADER
+            PAGE HEADER
         ====================================================== -->
 
         <section class="page-header">
 
             <div class="container">
+                <br>
 
                 <span class="section-label">
                     Interviews
                 </span>
-
+                <h1 class="page-title">
+                    కీర్తన కవుల వారసులను కలుద్దాం
+                </h1>
+                <br>
                 <h1 class="page-title">
                     Meet the Heirs of Hymn Writers
                 </h1>
@@ -606,15 +829,30 @@
         type="module"
         src="js/main.js">
     </script>
-    <script defer src="/_vercel/speed-insights/script.js"></script>
-    <script defer src="/_vercel/insights/script.js"></script>
+
+
+    <script
+        defer
+        src="/_vercel/speed-insights/script.js">
+    </script>
+
+
+    <script
+        defer
+        src="/_vercel/insights/script.js">
+    </script>
+
 
     <script
         type="module"
         src="js/pages/interviews.js">
     </script>
 
-    <script type="module" src="js/pages/home.js"></script>
+
+    <script
+        type="module"
+        src="js/pages/home.js">
+    </script>
 
 
 </body>

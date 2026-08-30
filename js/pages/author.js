@@ -43,6 +43,21 @@ const authorHymnsSubtitle =
 const authorHymns =
     document.getElementById("authorHymns");
 
+const authorHistoricalArchive =
+    document.getElementById(
+        "authorHistoricalArchive"
+    );
+
+const authorHistoricalImage =
+    document.getElementById(
+        "authorHistoricalImage"
+    );
+
+const authorHistoricalView =
+    document.getElementById(
+        "authorHistoricalView"
+    );
+
 
 /* =========================================================
    INITIALIZE
@@ -104,15 +119,16 @@ async function loadAuthor() {
         } = await supabase
             .from("authors")
             .select(`
-                id,
-                name,
-                photo_url,
-                bio,
-                birth_year,
-                death_year,
-                country,
-                media_id
-            `)
+    id,
+    name,
+    photo_url,
+    bio,
+    birth_year,
+    death_year,
+    country,
+    media_id,
+    historical_media_id
+`)
             .eq("id", authorId)
             .maybeSingle();
 
@@ -372,6 +388,7 @@ async function renderAuthor(author) {
     }
 
 
+
     /* =====================================================
        PHOTO
     ===================================================== */
@@ -518,6 +535,102 @@ async function renderAuthor(author) {
 
 }
 
+
+/* =====================================================
+   HISTORICAL RECORD
+===================================================== */
+
+if (
+    authorHistoricalArchive &&
+    authorHistoricalImage
+) {
+
+    const historicalMediaId =
+        author.historical_media_id;
+
+
+    if (historicalMediaId) {
+
+        const {
+            data: historicalMedia,
+            error: historicalMediaError
+        } = await supabase
+            .from("media")
+            .select("storage_path")
+            .eq(
+                "id",
+                historicalMediaId
+            )
+            .maybeSingle();
+
+
+        if (
+            !historicalMediaError &&
+            historicalMedia?.storage_path
+        ) {
+
+            const historicalUrl =
+                getPublicMediaUrl(
+                    historicalMedia.storage_path
+                );
+
+
+            if (historicalUrl) {
+
+                authorHistoricalImage.src =
+                    historicalUrl;
+
+                authorHistoricalImage.alt =
+                    `${name} - historical record`;
+
+
+                authorHistoricalArchive.classList.remove(
+                    "hidden"
+                );
+
+
+                if (authorHistoricalView) {
+
+                    authorHistoricalView.href =
+                        historicalUrl;
+
+                }
+
+
+                authorHistoricalImage.onerror =
+                    () => {
+
+                        authorHistoricalArchive.classList.add(
+                            "hidden"
+                        );
+
+                    };
+
+            } else {
+
+                authorHistoricalArchive.classList.add(
+                    "hidden"
+                );
+
+            }
+
+        } else {
+
+            authorHistoricalArchive.classList.add(
+                "hidden"
+            );
+
+        }
+
+    } else {
+
+        authorHistoricalArchive.classList.add(
+            "hidden"
+        );
+
+    }
+
+}
 
 /* =========================================================
    LOAD AUTHOR HYMNS

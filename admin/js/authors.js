@@ -32,6 +32,22 @@ const authorForm = document.getElementById("authorForm");
 const authorName = document.getElementById("authorName");
 const authorMedia = document.getElementById("authorMedia");
 
+
+const authorHistoricalMedia =
+    document.getElementById(
+        "authorHistoricalMedia"
+    );
+
+const authorHistoricalPreview =
+    document.getElementById(
+        "authorHistoricalPreview"
+    );
+
+const authorHistoricalPreviewImage =
+    document.getElementById(
+        "authorHistoricalPreviewImage"
+    );
+
 const authorBio =
     document.getElementById("authorBio");
 
@@ -354,6 +370,25 @@ function resetAuthorForm() {
 
     authorPhotoPreviewImage.src = "";
 }
+if (authorHistoricalMedia) {
+
+    authorHistoricalMedia.value = "";
+
+}
+
+if (authorHistoricalPreview) {
+
+    authorHistoricalPreview.classList.add(
+        "hidden"
+    );
+
+}
+
+if (authorHistoricalPreviewImage) {
+
+    authorHistoricalPreviewImage.src = "";
+
+}
 
 
 function closeModal() {
@@ -491,6 +526,47 @@ async function loadAuthorMedia() {
 
             }
         );
+        /* =====================================================
+   HISTORICAL RECORD IMAGE OPTIONS
+===================================================== */
+
+if (authorHistoricalMedia) {
+
+    authorHistoricalMedia.innerHTML = `
+        <option value="">
+            No Historical Record
+        </option>
+    `;
+
+
+    authorMediaList.forEach(
+        media => {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+            option.value =
+                media.id;
+
+            option.textContent =
+                media.file_name;
+
+            option.dataset.storagePath =
+                media.storage_path;
+
+            authorHistoricalMedia.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+
+
 
     } catch (error) {
 
@@ -508,6 +584,69 @@ async function loadAuthorMedia() {
     }
 }
 
+
+function updateHistoricalPreview() {
+
+    if (!authorHistoricalMedia) {
+        return;
+    }
+
+
+    const selectedOption =
+        authorHistoricalMedia.options[
+            authorHistoricalMedia.selectedIndex
+        ];
+
+
+    const storagePath =
+        selectedOption?.dataset?.storagePath;
+
+
+    if (!storagePath) {
+
+        authorHistoricalPreview.classList.add(
+            "hidden"
+        );
+
+        authorHistoricalPreviewImage.src = "";
+
+        return;
+    }
+
+
+    const publicUrl =
+        getPublicMediaUrl(
+            storagePath
+        );
+
+
+    if (!publicUrl) {
+
+        authorHistoricalPreview.classList.add(
+            "hidden"
+        );
+
+        return;
+    }
+
+
+    authorHistoricalPreviewImage.src =
+        publicUrl;
+
+    authorHistoricalPreview.classList.remove(
+        "hidden"
+    );
+}
+
+
+if (authorHistoricalMedia) {
+
+    authorHistoricalMedia.addEventListener(
+        "change",
+        updateHistoricalPreview
+    );
+
+}
 
 /* =========================================================
    PHOTO PREVIEW
@@ -975,7 +1114,18 @@ await loadAuthorMedia();
 authorMedia.value =
     author.media_id || "";
 
+
+
 updateAuthorPhotoPreview();
+
+if (authorHistoricalMedia) {
+
+    authorHistoricalMedia.value =
+        author.historical_media_id || "";
+
+    updateHistoricalPreview();
+
+}
 
 
     openModal();
@@ -1070,7 +1220,13 @@ authorForm.addEventListener(
             }
 
 
-            const payload = {
+const historicalMediaId =
+    authorHistoricalMedia?.value ||
+    null;
+
+
+const payload = {
+
     name,
 
     media_id:
@@ -1078,6 +1234,9 @@ authorForm.addEventListener(
 
     photo_url:
         photoUrl,
+
+    historical_media_id:
+        historicalMediaId,
 
     bio:
         authorBio.value.trim() || null,
@@ -1094,6 +1253,7 @@ authorForm.addEventListener(
 
     country:
         authorCountry.value.trim() || null
+
 };
 
             /*
