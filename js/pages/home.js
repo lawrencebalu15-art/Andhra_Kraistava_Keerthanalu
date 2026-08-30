@@ -8,6 +8,7 @@ import { supabase } from "../supabase.js";
 import { initThree } from "../three/index.js";
 import { setPageHeader } from "../components/page-header.js";
 
+
 /* ==========================================
    INITIALIZE HOME PAGE
 ========================================== */
@@ -22,9 +23,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
 
     await loadFeaturedHymns();
-    await loadFeaturedAuthors();
+await loadFeaturedAuthors();
 
-    initializeCounters();
+initializeCounters();
+await loadHomeSlidesAndInitializeCarousel();
 
 });
 
@@ -250,9 +252,11 @@ function getInitials(name) {
     if (!words.length) return "?";
 
     if (words.length === 3) {
+
         return words[0]
             .substring(0, 3)
             .toUpperCase();
+
     }
 
     return (
@@ -337,4 +341,908 @@ function initializeCounters() {
     counters.forEach(counter =>
         observer.observe(counter)
     );
+}
+
+
+/* ==========================================
+   HOME HERO CAROUSEL
+========================================== */
+/* =========================================================
+   HOME SLIDES FROM SUPABASE
+   ========================================================= */
+
+async function loadHomeSlidesAndInitializeCarousel() {
+
+    const track = document.getElementById("homeHeroTrack");
+
+    if (!track) {
+        console.warn("[Home Slides] Carousel track not found.");
+        return;
+    }
+
+    try {
+
+        /* -----------------------------------------------------
+           LOAD ACTIVE SLIDES FROM DATABASE
+        ----------------------------------------------------- */
+
+        const { data, error } = await supabase
+            .from("home_slides")
+            .select(`
+                id,
+                image_path,
+                image_name,
+                slide_order,
+                kicker,
+                title,
+                description,
+                button_text,
+                button_url,
+                is_active
+            `)
+            .eq("is_active", true)
+            .order("slide_order", {
+                ascending: true
+            });
+
+        if (error) {
+            throw error;
+        }
+
+
+        /* -----------------------------------------------------
+           REMOVE OLD HARD-CODED IMAGE SLIDES
+           KEEP THE ORIGINAL INTRO SLIDE
+        ----------------------------------------------------- */
+
+        track
+            .querySelectorAll(".hero-slide:not(.hero-slide--intro)")
+            .forEach(slide => slide.remove());
+
+
+        /* -----------------------------------------------------
+           NO DATABASE SLIDES
+        ----------------------------------------------------- */
+
+        if (!data || data.length === 0) {
+
+            console.info(
+                "[Home Slides] No active slides found."
+            );
+
+            initializeHomeHeroCarousel();
+
+            return;
+        }
+
+
+        /* -----------------------------------------------------
+           CREATE PUBLIC IMAGE URLS
+        ----------------------------------------------------- */
+
+        const slides = data
+            .filter(slide => slide.image_path)
+            .map(slide => {
+
+                const {
+                    data: publicUrlData
+                } = supabase.storage
+                    .from("home-slides")
+                    .getPublicUrl(slide.image_path);
+
+                return {
+                    ...slide,
+                    publicUrl:
+                        publicUrlData?.publicUrl || ""
+                };
+
+            })
+            .filter(slide => slide.publicUrl);
+
+
+        /* -----------------------------------------------------
+           INSERT DATABASE SLIDES
+        ----------------------------------------------------- */
+
+        slides.forEach((slide, index) => {
+
+            const article =
+                document.createElement("article");
+
+            article.className =
+                "hero-slide hero-slide--image";
+
+            if (index === 0) {
+                article.classList.add("is-active");
+            }
+
+            article.setAttribute(
+                "aria-hidden",
+                index === 0 ? "false" : "true"
+            );
+
+            article.dataset.slideImage =
+                slide.publicUrl;
+
+
+            /* -------------------------------------------------
+               IMAGE
+            ------------------------------------------------- */
+
+            const image =
+                document.createElement("div");
+
+            image.className =
+                "hero-slide-image";
+
+            image.style.backgroundImage =
+                `url("${slide.publicUrl}")`;
+
+
+            /* -------------------------------------------------
+               OVERLAY
+            ------------------------------------------------- */
+
+            const overlay =
+                document.createElement("div");
+
+            overlay.className =
+                "hero-slide-overlay";
+
+
+            /* -------------------------------------------------
+               CONTAINER
+            ------------------------------------------------- */
+
+            const container =
+                document.createElement("div");
+
+            container.className =
+                "container hero-slide-container";
+
+
+            /* -------------------------------------------------
+               CONTENT
+            ------------------------------------------------- */
+
+            const copy =
+                document.createElement("div");
+
+            copy.className =
+                "hero-slide-copy";
+
+
+            /* KICKER */
+
+            if (slide.kicker) {
+
+                const kicker =
+                    document.createElement("span");
+
+                kicker.className =
+                    "hero-slide-kicker";
+
+                kicker.textContent =
+                    slide.kicker;
+
+                copy.appendChild(kicker);
+            }
+
+
+            /* TITLE */
+
+            if (slide.title) {
+
+                const title =
+                    document.createElement("h2");
+
+                title.className =
+                    "hero-slide-title";
+
+                title.textContent =
+                    slide.title;
+
+                copy.appendChild(title);
+            }
+
+
+            /* DESCRIPTION */
+
+            if (slide.description) {
+
+                const description =
+                    document.createElement("p");
+
+                description.className =
+                    "hero-slide-description";
+
+                description.textContent =
+                    slide.description;
+
+                copy.appendChild(description);
+            }
+
+
+            /* -------------------------------------------------
+               BUTTON
+            ------------------------------------------------- */
+
+            if (
+                slide.button_text &&
+                slide.button_url
+            ) {
+
+                const actions =
+                    document.createElement("div");
+
+                actions.className =
+                    "hero-slide-actions";
+
+
+                const button =
+                    document.createElement("a");
+
+                button.className =
+                    "hero-btn hero-btn-primary";
+
+                button.href =
+                    slide.button_url;
+
+                const buttonText =
+                    document.createElement("span");
+
+                buttonText.textContent =
+                    slide.button_text;
+
+
+                const icon =
+                    document.createElement("i");
+
+                icon.className =
+                    "fa-solid fa-arrow-right";
+
+                icon.setAttribute(
+                    "aria-hidden",
+                    "true"
+                );
+
+
+                button.appendChild(buttonText);
+                button.appendChild(icon);
+
+                actions.appendChild(button);
+
+                copy.appendChild(actions);
+            }
+
+
+            container.appendChild(copy);
+
+            article.appendChild(image);
+            article.appendChild(overlay);
+            article.appendChild(container);
+
+            track.appendChild(article);
+        });
+
+
+        /* -----------------------------------------------------
+           INITIALIZE CAROUSEL
+        ----------------------------------------------------- */
+
+        initializeHomeHeroCarousel();
+
+
+        console.info(
+            `[Home Slides] Loaded ${slides.length} active slide(s).`
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "[Home Slides] Failed to load slides:",
+            error
+        );
+
+        /*
+         * Keep the original intro slide working even if
+         * the database/storage request fails.
+         */
+
+        initializeHomeHeroCarousel();
+    }
+}
+
+
+/* =========================================================
+   HOME HERO CAROUSEL
+   ========================================================= */
+
+function initializeHomeHeroCarousel() {
+
+    const carousel =
+        document.querySelector(
+            ".home-hero-carousel"
+        );
+
+    const track =
+        document.getElementById(
+            "homeHeroTrack"
+        );
+
+    const dotsBox =
+        document.getElementById(
+            "heroCarouselDots"
+        );
+
+    const prev =
+        document.getElementById(
+            "heroCarouselPrev"
+        );
+
+    const next =
+        document.getElementById(
+            "heroCarouselNext"
+        );
+
+    const progress =
+        document.getElementById(
+            "heroCarouselProgress"
+        );
+
+
+    if (
+        !carousel ||
+        !track ||
+        !dotsBox ||
+        !prev ||
+        !next
+    ) {
+        return;
+    }
+
+
+    const slides = [
+        ...track.querySelectorAll(
+            ".hero-slide"
+        )
+    ];
+
+
+    if (!slides.length) {
+        return;
+    }
+
+
+    const reduceMotion =
+        window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+
+    const delay = 6500;
+
+    let index = 0;
+    let timer = null;
+    let paused = false;
+
+    let touchX = null;
+    let touchY = null;
+
+
+    /* -----------------------------------------------------
+       IMAGE PRELOADING
+    ----------------------------------------------------- */
+
+    slides.forEach(slide => {
+
+        const url =
+            slide.dataset.slideImage;
+
+        const image =
+            slide.querySelector(
+                ".hero-slide-image"
+            );
+
+        if (!url || !image) {
+            return;
+        }
+
+
+        const preloader =
+            new Image();
+
+
+        preloader.onload = () => {
+
+            image.style.backgroundImage =
+                `url("${url.replace(
+                    /"/g,
+                    '\\"'
+                )}")`;
+
+            slide.classList.add(
+                "has-image"
+            );
+        };
+
+
+        preloader.onerror = () => {
+
+            console.warn(
+                "[Home Slides] Image failed:",
+                url
+            );
+
+        };
+
+
+        preloader.src = url;
+
+    });
+
+
+    /* -----------------------------------------------------
+       DOTS
+    ----------------------------------------------------- */
+
+    dotsBox.innerHTML =
+        slides.map((_, i) => {
+
+            return `
+                <button
+                    type="button"
+                    class="hero-carousel-dot${i === 0 ? " is-active" : ""}"
+                    data-index="${i}"
+                    aria-label="Go to slide ${i + 1}"
+                    aria-current="${i === 0 ? "true" : "false"}"
+                ></button>
+            `;
+
+        }).join("");
+
+
+    const dots = [
+        ...dotsBox.querySelectorAll(
+            ".hero-carousel-dot"
+        )
+    ];
+
+
+    /* -----------------------------------------------------
+       PROGRESS
+    ----------------------------------------------------- */
+
+    function resetProgress() {
+
+        if (!progress) {
+            return;
+        }
+
+
+        progress.style.transition =
+            "none";
+
+        progress.style.width =
+            "0%";
+
+
+        void progress.offsetWidth;
+
+
+        if (
+            !reduceMotion &&
+            !paused &&
+            slides.length > 1
+        ) {
+
+            progress.style.transition =
+                `width ${delay}ms linear`;
+
+            progress.style.width =
+                "100%";
+        }
+    }
+
+
+    /* -----------------------------------------------------
+       SHOW SLIDE
+    ----------------------------------------------------- */
+
+    function showSlide(nextIndex) {
+
+        index =
+            (nextIndex + slides.length) %
+            slides.length;
+
+
+        track.style.transform =
+            `translate3d(-${index * 100}%, 0, 0)`;
+
+
+        slides.forEach((slide, i) => {
+
+            const active =
+                i === index;
+
+
+            slide.classList.toggle(
+                "is-active",
+                active
+            );
+
+
+            slide.setAttribute(
+                "aria-hidden",
+                String(!active)
+            );
+
+
+            slide
+                .querySelectorAll("a")
+                .forEach(link => {
+
+                    if (active) {
+
+                        link.removeAttribute(
+                            "tabindex"
+                        );
+
+                    } else {
+
+                        link.setAttribute(
+                            "tabindex",
+                            "-1"
+                        );
+                    }
+
+                });
+
+        });
+
+
+        dots.forEach((dot, i) => {
+
+            const active =
+                i === index;
+
+
+            dot.classList.toggle(
+                "is-active",
+                active
+            );
+
+
+            dot.setAttribute(
+                "aria-current",
+                String(active)
+            );
+
+        });
+
+
+        resetProgress();
+    }
+
+
+    /* -----------------------------------------------------
+       STOP
+    ----------------------------------------------------- */
+
+    function stop() {
+
+        clearTimeout(timer);
+
+        timer = null;
+    }
+
+
+    /* -----------------------------------------------------
+       START
+    ----------------------------------------------------- */
+
+    function start() {
+
+        stop();
+
+
+        if (
+            reduceMotion ||
+            paused ||
+            slides.length < 2
+        ) {
+            return;
+        }
+
+
+        timer =
+            setTimeout(() => {
+
+                showSlide(index + 1);
+
+                start();
+
+            }, delay);
+    }
+
+
+    /* -----------------------------------------------------
+       PREVIOUS
+    ----------------------------------------------------- */
+
+    prev.addEventListener(
+        "click",
+        () => {
+
+            showSlide(index - 1);
+
+            start();
+        }
+    );
+
+
+    /* -----------------------------------------------------
+       NEXT
+    ----------------------------------------------------- */
+
+    next.addEventListener(
+        "click",
+        () => {
+
+            showSlide(index + 1);
+
+            start();
+        }
+    );
+
+
+    /* -----------------------------------------------------
+       DOT NAVIGATION
+    ----------------------------------------------------- */
+
+    dots.forEach(dot => {
+
+        dot.addEventListener(
+            "click",
+            () => {
+
+                showSlide(
+                    Number(
+                        dot.dataset.index
+                    )
+                );
+
+                start();
+            }
+        );
+
+    });
+
+
+    /* -----------------------------------------------------
+       MOUSE PAUSE
+    ----------------------------------------------------- */
+
+    carousel.addEventListener(
+        "mouseenter",
+        () => {
+
+            paused = true;
+
+            stop();
+
+            if (progress) {
+
+                progress.style.transition =
+                    "none";
+            }
+        }
+    );
+
+
+    carousel.addEventListener(
+        "mouseleave",
+        () => {
+
+            paused = false;
+
+            resetProgress();
+
+            start();
+        }
+    );
+
+
+    /* -----------------------------------------------------
+       KEYBOARD FOCUS
+    ----------------------------------------------------- */
+
+    carousel.addEventListener(
+        "focusin",
+        () => {
+
+            paused = true;
+
+            stop();
+        }
+    );
+
+
+    carousel.addEventListener(
+        "focusout",
+        event => {
+
+            if (
+                !carousel.contains(
+                    event.relatedTarget
+                )
+            ) {
+
+                paused = false;
+
+                resetProgress();
+
+                start();
+            }
+
+        }
+    );
+
+
+    /* -----------------------------------------------------
+       TOUCH / SWIPE
+    ----------------------------------------------------- */
+
+    carousel.addEventListener(
+        "touchstart",
+        event => {
+
+            const touch =
+                event.changedTouches[0];
+
+            touchX =
+                touch.clientX;
+
+            touchY =
+                touch.clientY;
+
+            paused = true;
+
+            stop();
+
+        },
+        {
+            passive: true
+        }
+    );
+
+
+    carousel.addEventListener(
+        "touchend",
+        event => {
+
+            if (
+                touchX === null ||
+                touchY === null
+            ) {
+                return;
+            }
+
+
+            const touch =
+                event.changedTouches[0];
+
+
+            const dx =
+                touch.clientX -
+                touchX;
+
+
+            const dy =
+                touch.clientY -
+                touchY;
+
+
+            if (
+                Math.abs(dx) > 50 &&
+                Math.abs(dx) >
+                Math.abs(dy)
+            ) {
+
+                showSlide(
+                    index +
+                    (dx < 0 ? 1 : -1)
+                );
+            }
+
+
+            touchX = null;
+            touchY = null;
+
+            paused = false;
+
+            start();
+
+        },
+        {
+            passive: true
+        }
+    );
+
+
+    /* -----------------------------------------------------
+       KEYBOARD ARROWS
+    ----------------------------------------------------- */
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                !carousel.contains(
+                    document.activeElement
+                )
+            ) {
+                return;
+            }
+
+
+            if (
+                event.key ===
+                "ArrowLeft"
+            ) {
+
+                event.preventDefault();
+
+                showSlide(index - 1);
+
+                start();
+            }
+
+
+            if (
+                event.key ===
+                "ArrowRight"
+            ) {
+
+                event.preventDefault();
+
+                showSlide(index + 1);
+
+                start();
+            }
+
+        }
+    );
+
+
+    /* -----------------------------------------------------
+       TAB VISIBILITY
+    ----------------------------------------------------- */
+
+    document.addEventListener(
+        "visibilitychange",
+        () => {
+
+            if (document.hidden) {
+
+                stop();
+
+            } else if (!paused) {
+
+                start();
+            }
+
+        }
+    );
+
+
+    /* -----------------------------------------------------
+       INITIAL STATE
+    ----------------------------------------------------- */
+
+    showSlide(0);
+
+    start();
 }

@@ -2372,3 +2372,378 @@ button:disabled{
 
     background: #ffffff;
 }
+
+
+
+/* =========================================================
+   FINAL SIDEBAR FIX
+   Keeps navigation scrollable and footer fully visible
+========================================================= */
+
+/* Sidebar itself */
+#sidebar {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 260px;
+    height: 100vh;
+
+    margin-left: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #0f172a;
+    color: #fff;
+
+    overflow: hidden;
+
+    z-index: 1000;
+}
+
+
+/* Sidebar header */
+.sidebar-header {
+    flex-shrink: 0;
+
+    padding: 30px;
+
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+
+/* Navigation area */
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+
+    min-height: 0;
+
+    padding: 20px;
+
+    gap: 8px;
+
+    /*
+       Important:
+       Navigation scrolls independently when
+       the screen is too short.
+    */
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,.20) transparent;
+}
+
+
+/* WebKit scrollbar */
+.sidebar-nav::-webkit-scrollbar {
+    width: 5px;
+}
+
+.sidebar-nav::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,.20);
+    border-radius: 10px;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,.35);
+}
+
+
+/* Navigation links */
+.nav-link {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    width: 100%;
+
+    min-height: 48px;
+
+    padding: 14px 16px;
+
+    box-sizing: border-box;
+
+    flex-shrink: 0;
+
+    text-decoration: none;
+
+    color: #cbd5e1;
+
+    border-radius: 10px;
+
+    transition:
+        background .25s ease,
+        color .25s ease;
+}
+
+
+.nav-link:hover {
+    background: #1e293b;
+    color: #fff;
+}
+
+
+.nav-link.active {
+    background: #2563eb;
+    color: #fff;
+}
+
+
+/* Sidebar icons */
+.sidebar-icon {
+    width: 19px;
+    height: 19px;
+
+    min-width: 19px;
+
+    flex-shrink: 0;
+
+    display: block;
+}
+
+
+/* Navigation text */
+.nav-link span {
+    line-height: 1;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   SIDEBAR FOOTER
+========================================================= */
+
+.sidebar-footer {
+    flex-shrink: 0;
+
+    width: 100%;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+
+    border-top: 1px solid rgba(255,255,255,.08);
+
+    background: #0f172a;
+}
+
+
+/* =========================================================
+   VIEW WEBSITE
+========================================================= */
+
+.website-link {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    width: 100%;
+
+    min-height: 44px;
+
+    padding: 11px 14px;
+
+    margin: 0 0 8px 0;
+
+    box-sizing: border-box;
+
+    border-radius: 8px;
+
+    color: #94a3b8;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    transition:
+        background .2s ease,
+        color .2s ease;
+}
+
+
+.website-link:hover {
+    background: rgba(255,255,255,.06);
+
+    color: #fff;
+}
+
+
+.website-link .sidebar-icon {
+    width: 19px;
+    height: 19px;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   LOGOUT BUTTON
+========================================================= */
+
+.logout-btn {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    width: 100%;
+
+    min-height: 46px;
+
+    padding: 12px 14px;
+
+    box-sizing: border-box;
+
+    flex-shrink: 0;
+
+    background: #ef4444;
+
+    color: #fff;
+
+    border: none;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    transition:
+        background .2s ease,
+        transform .18s ease;
+}
+
+
+.logout-btn:hover {
+    background: #dc2626;
+
+    transform: translateY(-1px);
+}
+
+
+.logout-btn .sidebar-icon {
+    width: 19px;
+    height: 19px;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   DASHBOARD CONTENT OFFSET
+========================================================= */
+
+.dashboard-layout {
+    display: flex;
+
+    flex-direction: column;
+
+    margin-left: 260px;
+
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   SMALL SCREEN SAFETY
+========================================================= */
+
+@media (max-height: 700px) {
+
+    .sidebar-header {
+        padding: 20px 30px;
+    }
+
+    .sidebar-nav {
+        padding: 14px 20px;
+        gap: 5px;
+    }
+
+    .nav-link {
+        min-height: 42px;
+        padding: 10px 14px;
+    }
+
+    .sidebar-footer {
+        padding: 14px 20px;
+    }
+
+    .website-link {
+        min-height: 38px;
+        padding: 8px 12px;
+        margin-bottom: 6px;
+    }
+
+    .logout-btn {
+        min-height: 42px;
+        padding: 10px 12px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL HEIGHT SCREENS
+========================================================= */
+
+@media (max-height: 580px) {
+
+    .sidebar-header {
+        padding: 15px 25px;
+    }
+
+    .sidebar-header h2 {
+        font-size: 20px;
+    }
+
+    .sidebar-header p {
+        margin-top: 3px;
+        font-size: 13px;
+    }
+
+    .sidebar-nav {
+        padding: 10px 15px;
+        gap: 3px;
+    }
+
+    .nav-link {
+        min-height: 38px;
+        padding: 8px 12px;
+    }
+
+    .sidebar-footer {
+        padding: 10px 15px;
+    }
+
+    .website-link {
+        min-height: 34px;
+        padding: 7px 10px;
+        margin-bottom: 5px;
+    }
+
+    .logout-btn {
+        min-height: 38px;
+        padding: 8px 10px;
+    }
+}

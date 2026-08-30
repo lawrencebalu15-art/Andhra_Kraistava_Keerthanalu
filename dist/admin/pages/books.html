@@ -1,524 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>
-        Books | AKK CMS
-    </title>
-
-
-
-  <script type="module" crossorigin src="/assets/adminBooks-9tCY1Xfb.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books | AKK CMS</title>
+  <script type="module" crossorigin src="/assets/adminBooks-_L9CAe5_.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/supabase-C4TjTvDq.js">
   <link rel="modulepreload" crossorigin href="/assets/common-DAz3qKPy.js">
   <link rel="modulepreload" crossorigin href="/assets/utils-B1kQYoMr.js">
   <link rel="modulepreload" crossorigin href="/assets/auth-BTxupRwK.js">
-  <link rel="stylesheet" crossorigin href="/assets/admin-Cqyqo54p.css">
+  <link rel="stylesheet" crossorigin href="/assets/adminBooks-DAh9KFUY.css">
+  <link rel="stylesheet" crossorigin href="/assets/admin-DXTTwHjp.css">
 </head>
-
-
 <body>
-
-
     <div class="dashboard-layout">
-
-
-        <!-- ==================================================
-             SIDEBAR
-        =================================================== -->
-
         <aside id="sidebar"></aside>
 
-
-
-        <!-- ==================================================
-             MAIN
-        =================================================== -->
-
         <main class="dashboard-main">
-
-
-            <!-- ==================================================
-                 NAVBAR
-            =================================================== -->
-
             <header id="navbar"></header>
 
-
-
-            <!-- ==================================================
-                 PAGE CONTENT
-            =================================================== -->
-
             <section class="page-content">
-
-
-                <!-- ==================================================
-                     PAGE HEADER
-                =================================================== -->
-
                 <div class="page-header">
-
                     <div>
-
-                        <h1>
-                            Books
-                        </h1>
-
-                        <p>
-                            Manage and preserve Christian hymn books
-                            and publications.
-                        </p>
-
+                        <h1>Books</h1>
+                        <p>Manage and preserve Christian hymn books and publications.</p>
                     </div>
 
-
-                    <button
-                        type="button"
-                        id="addBookButton"
-                        class="btn btn-primary"
-                    >
-
-                        <span>
-                            +
-                        </span>
-
-                        Add Book
-
+                    <button type="button" id="addBookButton" class="btn-primary">
+                        + Add Book
                     </button>
-
                 </div>
 
-
-
-                <!-- ==================================================
-                     BOOK FORM
-                =================================================== -->
-
-                <div
-                    id="bookFormPanel"
-                    class="admin-card books-form-panel"
-                    hidden
-                >
-
-                    <div class="admin-card-header">
-
-                        <div>
-
-                            <h2 id="bookFormTitle">
-                                Add Book
-                            </h2>
-
-                            <p>
-                                Add information about a book or publication.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <form
-                        id="bookForm"
-                        class="admin-form"
+                <!-- SEARCH -->
+                <div class="toolbar">
+                    <input
+                        type="text"
+                        id="searchInput"
+                        class="search-input"
+                        placeholder="Search by book name, slug or description"
+                        autocomplete="off"
                     >
-
-                        <!-- Hidden ID -->
-
-                        <input
-                            type="hidden"
-                            id="bookId"
-                            name="id"
-                        >
-
-
-
-                        <!-- ==================================================
-                             BOOK NAME
-                        =================================================== -->
-
-                        <div class="form-group">
-
-                            <label for="bookName">
-                                Book Name
-                                <span>*</span>
-                            </label>
-
-
-                            <input
-                                type="text"
-                                id="bookName"
-                                name="name"
-                                placeholder="Enter the book name"
-                                required
-                            >
-
-                        </div>
-
-
-
-                        <!-- ==================================================
-                             AUTHOR
-                        =================================================== -->
-
-                        <div class="form-group">
-
-                            <label for="bookAuthor">
-                                Author
-                            </label>
-
-
-                            <input
-                                type="text"
-                                id="bookAuthor"
-                                name="author"
-                                placeholder="Enter author name"
-                            >
-
-                        </div>
-
-
-
-                        <!-- ==================================================
-                             CATEGORY
-                        =================================================== -->
-
-                        <div class="form-group">
-
-                            <label for="bookCategory">
-                                Category
-                            </label>
-
-
-                            <input
-                                type="text"
-                                id="bookCategory"
-                                name="category"
-                                placeholder="Example: Hymns, Christian Literature"
-                            >
-
-                        </div>
-
-
-
-                        <!-- ==================================================
-                             DESCRIPTION
-                        =================================================== -->
-
-                        <div class="form-group">
-
-                            <label for="bookDescription">
-                                Description
-                            </label>
-
-
-                            <textarea
-                                id="bookDescription"
-                                name="description"
-                                rows="6"
-                                placeholder="Enter a short description of the book..."
-                            ></textarea>
-
-                        </div>
-
-
-
-                        <!-- ==================================================
-                             COVER IMAGE
-                        =================================================== -->
-
-                        <div class="form-group">
-
-                            <label for="bookCover">
-                                Book Cover
-                            </label>
-
-
-                            <input
-                                type="file"
-                                id="bookCover"
-                                name="cover"
-                                accept="image/*"
-                            >
-
-
-                            <small>
-                                Upload a JPG, PNG or WebP image.
-                            </small>
-
-
-                            <div
-                                id="bookCoverPreview"
-                                class="book-cover-preview"
-                                hidden
-                            >
-
-                                <img
-                                    id="bookCoverPreviewImage"
-                                    src=""
-                                    alt="Book cover preview"
-                                >
-
-                            </div>
-
-                        </div>
-
-
-
-                        <!-- ==================================================
-                             FORM ACTIONS
-                        =================================================== -->
-
-                        <div class="form-actions">
-
-                            <button
-                                type="button"
-                                id="cancelBookButton"
-                                class="btn btn-secondary"
-                            >
-                                Cancel
-                            </button>
-
-
-                            <button
-                                type="submit"
-                                id="saveBookButton"
-                                class="btn btn-primary"
-                            >
-                                Save Book
-                            </button>
-
-                        </div>
-
-                    </form>
-
                 </div>
 
-
-
-                <!-- ==================================================
-                     BOOKS LIST
-                =================================================== -->
-
-                <div class="admin-card books-list-card">
-
-
-                    <div class="admin-card-header">
-
-                        <div>
-
-                            <h2>
-                                Book Collection
-                            </h2>
-
-                            <p>
-                                Books currently stored in the collection.
-                            </p>
-
-                        </div>
-
-
-                        <span
-                            id="booksCount"
-                            class="admin-count"
-                        >
-                            0
-                        </span>
-
-                    </div>
-
-
-
-                    <!-- ==================================================
-                         LOADING
-                    =================================================== -->
-
-                    <div
-                        id="booksLoading"
-                        class="books-state"
-                    >
-
-                        <div class="loading-spinner"></div>
-
-                        <p>
-                            Loading books...
-                        </p>
-
-                    </div>
-
-
-
-                    <!-- ==================================================
-                         EMPTY
-                    =================================================== -->
-
-                    <div
-                        id="booksEmpty"
-                        class="books-state"
-                        hidden
-                    >
-
-                        <div class="books-empty-icon">
-                            📚
-                        </div>
-
-
-                        <h3>
-                            No books yet
-                        </h3>
-
-
-                        <p>
-                            Your book collection is currently empty.
-                            Add the first book to begin building the archive.
-                        </p>
-
-
-                        <button
-                            type="button"
-                            id="emptyAddBookButton"
-                            class="btn btn-primary"
-                        >
-                            Add First Book
-                        </button>
-
-                    </div>
-
-
-
-                    <!-- ==================================================
-                         ERROR
-                    =================================================== -->
-
-                    <div
-                        id="booksError"
-                        class="books-state"
-                        hidden
-                    >
-
-                        <div class="books-empty-icon">
-                            !
-                        </div>
-
-
-                        <h3>
-                            Unable to load books
-                        </h3>
-
-
-                        <p id="booksErrorMessage">
-                            Something went wrong while loading the books.
-                        </p>
-
-
-                        <button
-                            type="button"
-                            id="retryBooksButton"
-                            class="btn btn-secondary"
-                        >
-                            Try Again
-                        </button>
-
-                    </div>
-
-
-
-                    <!-- ==================================================
-                         TABLE
-                    =================================================== -->
-
-                    <div
-                        id="booksTableWrapper"
-                        class="books-table-wrapper"
-                        hidden
-                    >
-
-                        <table class="admin-table">
-
-                            <thead>
-
-                                <tr>
-
-                                    <th>
-                                        Cover
-                                    </th>
-
-                                    <th>
-                                        Book
-                                    </th>
-
-                                    <th>
-                                        Author
-                                    </th>
-
-                                    <th>
-                                        Category
-                                    </th>
-
-                                    <th>
-                                        Added
-                                    </th>
-
-                                    <th>
-                                        Actions
-                                    </th>
-
-                                </tr>
-
-                            </thead>
-
-
-                            <tbody
-                                id="booksTableBody"
-                            ></tbody>
-
-                        </table>
-
-                    </div>
-
-
+                <!-- LOADING -->
+                <div id="loadingState" class="state-card">
+                    <h3>Loading Books...</h3>
+                    <p>Please wait.</p>
                 </div>
 
+                <!-- ERROR -->
+                <div id="errorState" class="state-card hidden">
+                    <h3>Unable to Load Books</h3>
+                    <p id="errorMessage">Something went wrong while loading the books.</p>
+                    <button type="button" id="retryButton" class="btn-secondary">Try Again</button>
+                </div>
 
+                <!-- EMPTY -->
+                <div id="emptyState" class="state-card hidden">
+                    <h3>No Books Found</h3>
+                    <p id="emptyMessage">No books found.</p>
+                    <button type="button" id="emptyAddBookButton" class="btn-primary">Add First Book</button>
+                </div>
+
+                <!-- TABLE -->
+                <div id="tableContainer" class="table-container hidden">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Cover</th>
+                                <th>Book</th>
+                                <th>Description</th>
+                                <th>Added</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="booksTableBody"></tbody>
+                    </table>
+                </div>
             </section>
-
         </main>
-
     </div>
 
+    <!-- ADD / EDIT BOOK MODAL -->
+    <div id="bookModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="bookFormTitle">Add New Book</h2>
+                <button type="button" id="closeModal" class="modal-close">&times;</button>
+            </div>
 
+            <form id="bookForm">
+                <input type="hidden" id="bookId">
 
-    <!-- ==================================================
-         TOAST
-    =================================================== -->
+                <div class="form-grid">
+                    <div class="form-group full">
+                        <label for="bookName">Book Name</label>
+                        <input
+                            type="text"
+                            id="bookName"
+                            placeholder="Enter the book name"
+                            required
+                        >
+                    </div>
 
-    <div
-        id="toastContainer"
-        class="toast-container"
-    ></div>
+                    <div class="form-group full">
+                        <label for="bookSlug">Slug</label>
+                        <input
+                            type="text"
+                            id="bookSlug"
+                            placeholder="book-name"
+                            autocomplete="off"
+                        >
+                        <small>Used for the book's web address.</small>
+                    </div>
 
+                    <div class="form-group full">
+                        <label for="bookDescription">Description</label>
+                        <textarea
+                            id="bookDescription"
+                            rows="5"
+                            placeholder="Enter a short description of the book..."
+                        ></textarea>
+                    </div>
 
+                    <!-- EXISTING MEDIA LIBRARY -->
+                    <div class="form-group full">
+                        <label for="bookMedia">Book Cover</label>
+                        <select id="bookMedia">
+                            <option value="">No Cover</option>
+                        </select>
+                        <small>Select an image already uploaded in the Media library.</small>
 
-    <!-- ==================================================
-         SHARED ADMIN SCRIPT
-    =================================================== -->
+                        <div id="bookCoverPreview" class="book-cover-preview hidden">
+                            <img
+                                id="bookCoverPreviewImage"
+                                src=""
+                                alt="Book cover preview"
+                            >
+                        </div>
+                    </div>
+                </div>
 
+                <div class="modal-footer">
+                    <button type="button" id="cancelModal" class="btn-secondary">Cancel</button>
+                    <button type="submit" id="saveButton" class="primary-btn">Save Book</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
+    <!-- DELETE CONFIRMATION -->
+    <div id="confirmModal" class="modal">
+        <div class="confirm-card">
+            <div class="confirm-icon">🗑️</div>
+            <h2>Delete Book</h2>
+            <p id="confirmMessage">Are you sure you want to delete this book?</p>
+            <div class="confirm-actions">
+                <button type="button" id="cancelDelete" class="btn-secondary">Cancel</button>
+                <button type="button" id="confirmDelete" class="btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
 
-    <!-- ==================================================
-         BOOKS SCRIPT
-    =================================================== -->
-
-
+    <div id="toastContainer" class="toast-container"></div>
 
 </body>
-
 </html>

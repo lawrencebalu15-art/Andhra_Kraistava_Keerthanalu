@@ -151,17 +151,30 @@ function getAlphabetTitle() {
 
 function getSongTitle(song) {
 
-    if (song.language === "english") {
-        return song.title || song.titleEnglish || "";
+    const language = String(song.language || "")
+        .trim()
+        .toLowerCase();
+
+    /* English hymn */
+    if (
+        language === "english" ||
+        language === "en"
+    ) {
+        return String(
+            song.titleEnglish ||
+            song.title ||
+            ""
+        ).trim();
     }
 
+    /* Telugu hymn */
     if (song.titleTelugu?.trim()) {
         return song.titleTelugu.trim();
     }
 
+    /* Fallback */
     return `~~~${song.number}`;
 }
-
 
 /* ======================================================
    LANGUAGE FILTER
@@ -301,29 +314,85 @@ searchInput.addEventListener("input", (event) => {
         .trim()
         .toLowerCase();
 
-    updateHymns();
+    /*
+     * SEARCH TAKES PRIORITY OVER ALPHABET FILTER
+     *
+     * If the user starts searching while a Telugu
+     * alphabet is selected, automatically clear the
+     * alphabet filter so the search runs across the
+     * complete hymn database.
+     */
+    if (state.search !== "" && state.letter !== "All") {
 
+        state.letter = "All";
+
+        renderAlphabetFilter();
+    }
+
+    updateHymns();
 });
 
 
 /* ======================================================
    APPLY FILTERS
 ====================================================== */
+/* ======================================================
+   APPLY FILTERS
+   ====================================================== */
 
 function applyFilters() {
 
     return songsList.filter(song => {
 
         /* -----------------------------
-           LANGUAGE
+           NORMALIZE LANGUAGE
         ----------------------------- */
 
-        const languageMatch =
+        const language = String(song.language || "")
+            .trim()
+            .toLowerCase();
 
-            state.language === "all" ||
+        const hasTeluguTitle =
+            String(song.titleTelugu || "").trim().length > 0;
 
-            song.language === state.language;
+        const hasEnglishTitle =
+            String(song.titleEnglish || "").trim().length > 0;
 
+        /* -----------------------------
+           LANGUAGE FILTER
+        ----------------------------- */
+
+        let languageMatch = true;
+
+        if (state.language === "telugu") {
+
+            /*
+             * Treat the hymn as Telugu when:
+             * 1. language is explicitly Telugu
+             * 2. language is "te"
+             * 3. language is missing but a Telugu title exists
+             */
+
+            languageMatch =
+                language === "telugu" ||
+                language === "te" ||
+                (
+                    language === "" &&
+                    hasTeluguTitle
+                );
+
+        } else if (state.language === "english") {
+
+            /*
+             * English hymns require an explicit
+             * English language value.
+             */
+
+            languageMatch =
+                language === "english" ||
+                language === "en";
+
+        }
 
         /* -----------------------------
            TITLE
@@ -332,34 +401,34 @@ function applyFilters() {
         const title = getSongTitle(song);
 
         const englishTitle =
-
-            song.titleEnglish || "";
-
+            String(song.titleEnglish || "");
 
         /* -----------------------------
            SEARCH
         ----------------------------- */
+        const searchTerm = state.search.trim();
 
-        const searchMatch =
+/*
+ * If the search contains only numbers,
+ * treat it as an exact hymn-number search.
+ */
+const isNumberSearch = /^\d+$/.test(searchTerm);
 
-            state.search === "" ||
+const searchMatch =
 
-            String(song.number)
-                .includes(state.search) ||
+    searchTerm === "" ||
 
-            title
-                .toLowerCase()
-                .includes(state.search) ||
-
-            englishTitle
-                .toLowerCase()
-                .includes(state.search) ||
-
-            (song.author || "")
-                .toLowerCase()
-                .includes(state.search);
-
-
+    (
+        isNumberSearch
+            ? String(song.number) === searchTerm
+            : (
+                title.toLowerCase().includes(searchTerm) ||
+                englishTitle.toLowerCase().includes(searchTerm) ||
+                String(song.author || "")
+                    .toLowerCase()
+                    .includes(searchTerm)
+            )
+    );
         /* -----------------------------
            ALPHABET FILTER
         ----------------------------- */
@@ -372,15 +441,14 @@ function applyFilters() {
                 .trim()
                 .startsWith(state.letter);
 
+        /* -----------------------------
+           FINAL RESULT
+        ----------------------------- */
 
         return (
-
             languageMatch &&
-
             searchMatch &&
-
             letterMatch
-
         );
 
     });

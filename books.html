@@ -89,14 +89,14 @@
                         "
                     >
 
-                        <i
+                      <!--  <i
                             class="fas fa-magnifying-glass"
                             style="
                                 position:absolute;
                                 left:18px;
                                 pointer-events:none;
                             "
-                        ></i>
+                        ></i> -->
 
                         <input
                             type="search"
@@ -256,6 +256,45 @@
     <!-- ==========================
          SEARCH / FOOTER
     =========================== -->
+
+    <!-- ==========================================================
+         BOOK COVER LIGHTBOX
+    =========================================================== -->
+
+    <div
+        id="bookCoverLightbox"
+        class="book-cover-lightbox"
+        aria-hidden="true"
+    >
+        <div
+            class="book-cover-lightbox-backdrop"
+            data-book-cover-close
+        ></div>
+
+        <div
+            class="book-cover-lightbox-content"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Book cover preview"
+        >
+            <button
+                type="button"
+                id="bookCoverLightboxClose"
+                class="book-cover-lightbox-close"
+                aria-label="Close book cover preview"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="book-cover-lightbox-image-wrapper">
+                <img
+                    id="bookCoverLightboxImage"
+                    src=""
+                    alt=""
+                >
+            </div>
+        </div>
+    </div>
 
     <div id="searchModal"></div>
 

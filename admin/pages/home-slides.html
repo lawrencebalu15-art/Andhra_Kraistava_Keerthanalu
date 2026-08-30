@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Home Slides | AKK CMS
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="/admin/css/admin.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/admin/css/home-slides.css"
+    >
+
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+>
+
+</head>
+
+
+<body>
+
+    <div class="dashboard-layout">
+
+
+        <!-- ==================================================
+             SIDEBAR
+        =================================================== -->
+
+        <aside id="sidebar"></aside>
+
+
+        <!-- ==================================================
+             MAIN
+        =================================================== -->
+
+        <main class="dashboard-main">
+
+
+            <!-- ==================================================
+                 NAVBAR
+            =================================================== -->
+
+            <header id="navbar"></header>
+
+
+            <!-- ==================================================
+                 PAGE CONTENT
+            =================================================== -->
+
+            <section class="page-content">
+
+
+                <!-- ==================================================
+                     PAGE HEADER
+                =================================================== -->
+
+                <div class="page-header">
+
+                    <div>
+
+                        <h1>
+                            Home Slides
+                        </h1>
+
+                        <p>
+                            Manage the images and stories displayed
+                            in the homepage hero carousel.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="addSlideButton"
+                        class="btn btn-primary"
+                    >
+
+                        <span>
+                            +
+                        </span>
+
+                        Add Home Slide
+
+                    </button>
+
+                </div>
+
+
+                <!-- ==================================================
+                     INFORMATION
+                =================================================== -->
+
+                <div class="home-slides-info">
+
+                    <div class="home-slides-info-icon">
+                        <i class="fa-solid fa-images"></i>
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Homepage Carousel
+                        </strong>
+
+                        <p>
+                            Upload photographs of your research,
+                            church visits, hymn writers, families,
+                            books and other archive work.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================================
+                     SLIDES LIST
+                =================================================== -->
+
+                <div class="admin-card home-slides-card">
+
+
+                    <div class="admin-card-header">
+
+                        <div>
+
+                            <h2>
+                                Published Home Slides
+                            </h2>
+
+                            <p>
+                                Slides are displayed according
+                                to their order number.
+                            </p>
+
+                        </div>
+
+
+                        <span
+                            id="slidesCount"
+                            class="admin-count"
+                        >
+                            0
+                        </span>
+
+                    </div>
+
+
+                    <!-- ==================================================
+                         LOADING
+                    =================================================== -->
+
+                    <div
+                        id="slidesLoading"
+                        class="home-slides-state"
+                    >
+
+                        <div class="loading-spinner"></div>
+
+                        <p>
+                            Loading home slides...
+                        </p>
+
+                    </div>
+
+
+                    <!-- ==================================================
+                         ERROR
+                    =================================================== -->
+
+                    <div
+                        id="slidesError"
+                        class="home-slides-state"
+                        hidden
+                    >
+
+                        <div class="home-slides-state-icon">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                        </div>
+
+                        <h3>
+                            Unable to Load Home Slides
+                        </h3>
+
+                        <p id="slidesErrorMessage">
+                            Something went wrong while loading
+                            the home slides.
+                        </p>
+
+                        <button
+                            type="button"
+                            id="retrySlidesButton"
+                            class="btn btn-secondary"
+                        >
+                            Try Again
+                        </button>
+
+                    </div>
+
+
+                    <!-- ==================================================
+                         EMPTY
+                    =================================================== -->
+
+                    <div
+                        id="slidesEmpty"
+                        class="home-slides-state"
+                        hidden
+                    >
+
+                        <div class="home-slides-state-icon">
+                            <i class="fa-regular fa-images"></i>
+                        </div>
+
+                        <h3>
+                            No Home Slides Yet
+                        </h3>
+
+                        <p>
+                            Add your first homepage slide to
+                            start showing your archive work.
+                        </p>
+
+                        <button
+                            type="button"
+                            id="emptyAddSlideButton"
+                            class="btn btn-primary"
+                        >
+                            Add First Slide
+                        </button>
+
+                    </div>
+
+
+                    <!-- ==================================================
+                         SLIDES TABLE
+                    =================================================== -->
+
+                    <div
+                        id="slidesTableWrapper"
+                        class="home-slides-table-wrapper"
+                        hidden
+                    >
+
+                        <table class="admin-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Order
+                                    </th>
+
+                                    <th>
+                                        Image
+                                    </th>
+
+                                    <th>
+                                        Slide
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                    <th>
+                                        Actions
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody
+                                id="slidesTableBody"
+                            ></tbody>
+
+                        </table>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- ==========================================================
+         ADD / EDIT SLIDE MODAL
+    =========================================================== -->
+
+    <div
+        id="slideModal"
+        class="home-slide-modal"
+        hidden
+    >
+
+        <div
+            class="home-slide-modal-backdrop"
+            data-close-slide-modal
+        ></div>
+
+
+        <div
+            class="home-slide-modal-card"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="slideModalTitle"
+        >
+
+
+            <!-- ==================================================
+                 HEADER
+            =================================================== -->
+
+            <div class="home-slide-modal-header">
+
+                <div>
+
+                    <span class="home-slide-modal-kicker">
+                        Homepage Carousel
+                    </span>
+
+                    <h2 id="slideModalTitle">
+                        Add Home Slide
+                    </h2>
+
+                    <p>
+                        Create a new visual story for the homepage.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="closeSlideModal"
+                    class="modal-close"
+                    aria-label="Close"
+                >
+                    &times;
+                </button>
+
+            </div>
+
+
+            <!-- ==================================================
+                 FORM
+            =================================================== -->
+
+            <form
+                id="slideForm"
+                class="admin-form"
+            >
+
+                <input
+                    type="hidden"
+                    id="slideId"
+                >
+
+
+                <!-- ==================================================
+                     IMAGE
+                =================================================== -->
+
+                <div class="form-group">
+
+                    <label for="slideImage">
+
+                        Slide Image
+
+                        <span>
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <input
+                        type="file"
+                        id="slideImage"
+                        accept="image/jpeg,image/png,image/webp"
+                    >
+
+
+                    <small>
+                        Recommended: landscape image,
+                        ideally 16:9 or wider.
+                    </small>
+
+
+                    <div
+                        id="slideImagePreview"
+                        class="home-slide-image-preview"
+                        hidden
+                    >
+
+                        <img
+                            id="slidePreviewImage"
+                            src=""
+                            alt="Slide preview"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================================
+                     ORDER
+                =================================================== -->
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label for="slideOrder">
+
+                            Display Order
+
+                            <span>
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="number"
+                            id="slideOrder"
+                            min="1"
+                            step="1"
+                            value="1"
+                            required
+                        >
+
+
+                        <small>
+                            1 appears first, 2 second, etc.
+                        </small>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="slideActive">
+                            Status
+                        </label>
+
+
+                        <label class="home-slide-toggle">
+
+                            <input
+                                type="checkbox"
+                                id="slideActive"
+                                checked
+                            >
+
+                            <span class="home-slide-toggle-track">
+                                <span></span>
+                            </span>
+
+                            <span>
+                                Active
+                            </span>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================================
+                     KICKER
+                =================================================== -->
+
+                <div class="form-group">
+
+                    <label for="slideKicker">
+                        Small Label
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="slideKicker"
+                        maxlength="100"
+                        placeholder="Preserving Their Stories"
+                    >
+
+                </div>
+
+
+                <!-- ==================================================
+                     TITLE
+                =================================================== -->
+
+                <div class="form-group">
+
+                    <label for="slideTitle">
+
+                        Title
+
+                        <span>
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="slideTitle"
+                        maxlength="180"
+                        placeholder="Meeting the Families Behind the Hymns"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- ==================================================
+                     DESCRIPTION
+                =================================================== -->
+
+                <div class="form-group">
+
+                    <label for="slideDescription">
+                        Description
+                    </label>
+
+
+                    <textarea
+                        id="slideDescription"
+                        rows="4"
+                        maxlength="600"
+                        placeholder="Write a short description about this story..."
+                    ></textarea>
+
+                </div>
+
+
+                <!-- ==================================================
+                     BUTTON
+                =================================================== -->
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label for="slideButtonText">
+                            Button Text
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="slideButtonText"
+                            maxlength="80"
+                            placeholder="Meet the Writers"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="slideButtonUrl">
+                            Button Link
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="slideButtonUrl"
+                            maxlength="400"
+                            placeholder="authors.html"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================================
+                     ACTIONS
+                =================================================== -->
+
+                <div class="home-slide-form-actions">
+
+                    <button
+                        type="button"
+                        id="cancelSlideButton"
+                        class="btn btn-secondary"
+                    >
+                        Cancel
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        id="saveSlideButton"
+                        class="btn btn-primary"
+                    >
+                        Save Home Slide
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================================
+         DELETE CONFIRMATION
+    =========================================================== -->
+
+    <div
+        id="deleteSlideModal"
+        class="home-slide-modal"
+        hidden
+    >
+
+        <div
+            class="home-slide-modal-backdrop"
+        ></div>
+
+
+        <div
+            class="home-slide-confirm-card"
+            role="dialog"
+            aria-modal="true"
+        >
+
+            <div class="confirm-icon">
+                <i class="fa-solid fa-trash"></i>
+            </div>
+
+
+            <h2>
+                Delete Home Slide?
+            </h2>
+
+
+            <p id="deleteSlideMessage">
+                This slide will be permanently removed.
+            </p>
+
+
+            <div class="confirm-actions">
+
+                <button
+                    type="button"
+                    id="cancelDeleteSlide"
+                    class="btn btn-secondary"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="button"
+                    id="confirmDeleteSlide"
+                    class="btn btn-danger"
+                >
+                    Delete Slide
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================================
+         TOAST
+    =========================================================== -->
+
+    <div
+        id="toastContainer"
+        class="toast-container"
+    ></div>
+
+
+    <!-- ==========================================================
+         SHARED ADMIN
+    =========================================================== -->
+
+    <script
+        type="module"
+        src="../js/common.js"
+    ></script>
+
+
+    <!-- ==========================================================
+         HOME SLIDES
+    =========================================================== -->
+
+    <script
+        type="module"
+        src="../js/home-slides.js"
+    ></script>
+
+
+</body>
+
+</html>
