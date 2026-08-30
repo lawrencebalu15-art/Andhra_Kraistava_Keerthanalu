@@ -7,726 +7,73 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0">
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>Interviews | Andhra Kraistava Keerthanalu</title>
+    <title>
+        Interviews | Andhra Kraistava Keerthanalu
+    </title>
 
+    <!-- Main website styles -->
     <link
         rel="stylesheet"
-        href="css/style.css">
-
-    <style>
-
-        /* =========================================================
-           INTERVIEWS PAGE HEADER
-        ========================================================= */
-
-        .interviews-page .page-header {
-            width: 100%;
-            background: #f7f3eb;
-
-            text-align: center;
-
-            border-bottom: 1px solid #e5ded2;
-        }
-
-
-        .interviews-page .page-header .container {
-            width: 100%;
-            max-width: 1200px;
-
-            margin: 0 auto;
-
-            padding: 3px 10px 6px;
-        }
-
-
-        /* =========================================================
-           SECTION LABEL
-        ========================================================= */
-
-        .interviews-page .page-header .section-label {
-            display: block;
-
-            margin-bottom: 18px;
-
-            color: #a27624;
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-
-            font-size: 14px;
-
-            font-weight: 700;
-
-            line-height: 1.2;
-
-            letter-spacing: 3px;
-
-            text-transform: uppercase;
-        }
-
-
-        /* =========================================================
-           PAGE TITLE
-        ========================================================= */
-
-        .interviews-page .page-header .page-title {
-            width: 100%;
-
-            max-width: 950px;
-
-            margin: 0 auto;
-
-            color: #5a2b20;
-
-            font-family:
-                Georgia,
-                "Times New Roman",
-                serif;
-
-            font-size: 40px;
-
-            font-weight: 700;
-
-            line-height: 1.08;
-
-            letter-spacing: -1px;
-
-            text-align: center;
-        }
-
-
-        /* =========================================================
-           PAGE SUBTITLE
-        ========================================================= */
-
-        .interviews-page .page-header .page-subtitle {
-            max-width: 750px;
-
-            margin: 2px auto 0;
-
-            color: #66615c;
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-
-            font-size: 15px;
-
-            font-weight: 700;
-
-            line-height: 1.5;
-
-            text-align: center;
-        }
-
-
-        /* =========================================================
-           INTERVIEWS PAGE
-        ========================================================= */
-
-        .interviews-authors {
-            display: grid;
-
-            grid-template-columns:
-                repeat(2, minmax(0, 1fr));
-
-            gap: 22px;
-
-            margin-top: 10px;
-        }
-
-
-        /* =========================================================
-           AUTHOR CARD
-        ========================================================= */
-
-        .interview-author-card {
-            display: flex;
-
-            align-items: center;
-
-            gap: 22px;
-
-            padding: 22px;
-
-            background: #ffffff;
-
-            border: 1px solid
-                rgba(59, 2, 2, 0.10);
-
-            border-radius: 16px;
-
-            text-decoration: none;
-
-            box-shadow:
-                0 4px 18px
-                rgba(59, 2, 2, 0.04);
-
-            transition:
-                transform .25s ease,
-                box-shadow .25s ease,
-                border-color .25s ease;
-        }
-
-
-        .interview-author-card:hover {
-            transform: translateY(-4px);
-
-            border-color:
-                rgba(212, 175, 55, 0.55);
-
-            box-shadow:
-                0 12px 28px
-                rgba(59, 2, 2, 0.08);
-        }
-
-
-        /* =========================================================
-           AUTHOR PHOTO
-        ========================================================= */
-
-        .interview-author-photo {
-            width: 82px;
-            height: 82px;
-
-            flex: 0 0 82px;
-
-            border-radius: 50%;
-
-            object-fit: cover;
-
-            background: #f4eee3;
-
-            border: 2px solid
-                rgba(212, 175, 55, 0.25);
-        }
-
-
-        .interview-author-placeholder {
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            width: 82px;
-            height: 82px;
-
-            flex: 0 0 82px;
-
-            border-radius: 50%;
-
-            background: #f4eee3;
-
-            color: #3b0202;
-
-            font-family: var(--font-heading);
-
-            font-size: 1.5rem;
-
-            font-weight: 700;
-        }
-
-
-        /* =========================================================
-           AUTHOR INFORMATION
-        ========================================================= */
-
-        .interview-author-info {
-            flex: 1;
-
-            min-width: 0;
-        }
-
-
-        .interview-author-info h3 {
-            margin: 0 0 8px;
-
-            color: #3b0202;
-
-            font-family: var(--font-heading);
-
-            font-size: 1.25rem;
-
-            line-height: 1.35;
-        }
-
-
-        .interview-author-count {
-            color: #777;
-
-            font-size: .92rem;
-
-            line-height: 1.5;
-        }
-
-
-        .interview-author-arrow {
-            color: #3b0202;
-
-            font-size: 1.35rem;
-
-            font-weight: 700;
-
-            transition:
-                transform .25s ease;
-        }
-
-
-        .interview-author-card:hover
-        .interview-author-arrow {
-            transform: translateX(4px);
-
-            color: #d4af37;
-        }
-
-
-        /* =========================================================
-           AUTHOR DETAIL HEADER
-        ========================================================= */
-
-        .interview-author-header {
-            display: flex;
-
-            align-items: center;
-
-            gap: 22px;
-
-            margin-bottom: 35px;
-
-            padding-bottom: 25px;
-
-            border-bottom:
-                1px solid
-                rgba(59, 2, 2, 0.10);
-        }
-
-
-        .interview-author-header img,
-        .interview-author-header .placeholder {
-            width: 92px;
-            height: 92px;
-
-            flex: 0 0 92px;
-
-            border-radius: 50%;
-
-            object-fit: cover;
-
-            background: #f4eee3;
-        }
-
-
-        .interview-author-header .placeholder {
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            color: #3b0202;
-
-            font-family: var(--font-heading);
-
-            font-size: 1.6rem;
-
-            font-weight: 700;
-        }
-
-
-        .interview-author-header h2 {
-            margin: 0 0 6px;
-
-            color: #3b0202;
-
-            font-family: var(--font-heading);
-
-            font-size: 2rem;
-        }
-
-
-        .interview-author-header p {
-            margin: 0;
-
-            color: #777;
-        }
-
-
-        .back-to-authors {
-            display: inline-flex;
-
-            align-items: center;
-
-            gap: 8px;
-
-            margin-bottom: 25px;
-
-            color: #3b0202;
-
-            font-weight: 700;
-
-            text-decoration: none;
-        }
-
-
-        .back-to-authors:hover {
-            color: #d4af37;
-        }
-
-
-        /* =========================================================
-           INTERVIEW CARDS
-        ========================================================= */
-
-        .interviews-list {
-            display: grid;
-
-            grid-template-columns:
-                repeat(2, minmax(0, 1fr));
-
-            gap: 30px;
-        }
-
-
-        .interview-card {
-            background: #ffffff;
-
-            border:
-                1px solid
-                rgba(59, 2, 2, 0.10);
-
-            border-radius: 16px;
-
-            overflow: hidden;
-
-            box-shadow:
-                0 4px 15px
-                rgba(59, 2, 2, 0.04);
-
-            transition: .3s ease;
-        }
-
-
-        .interview-card:hover {
-            transform: translateY(-5px);
-
-            box-shadow:
-                0 14px 30px
-                rgba(59, 2, 2, 0.08);
-        }
-
-
-        .interview-video {
-            position: relative;
-
-            width: 100%;
-
-            aspect-ratio: 16 / 9;
-
-            background: #f4eee3;
-
-            overflow: hidden;
-        }
-
-
-        .interview-video img {
-            width: 100%;
-            height: 100%;
-
-            object-fit: cover;
-
-            display: block;
-        }
-
-
-        .interview-play {
-            position: absolute;
-
-            left: 50%;
-            top: 50%;
-
-            transform:
-                translate(-50%, -50%);
-
-            width: 62px;
-            height: 62px;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 50%;
-
-            background: #ffffff;
-
-            color: #3b0202;
-
-            box-shadow:
-                0 5px 20px
-                rgba(0, 0, 0, .20);
-
-            font-size: 1.4rem;
-        }
-
-
-        .interview-content {
-            padding: 24px;
-        }
-
-
-        .interview-category {
-            display: inline-block;
-
-            margin-bottom: 9px;
-
-            color: #d4af37;
-
-            font-size: .78rem;
-
-            font-weight: 700;
-
-            text-transform: uppercase;
-
-            letter-spacing: 1px;
-        }
-
-
-        .interview-content h3 {
-            margin: 0 0 12px;
-
-            color: #3b0202;
-
-            font-family: var(--font-heading);
-
-            font-size: 1.35rem;
-
-            line-height: 1.35;
-        }
-
-
-        .interview-description {
-            color: #666;
-
-            line-height: 1.7;
-
-            margin-bottom: 18px;
-        }
-
-
-        .interview-youtube {
-            color: #3b0202;
-
-            font-weight: 700;
-
-            text-decoration: none;
-        }
-
-
-        .interview-youtube:hover {
-            color: #d4af37;
-        }
-
-
-        /* =========================================================
-           STATES
-        ========================================================= */
-
-        .interviews-state {
-            text-align: center;
-
-            padding: 70px 20px;
-
-            color: #666;
-        }
-
-
-        .hidden {
-            display: none !important;
-        }
-
-
-        /* =========================================================
-           RESPONSIVE
-        ========================================================= */
-
-        @media (max-width: 992px) {
-
-            .interviews-page .page-header .container {
-                padding: 35px 25px 40px;
-            }
-
-
-            .interviews-page .page-header .page-title {
-                max-width: 850px;
-
-                font-size: 56px;
-
-                line-height: 1.1;
-            }
-
-
-            .interviews-page .page-header .page-subtitle {
-                font-size: 18px;
-            }
-        }
-
-
-        @media (max-width: 900px) {
-
-            .interviews-authors,
-            .interviews-list {
-                grid-template-columns: 1fr;
-            }
-        }
-
-
-        @media (max-width: 768px) {
-
-            .interviews-page .page-header .container {
-                padding: 30px 20px 35px;
-            }
-
-
-            .interviews-page .page-header .section-label {
-                margin-bottom: 14px;
-
-                font-size: 12px;
-
-                letter-spacing: 2.5px;
-            }
-
-
-            .interviews-page .page-header .page-title {
-                max-width: 700px;
-
-                font-size: 46px;
-
-                line-height: 1.1;
-
-                letter-spacing: -0.5px;
-            }
-
-
-            .interviews-page .page-header .page-subtitle {
-                margin-top: 22px;
-
-                font-size: 17px;
-
-                line-height: 1.5;
-            }
-        }
-
-
-        @media (max-width: 600px) {
-
-            .interview-author-card {
-                padding: 18px;
-
-                gap: 15px;
-            }
-
-
-            .interview-author-photo,
-            .interview-author-placeholder {
-                width: 65px;
-                height: 65px;
-
-                flex-basis: 65px;
-            }
-
-
-            .interview-author-info h3 {
-                font-size: 1.05rem;
-            }
-
-
-            .interview-author-header h2 {
-                font-size: 1.5rem;
-            }
-        }
-
-
-        /* =========================================================
-           SMALL MOBILE
-        ========================================================= */
-
-        @media (max-width: 480px) {
-
-            .interviews-page .page-header .container {
-                padding: 25px 16px 30px;
-            }
-
-
-            .interviews-page .page-header .section-label {
-                margin-bottom: 12px;
-
-                font-size: 11px;
-
-                letter-spacing: 2px;
-            }
-
-
-            .interviews-page .page-header .page-title {
-                font-size: 36px;
-
-                line-height: 1.12;
-
-                letter-spacing: 0;
-            }
-
-
-            .interviews-page .page-header .page-subtitle {
-                margin-top: 18px;
-
-                font-size: 16px;
-
-                line-height: 1.45;
-            }
-        }
-
-    </style>
+        href="css/style.css"
+    >
+
+    <!-- Interviews page styles -->
+    <link
+        rel="stylesheet"
+        href="css/interviews.css"
+    >
 
 </head>
 
 
 <body class="interviews-page">
 
+    <!-- =====================================================
+         SEARCH
+    ====================================================== -->
 
     <div id="searchModalContainer"></div>
 
 
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
     <main>
 
+        <!-- Navbar -->
         <div id="navbar"></div>
 
 
         <!-- =====================================================
-            PAGE HEADER
+             PAGE HEADER
         ====================================================== -->
 
         <section class="page-header">
 
-            <div class="container">
-                <br>
+            <div class="container interviews-header-inner">
 
                 <span class="section-label">
                     Interviews
                 </span>
-                <h1 class="page-title">
+
+
+                <h1 class="page-title-telugu">
                     కీర్తన కవుల వారసులను కలుద్దాం
                 </h1>
-                <br>
-                <h1 class="page-title">
+
+
+                <h2 class="page-title">
                     Meet the Heirs of Hymn Writers
-                </h1>
+                </h2>
+
 
                 <p class="page-subtitle">
-                    Explore interviews with the people behind
-                    Telugu Christian hymn heritage.
+                    Explore the stories, memories, and voices
+                    behind Telugu Christian hymn heritage.
                 </p>
 
             </div>
@@ -734,83 +81,234 @@
         </section>
 
 
+
         <!-- =====================================================
              CONTENT
         ====================================================== -->
 
-        <section class="section">
+        <section class="interviews-content">
 
-            <div class="container">
+            <div class="container interviews-container">
 
 
-                <!-- Back button -->
+                <!-- =================================================
+                     INTRODUCTION
+                ================================================== -->
+
+                <div class="interviews-introduction">
+
+                    <div class="introduction-copy">
+
+                        <span class="archive-label">
+                            PRESERVED VOICES
+                        </span>
+
+                        <h2>
+                            Stories Behind the Hymns
+                        </h2>
+
+                        <p>
+                            These conversations preserve the memories,
+                            experiences, and testimonies surrounding the
+                            writers and communities who shaped Telugu
+                            Christian hymnody.
+                        </p>
+
+                    </div>
+
+
+                    <div class="archive-mark">
+
+                        <span class="archive-mark-symbol">
+                            ✦
+                        </span>
+
+                        <span class="archive-mark-text">
+                            TELUGU CHRISTIAN<br>
+                            HYMN ARCHIVE
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     ARCHIVE META
+                ================================================== -->
+
+                <div class="interviews-archive-meta">
+
+                    <div class="archive-meta-item">
+
+                        <span class="archive-meta-number">
+                            01
+                        </span>
+
+                        <span class="archive-meta-label">
+                            Interview Archive
+                        </span>
+
+                    </div>
+
+
+                    <div class="archive-meta-divider"></div>
+
+
+                    <div class="archive-meta-item">
+
+                        <span class="archive-meta-symbol">
+                            ✦
+                        </span>
+
+                        <span class="archive-meta-label">
+                            Voices &amp; Memories
+                        </span>
+
+                    </div>
+
+
+                    <div class="archive-meta-divider"></div>
+
+
+                    <div class="archive-meta-item">
+
+                        <span class="archive-meta-symbol">
+                            ♫
+                        </span>
+
+                        <span class="archive-meta-label">
+                            Telugu Hymn Heritage
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     BACK BUTTON
+                ================================================== -->
 
                 <a
                     id="backToAuthors"
                     href="interviews.html"
-                    class="back-to-authors hidden">
+                    class="back-to-authors hidden"
+                >
+                    <span class="back-arrow">
+                        ←
+                    </span>
 
-                    ← All Writers
+                    <span>
+                        All Writers
+                    </span>
 
                 </a>
 
 
-                <!-- Author detail -->
+
+                <!-- =================================================
+                     AUTHOR DETAIL
+                ================================================== -->
 
                 <div
                     id="authorHeader"
-                    class="interview-author-header hidden">
-                </div>
+                    class="interview-author-header hidden"
+                ></div>
 
 
-                <!-- Loading -->
+
+                <!-- =================================================
+                     LOADING
+                ================================================== -->
 
                 <div
                     id="interviewsLoading"
-                    class="interviews-state">
+                    class="interviews-state"
+                >
 
-                    Loading interviews...
+                    <div class="state-spinner"></div>
+
+                    <p>
+                        Loading interviews...
+                    </p>
 
                 </div>
 
 
-                <!-- Error -->
+
+                <!-- =================================================
+                     ERROR
+                ================================================== -->
 
                 <div
                     id="interviewsError"
-                    class="interviews-state hidden">
+                    class="interviews-state hidden"
+                >
 
-                    Unable to load interviews.
-                    Please try again later.
+                    <div class="state-icon">
+                        !
+                    </div>
+
+                    <h3>
+                        Unable to load interviews
+                    </h3>
+
+                    <p>
+                        Please try again later.
+                    </p>
 
                 </div>
 
 
-                <!-- Empty -->
+
+                <!-- =================================================
+                     EMPTY
+                ================================================== -->
 
                 <div
                     id="interviewsEmpty"
-                    class="interviews-state hidden">
+                    class="interviews-state hidden"
+                >
 
-                    No interviews are available yet.
+                    <div class="state-icon">
+                        ♪
+                    </div>
+
+                    <h3>
+                        No interviews yet
+                    </h3>
+
+                    <p>
+                        Interviews for this archive will appear here
+                        as they become available.
+                    </p>
 
                 </div>
 
 
-                <!-- Authors -->
+
+                <!-- =================================================
+                     AUTHORS
+                ================================================== -->
 
                 <div
                     id="interviewAuthors"
-                    class="interviews-authors hidden">
-                </div>
+                    class="interviews-authors hidden"
+                ></div>
 
 
-                <!-- Interviews -->
+
+                <!-- =================================================
+                     INTERVIEWS
+                ================================================== -->
 
                 <div
                     id="interviewsGrid"
-                    class="interviews-list hidden">
-                </div>
+                    class="interviews-list hidden"
+                ></div>
 
 
             </div>
@@ -820,40 +318,57 @@
     </main>
 
 
+
+    <!-- =====================================================
+         SEARCH MODAL
+    ====================================================== -->
+
     <div id="searchModal"></div>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
 
     <div id="footer"></div>
 
 
+
+    <!-- =====================================================
+         MAIN WEBSITE JS
+    ====================================================== -->
+
     <script
         type="module"
-        src="js/main.js">
-    </script>
+        src="js/main.js"
+    ></script>
 
+
+    <!-- =====================================================
+         VERCEL
+    ====================================================== -->
 
     <script
         defer
-        src="/_vercel/speed-insights/script.js">
-    </script>
-
+        src="/_vercel/speed-insights/script.js"
+    ></script>
 
     <script
         defer
-        src="/_vercel/insights/script.js">
-    </script>
+        src="/_vercel/insights/script.js"
+    ></script>
 
+
+
+    <!-- =====================================================
+         INTERVIEWS PAGE JS
+    ====================================================== -->
 
     <script
         type="module"
-        src="js/pages/interviews.js">
-    </script>
-
-
-    <script
-        type="module"
-        src="js/pages/home.js">
-    </script>
-
+        src="js/pages/interviews.js"
+    ></script>
 
 </body>
 
