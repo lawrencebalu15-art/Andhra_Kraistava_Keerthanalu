@@ -58,6 +58,227 @@ const authorHistoricalView =
         "authorHistoricalView"
     );
 
+const authorHistoricalImageButton =
+    document.getElementById(
+        "authorHistoricalImageButton"
+    );
+
+const historicalLightbox =
+    document.getElementById(
+        "historicalLightbox"
+    );
+
+const historicalLightboxImage =
+    document.getElementById(
+        "historicalLightboxImage"
+    );
+
+const historicalLightboxClose =
+    document.getElementById(
+        "historicalLightboxClose"
+    );
+
+
+/* =========================================================
+   HISTORICAL RECORD LIGHTBOX
+========================================================= */
+
+function openHistoricalLightbox() {
+
+    if (
+        !historicalLightbox ||
+        !historicalLightboxImage ||
+        !authorHistoricalImage
+    ) {
+        return;
+    }
+
+
+    const imageUrl =
+        authorHistoricalImage.src;
+
+
+    if (!imageUrl) {
+        return;
+    }
+
+
+    historicalLightboxImage.src =
+        imageUrl;
+
+    historicalLightboxImage.alt =
+        authorHistoricalImage.alt ||
+        "Historical archival record";
+
+
+    historicalLightbox.classList.add(
+        "is-open"
+    );
+
+
+    historicalLightbox.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+
+
+    document.body.classList.add(
+        "historical-lightbox-open"
+    );
+
+
+    /*
+     * Move keyboard focus to close button.
+     */
+
+    if (historicalLightboxClose) {
+
+        historicalLightboxClose.focus();
+
+    }
+
+}
+
+
+function closeHistoricalLightbox() {
+
+    if (!historicalLightbox) {
+        return;
+    }
+
+
+    historicalLightbox.classList.remove(
+        "is-open"
+    );
+
+
+    historicalLightbox.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+
+    document.body.classList.remove(
+        "historical-lightbox-open"
+    );
+
+
+    /*
+     * Clear the image after the
+     * closing animation.
+     */
+
+    window.setTimeout(
+        () => {
+
+            if (
+                !historicalLightbox.classList.contains(
+                    "is-open"
+                ) &&
+                historicalLightboxImage
+            ) {
+
+                historicalLightboxImage.src = "";
+
+            }
+
+        },
+        250
+    );
+
+}
+
+
+/* =========================================================
+   CLICK IMAGE
+========================================================= */
+
+if (authorHistoricalImageButton) {
+
+    authorHistoricalImageButton.addEventListener(
+        "click",
+        openHistoricalLightbox
+    );
+
+}
+
+
+/* =========================================================
+   CLICK VIEW FULL RECORD
+========================================================= */
+
+if (authorHistoricalView) {
+
+    authorHistoricalView.addEventListener(
+        "click",
+        openHistoricalLightbox
+    );
+
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+if (historicalLightboxClose) {
+
+    historicalLightboxClose.addEventListener(
+        "click",
+        closeHistoricalLightbox
+    );
+
+}
+
+
+/* =========================================================
+   CLICK BACKDROP
+========================================================= */
+
+if (historicalLightbox) {
+
+    historicalLightbox.addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target.hasAttribute(
+                    "data-historical-close"
+                )
+            ) {
+
+                closeHistoricalLightbox();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ESCAPE KEY
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Escape" &&
+            historicalLightbox &&
+            historicalLightbox.classList.contains(
+                "is-open"
+            )
+        ) {
+
+            closeHistoricalLightbox();
+
+        }
+
+    }
+);
 
 /* =========================================================
    INITIALIZE

@@ -262,8 +262,7 @@
 
                     </section>
 
-
-            <!-- =====================================================
+                    <!-- =====================================================
      HISTORICAL RECORD
 ====================================================== -->
 
@@ -296,7 +295,14 @@
 
     <div class="historical-document">
 
-        <div class="historical-document-image">
+        <!-- CLICKABLE IMAGE -->
+
+        <button
+            type="button"
+            id="authorHistoricalImageButton"
+            class="historical-document-image"
+            aria-label="View historical record"
+        >
 
             <img
                 id="authorHistoricalImage"
@@ -304,8 +310,18 @@
                 alt=""
             >
 
-        </div>
+            <span
+                class="historical-image-overlay"
+                aria-hidden="true"
+            >
+                <i class="fa-solid fa-expand"></i>
+                <span>View Record</span>
+            </span>
 
+        </button>
+
+
+        <!-- FOOTER -->
 
         <div class="historical-document-footer">
 
@@ -313,15 +329,14 @@
                 Original archival record
             </span>
 
-            <a
+            <button
+                type="button"
                 id="authorHistoricalView"
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
+                class="historical-view-button"
             >
                 View Full Record
                 <span>↗</span>
-            </a>
+            </button>
 
         </div>
 
@@ -329,6 +344,53 @@
 
 </section>
 
+
+<!-- =====================================================
+     HISTORICAL RECORD LIGHTBOX
+====================================================== -->
+
+<div
+    id="historicalLightbox"
+    class="historical-lightbox"
+    aria-hidden="true"
+>
+
+    <div
+        class="historical-lightbox-backdrop"
+        data-historical-close
+    ></div>
+
+
+    <div
+        class="historical-lightbox-content"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Historical record"
+    >
+
+        <button
+            type="button"
+            id="historicalLightboxClose"
+            class="historical-lightbox-close"
+            aria-label="Close historical record"
+        >
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+
+        <div class="historical-lightbox-image-wrapper">
+
+            <img
+                id="historicalLightboxImage"
+                src=""
+                alt=""
+            >
+
+        </div>
+
+    </div>
+
+</div>
 
                     <!-- =============================================
                          HYMNS
