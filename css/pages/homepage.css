@@ -2888,3 +2888,425 @@
         transition:none !important;
     }
 }
+
+
+
+
+/* ============================================================
+   LATEST UPDATES TICKER
+   Thin live-update strip below the navbar
+   ============================================================ */
+
+.latest-updates-ticker {
+    --updates-height: 40px;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    height: var(--updates-height);
+
+    overflow: hidden;
+
+    background: var(--ak-burgundy-dark);
+
+    border-top: 1px solid rgba(201, 162, 39, 0.35);
+    border-bottom: 1px solid rgba(201, 162, 39, 0.35);
+
+    color: var(--ak-white);
+
+    z-index: 20;
+}
+
+
+/* ============================================================
+   LABEL
+   ============================================================ */
+
+.latest-updates-label {
+    position: relative;
+    z-index: 3;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    flex: 0 0 auto;
+
+    height: 100%;
+
+    padding:
+        0
+        18px
+        0
+        22px;
+
+    background: var(--ak-burgundy-dark);
+
+    color: var(--ak-gold);
+
+    font-family:
+        "Source Sans 3",
+        sans-serif;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+
+    white-space: nowrap;
+}
+
+
+/* Small separator after label */
+
+.latest-updates-label::after {
+    content: "";
+
+    width: 1px;
+    height: 18px;
+
+    margin-left: 7px;
+
+    background:
+        rgba(201, 162, 39, 0.45);
+}
+
+
+.latest-updates-star {
+    display: inline-flex;
+
+    color: var(--ak-gold-light);
+
+    font-size: 13px;
+
+    line-height: 1;
+}
+
+
+/* ============================================================
+   VIEWPORT
+   ============================================================ */
+
+.latest-updates-viewport {
+    position: relative;
+
+    flex: 1;
+
+    min-width: 0;
+
+    height: 100%;
+
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+
+    /*
+     * Soft fade at both edges.
+     */
+    mask-image:
+        linear-gradient(
+            to right,
+            transparent 0,
+            black 18px,
+            black calc(100% - 24px),
+            transparent 100%
+        );
+
+    -webkit-mask-image:
+        linear-gradient(
+            to right,
+            transparent 0,
+            black 18px,
+            black calc(100% - 24px),
+            transparent 100%
+        );
+}
+
+
+/* ============================================================
+   TRACK
+   ============================================================ */
+
+.latest-updates-track {
+    display: inline-flex;
+    align-items: center;
+
+    width: max-content;
+    min-width: 100%;
+
+    height: 100%;
+
+    will-change: transform;
+
+    animation:
+        latestUpdatesScroll
+        38s
+        linear
+        infinite;
+}
+
+
+/* Pause while hovering */
+
+.latest-updates-ticker:hover
+.latest-updates-track {
+    animation-play-state: paused;
+}
+
+
+/* ============================================================
+   INDIVIDUAL UPDATE
+   ============================================================ */
+
+.latest-update-item {
+    display: inline-flex;
+    align-items: center;
+
+    flex: 0 0 auto;
+
+    gap: 8px;
+
+    margin-right: 42px;
+
+    height: 100%;
+
+    color: rgba(255, 255, 255, 0.92);
+
+    font-family:
+        "Source Sans 3",
+        sans-serif;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    line-height: 1;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    transition:
+        color 0.2s ease;
+}
+
+
+.latest-update-item:hover {
+    color: var(--ak-gold-light);
+}
+
+
+/* ============================================================
+   TYPE
+   ============================================================ */
+
+.latest-update-type {
+    color: var(--ak-gold);
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+}
+
+
+/* ============================================================
+   TITLE
+   ============================================================ */
+
+.latest-update-title {
+    color: var(--ak-white);
+
+    font-weight: 600;
+}
+
+
+/* ============================================================
+   SEPARATOR
+   ============================================================ */
+
+.latest-update-separator {
+    display: inline-block;
+
+    margin-left: 8px;
+
+    color:
+        rgba(201, 162, 39, 0.65);
+
+    font-size: 12px;
+}
+
+
+/* ============================================================
+   NEW BADGE
+   ============================================================ */
+
+.latest-update-new {
+    display: inline-flex;
+    align-items: center;
+
+    height: 18px;
+
+    padding:
+        0
+        6px;
+
+    border:
+        1px solid
+        rgba(201, 162, 39, 0.55);
+
+    border-radius: 999px;
+
+    color: var(--ak-gold-light);
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 0.8px;
+
+    text-transform: uppercase;
+}
+
+
+/* ============================================================
+   LOADING
+   ============================================================ */
+
+.latest-updates-ticker.is-loading {
+    cursor: default;
+}
+
+
+.latest-updates-ticker.is-loading
+.latest-updates-track {
+    animation: none;
+}
+
+
+.latest-updates-loading {
+    display: inline-flex;
+    align-items: center;
+
+    padding-left: 18px;
+
+    color:
+        rgba(255, 255, 255, 0.65);
+
+    font-family:
+        "Source Sans 3",
+        sans-serif;
+
+    font-size: 12px;
+}
+
+
+/* ============================================================
+   ANIMATION
+   ============================================================ */
+
+@keyframes latestUpdatesScroll {
+
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+
+    to {
+        transform: translate3d(-50%, 0, 0);
+    }
+
+}
+
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .latest-updates-track {
+        animation: none;
+        transform: none;
+    }
+
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 700px) {
+
+    .latest-updates-ticker {
+        --updates-height: 36px;
+    }
+
+
+    .latest-updates-label {
+        padding-left: 14px;
+        padding-right: 12px;
+
+        font-size: 10px;
+        letter-spacing: 1.2px;
+    }
+
+
+    .latest-updates-label::after {
+        height: 16px;
+    }
+
+
+    .latest-updates-star {
+        font-size: 11px;
+    }
+
+
+    .latest-update-item {
+        margin-right: 30px;
+
+        font-size: 12px;
+    }
+
+
+    .latest-update-type {
+        font-size: 9px;
+    }
+
+
+    .latest-update-new {
+        height: 16px;
+
+        padding-left: 5px;
+        padding-right: 5px;
+
+        font-size: 8px;
+    }
+
+}
+
+
+/* ============================================================
+   SMALL MOBILE
+   ============================================================ */
+
+@media (max-width: 420px) {
+
+    .latest-updates-label {
+        padding-left: 11px;
+        padding-right: 9px;
+    }
+
+
+    .latest-update-item {
+        margin-right: 26px;
+
+        font-size: 11px;
+    }
+
+}

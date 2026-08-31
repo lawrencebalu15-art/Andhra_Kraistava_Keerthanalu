@@ -7,7 +7,7 @@
 import { supabase } from "../supabase.js";
 import { initThree } from "../three/index.js";
 import { setPageHeader } from "../components/page-header.js";
-
+import "../components/latest-updates.js";
 
 /* ==========================================
    INITIALIZE HOME PAGE
@@ -721,7 +721,7 @@ function initializeHomeHeroCarousel() {
         ).matches;
 
 
-    const delay = 3000;
+    const delay = 2000;
 
     let index = 0;
     let timer = null;
