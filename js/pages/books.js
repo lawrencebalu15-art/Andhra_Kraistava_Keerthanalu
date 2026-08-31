@@ -340,10 +340,11 @@ function createBookCard(book, index) {
                     book.slug
                         ? `
                             <a
-                                href="book.html?slug=${encodeURIComponent(book.slug)}"
+                                href="contact.html?slug=${encodeURIComponent(book.slug)}"
                                 class="book-link"
                             >
-                                View Publication
+                                Order This Book →<br>
+                                Contact us for details.
                             </a>
                         `
                         : ""
