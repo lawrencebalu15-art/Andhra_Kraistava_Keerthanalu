@@ -2888,17 +2888,13 @@
         transition:none !important;
     }
 }
-
-
-
-
 /* ============================================================
    LATEST UPDATES TICKER
-   Thin live-update strip below the navbar
+   Premium minimal live-update strip
    ============================================================ */
 
 .latest-updates-ticker {
-    --updates-height: 40px;
+    --updates-height: 38px;
 
     position: relative;
 
@@ -2910,14 +2906,50 @@
 
     overflow: hidden;
 
-    background: var(--ak-burgundy-dark);
+    background:
+        linear-gradient(
+            90deg,
+            #300303 0%,
+            #420606 48%,
+            #300303 100%
+        );
 
-    border-top: 1px solid rgba(201, 162, 39, 0.35);
-    border-bottom: 1px solid rgba(201, 162, 39, 0.35);
+    border-top: 1px solid rgba(201, 162, 39, .38);
+    border-bottom: 1px solid rgba(201, 162, 39, .38);
 
     color: var(--ak-white);
 
     z-index: 20;
+
+    box-shadow:
+        0 2px 8px rgba(48, 3, 3, .08);
+}
+
+
+/* ============================================================
+   SUBTLE TOP LIGHT
+   ============================================================ */
+
+.latest-updates-ticker::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(227,196,91,.55),
+            transparent
+        );
+
+    pointer-events: none;
 }
 
 
@@ -2927,10 +2959,11 @@
 
 .latest-updates-label {
     position: relative;
-    z-index: 3;
+    z-index: 5;
 
     display: inline-flex;
     align-items: center;
+
     gap: 7px;
 
     flex: 0 0 auto;
@@ -2941,49 +2974,82 @@
         0
         18px
         0
-        22px;
+        20px;
 
-    background: var(--ak-burgundy-dark);
+    background:
+        linear-gradient(
+            90deg,
+            #300303,
+            #390404
+        );
 
-    color: var(--ak-gold);
+    color: var(--ak-gold-light);
 
     font-family:
         "Source Sans 3",
         sans-serif;
 
-    font-size: 11px;
+    font-size: 10px;
+
     font-weight: 700;
 
-    letter-spacing: 1.5px;
+    letter-spacing: 1.6px;
+
     text-transform: uppercase;
 
     white-space: nowrap;
+
+    box-shadow:
+        8px 0 18px rgba(48,3,3,.25);
 }
 
 
-/* Small separator after label */
+/* ============================================================
+   LABEL SEPARATOR
+   ============================================================ */
 
 .latest-updates-label::after {
     content: "";
 
     width: 1px;
-    height: 18px;
+    height: 17px;
 
     margin-left: 7px;
 
     background:
-        rgba(201, 162, 39, 0.45);
+        linear-gradient(
+            to bottom,
+            transparent,
+            rgba(201,162,39,.65),
+            transparent
+        );
 }
 
+
+/* ============================================================
+   LIVE STAR
+   ============================================================ */
 
 .latest-updates-star {
     display: inline-flex;
 
+    align-items: center;
+    justify-content: center;
+
+    width: 17px;
+    height: 17px;
+
     color: var(--ak-gold-light);
 
-    font-size: 13px;
+    font-size: 12px;
 
     line-height: 1;
+
+    animation:
+        latestUpdatesPulse
+        2.4s
+        ease-in-out
+        infinite;
 }
 
 
@@ -3005,15 +3071,12 @@
     display: flex;
     align-items: center;
 
-    /*
-     * Soft fade at both edges.
-     */
     mask-image:
         linear-gradient(
             to right,
             transparent 0,
-            black 18px,
-            black calc(100% - 24px),
+            black 20px,
+            black calc(100% - 30px),
             transparent 100%
         );
 
@@ -3021,8 +3084,8 @@
         linear-gradient(
             to right,
             transparent 0,
-            black 18px,
-            black calc(100% - 24px),
+            black 20px,
+            black calc(100% - 30px),
             transparent 100%
         );
 }
@@ -3045,13 +3108,15 @@
 
     animation:
         latestUpdatesScroll
-        38s
+        42s
         linear
         infinite;
 }
 
 
-/* Pause while hovering */
+/* ============================================================
+   PAUSE ON HOVER
+   ============================================================ */
 
 .latest-updates-ticker:hover
 .latest-updates-track {
@@ -3064,6 +3129,8 @@
    ============================================================ */
 
 .latest-update-item {
+    position: relative;
+
     display: inline-flex;
     align-items: center;
 
@@ -3071,17 +3138,19 @@
 
     gap: 8px;
 
-    margin-right: 42px;
+    margin-right: 46px;
 
     height: 100%;
 
-    color: rgba(255, 255, 255, 0.92);
+    color:
+        rgba(255,255,255,.86);
 
     font-family:
         "Source Sans 3",
         sans-serif;
 
-    font-size: 13px;
+    font-size: 12px;
+
     font-weight: 500;
 
     line-height: 1;
@@ -3091,12 +3160,44 @@
     white-space: nowrap;
 
     transition:
-        color 0.2s ease;
+        color .2s ease,
+        opacity .2s ease;
 }
 
 
-.latest-update-item:hover {
-    color: var(--ak-gold-light);
+/* ============================================================
+   ICON
+   ============================================================ */
+
+.latest-update-item > i {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 20px;
+    height: 20px;
+
+    flex: 0 0 20px;
+
+    border:
+        1px solid
+        rgba(201,162,39,.28);
+
+    border-radius: 50%;
+
+    background:
+        rgba(201,162,39,.08);
+
+    color:
+        var(--ak-gold-light);
+
+    font-size: 9px;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        transform .2s ease;
 }
 
 
@@ -3105,12 +3206,14 @@
    ============================================================ */
 
 .latest-update-type {
-    color: var(--ak-gold);
+    color:
+        var(--ak-gold);
 
-    font-size: 10px;
+    font-size: 9px;
+
     font-weight: 700;
 
-    letter-spacing: 1px;
+    letter-spacing: 1.1px;
 
     text-transform: uppercase;
 }
@@ -3121,9 +3224,37 @@
    ============================================================ */
 
 .latest-update-title {
-    color: var(--ak-white);
+    color:
+        rgba(255,255,255,.94);
 
     font-weight: 600;
+}
+
+
+/* ============================================================
+   HOVER
+   ============================================================ */
+
+.latest-update-item:hover {
+    color:
+        var(--ak-gold-light);
+}
+
+.latest-update-item:hover > i {
+    background:
+        rgba(201,162,39,.16);
+
+    border-color:
+        rgba(201,162,39,.60);
+
+    transform:
+        scale(1.08);
+}
+
+.latest-update-item:hover
+.latest-update-title {
+    color:
+        var(--ak-gold-light);
 }
 
 
@@ -3132,14 +3263,17 @@
    ============================================================ */
 
 .latest-update-separator {
-    display: inline-block;
+    display: inline-flex;
 
-    margin-left: 8px;
+    align-items: center;
+    justify-content: center;
+
+    margin-left: 7px;
 
     color:
-        rgba(201, 162, 39, 0.65);
+        rgba(201,162,39,.45);
 
-    font-size: 12px;
+    font-size: 11px;
 }
 
 
@@ -3149,28 +3283,77 @@
 
 .latest-update-new {
     display: inline-flex;
-    align-items: center;
 
-    height: 18px;
+    align-items: center;
+    justify-content: center;
+
+    height: 17px;
 
     padding:
         0
-        6px;
+        7px;
 
     border:
         1px solid
-        rgba(201, 162, 39, 0.55);
+        rgba(227,196,91,.48);
 
     border-radius: 999px;
 
-    color: var(--ak-gold-light);
+    background:
+        rgba(201,162,39,.07);
 
-    font-size: 9px;
+    color:
+        var(--ak-gold-light);
+
+    font-size: 8px;
+
     font-weight: 700;
 
-    letter-spacing: 0.8px;
+    letter-spacing: .9px;
 
     text-transform: uppercase;
+
+    box-shadow:
+        0 0 0 1px rgba(201,162,39,.03);
+}
+
+
+/* ============================================================
+   INFINITE SCROLL
+   ============================================================ */
+
+@keyframes latestUpdatesScroll {
+
+    from {
+        transform:
+            translate3d(0,0,0);
+    }
+
+    to {
+        transform:
+            translate3d(-50%,0,0);
+    }
+
+}
+
+
+/* ============================================================
+   LABEL PULSE
+   ============================================================ */
+
+@keyframes latestUpdatesPulse {
+
+    0%,
+    100% {
+        opacity: .72;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.12);
+    }
+
 }
 
 
@@ -3182,12 +3365,10 @@
     cursor: default;
 }
 
-
 .latest-updates-ticker.is-loading
 .latest-updates-track {
     animation: none;
 }
-
 
 .latest-updates-loading {
     display: inline-flex;
@@ -3196,30 +3377,13 @@
     padding-left: 18px;
 
     color:
-        rgba(255, 255, 255, 0.65);
+        rgba(255,255,255,.58);
 
     font-family:
         "Source Sans 3",
         sans-serif;
 
-    font-size: 12px;
-}
-
-
-/* ============================================================
-   ANIMATION
-   ============================================================ */
-
-@keyframes latestUpdatesScroll {
-
-    from {
-        transform: translate3d(0, 0, 0);
-    }
-
-    to {
-        transform: translate3d(-50%, 0, 0);
-    }
-
+    font-size: 11px;
 }
 
 
@@ -3229,9 +3393,11 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-    .latest-updates-track {
-        animation: none;
-        transform: none;
+    .latest-updates-track,
+    .latest-updates-star,
+    .latest-update-item > i {
+        animation: none !important;
+        transition: none !important;
     }
 
 }
@@ -3244,48 +3410,60 @@
 @media (max-width: 700px) {
 
     .latest-updates-ticker {
-        --updates-height: 36px;
+        --updates-height: 35px;
     }
 
-
     .latest-updates-label {
-        padding-left: 14px;
+        padding-left: 13px;
         padding-right: 12px;
 
-        font-size: 10px;
+        font-size: 9px;
+
         letter-spacing: 1.2px;
     }
 
-
     .latest-updates-label::after {
-        height: 16px;
+        height: 15px;
     }
 
-
     .latest-updates-star {
+        width: 15px;
+        height: 15px;
+
         font-size: 11px;
     }
 
-
     .latest-update-item {
-        margin-right: 30px;
+        gap: 7px;
 
-        font-size: 12px;
+        margin-right: 34px;
+
+        font-size: 11px;
     }
 
+    .latest-update-item > i {
+        width: 18px;
+        height: 18px;
 
-    .latest-update-type {
-        font-size: 9px;
-    }
-
-
-    .latest-update-new {
-        height: 16px;
-
-        padding-left: 5px;
-        padding-right: 5px;
+        flex-basis: 18px;
 
         font-size: 8px;
+    }
+
+    .latest-update-type {
+        font-size: 8px;
+
+        letter-spacing: .9px;
+    }
+
+    .latest-update-new {
+        height: 15px;
+
+        padding:
+            0
+            5px;
+
+        font-size: 7px;
     }
 
 }
@@ -3297,16 +3475,30 @@
 
 @media (max-width: 420px) {
 
+    .latest-updates-ticker {
+        --updates-height: 34px;
+    }
+
     .latest-updates-label {
-        padding-left: 11px;
+        padding-left: 10px;
         padding-right: 9px;
     }
 
-
     .latest-update-item {
-        margin-right: 26px;
+        margin-right: 28px;
 
-        font-size: 11px;
+        font-size: 10.5px;
+    }
+
+    .latest-update-type {
+        display: none;
+    }
+
+    .latest-update-item > i {
+        width: 17px;
+        height: 17px;
+
+        flex-basis: 17px;
     }
 
 }

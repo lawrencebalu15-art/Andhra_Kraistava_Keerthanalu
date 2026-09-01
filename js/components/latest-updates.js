@@ -17,8 +17,8 @@ import { supabase } from "../supabase.js";
    CONFIGURATION
    ========================================================== */
 
-const MAX_ITEMS_PER_SOURCE = 5;
-const MAX_DISPLAY_ITEMS = 8;
+const MAX_ITEMS_PER_SOURCE = 8;
+const MAX_DISPLAY_ITEMS = 10;
 
 
 /* ==========================================================
