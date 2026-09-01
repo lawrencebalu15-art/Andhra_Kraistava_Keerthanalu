@@ -658,38 +658,30 @@ async function loadHomeSlidesAndInitializeCarousel() {
 /* =========================================================
    HOME HERO CAROUSEL
    ========================================================= */
+/* =========================================================
+   HOME HERO CAROUSEL
+   INFINITE / SEAMLESS LOOP
+   ========================================================= */
 
 function initializeHomeHeroCarousel() {
 
     const carousel =
-        document.querySelector(
-            ".home-hero-carousel"
-        );
+        document.querySelector(".home-hero-carousel");
 
     const track =
-        document.getElementById(
-            "homeHeroTrack"
-        );
+        document.getElementById("homeHeroTrack");
 
     const dotsBox =
-        document.getElementById(
-            "heroCarouselDots"
-        );
+        document.getElementById("heroCarouselDots");
 
     const prev =
-        document.getElementById(
-            "heroCarouselPrev"
-        );
+        document.getElementById("heroCarouselPrev");
 
     const next =
-        document.getElementById(
-            "heroCarouselNext"
-        );
+        document.getElementById("heroCarouselNext");
 
     const progress =
-        document.getElementById(
-            "heroCarouselProgress"
-        );
+        document.getElementById("heroCarouselProgress");
 
 
     if (
@@ -703,17 +695,40 @@ function initializeHomeHeroCarousel() {
     }
 
 
-    const slides = [
-        ...track.querySelectorAll(
-            ".hero-slide"
-        )
+    /*
+    ---------------------------------------------------------
+    ORIGINAL SLIDES
+    ---------------------------------------------------------
+    */
+
+    const originalSlides = [
+        ...track.querySelectorAll(".hero-slide")
     ];
 
 
-    if (!slides.length) {
+    if (!originalSlides.length) {
         return;
     }
 
+
+    /*
+    ---------------------------------------------------------
+    PREVENT DOUBLE INITIALIZATION
+    ---------------------------------------------------------
+    */
+
+    if (carousel.dataset.carouselInitialized === "true") {
+        return;
+    }
+
+    carousel.dataset.carouselInitialized = "true";
+
+
+    /*
+    ---------------------------------------------------------
+    REDUCED MOTION
+    ---------------------------------------------------------
+    */
 
     const reduceMotion =
         window.matchMedia(
@@ -721,19 +736,158 @@ function initializeHomeHeroCarousel() {
         ).matches;
 
 
-    const delay = 15000;
+    /*
+    ---------------------------------------------------------
+    SETTINGS
+    ---------------------------------------------------------
+    */
 
-    let index = 0;
+    const delay = 6500;
+
     let timer = null;
+
     let paused = false;
 
     let touchX = null;
+
     let touchY = null;
 
 
-    /* -----------------------------------------------------
-       IMAGE PRELOADING
-    ----------------------------------------------------- */
+    /*
+    ---------------------------------------------------------
+    SINGLE SLIDE
+    ---------------------------------------------------------
+    */
+
+    if (originalSlides.length === 1) {
+
+        originalSlides[0].classList.add("is-active");
+
+        originalSlides[0].setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        return;
+    }
+
+
+    /*
+    ---------------------------------------------------------
+    CREATE SEAMLESS CLONES
+    ---------------------------------------------------------
+
+    We create:
+
+        [LAST CLONE]
+        [1]
+        [2]
+        [3]
+        [4]
+        [FIRST CLONE]
+
+    The real slides are always between the clones.
+
+    This allows:
+
+        4 → FIRST CLONE
+
+    to look like a normal forward movement.
+
+    Then, after the animation finishes,
+    FIRST CLONE is silently replaced with REAL SLIDE 1.
+    ---------------------------------------------------------
+    */
+
+    const firstClone =
+        originalSlides[0].cloneNode(true);
+
+    const lastClone =
+        originalSlides[
+            originalSlides.length - 1
+        ].cloneNode(true);
+
+
+    firstClone.classList.add(
+        "hero-slide--clone"
+    );
+
+    lastClone.classList.add(
+        "hero-slide--clone"
+    );
+
+
+    firstClone.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+    lastClone.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+
+    /*
+    Put last clone before the real slides.
+    */
+
+    track.insertBefore(
+        lastClone,
+        originalSlides[0]
+    );
+
+
+    /*
+    Put first clone after the real slides.
+    */
+
+    track.appendChild(
+        firstClone
+    );
+
+
+    /*
+    ---------------------------------------------------------
+    ALL PHYSICAL SLIDES
+    ---------------------------------------------------------
+    */
+
+    const slides = [
+        ...track.querySelectorAll(".hero-slide")
+    ];
+
+
+    /*
+    ---------------------------------------------------------
+    INITIAL PHYSICAL POSITION
+    ---------------------------------------------------------
+
+    Because slide 0 is the LAST CLONE,
+    real slide 1 is physical index 1.
+    ---------------------------------------------------------
+    */
+
+    let physicalIndex = 1;
+
+
+    /*
+    Logical index:
+
+        0 = slide 1
+        1 = slide 2
+        2 = slide 3
+        ...
+    */
+
+    let logicalIndex = 0;
+
+
+    /*
+    ---------------------------------------------------------
+    IMAGE PRELOADING
+    ---------------------------------------------------------
+    */
 
     slides.forEach(slide => {
 
@@ -744,6 +898,7 @@ function initializeHomeHeroCarousel() {
             slide.querySelector(
                 ".hero-slide-image"
             );
+
 
         if (!url || !image) {
             return;
@@ -761,6 +916,7 @@ function initializeHomeHeroCarousel() {
                     /"/g,
                     '\\"'
                 )}")`;
+
 
             slide.classList.add(
                 "has-image"
@@ -783,12 +939,19 @@ function initializeHomeHeroCarousel() {
     });
 
 
-    /* -----------------------------------------------------
-       DOTS
-    ----------------------------------------------------- */
+    /*
+    ---------------------------------------------------------
+    DOTS
+    ---------------------------------------------------------
+
+    IMPORTANT:
+    Only create dots for REAL slides.
+    Clones do not get dots.
+    ---------------------------------------------------------
+    */
 
     dotsBox.innerHTML =
-        slides.map((_, i) => {
+        originalSlides.map((_, i) => {
 
             return `
                 <button
@@ -810,61 +973,18 @@ function initializeHomeHeroCarousel() {
     ];
 
 
-    /* -----------------------------------------------------
-       PROGRESS
-    ----------------------------------------------------- */
+    /*
+    ---------------------------------------------------------
+    UPDATE ACCESSIBILITY + DOTS
+    ---------------------------------------------------------
+    */
 
-    function resetProgress() {
-
-        if (!progress) {
-            return;
-        }
-
-
-        progress.style.transition =
-            "none";
-
-        progress.style.width =
-            "0%";
-
-
-        void progress.offsetWidth;
-
-
-        if (
-            !reduceMotion &&
-            !paused &&
-            slides.length > 1
-        ) {
-
-            progress.style.transition =
-                `width ${delay}ms linear`;
-
-            progress.style.width =
-                "100%";
-        }
-    }
-
-
-    /* -----------------------------------------------------
-       SHOW SLIDE
-    ----------------------------------------------------- */
-
-    function showSlide(nextIndex) {
-
-        index =
-            (nextIndex + slides.length) %
-            slides.length;
-
-
-        track.style.transform =
-            `translate3d(-${index * 100}%, 0, 0)`;
-
+    function updateUI() {
 
         slides.forEach((slide, i) => {
 
             const active =
-                i === index;
+                i === physicalIndex;
 
 
             slide.classList.toggle(
@@ -895,6 +1015,7 @@ function initializeHomeHeroCarousel() {
                             "tabindex",
                             "-1"
                         );
+
                     }
 
                 });
@@ -905,7 +1026,7 @@ function initializeHomeHeroCarousel() {
         dots.forEach((dot, i) => {
 
             const active =
-                i === index;
+                i === logicalIndex;
 
 
             dot.classList.toggle(
@@ -921,26 +1042,326 @@ function initializeHomeHeroCarousel() {
 
         });
 
-
-        resetProgress();
     }
 
 
-    /* -----------------------------------------------------
-       STOP
-    ----------------------------------------------------- */
+    /*
+    ---------------------------------------------------------
+    PROGRESS BAR
+    ---------------------------------------------------------
+    */
+
+    function resetProgress() {
+
+        if (!progress) {
+            return;
+        }
+
+
+        progress.style.transition =
+            "none";
+
+
+        progress.style.width =
+            "0%";
+
+
+        void progress.offsetWidth;
+
+
+        if (
+            !reduceMotion &&
+            !paused
+        ) {
+
+            progress.style.transition =
+                `width ${delay}ms linear`;
+
+
+            progress.style.width =
+                "100%";
+
+        }
+
+    }
+
+
+    /*
+    ---------------------------------------------------------
+    MOVE TO PHYSICAL SLIDE
+    ---------------------------------------------------------
+    */
+
+    function moveToPhysical(
+        targetIndex,
+        animate = true
+    ) {
+
+        physicalIndex =
+            targetIndex;
+
+
+        if (animate) {
+
+            track.style.transition =
+                "transform .75s cubic-bezier(.65,0,.2,1)";
+
+        } else {
+
+            track.style.transition =
+                "none";
+
+        }
+
+
+        track.style.transform =
+            `translate3d(-${physicalIndex * 100}%, 0, 0)`;
+
+
+        updateUI();
+
+    }
+
+
+    /*
+    ---------------------------------------------------------
+    SHOW LOGICAL SLIDE
+    ---------------------------------------------------------
+
+    Used by:
+
+        • dots
+        • normal navigation
+    ---------------------------------------------------------
+    */
+
+    function showSlide(
+        targetLogicalIndex,
+        animate = true
+    ) {
+
+        logicalIndex =
+            (
+                targetLogicalIndex +
+                originalSlides.length
+            ) %
+            originalSlides.length;
+
+
+        /*
+        Real slide position is logical index + 1
+        because of the last clone at position 0.
+        */
+
+        moveToPhysical(
+            logicalIndex + 1,
+            animate
+        );
+
+
+        resetProgress();
+
+    }
+
+
+    /*
+    ---------------------------------------------------------
+    NEXT SLIDE
+    ---------------------------------------------------------
+    */
+
+    function goNext() {
+
+        physicalIndex++;
+
+        logicalIndex =
+            (
+                logicalIndex + 1
+            ) %
+            originalSlides.length;
+
+
+        track.style.transition =
+            "transform .75s cubic-bezier(.65,0,.2,1)";
+
+
+        track.style.transform =
+            `translate3d(-${physicalIndex * 100}%, 0, 0)`;
+
+
+        updateUI();
+
+        resetProgress();
+
+    }
+
+
+    /*
+    ---------------------------------------------------------
+    PREVIOUS SLIDE
+    ---------------------------------------------------------
+    */
+
+    function goPrevious() {
+
+        physicalIndex--;
+
+        logicalIndex =
+            (
+                logicalIndex -
+                1 +
+                originalSlides.length
+            ) %
+            originalSlides.length;
+
+
+        track.style.transition =
+            "transform .75s cubic-bezier(.65,0,.2,1)";
+
+
+        track.style.transform =
+            `translate3d(-${physicalIndex * 100}%, 0, 0)`;
+
+
+        updateUI();
+
+        resetProgress();
+
+    }
+
+
+    /*
+    ---------------------------------------------------------
+    SEAMLESS LOOP RESET
+    ---------------------------------------------------------
+
+    Example:
+
+        REAL SLIDE 4
+              ↓
+        FIRST CLONE
+
+    Animation finishes.
+
+    Then we instantly move from:
+
+        FIRST CLONE
+
+    to:
+
+        REAL SLIDE 1
+
+    with transition disabled.
+
+    Because both slides contain the same content,
+    the user sees NO jump.
+    ---------------------------------------------------------
+    */
+
+    track.addEventListener(
+        "transitionend",
+        event => {
+
+            if (
+                event.propertyName !==
+                "transform"
+            ) {
+                return;
+            }
+
+
+            /*
+            FIRST CLONE
+
+            Physical index:
+
+                originalSlides.length + 1
+            */
+
+            if (
+                physicalIndex ===
+                originalSlides.length + 1
+            ) {
+
+                physicalIndex = 1;
+
+                track.style.transition =
+                    "none";
+
+
+                track.style.transform =
+                    "translate3d(-100%, 0, 0)";
+
+
+                /*
+                Force browser to apply the
+                transition-free position.
+                */
+
+                void track.offsetWidth;
+
+
+                updateUI();
+
+                return;
+            }
+
+
+            /*
+            LAST CLONE
+
+            Physical index:
+
+                0
+            */
+
+            if (physicalIndex === 0) {
+
+                physicalIndex =
+                    originalSlides.length;
+
+
+                track.style.transition =
+                    "none";
+
+
+                track.style.transform =
+                    `translate3d(-${
+                        originalSlides.length * 100
+                    }%, 0, 0)`;
+
+
+                void track.offsetWidth;
+
+
+                updateUI();
+
+            }
+
+        }
+    );
+
+
+    /*
+    ---------------------------------------------------------
+    STOP TIMER
+    ---------------------------------------------------------
+    */
 
     function stop() {
 
         clearTimeout(timer);
 
         timer = null;
+
     }
 
 
-    /* -----------------------------------------------------
-       START
-    ----------------------------------------------------- */
+    /*
+    ---------------------------------------------------------
+    START AUTOPLAY
+    ---------------------------------------------------------
+    */
 
     function start() {
 
@@ -950,7 +1371,7 @@ function initializeHomeHeroCarousel() {
         if (
             reduceMotion ||
             paused ||
-            slides.length < 2
+            originalSlides.length < 2
         ) {
             return;
         }
@@ -959,47 +1380,56 @@ function initializeHomeHeroCarousel() {
         timer =
             setTimeout(() => {
 
-                showSlide(index + 1);
+                goNext();
 
                 start();
 
             }, delay);
+
     }
 
 
-    /* -----------------------------------------------------
-       PREVIOUS
-    ----------------------------------------------------- */
-
-    prev.addEventListener(
-        "click",
-        () => {
-
-            showSlide(index - 1);
-
-            start();
-        }
-    );
-
-
-    /* -----------------------------------------------------
-       NEXT
-    ----------------------------------------------------- */
+    /*
+    ---------------------------------------------------------
+    NEXT BUTTON
+    ---------------------------------------------------------
+    */
 
     next.addEventListener(
         "click",
         () => {
 
-            showSlide(index + 1);
+            goNext();
 
             start();
+
         }
     );
 
 
-    /* -----------------------------------------------------
-       DOT NAVIGATION
-    ----------------------------------------------------- */
+    /*
+    ---------------------------------------------------------
+    PREVIOUS BUTTON
+    ---------------------------------------------------------
+    */
+
+    prev.addEventListener(
+        "click",
+        () => {
+
+            goPrevious();
+
+            start();
+
+        }
+    );
+
+
+    /*
+    ---------------------------------------------------------
+    DOT NAVIGATION
+    ---------------------------------------------------------
+    */
 
     dots.forEach(dot => {
 
@@ -1007,22 +1437,30 @@ function initializeHomeHeroCarousel() {
             "click",
             () => {
 
-                showSlide(
+                const target =
                     Number(
                         dot.dataset.index
-                    )
+                    );
+
+
+                showSlide(
+                    target
                 );
 
+
                 start();
+
             }
         );
 
     });
 
 
-    /* -----------------------------------------------------
-       MOUSE PAUSE
-    ----------------------------------------------------- */
+    /*
+    ---------------------------------------------------------
+    MOUSE PAUSE
+    ---------------------------------------------------------
+    */
 
     carousel.addEventListener(
         "mouseenter",
@@ -1032,11 +1470,14 @@ function initializeHomeHeroCarousel() {
 
             stop();
 
+
             if (progress) {
 
                 progress.style.transition =
                     "none";
+
             }
+
         }
     );
 
@@ -1050,13 +1491,16 @@ function initializeHomeHeroCarousel() {
             resetProgress();
 
             start();
+
         }
     );
 
 
-    /* -----------------------------------------------------
-       KEYBOARD FOCUS
-    ----------------------------------------------------- */
+    /*
+    ---------------------------------------------------------
+    KEYBOARD FOCUS
+    ---------------------------------------------------------
+    */
 
     carousel.addEventListener(
         "focusin",
@@ -1065,6 +1509,7 @@ function initializeHomeHeroCarousel() {
             paused = true;
 
             stop();
+
         }
     );
 
@@ -1084,15 +1529,18 @@ function initializeHomeHeroCarousel() {
                 resetProgress();
 
                 start();
+
             }
 
         }
     );
 
 
-    /* -----------------------------------------------------
-       TOUCH / SWIPE
-    ----------------------------------------------------- */
+    /*
+    ---------------------------------------------------------
+    TOUCH / SWIPE
+    ---------------------------------------------------------
+    */
 
     carousel.addEventListener(
         "touchstart",
@@ -1101,11 +1549,13 @@ function initializeHomeHeroCarousel() {
             const touch =
                 event.changedTouches[0];
 
+
             touchX =
                 touch.clientX;
 
             touchY =
                 touch.clientY;
+
 
             paused = true;
 
@@ -1150,15 +1600,23 @@ function initializeHomeHeroCarousel() {
                 Math.abs(dy)
             ) {
 
-                showSlide(
-                    index +
-                    (dx < 0 ? 1 : -1)
-                );
+                if (dx < 0) {
+
+                    goNext();
+
+                } else {
+
+                    goPrevious();
+
+                }
+
             }
 
 
             touchX = null;
+
             touchY = null;
+
 
             paused = false;
 
@@ -1171,9 +1629,11 @@ function initializeHomeHeroCarousel() {
     );
 
 
-    /* -----------------------------------------------------
-       KEYBOARD ARROWS
-    ----------------------------------------------------- */
+    /*
+    ---------------------------------------------------------
+    KEYBOARD ARROWS
+    ---------------------------------------------------------
+    */
 
     document.addEventListener(
         "keydown",
@@ -1195,9 +1655,10 @@ function initializeHomeHeroCarousel() {
 
                 event.preventDefault();
 
-                showSlide(index - 1);
+                goPrevious();
 
                 start();
+
             }
 
 
@@ -1208,18 +1669,21 @@ function initializeHomeHeroCarousel() {
 
                 event.preventDefault();
 
-                showSlide(index + 1);
+                goNext();
 
                 start();
+
             }
 
         }
     );
 
 
-    /* -----------------------------------------------------
-       TAB VISIBILITY
-    ----------------------------------------------------- */
+    /*
+    ---------------------------------------------------------
+    TAB VISIBILITY
+    ---------------------------------------------------------
+    */
 
     document.addEventListener(
         "visibilitychange",
@@ -1232,17 +1696,41 @@ function initializeHomeHeroCarousel() {
             } else if (!paused) {
 
                 start();
+
             }
 
         }
     );
 
 
-    /* -----------------------------------------------------
-       INITIAL STATE
-    ----------------------------------------------------- */
+    /*
+    ---------------------------------------------------------
+    INITIAL POSITION
+    ---------------------------------------------------------
 
-    showSlide(0);
+    Start on REAL SLIDE 1.
+
+    Physical position = 1
+    ---------------------------------------------------------
+    */
+
+    physicalIndex = 1;
+
+    logicalIndex = 0;
+
+
+    track.style.transition =
+        "none";
+
+
+    track.style.transform =
+        "translate3d(-100%, 0, 0)";
+
+
+    updateUI();
+
+    resetProgress();
 
     start();
+
 }
