@@ -721,7 +721,7 @@ function initializeHomeHeroCarousel() {
         ).matches;
 
 
-    const delay = 2000;
+    const delay = 15000;
 
     let index = 0;
     let timer = null;
