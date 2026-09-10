@@ -76,7 +76,7 @@
 
         .greetings-grid {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: repeat(5, minmax(0, .5fr));
             gap: 30px;
             align-items: start;
         }
@@ -115,7 +115,7 @@
         .greeting-video {
             position: relative;
             width: 100%;
-            aspect-ratio: 9 / 16;
+            aspect-ratio: 14 / 16;
             background: #000;
             overflow: hidden;
         }
@@ -184,7 +184,7 @@
 
             color: #3b0202;
 
-            font-weight: 700;
+            font-weight: 500;
             text-decoration: none;
 
             transition:
@@ -223,7 +223,7 @@
 
             .greetings-grid {
                 grid-template-columns:
-                    repeat(2, minmax(0, 1fr));
+                    repeat(2, minmax(0, 0.5fr));
             }
 
         }
@@ -249,12 +249,12 @@
             }
 
             .greetings-grid {
-                grid-template-columns: 1fr;
-                gap: 25px;
+                grid-template-columns: repeat(2, minmax(0, .5fr));
+                gap: 5px;
             }
 
             .greeting-content {
-                padding: 22px;
+                padding: 1px;
             }
 
         }
